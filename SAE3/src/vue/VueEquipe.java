@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurCalendrier;
-import controleur.ControleurCalendrier.Etat;
+import controleur.ControleurEquipe.Etat;
 import controleur.ControleurEquipe;
 import modele.Connexion;
 
@@ -428,7 +428,7 @@ public class VueEquipe extends JFrame{
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se dÃ©connecter") {
+		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;

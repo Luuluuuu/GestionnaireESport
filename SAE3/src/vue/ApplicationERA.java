@@ -2,14 +2,14 @@ package vue;
 
 import java.awt.EventQueue;
 
-public class ApplicationEcurie {
+public class ApplicationERA {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VueEcurie window = new VueEcurie();
-					window.fenetreEcurie.setVisible(true);
+					VueERA window = new VueERA();
+					window.fenetreERA.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

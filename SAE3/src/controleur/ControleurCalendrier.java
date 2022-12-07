@@ -1,7 +1,7 @@
 package controleur;
 import vue.VueCalendrier;
 import vue.VueConnexion;
-import vue.VueEcurie;
+import vue.VueERA;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -136,7 +136,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
 		case ECURIE :
-			VueEcurie fenEcurie = new VueEcurie();
+			VueERA fenEcurie = new VueERA();
 			fenEcurie.getFrame().setVisible(true);
 			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
 		break;
