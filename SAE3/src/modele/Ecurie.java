@@ -73,6 +73,7 @@ public class Ecurie {
     	if (this.equipes.contains(equipe)) {
     		throw new IllegalArgumentException("Cette equipe appartient deja a l'ecurie");
     	}
+        this.equipes.add(this.equipe);
     }
 
     /*Renvoie l'equipe a partir de son nom
