@@ -34,6 +34,7 @@ public class VueConnexion extends JFrame {
 	public VueConnexion() {
 		
 		fenetreConnexion = new JFrame();
+		fenetreConnexion.getContentPane().setBackground(new Color(86,140,206));
 		fenetreConnexion.setResizable(false);
 		fenetreConnexion.setBounds(100, 100, 600, 700);
 		fenetreConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,11 +46,13 @@ public class VueConnexion extends JFrame {
 		
 		JLabel logo = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("logo.png")).getImage();
+		panelLogo.setBackground(new Color(86,140,206));
 		panelLogo.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		logo.setIcon(new ImageIcon(img));
 		panelLogo.add(logo);
 		
 		JPanel panelConnexion = new JPanel();
+		panelConnexion.setBackground(new Color(2,137,150));
 		fenetreConnexion.getContentPane().add(panelConnexion, BorderLayout.CENTER);
 		GridBagLayout gbl_panelConnexion = new GridBagLayout();
 		gbl_panelConnexion.columnWidths = new int[]{603, 0};
@@ -59,6 +62,7 @@ public class VueConnexion extends JFrame {
 		panelConnexion.setLayout(gbl_panelConnexion);
 		
 		JPanel panelTxtUsername = new JPanel();
+		panelTxtUsername.setBackground(new Color(2,137,150));
 		GridBagConstraints gbc_panelTxtUsername = new GridBagConstraints();
 		gbc_panelTxtUsername.anchor = GridBagConstraints.SOUTH;
 		gbc_panelTxtUsername.fill = GridBagConstraints.HORIZONTAL;
@@ -69,12 +73,14 @@ public class VueConnexion extends JFrame {
 		panelTxtUsername.setLayout(new FlowLayout(FlowLayout.LEFT, 135, 0));
 		
 		JLabel nomUtilisateur = new JLabel("Nom d'utilisateur");
+		nomUtilisateur.setForeground(Color.WHITE);
 		nomUtilisateur.setVerticalAlignment(SwingConstants.TOP);
 		nomUtilisateur.setFont(new Font("Roboto", Font.PLAIN, 20));
 		nomUtilisateur.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTxtUsername.add(nomUtilisateur);
 		
 		JPanel panelEntreeUsername = new JPanel();
+		panelEntreeUsername.setBackground(new Color(2,137,150));
 		FlowLayout fl_panelEntreeUsername = (FlowLayout) panelEntreeUsername.getLayout();
 		fl_panelEntreeUsername.setVgap(0);
 		fl_panelEntreeUsername.setHgap(0);
@@ -92,6 +98,7 @@ public class VueConnexion extends JFrame {
 		entreeNomUtilisateur.setColumns(25);
 		
 		JPanel panelTxtMdp = new JPanel();
+		panelTxtMdp.setBackground(new Color(2,137,150));
 		FlowLayout fl_panelTxtMdp = (FlowLayout) panelTxtMdp.getLayout();
 		fl_panelTxtMdp.setAlignment(FlowLayout.LEFT);
 		fl_panelTxtMdp.setVgap(0);
@@ -105,10 +112,12 @@ public class VueConnexion extends JFrame {
 		panelConnexion.add(panelTxtMdp, gbc_panelTxtMdp);
 		
 		JLabel motDePasse = new JLabel("Mot de passe");
+		motDePasse.setForeground(Color.WHITE);
 		motDePasse.setFont(new Font("Roboto", Font.PLAIN, 20));
 		panelTxtMdp.add(motDePasse);
 		
 		JPanel panelEntreeMdp = new JPanel();
+		panelEntreeMdp.setBackground(new Color(2,137,150));
 		FlowLayout fl_panelEntreeMdp = (FlowLayout) panelEntreeMdp.getLayout();
 		fl_panelEntreeMdp.setVgap(0);
 		fl_panelEntreeMdp.setHgap(0);
@@ -126,6 +135,7 @@ public class VueConnexion extends JFrame {
 		panelEntreeMdp.add(entreeMotDePasse);
 		
 		JPanel panelBtnConnexion = new JPanel();
+		panelBtnConnexion.setBackground(new Color(2,137,150));
 		GridBagConstraints gbc_panelBtnConnexion = new GridBagConstraints();
 		gbc_panelBtnConnexion.fill = GridBagConstraints.BOTH;
 		gbc_panelBtnConnexion.gridx = 0;
@@ -134,9 +144,10 @@ public class VueConnexion extends JFrame {
 		panelBtnConnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 130, 0));
 		
 		JButton btnConnexion = new JButton("Se connecter");
-		btnConnexion.setFont(new Font("Roboto", Font.PLAIN, 16));
+		btnConnexion.setForeground(new Color(2,137,150));
+		btnConnexion.setFont(new Font("Roboto", Font.BOLD, 16));
 		btnConnexion.setPreferredSize(new Dimension(150, 40));
-		btnConnexion.setBackground(new Color(162, 220, 255));
+		btnConnexion.setBackground(Color.WHITE);
 		panelBtnConnexion.add(btnConnexion);
 		btnConnexion.addActionListener(controleur);
 		
