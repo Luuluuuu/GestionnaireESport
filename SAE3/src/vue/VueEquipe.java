@@ -75,7 +75,7 @@ public class VueEquipe extends JFrame{
 		btnCalendrier.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelMenu.add(btnCalendrier);
 		
-		JButton btnEcuries = new JButton("Ecuries");
+		JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
 		btnEcuries.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelMenu.add(btnEcuries);
 		
@@ -403,8 +403,9 @@ public class VueEquipe extends JFrame{
 		// GESTION DES TOURNOIS
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
-		
+		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
+		btnJoueurs.addActionListener(controleur);
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -428,14 +429,21 @@ public class VueEquipe extends JFrame{
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+			return Etat.ECURIE;}
+		else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries") {
-			return Etat.ECURIE;
+	
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
+		}
+		else if (b.getText() == "Calendrier") {
+			return Etat.CALENDRIER;
+		}
+		else if (b.getText()=="Joueurs") {
+			return Etat.JOUEURS;
 		}
 		return null;
 	}

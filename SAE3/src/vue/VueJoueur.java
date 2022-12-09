@@ -506,7 +506,13 @@ public class VueJoueur extends JFrame{
 			return Etat.ECURIE;
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
+		}		else if (b.getText() == "Calendrier") {
+			return Etat.CALENDRIER;
 		}
+		else if (b.getText()=="Joueurs") {
+			return Etat.JOUEURS;
+		}
+		
 		return null;
 	}
 	
