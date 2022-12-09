@@ -28,10 +28,10 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 	
 	private VueCalendrier vue;
 	private Etat etat;
-	private Map<String, Tournoi> 		listeTournois;
-	private Map<String, Responsable> 	listeResponsables;
-	private Map<String, Arbitre>		listeArbitres;
-	private Map<String, Jeu>			listeJeux;
+	static	Map<String, Tournoi> 		listeTournois;
+	static	Map<String, Responsable> 	listeResponsables;
+	static	Map<String, Arbitre>		listeArbitres;
+	static 	Map<String, Jeu>			listeJeux;
 	
 	private Map<Integer, Responsable> 	listeResponsablesID;
 	private Map<Integer, Arbitre>		listeArbitresID;
@@ -52,7 +52,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 	}
 	
 	public void initialiserListeTournois() {
-		this.listeTournois = new HashMap<String,Tournoi>();
+		ControleurCalendrier.listeTournois = new HashMap<String,Tournoi>();
 		Connexion c = Connexion.getInstance();
 		ResultSet rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
 				+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
@@ -60,8 +60,8 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		try {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
-				if (this.listeTournois.containsKey(rs.getString(2))) {
-					this.listeTournois.get(rs.getString(2)).ajouterJeu(this.listeJeuxID.get(rs.getInt("IDJEU")));
+				if (ControleurCalendrier.listeTournois.containsKey(rs.getString(2))) {
+					ControleurCalendrier.listeTournois.get(rs.getString(2)).ajouterJeu(this.listeJeuxID.get(rs.getInt("IDJEU")));
 				} else {
 					this.vue.ajouterTournoi(rs.getString("NOMTOURNOI"));
 					
@@ -79,14 +79,14 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 	}
 
 	public void initialiserListeResponsables() {
-		this.listeResponsables = new HashMap<String, Responsable>();
+		ControleurCalendrier.listeResponsables = new HashMap<String, Responsable>();
 		this.listeResponsablesID = new HashMap<Integer,Responsable>();
 		Connexion c = Connexion.getInstance();
 		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_RESPONSABLE");
 		try {
 			while (rs.next()) {
 				Responsable r = new Responsable(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getInt(4));
-				this.listeResponsables.put(r.getPrenomNom(),r);
+				ControleurCalendrier.listeResponsables.put(r.getPrenomNom(),r);
 				this.listeResponsablesID.put(r.getID(), r);
 				this.vue.ajouterResponsable(r.getPrenomNom());
 			}
@@ -96,14 +96,14 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 	}
 	
 	public void initialiserListeArbitres() {
-		this.listeArbitres = new HashMap<String, Arbitre>();
+		ControleurCalendrier.listeArbitres = new HashMap<String, Arbitre>();
 		this.listeArbitresID = new HashMap<Integer,Arbitre>();
 		Connexion c = Connexion.getInstance();
 		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ARBITRE");
 		try {
 			while (rs.next()) {
 				Arbitre a = new Arbitre(rs.getInt(5),rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4));
-				this.listeArbitres.put(a.getPrenomNom(),a);
+				ControleurCalendrier.listeArbitres.put(a.getPrenomNom(),a);
 				this.listeArbitresID.put(a.getID(), a);
 				this.vue.ajouterArbitre(a.getPrenomNom());
 			}
@@ -113,14 +113,14 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 	}
 	
 	public void initialiserListeJeux() {
-		this.listeJeux = new HashMap<String, Jeu>();
+		ControleurCalendrier.listeJeux = new HashMap<String, Jeu>();
 		this.listeJeuxID = new HashMap<Integer,Jeu>();
 		Connexion c = Connexion.getInstance();
 		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JEU");
 		try {
 			while (rs.next()) {
 				Jeu j = new Jeu(rs.getInt(1),rs.getString(2),rs.getInt(3));
-				this.listeJeux.put(j.getNom(),j);
+				ControleurCalendrier.listeJeux.put(j.getNom(),j);
 				this.listeJeuxID.put(j.getID(), j);
 				VueCalendrier.ajouterJeu(j.getNom());
 			}
@@ -147,9 +147,9 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		break;
 		case SUPPRIMER :
 			if ((this.vue.getTournoiSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
-				Tournoi t = this.listeTournois.get(this.vue.getTournoiSelectionne());
+				Tournoi t = ControleurCalendrier.listeTournois.get(this.vue.getTournoiSelectionne());
 				this.vue.supprimerTournoi();
-				this.listeTournois.remove(t.getNom());
+				ControleurCalendrier.listeTournois.remove(t.getNom());
 				Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
 				Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = "+t.getID());
 				this.vue.creerTournoi();
@@ -160,12 +160,12 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 				// Instancie un tournoi
 				Tournoi t = new Tournoi(2,this.vue.entreeNom.getText(),this.vue.entreeDate.getText(),
 						this.vue.entreeHeure.getText(), this.vue.getEchelle());
-				t.setArbitre(this.listeArbitres.get(this.vue.getArbitre()));
-				t.setResponsable(this.listeResponsables.get(this.vue.getResponsable()));
+				t.setArbitre(ControleurCalendrier.listeArbitres.get(this.vue.getArbitre()));
+				t.setResponsable(ControleurCalendrier.listeResponsables.get(this.vue.getResponsable()));
 
 				//Vérifie si c'est une creation ou une modification
 				if (this.vue.titreModif.getText().equals("Créer un tournoi")) {
-					if (!(this.listeTournois.containsKey(t.getNom()))) {
+					if (!(ControleurCalendrier.listeTournois.containsKey(t.getNom()))) {
 						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au tournoi
 						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_tournoiId.nextval FROM dual");
 						try {
@@ -181,20 +181,20 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 						Connexion.getInstance().executerRequete("INSERT INTO SAE_TOURNOI VALUES ("+t.getID()+", '"+t.getNom()+"', TO_DATE('"+t.getDate()+
 								"','DD-MM-YYYY'), '"+ t.getHeureDebut()+"', "+t.getArbitre().getID()+", "+t.getResponsable().getID()+", '"+t.getEchelle()+"')");;
 						for (String nomJeu : this.vue.getJeux()) {
-							Jeu j = this.listeJeux.get(nomJeu);
+							Jeu j = ControleurCalendrier.listeJeux.get(nomJeu);
 							t.ajouterJeu(j);
 							Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
 						}
-						this.listeTournois.put(t.getNom(), t);
+						ControleurCalendrier.listeTournois.put(t.getNom(), t);
 						this.vue.ajouterTournoi(t.getNom());
 					}else {
 							this.vue.tournoiExiste();
 					}
 				} else {
-					t.setID(this.listeTournois.get(this.vue.getTournoiSelectionne()).getID());
+					t.setID(ControleurCalendrier.listeTournois.get(this.vue.getTournoiSelectionne()).getID());
 					Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
 					for (String nomJeu : this.vue.getJeux()) {
-						Jeu j = this.listeJeux.get(nomJeu);
+						Jeu j = ControleurCalendrier.listeJeux.get(nomJeu);
 						t.ajouterJeu(j);
 						Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
 					}
@@ -203,8 +203,8 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 							+ "DATETOURNOI = TO_DATE('"+t.getDate()+"','DD-MM-YYYY'), HEUREDEBUT='"+t.getHeureDebut()+"', ECHELLETOURNOI ='"+t.getEchelle()+"',"
 									+ "IDARBITRE = "+t.getArbitre().getID()+", IDRESPONSABLE = "+t.getResponsable().getID()+
 									"WHERE IDTOURNOI = "+t.getID());
-					this.listeTournois.remove(this.vue.getTournoiSelectionne());
-					this.listeTournois.put(t.getNom(), t);
+					ControleurCalendrier.listeTournois.remove(this.vue.getTournoiSelectionne());
+					ControleurCalendrier.listeTournois.put(t.getNom(), t);
 					this.vue.modifierTournoi();
 					}
 				this.vue.creerTournoi();
@@ -230,13 +230,13 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			VueCalendrier.supprimerTexte(this.vue.entreeHeure);
 			break;
 		default:
-			JList list = (JList) e.getSource();
+			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
 				this.etat = Etat.MODIFIER;
 				VueCalendrier.afficherPanel(this.vue.panelModif);
 				VueCalendrier.afficherTexte(this.vue.titreModif, "Modifier un tournoi");
 				
-				Tournoi t = this.listeTournois.get(this.vue.getTournoiSelectionne());
+				Tournoi t = ControleurCalendrier.listeTournois.get(this.vue.getTournoiSelectionne());
 				this.vue.entreeNom.setText(t.getNom());
 				this.vue.entreeDate.setText(t.getDate().toString());
 				this.vue.entreeHeure.setText(t.getHeureDebut());

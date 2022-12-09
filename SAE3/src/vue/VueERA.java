@@ -492,8 +492,8 @@ public class VueERA {
 	}
 	
 	// ECURIE
-	public void ajouterEcurie(String t) {
-		modeleEcuries.addElement(t);
+	public void ajouterEcurie(String e) {
+		modeleEcuries.addElement(e);
 	}
 	
 	public void supprimerEcurie() {
@@ -506,11 +506,37 @@ public class VueERA {
 	}
 	
 	//RESPONSABLE
+	public void ajouterResponsable(String r) {
+		modeleResponsables.addElement(r);
+	}
+	
+	public void supprimerResponsable() {
+		modeleResponsables.removeElement(this.listeResponsables.getSelectedValue());
+	}
+	
+	public void modifierResponsable() {
+		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),this.getNomResponsable());
+		this.listeResponsables.clearSelection();
+	}
 	
 	//ARBITRE
+	public void ajouterArbitre(String a) {
+		modeleArbitres.addElement(a);
+	}
+	
+	public void supprimerArbitre() {
+		modeleArbitres.removeElement(this.listeArbitres.getSelectedValue());
+	}
+	
+	public void modifierArbitre() {
+		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getNomArbitre());
+		this.listeArbitres.clearSelection();
+	}
 	
 	// GETTERS //
 		public String getNomEcurie() {return this.nomEcurie.getText();}
+		public String getNomResponsable() {return this.nomResponsable.getText();}
+		public String getNomArbitre() {return this.nomArbitre.getText();}
 		
 		public String getNomSelectionne() {return this.listeEcuries.getSelectedValue();}
 		

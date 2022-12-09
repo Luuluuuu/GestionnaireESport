@@ -26,14 +26,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	private VueERA vue;
 	private Etat etat;
 	private Map<String, Ecurie> listeEcuries;
-	private Map<String, Responsable> listeResponsbles;
+	private Map<String, Responsable> listeResponsables;
 	private Map<String, Arbitre> listeArbitres;
 	
 	public ControleurERA(VueERA vue) {
 		this.vue = vue;
 		this.initialiserListeEcuries();
-		this.initialiserListeResponsables();
-		this.initialiserListeArbitres();
+		this.initialiserListeResponsables(ControleurCalendrier.listeResponsables);
+		this.initialiserListeArbitres(ControleurCalendrier.listeArbitres);
 	}
 	
 	public void initialiserListeEcuries() {
@@ -53,12 +53,18 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		}
 	}
 	
-	public void initialiserListeResponsables() {
-		
+	public void initialiserListeResponsables(Map<String,Responsable> listeResponsables) {
+		this.listeResponsables = listeResponsables;
+		for (String nomResponsable : listeResponsables.keySet()) {
+			this.vue.ajouterResponsable(nomResponsable);
+		}
 	}
 	
-	public void initialiserListeArbitres() {
-
+	public void initialiserListeArbitres(Map<String,Arbitre> listeArbitres) {
+		this.listeArbitres = listeArbitres;
+		for (String nomArbitres : listeArbitres.keySet()) {
+			this.vue.ajouterArbitre(nomArbitres);
+		}
 	}
 	
 	@Override
