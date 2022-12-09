@@ -28,7 +28,6 @@ import controleur.ControleurERA.Etat;
 import java.awt.Color;
 
 public class VueERA {
-
 	public JFrame fenetreERA;
 	private JTextField ERecherche;
 	private JTextField RRecherche;
@@ -47,7 +46,13 @@ public class VueERA {
 	private JPasswordField mdpResponsable;
 	private JTextField nomArbitre;
 	private JPasswordField mdpArbitre;
+	
+	private JButton EBtnRecherche;
+	private JButton RBtnRecherche;
+	private JButton ABtnRecherche;
 
+	public enum Entite {ECURIE,RESPONSABLE,ARBITRE};
+	
 	public JFrame getFrame() {
 		return this.fenetreERA;
 	}
@@ -258,9 +263,9 @@ public class VueERA {
 		RPanelRecherche.add(RRecherche);
 		RRecherche.setColumns(10);
 		
-		JButton RBtnRecherche = new JButton("Rechercher");
-		RBtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelRecherche.add(RBtnRecherche);
+		this.RBtnRecherche = new JButton("Rechercher");
+		this.RBtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
+		RPanelRecherche.add(this.RBtnRecherche);
 		
 		JPanel panelListeResponsables = new JPanel();
 		FlowLayout fl_panelListeResponsables = (FlowLayout) panelListeResponsables.getLayout();
@@ -534,29 +539,51 @@ public class VueERA {
 	}
 	
 	// GETTERS //
-		public String getNomEcurie() {return this.nomEcurie.getText();}
-		public String getNomResponsable() {return this.nomResponsable.getText();}
-		public String getNomArbitre() {return this.nomArbitre.getText();}
-		
-		public String getNomSelectionne() {return this.listeEcuries.getSelectedValue();}
-		
-		public String getMotDePasseEcurie() {return String.valueOf(this.mdpEcurie.getPassword());}
+	public String getNomEcurie() {return this.nomEcurie.getText();}
+	public String getNomResponsable() {return this.nomResponsable.getText();}
+	public String getNomArbitre() {return this.nomArbitre.getText();}
+	
+	public String getRechercheEcurie() {return this.ERecherche.getText();}
+	public String getRechercheResponsable() {return this.RRecherche.getText();}
+	public String getRechercheArbitre() {return this.ARecherche.getText();}
+	
+	public String getNomSelectionne() {return this.listeEcuries.getSelectedValue();}
+	
+	public String getMotDePasseEcurie() {return String.valueOf(this.mdpEcurie.getPassword());}
 		
 	// SETTERS //
 	public void setDefaultListModel() {
 		this.listeEcuries.setModel(modeleEcuries);
 	}
 
-	public void setNomSelectionne() {
+	public void setNomSelectionneEcurie() {
 		this.nomEcurie.setText(this.listeEcuries.getSelectedValue());
 	}
 	
-	public void setNom(String nom) {
+	public void setNomSelectionneResponsable() {
+		this.nomResponsable.setText(this.listeResponsables.getSelectedValue());
+	}
+	
+	public void setNomSelectionneArbitre() {
+		this.nomArbitre.setText(this.listeArbitres.getSelectedValue());
+	}
+	
+	public void setNomEcurie(String nom) {
 		this.nomEcurie.setText(nom);
+	}
+	
+	public void setNomResponsable(String nom) {
+		this.nomResponsable.setText(nom);
+	}
+	
+	public void setNomArbitre(String nom) {
+		this.nomArbitre.setText(nom);
 	}
 	
 	public void viderMotDePasse() {
 		this.mdpEcurie.setText("");
+		this.mdpResponsable.setText("");
+		this.mdpArbitre.setText("");
 	}
 	
 	// LISTE //
@@ -566,12 +593,32 @@ public class VueERA {
 	
 	// ETATS
 	public Etat getEtat(JButton b) {
-		switch (b.getText()) {
-		case "RECHERCHER":
+		System.out.println(b.getActionCommand());
+		
+		if (b.getText() == "Créer une nouvelle écurie") {
+			this.listeEcuries.clearSelection();
+			return Etat.CREER;
+		} else if (b.getText() == "Modifier l'écurie sélectionnée") {
+			return Etat.MODIFIER;
+		} else if (b.getText() == "Supprimer l'écurie sélectionnée") {
+			return Etat.SUPPRIMER;
+		} else if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Calendrier") {
+			return Etat.CALENDRIER;
+		} else if (b.getText() == "Joueurs") {
+			return Etat.JOUEURS;
+		} else if (b.getText() == "Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText() == "Rechercher") {
 			return Etat.RECHERCHER;
-		default:
-			return null;
-		}		
+		} else if (b.getText() == "Valider") {
+			return Etat.VALIDER;
+		} else if (b.getText() == "Annuler") {
+			this.listeEcuries.clearSelection();
+			return Etat.ANNULER;
+		} 
+		return null;
 	}
 	
 	// FILTRES
