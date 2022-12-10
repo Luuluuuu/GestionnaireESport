@@ -205,6 +205,7 @@ public class VueERA {
 		JButton EBtnValider = new JButton("Valider");
 		EBtnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
 		EPanelValider.add(EBtnValider);
+		EBtnValider.setName("ValiderEcurie");
 		
 		JButton EBtnAnnuler = new JButton("Annuler");
 		EBtnAnnuler.setFont(new Font("Roboto", Font.PLAIN, 11));
@@ -591,9 +592,9 @@ public class VueERA {
 		return !(this.listeEcuries.isSelectionEmpty());
 	}
 	
-	// ETATS
+	// ETATS //
 	public Etat getEtat(JButton b) {
-		System.out.println(b.getActionCommand());
+		System.out.println(b.getName());
 		
 		if (b.getText() == "Créer une nouvelle écurie") {
 			this.listeEcuries.clearSelection();

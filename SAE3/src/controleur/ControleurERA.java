@@ -36,8 +36,8 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		this.vue = vue;
 		
 		this.initialiserListeEcuries();
-		this.initialiserListeResponsables(ControleurCalendrier.listeResponsables);
-		this.initialiserListeArbitres(ControleurCalendrier.listeArbitres);
+		//this.initialiserListeResponsables(ControleurCalendrier.listeResponsables);
+		//this.initialiserListeArbitres(ControleurCalendrier.listeArbitres);
 	}
 	
 	public void initialiserListeEcuries() {
