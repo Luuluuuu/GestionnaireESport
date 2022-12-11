@@ -3,6 +3,7 @@ import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -224,7 +225,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		case SUPPRIMER:
 			this.etat = Etat.CREER;
 			VueCalendrier.afficherPanel(this.vue.panelModif);
-			VueCalendrier.afficherTexte(this.vue.titreModif, "CrÃ©er un tournoi");
+			VueCalendrier.afficherTexte(this.vue.titreModif, "Créer un tournoi");
 			VueCalendrier.supprimerTexte(this.vue.entreeNom);
 			VueCalendrier.supprimerTexte(this.vue.entreeDate);
 			VueCalendrier.supprimerTexte(this.vue.entreeHeure);

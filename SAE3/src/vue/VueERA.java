@@ -47,6 +47,8 @@ public class VueERA {
 	private JPasswordField mdpResponsable;
 	private JTextField nomArbitre;
 	private JPasswordField mdpArbitre;
+	private JTextField prenomResponsable;
+	private JTextField textField;
 
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -105,7 +107,7 @@ public class VueERA {
 		panelContenu.add(panelEcuries);
 		GridBagLayout gbl_panelEcuries = new GridBagLayout();
 		gbl_panelEcuries.columnWidths = new int[]{461, 0};
-		gbl_panelEcuries.rowHeights = new int[] {100, 574, 50, 100, 0};
+		gbl_panelEcuries.rowHeights = new int[] {100, 549, 100, 100, 0};
 		gbl_panelEcuries.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panelEcuries.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelEcuries.setLayout(gbl_panelEcuries);
@@ -226,9 +228,9 @@ public class VueERA {
 		panelContenu.add(panelResponsables);
 		GridBagLayout gbl_panelResponsables = new GridBagLayout();
 		gbl_panelResponsables.columnWidths = new int[]{461, 0};
-		gbl_panelResponsables.rowHeights = new int[] {100, 574, 50, 100, 0};
+		gbl_panelResponsables.rowHeights = new int[] {100, 549, 100, 100, 0};
 		gbl_panelResponsables.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelResponsables.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panelResponsables.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};
 		panelResponsables.setLayout(gbl_panelResponsables);
 		
 		JPanel RPanelHeaderContenu = new JPanel();
@@ -279,6 +281,7 @@ public class VueERA {
 		panelListeResponsables.add(listeResponsables);
 		
 		JPanel RPanelModification = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) RPanelModification.getLayout();
 		GridBagConstraints gbc_RPanelModification = new GridBagConstraints();
 		gbc_RPanelModification.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RPanelModification.insets = new Insets(0, 0, 5, 0);
@@ -288,7 +291,7 @@ public class VueERA {
 		
 		JPanel RPanelEntree = new JPanel();
 		RPanelModification.add(RPanelEntree);
-		RPanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
+		RPanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
 		JLabel lblNomResponsable = new JLabel("Nom responsable");
 		lblNomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -299,6 +302,16 @@ public class VueERA {
 		nomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
 		RPanelEntree.add(nomResponsable);
 		nomResponsable.setColumns(10);
+		
+		JLabel lblPrenomResponsable = new JLabel("Pr\u00E9nom responsable");
+		lblPrenomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrenomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		RPanelEntree.add(lblPrenomResponsable);
+		
+		prenomResponsable = new JTextField();
+		prenomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		RPanelEntree.add(prenomResponsable);
+		prenomResponsable.setColumns(10);
 		
 		JLabel lblMdpResponsable = new JLabel("Mot de passe");
 		lblMdpResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -341,7 +354,7 @@ public class VueERA {
 		panelContenu.add(panelArbitres);
 		GridBagLayout gbl_panelArbitres = new GridBagLayout();
 		gbl_panelArbitres.columnWidths = new int[]{461, 0};
-		gbl_panelArbitres.rowHeights = new int[] {100, 574, 50, 100, 0};
+		gbl_panelArbitres.rowHeights = new int[] {100, 549, 100, 100, 0};
 		gbl_panelArbitres.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panelArbitres.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panelArbitres.setLayout(gbl_panelArbitres);
@@ -408,7 +421,7 @@ public class VueERA {
 		JPanel APanelEntree = new JPanel();
 		APanelEntree.setBackground(new Color(192, 192, 192));
 		APanelModification.add(APanelEntree);
-		APanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
+		APanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
 		JLabel lblNomArbitre = new JLabel("Nom arbitre");
 		lblNomArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -419,6 +432,16 @@ public class VueERA {
 		nomArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
 		APanelEntree.add(nomArbitre);
 		nomArbitre.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Pr\u00E9nom arbitre");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 13));
+		APanelEntree.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Roboto", Font.PLAIN, 13));
+		APanelEntree.add(textField);
+		textField.setColumns(10);
 		
 		JLabel lblMdpArbitre = new JLabel("Mot de passe");
 		lblMdpArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
