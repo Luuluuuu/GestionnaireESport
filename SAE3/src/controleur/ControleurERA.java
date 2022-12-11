@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -21,27 +22,34 @@ import vue.VueERA;
 
 
 public class ControleurERA implements ActionListener, ListSelectionListener {
+	public enum Entite {ECURIE("Ecurie"),RESPONSABLE("Responsable"),ARBITRE("Arbitre");
+		private String nom;
+		Entite(String nom) {
+			this.nom = nom;
+		}
+		public String getNom() {return this.nom;}
+	};
 	
 	public enum Etat {
-		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, RECHERCHER, VALIDER, ANNULER
+		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
+		RECHERCHER, VALIDER, ANNULER
 	}
 
 	private VueERA vue;
 	private Etat etat;
+	public static Entite entite;
 	static Map<String, Ecurie> listeEcuries;
-	private Map<String, Responsable> listeResponsables;
-	private Map<String, Arbitre> listeArbitres;
 	
 	public ControleurERA(VueERA vue) {
 		this.vue = vue;
 		
 		this.initialiserListeEcuries();
-		//this.initialiserListeResponsables(ControleurCalendrier.listeResponsables);
-		//this.initialiserListeArbitres(ControleurCalendrier.listeArbitres);
+		this.initialiserListeResponsables();
+		this.initialiserListeArbitres();
 	}
 	
 	public void initialiserListeEcuries() {
-		this.listeEcuries = new HashMap<String,Ecurie>();
+		ControleurERA.listeEcuries = new HashMap<String,Ecurie>();
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
@@ -57,16 +65,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		}
 	}
 	
-	public void initialiserListeResponsables(Map<String,Responsable> listeResponsables) {
-		this.listeResponsables = listeResponsables;
-		for (String nomResponsable : listeResponsables.keySet()) {
+	public void initialiserListeResponsables() {
+		for (String nomResponsable : ControleurCalendrier.listeResponsables.keySet()) {
 			this.vue.ajouterResponsable(nomResponsable);
 		}
 	}
 	
-	public void initialiserListeArbitres(Map<String,Arbitre> listeArbitres) {
-		this.listeArbitres = listeArbitres;
-		for (String nomArbitres : listeArbitres.keySet()) {
+	public void initialiserListeArbitres() {
+		for (String nomArbitres : ControleurCalendrier.listeArbitres.keySet()) {
 			this.vue.ajouterArbitre(nomArbitres);
 		}
 	}
@@ -77,19 +83,33 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
 		case ANNULER:
-		/*case CREER :
-			this.vue.setNomEcurie("");
+		case CREER :
+			this.vue.setNom("");
 			this.vue.viderMotDePasse();
 		break;
 		case SUPPRIMER :
-			if (!(this.vue.getNomEcurie().isEmpty()) && this.vue.confirmer("suppression")==0) {
-				Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
-				Connexion.getInstance().executerRequete("DELETE SAE_ECURIE WHERE NOMECURIE = '"+this.vue.getNomSelectionne()+"'");
-				ControleurERA.listeEcuries.remove(this.vue.getNomSelectionne());
-				this.vue.supprimerEcurie();
+			if (!(this.vue.getNom().isEmpty()) && this.vue.confirmer("suppression")==0) {
+				switch (entite) {
+				case ECURIE:
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionneEcurie()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_ECURIE WHERE NOMECURIE = '"+this.vue.getNomSelectionneEcurie()+"'");
+					ControleurERA.listeEcuries.remove(this.vue.getNomSelectionneEcurie());
+					break;
+				case RESPONSABLE:
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE WHERE NOMRESPONSABLE || ' ' || PRENOMRESPONSABLE = '"+this.vue.getNomSelectionneResponsable()+"'");
+					ControleurCalendrier.listeResponsables.remove(this.vue.getNomSelectionneResponsable());
+					break;
+				case ARBITRE:
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDARBITRE = "+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE NOMARBITRE || ' ' || PRENOMARBITRE = '"+this.vue.getNomSelectionneArbitre()+"'");
+					ControleurCalendrier.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
+					break;
+				}
+				this.vue.supprimerEntite();
 				this.vue.viderMotDePasse();
 			}
-			break;*/
+			break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();
@@ -101,14 +121,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			fenCalendrier.getFrame().setVisible(true);
 			VueERA.fermerFenetre(this.vue.fenetreERA);
 		break;
-		/*case RECHERCHER:
-			if (this.vue.getRechercheEcurie()!="") {
-				this.vue.filtrerRechercheEcurie();
+		case RECHERCHER:
+			if (this.vue.getRecherche()!="") {
+				this.vue.filtrerRecherche();
 			} else {
 				this.vue.setDefaultListModel();
 			}
 		break;
-		case VALIDER:
+		/*case VALIDER:
 			if (!(this.vue.getNomEcurie().isEmpty())) {
 					if (this.vue.estSelectionne()) {
 						if (this.vue.confirmer("modification")==0) {
@@ -155,9 +175,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		this.vue.setNomSelectionneEcurie();
+		this.vue.setEntite((JList<String>) e.getSource());
+		this.vue.setNomSelectionne();
 	}
 
 }
