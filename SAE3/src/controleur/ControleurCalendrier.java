@@ -2,6 +2,8 @@ package controleur;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
+import vue.VueEquipe;
+import vue.VueJoueur;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -24,7 +26,7 @@ import modele.Tournoi;
 
 public class ControleurCalendrier implements ActionListener, ListSelectionListener {
 	public enum Etat {
-		CREER, MODIFIER, ANNULER, DECONNECTER, SUPPRIMER, VALIDER, ECURIE
+		CREER, MODIFIER, ANNULER, DECONNECTER, SUPPRIMER, VALIDER, ECURIE, CLASSEMENT, EQUIPES, JOUEURS, CALENDRIER,
 	}
 	
 	private VueCalendrier vue;
@@ -140,6 +142,22 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			fenEcurie.getFrame().setVisible(true);
 			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
 		break;
+		
+		case EQUIPES :
+			VueEquipe fenEquipe = new VueEquipe();
+			fenEquipe.getFrame().setVisible(true);
+			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
+		break;
+		case JOUEURS :
+			VueJoueur fenJoueur = new VueJoueur();
+			fenJoueur.getFrame().setVisible(true);
+			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
+		break;
+/*		case CLASSEMENT :
+			VueClassement fenClassement = new VueClassement();
+			fenClassement.getFrame().setVisible(true);
+			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
+		break; */
 		case DECONNECTER :
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();

@@ -23,16 +23,16 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurERA;
+import controleur.ControleurERA.Entite;
 import controleur.ControleurERA.Etat;
 
 import java.awt.Color;
 
 public class VueERA {
-
 	public JFrame fenetreERA;
-	private JTextField ERecherche;
-	private JTextField RRecherche;
-	private JTextField ARecherche;
+	private JTextField rechercheEcurie;
+	private JTextField rechercheResponsable;
+	private JTextField rechercheArbitre;
 	
 	public JList<String> listeEcuries;
 	private DefaultListModel<String> modeleEcuries;
@@ -49,6 +49,7 @@ public class VueERA {
 	private JPasswordField mdpArbitre;
 	private JTextField prenomResponsable;
 	private JTextField textField;
+
 
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -102,6 +103,7 @@ public class VueERA {
 		fenetreERA.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 3, 0, 0));
 		
+		// ----------------------------- ECURIE ----------------------------- //
 		JPanel panelEcuries = new JPanel();
 		panelEcuries.setBackground(Color.LIGHT_GRAY);
 		panelContenu.add(panelEcuries);
@@ -136,14 +138,14 @@ public class VueERA {
 		fl_EPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		EPanelHeaderContenu.add(EPanelRecherche);
 		
-		ERecherche = new JTextField();
-		ERecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		EPanelRecherche.add(ERecherche);
-		ERecherche.setColumns(10);
+		rechercheEcurie = new JTextField();
+		rechercheEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
+		EPanelRecherche.add(rechercheEcurie);
+		rechercheEcurie.setColumns(10);
 		
-		JButton EBtnRecherche = new JButton("Rechercher");
-		EBtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		EPanelRecherche.add(EBtnRecherche);
+		JButton btnRechercheEcurie = new JButton("Rechercher");
+		btnRechercheEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
+		EPanelRecherche.add(btnRechercheEcurie);
 		
 		JPanel panelListeEcuries = new JPanel();
 		panelListeEcuries.setBackground(Color.LIGHT_GRAY);
@@ -203,9 +205,9 @@ public class VueERA {
 		EBtnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
 		EPanelValider.add(EBtnValider);
 		
-		JButton EBtnAnnuler = new JButton("Annuler");
-		EBtnAnnuler.setFont(new Font("Roboto", Font.PLAIN, 11));
-		EPanelValider.add(EBtnAnnuler);
+		JButton btnAnnulerEcurie = new JButton("Annuler");
+		btnAnnulerEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+		EPanelValider.add(btnAnnulerEcurie);
 		
 		JPanel EPanelBoutons = new JPanel();
 		EPanelBoutons.setBackground(Color.LIGHT_GRAY);
@@ -223,7 +225,8 @@ public class VueERA {
 		JButton btnSupprimerEcurie = new JButton("Supprimer l'\u00E9curie s\u00E9lectionn\u00E9e");
 		btnSupprimerEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
 		EPanelBoutons.add(btnSupprimerEcurie);
-		
+
+		// ----------------------------- RESPONSABLE ----------------------------- //
 		JPanel panelResponsables = new JPanel();
 		panelContenu.add(panelResponsables);
 		GridBagLayout gbl_panelResponsables = new GridBagLayout();
@@ -255,14 +258,14 @@ public class VueERA {
 		fl_RPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		RPanelHeaderContenu.add(RPanelRecherche);
 		
-		RRecherche = new JTextField();
-		RRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelRecherche.add(RRecherche);
-		RRecherche.setColumns(10);
+		rechercheResponsable = new JTextField();
+		rechercheResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		RPanelRecherche.add(rechercheResponsable);
+		rechercheResponsable.setColumns(10);
 		
-		JButton RBtnRecherche = new JButton("Rechercher");
-		RBtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelRecherche.add(RBtnRecherche);
+		JButton btnRechercheResponsable = new JButton("Rechercher");
+		btnRechercheResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		RPanelRecherche.add(btnRechercheResponsable);
 		
 		JPanel panelListeResponsables = new JPanel();
 		FlowLayout fl_panelListeResponsables = (FlowLayout) panelListeResponsables.getLayout();
@@ -348,7 +351,8 @@ public class VueERA {
 		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable s\u00E9lectionn\u00E9");
 		btnSupprimerResponsable.setFont(new Font("Roboto", Font.PLAIN, 11));
 		RPanelBoutons.add(btnSupprimerResponsable);
-		
+
+		// ----------------------------- ARBITRE ----------------------------- //
 		JPanel panelArbitres = new JPanel();
 		panelArbitres.setBackground(new Color(192, 192, 192));
 		panelContenu.add(panelArbitres);
@@ -383,10 +387,10 @@ public class VueERA {
 		fl_APanelRecherche.setAlignment(FlowLayout.RIGHT);
 		APanelHeaderContenu.add(APanelRecherche);
 		
-		ARecherche = new JTextField();
-		ARecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		APanelRecherche.add(ARecherche);
-		ARecherche.setColumns(10);
+		rechercheArbitre = new JTextField();
+		rechercheArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
+		APanelRecherche.add(rechercheArbitre);
+		rechercheArbitre.setColumns(10);
 		
 		JButton ABtnRecherche = new JButton("Rechercher");
 		ABtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
@@ -485,101 +489,270 @@ public class VueERA {
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
-		btnDeconnexion.addActionListener(controleur);
+		btnDeconnexion.addActionListener(controleur);		
 		
-		EBtnRecherche.addActionListener(controleur);
+		// ECURIE //
+		btnRechercheEcurie.addActionListener(controleur);
 		btnCreerEcurie.addActionListener(controleur);
 		btnSupprimerEcurie.addActionListener(controleur);
 		EBtnValider.addActionListener(controleur);
-		EBtnAnnuler.addActionListener(controleur);
+		btnAnnulerEcurie.addActionListener(controleur);
 		
-		RBtnRecherche.addActionListener(controleur);
+		btnRechercheEcurie.setName(Entite.ECURIE.getNom());
+		btnCreerEcurie.setName(Entite.ECURIE.getNom());
+		btnSupprimerEcurie.setName(Entite.ECURIE.getNom());
+		EBtnValider.setName(Entite.ECURIE.getNom());
+		btnAnnulerEcurie.setName(Entite.ECURIE.getNom());
+		
+		// RESPONSABLE //
+		btnRechercheResponsable.addActionListener(controleur);
 		btnCreerResponsable.addActionListener(controleur);
 		btnSupprimerResponsable.addActionListener(controleur);
 		RBtnValider.addActionListener(controleur);
 		RBtnAnnuler.addActionListener(controleur);
 		
+		btnRechercheResponsable.setName(Entite.RESPONSABLE.getNom());
+		btnCreerResponsable.setName(Entite.RESPONSABLE.getNom());
+		btnSupprimerResponsable.setName(Entite.RESPONSABLE.getNom());
+		RBtnValider.setName(Entite.RESPONSABLE.getNom());
+		RBtnAnnuler.setName(Entite.RESPONSABLE.getNom());
+		
+		// ARBITRE
 		ABtnRecherche.addActionListener(controleur);
 		btnCreerArbitre.addActionListener(controleur);
 		btnSupprimerArbitre.addActionListener(controleur);
 		ABtnValider.addActionListener(controleur);
 		ABtnAnnuler.addActionListener(controleur);
+
+		ABtnRecherche.setName(Entite.ARBITRE.getNom());
+		btnCreerArbitre.setName(Entite.ARBITRE.getNom());
+		btnSupprimerArbitre.setName(Entite.ARBITRE.getNom());
+		ABtnValider.setName(Entite.ARBITRE.getNom());
+		ABtnAnnuler.setName(Entite.ARBITRE.getNom());
 		
 		this.listeEcuries.addListSelectionListener(controleur);
+		this.listeEcuries.setName(Entite.ECURIE.getNom());
 		this.listeResponsables.addListSelectionListener(controleur);
+		this.listeResponsables.setName(Entite.RESPONSABLE.getNom());
 		this.listeArbitres.addListSelectionListener(controleur);
+		this.listeArbitres.setName(Entite.ARBITRE.getNom());
 	}
 	
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
 	
-	// ECURIE
+	// AJOUTER UNE ENTITE //
+	public void ajouterEntite(String e) {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			ajouterEcurie(e);
+			break;
+		case RESPONSABLE:
+			ajouterResponsable(e);
+			break;
+		case ARBITRE:
+			ajouterArbitre(e);
+			break;
+		default:
+		}
+	}
 	public void ajouterEcurie(String e) {
 		modeleEcuries.addElement(e);
 	}
-	
-	public void supprimerEcurie() {
-		modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
-	}
-	
-	public void modifierEcurie() {
-		modeleEcuries.set(this.listeEcuries.getSelectedIndex(),this.getNomEcurie());
-		this.listeEcuries.clearSelection();
-	}
-	
-	//RESPONSABLE
 	public void ajouterResponsable(String r) {
 		modeleResponsables.addElement(r);
 	}
-	
-	public void supprimerResponsable() {
-		modeleResponsables.removeElement(this.listeResponsables.getSelectedValue());
-	}
-	
-	public void modifierResponsable() {
-		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),this.getNomResponsable());
-		this.listeResponsables.clearSelection();
-	}
-	
-	//ARBITRE
 	public void ajouterArbitre(String a) {
 		modeleArbitres.addElement(a);
 	}
 	
+	// SUPPRIMER UNE ENTITE //
+	public void supprimerEntite() {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			supprimerEcurie();
+			break;
+		case RESPONSABLE:
+			supprimerResponsable();
+			break;
+		case ARBITRE:
+			supprimerArbitre();
+			break;
+		default:
+		}
+	}
+	public void supprimerEcurie() {
+		modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
+	}
+	public void supprimerResponsable() {
+		modeleResponsables.removeElement(this.listeResponsables.getSelectedValue());
+	}
 	public void supprimerArbitre() {
 		modeleArbitres.removeElement(this.listeArbitres.getSelectedValue());
 	}
 	
+	// MODIFIER UNE ENTITE //
+	public void modifierEntite() {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			modifierEcurie();
+			break;
+		case RESPONSABLE:
+			modifierResponsable();
+			break;
+		case ARBITRE:
+			modifierArbitre();
+			break;
+		default:
+		}
+	}
+	public void modifierEcurie() {
+		modeleEcuries.set(this.listeEcuries.getSelectedIndex(),this.getNomEcurie());
+		this.listeEcuries.clearSelection();
+	}
+	public void modifierResponsable() {
+		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),this.getNomResponsable());
+		this.listeResponsables.clearSelection();
+	}
 	public void modifierArbitre() {
 		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getNomArbitre());
 		this.listeArbitres.clearSelection();
 	}
 	
 	// GETTERS //
-		public String getNomEcurie() {return this.nomEcurie.getText();}
-		public String getNomResponsable() {return this.nomResponsable.getText();}
-		public String getNomArbitre() {return this.nomArbitre.getText();}
-		
-		public String getNomSelectionne() {return this.listeEcuries.getSelectedValue();}
-		
-		public String getMotDePasseEcurie() {return String.valueOf(this.mdpEcurie.getPassword());}
+	public String getNom() {
+		String nom;
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			nom = getNomEcurie();
+			break;
+		case RESPONSABLE:
+			nom = getNomResponsable();
+			break;
+		case ARBITRE:
+			nom = getNomArbitre();
+			break;
+		default:
+			nom = null;
+		}
+		return nom;
+	}
+	public String getNomEcurie() {return this.nomEcurie.getText();}
+	public String getNomResponsable() {return this.nomResponsable.getText();}
+	public String getNomArbitre() {return this.nomArbitre.getText();}
+	
+	public String getRecherche() {
+		String recherche;
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			recherche = getRechercheEcurie();
+			break;
+		case RESPONSABLE:
+			recherche = getRechercheResponsable();
+			break;
+		case ARBITRE:
+			recherche = getRechercheArbitre();
+			break;
+		default:
+			recherche = null;
+		}
+		return recherche;
+	}
+	public String getRechercheEcurie() {return this.rechercheEcurie.getText();}
+	public String getRechercheResponsable() {return this.rechercheResponsable.getText();}
+	public String getRechercheArbitre() {return this.rechercheArbitre.getText();}
+	
+	public String getNomSelectionne() {
+		String nomSelectionne;
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			nomSelectionne = getNomSelectionneEcurie();
+			break;
+		case RESPONSABLE:
+			nomSelectionne = getNomSelectionneResponsable();
+			break;
+		case ARBITRE:
+			nomSelectionne = getNomSelectionneArbitre();
+			break;
+		default:
+			nomSelectionne = null;
+		}
+		return nomSelectionne;
+	}
+	public String getNomSelectionneEcurie() {return this.listeEcuries.getSelectedValue();}
+	public String getNomSelectionneResponsable() {return this.listeResponsables.getSelectedValue();}
+	public String getNomSelectionneArbitre() {return this.listeArbitres.getSelectedValue();}
+	
+	public String getMotDePasse() {
+		String mdp;
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			mdp = getMotDePasseEcurie();
+			break;
+		case RESPONSABLE:
+			mdp = getMotDePasseResponsable();
+			break;
+		case ARBITRE:
+			mdp = getMotDePasseArbitre();
+			break;
+		default:
+			mdp = null;
+		}
+		return mdp;
+	}
+	public String getMotDePasseEcurie() {return String.valueOf(this.mdpEcurie.getPassword());}
+	public String getMotDePasseResponsable() {return String.valueOf(this.mdpResponsable.getPassword());}
+	public String getMotDePasseArbitre() {return String.valueOf(this.mdpArbitre.getPassword());}
 		
 	// SETTERS //
 	public void setDefaultListModel() {
 		this.listeEcuries.setModel(modeleEcuries);
-	}
-
-	public void setNomSelectionne() {
-		this.nomEcurie.setText(this.listeEcuries.getSelectedValue());
+		this.listeResponsables.setModel(modeleResponsables);
+		this.listeArbitres.setModel(modeleArbitres);
 	}
 	
-	public void setNom(String nom) {
-		this.nomEcurie.setText(nom);
+	public void setNomSelectionne() {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			setNomSelectionneEcurie();
+			break;
+		case RESPONSABLE:
+			setNomSelectionneResponsable();
+			break;
+		case ARBITRE:
+			setNomSelectionneArbitre();
+			break;
+		default:
+			break;
+		}
 	}
+	public void setNomSelectionneEcurie() {this.nomEcurie.setText(this.listeEcuries.getSelectedValue());}
+	public void setNomSelectionneResponsable() {this.nomResponsable.setText(this.listeResponsables.getSelectedValue());}
+	public void setNomSelectionneArbitre() {this.nomArbitre.setText(this.listeArbitres.getSelectedValue());}
+	
+	public void setNom(String nom) {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			setNomEcurie(nom);
+			break;
+		case RESPONSABLE:
+			setNomResponsable(nom);
+			break;
+		case ARBITRE:
+			setNomArbitre(nom);
+			break;
+		default:
+		}
+	}
+	public void setNomEcurie(String nom) {this.nomEcurie.setText(nom);}
+	public void setNomResponsable(String nom) {this.nomResponsable.setText(nom);}
+	public void setNomArbitre(String nom) {this.nomArbitre.setText(nom);}
 	
 	public void viderMotDePasse() {
 		this.mdpEcurie.setText("");
+		this.mdpResponsable.setText("");
+		this.mdpArbitre.setText("");
 	}
 	
 	// LISTE //
@@ -587,41 +760,98 @@ public class VueERA {
 		return !(this.listeEcuries.isSelectionEmpty());
 	}
 	
-	// ETATS
+	// ETATS //
 	public Etat getEtat(JButton b) {
-		switch (b.getText()) {
-		case "RECHERCHER":
+		this.setEntite(b);
+		if (b.getText().contains("Créer")) {
+			this.listeEcuries.clearSelection();
+			return Etat.CREER;
+		} else if (b.getText().contains("Modifier")) {
+			return Etat.MODIFIER;
+		} else if (b.getText().contains("Supprimer")) {
+			return Etat.SUPPRIMER;
+		} else if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Calendrier") {
+			return Etat.CALENDRIER;
+		} else if (b.getText() == "Joueurs") {
+			return Etat.JOUEURS;
+		} else if (b.getText() == "Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText() == "Rechercher") {
 			return Etat.RECHERCHER;
+		} else if (b.getText() == "Valider") {
+			return Etat.VALIDER;
+		} else if (b.getText() == "Annuler") {
+			this.listeEcuries.clearSelection();
+			return Etat.ANNULER;
+		} 
+		return null;
+	}
+
+	private void setEntite(JButton b) {
+		if (b.getName() == "Ecurie") {
+			ControleurERA.entite = Entite.ECURIE;
+		} else if (b.getName() == "Responsable") {
+			ControleurERA.entite = Entite.RESPONSABLE;
+		} else if (b.getName() == "Arbitre") {
+			ControleurERA.entite = Entite.ARBITRE;
+		}
+	}
+	
+	public void setEntite(JList l) {
+		switch (l.getName()) {
+		case "Ecurie":
+			ControleurERA.entite = Entite.ECURIE;
+			break;
+		case "Responsable":
+			ControleurERA.entite = Entite.RESPONSABLE;
+			break;
+		case "Arbitre":
+			ControleurERA.entite = Entite.ARBITRE;
+			break;
 		default:
-			return null;
-		}		
+		}
 	}
 	
 	// FILTRES
+	public void filtrerRecherche() {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			filtrerRechercheEcurie();
+			break;
+		case RESPONSABLE:
+			filtrerRechercheResponsable();
+			break;
+		case ARBITRE:
+			filtrerRechercheArbitre();
+			break;
+		default:
+			break;
+		}
+	}
 	public void filtrerRechercheEcurie() {
 		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
 	    for (int i = 0; i < this.modeleEcuries.size(); i++) {
-	    	if (this.modeleEcuries.get(i).contains(this.ERecherche.getText())){
+	    	if (this.modeleEcuries.get(i).contains(this.rechercheEcurie.getText())){
 	    		modeleFiltre.addElement(this.modeleEcuries.get(i));
 	    	}
 	    }
 	    this.listeEcuries.setModel(modeleFiltre);
 	}
-	
 	public void filtrerRechercheResponsable() {
 		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
 	    for (int i = 0; i < this.modeleResponsables.size(); i++) {
-	    	if (this.modeleResponsables.get(i).contains(this.RRecherche.getText())){
+	    	if (this.modeleResponsables.get(i).contains(this.rechercheResponsable.getText())){
 	    		modeleFiltre.addElement(this.modeleResponsables.get(i));
 	    	}
 	    }
 	    this.listeResponsables.setModel(modeleFiltre);
 	}
-	
 	public void filtrerRechercheArbitre() {
 		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
 	    for (int i = 0; i < this.modeleArbitres.size(); i++) {
-	    	if (this.modeleArbitres.get(i).contains(this.ARecherche.getText())){
+	    	if (this.modeleArbitres.get(i).contains(this.rechercheArbitre.getText())){
 	    		modeleFiltre.addElement(this.modeleArbitres.get(i));
 	    	}
 	    }
