@@ -1,1 +1,2 @@
-/controleur/
+bin/    # ignore bin directory
+*.class   # ignore any files with .class postfix
