@@ -44,6 +44,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	
 	public ControleurERA(VueERA vue) {
 		this.vue = vue;
+		this.etat = Etat.CREER;
 		
 		this.initialiserListeEcuries();
 		this.initialiserListeResponsables();
@@ -120,6 +121,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					break;
 					
 				}
+				this.vue.setNom("","");
 				this.vue.supprimerEntite();
 				this.vue.viderMotDePasse();
 			}
@@ -182,23 +184,31 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		JList<String> liste = (JList<String>) e.getSource();
-		this.vue.setEntite(liste);
-		if (!(liste.isSelectionEmpty())) {
-			switch (ControleurERA.entite) {
-			case ECURIE:
-				this.vue.setNomSelectionneEcurie();
-				break;
-			case RESPONSABLE:
-				Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
-				this.vue.setNomResponsable(r.getNom(),r.getPrenom());
-				break;
-			case ARBITRE:
-				Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
-				this.vue.setNomArbitre(a.getNom(),a.getPrenom());
-				break;
-			default:
-				break;
+		switch (this.etat) {
+		case SUPPRIMER:
+			this.etat = Etat.CREER;
+			this.vue.setNom("","");
+			this.vue.viderMotDePasse();
+			break;
+		default:
+			JList<String> liste = (JList<String>) e.getSource();
+			this.vue.setEntite(liste);
+			if (!(liste.isSelectionEmpty())) {
+				switch (ControleurERA.entite) {
+				case ECURIE:
+					this.vue.setNomSelectionneEcurie();
+					break;
+				case RESPONSABLE:
+					Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+					this.vue.setNomResponsable(r.getNom(),r.getPrenom());
+					break;
+				case ARBITRE:
+					Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+					this.vue.setNomArbitre(a.getNom(),a.getPrenom());
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -266,7 +276,20 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	}
 
 	private void modifierResponsable() {
-		
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			}
+			Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionne());
+			ControleurCalendrier.listeResponsables.remove(r.getPrenomNom());
+			r.setNom(this.vue.getNomResponsable());
+			r.setPrenom(this.vue.getPrenomResponsable());
+			ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+			this.vue.modifierResponsable();
+			this.vue.setNomResponsable("","");
+			this.vue.viderMotDePasse();
+		}
 	}
 	
 	private void creerArbitre() {
