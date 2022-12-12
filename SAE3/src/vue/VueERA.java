@@ -761,7 +761,9 @@ public class VueERA {
 	}
 	
 	// LISTE //
-	public boolean estSelectionne() {return !(this.listeEcuries.isSelectionEmpty());}
+	public boolean estSelectionneEcurie() {return !(this.listeEcuries.isSelectionEmpty());}
+	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
+	public boolean estSelectionneArbitre() {return !(this.listeArbitres.isSelectionEmpty());}
 	
 	// ETATS //
 	public Etat getEtat(JButton b) {

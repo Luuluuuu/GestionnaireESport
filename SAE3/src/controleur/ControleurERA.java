@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,53 +128,41 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 				this.vue.setDefaultListModel();
 			}
 		break;
-		/*case VALIDER:
+		case VALIDER:
 			if (!(this.vue.getNomEcurie().isEmpty())) {
-					if (this.vue.estSelectionne()) {
-						if (this.vue.confirmer("modification")==0) {
-							Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+this.listeEcuries.get(this.vue.getNomSelectionne()).getID());
-							if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-								Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+this.listeEcuries.get(this.vue.getNomSelectionne()).getID());
-							}
-							Ecurie ecurie = this.listeEcuries.get(this.vue.getNomSelectionne());
-							this.listeEcuries.remove(ecurie.getNom());
-							ecurie.setNom(this.vue.getNomEcurie());
-							this.listeEcuries.put(ecurie.getNom(), ecurie);
-							this.vue.modifierEcurie();
-							this.vue.setNomEcurie("");
-							this.vue.viderMotDePasse();
-						}
+				switch (ControleurERA.entite) {
+				case ECURIE:
+					if (this.vue.estSelectionneEcurie()) {
+						this.modifierEcurie();
 					}else{
-						if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-							if (!(this.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
-								try {
-									ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
-									Ecurie ecurie = null;
-									if (rs.next()) {
-										ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
-										this.listeEcuries.put(ecurie.getNom(), ecurie);
-										this.vue.ajouterEcurie(ecurie.getNom());
-										rs.close();
-										Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
-									}
-									ecurie.creerLogin(this.vue.getMotDePasseEcurie());
-									this.vue.setNomEcurie("");
-									this.vue.viderMotDePasse();
-								} catch (SQLException e1) {e1.printStackTrace();}
-							} else {this.vue.tournoiExiste();}
-						} else {
-							this.vue.estVide();
-						}
+						this.creerEcurie();
 					}
+					break;
+				case RESPONSABLE:
+					if (this.vue.estSelectionneResponsable()) {
+						this.creerResponsable();
+					}else{
+						this.modifierResponsable();
+					}
+					break;
+				case ARBITRE:
+					if (this.vue.estSelectionneArbitre()) {
+						this.creerArbitre();
+					}else{
+						this.modifierArbitre();
+					}
+					break;
+				default:
+				}
 			} else {
 				this.vue.estVide();
 			}
-			break;*/
+			break;
 		default:
 		}
 		
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
@@ -198,4 +187,58 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		}
 	}
 
+	public void modifierEcurie() {
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			}
+			Ecurie ecurie = ControleurERA.listeEcuries.get(this.vue.getNomSelectionne());
+			ControleurERA.listeEcuries.remove(ecurie.getNom());
+			ecurie.setNom(this.vue.getNomEcurie());
+			ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+			this.vue.modifierEcurie();
+			this.vue.setNomEcurie("");
+			this.vue.viderMotDePasse();
+		}
+	}
+	
+	public void creerEcurie() {
+		if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
+			if (!(ControleurERA.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
+					Ecurie ecurie = null;
+					if (rs.next()) {
+						ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
+						ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+						this.vue.ajouterEcurie(ecurie.getNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
+					}
+					ecurie.creerLogin(this.vue.getMotDePasseEcurie());
+					this.vue.setNomEcurie("");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.tournoiExiste();}
+		} else {
+			this.vue.estVide();
+		}
+	}
+	
+	private void creerResponsable() {
+		
+	}
+
+	private void modifierResponsable() {
+		
+	}
+	
+	private void creerArbitre() {
+		
+	}
+	
+	private void modifierArbitre() {
+		
+	}
 }
