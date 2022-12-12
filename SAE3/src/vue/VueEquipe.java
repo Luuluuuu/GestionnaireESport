@@ -55,7 +55,7 @@ public class VueEquipe extends JFrame{
 	public VueEquipe() {
 		// CREATION DE LA FENETRE //
 		fenetreEquipe = new JFrame();
-		fenetreEquipe.setBackground(Couleur.BLEU1);
+		fenetreEquipe.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreEquipe.setResizable(false);
 		fenetreEquipe.setBounds(100, 100, 1400, 900);
 		fenetreEquipe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
