@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -27,6 +29,8 @@ import controleur.ControleurERA.Entite;
 import controleur.ControleurERA.Etat;
 
 import java.awt.Color;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 public class VueERA {
 	public JFrame fenetreERA;
@@ -57,55 +61,73 @@ public class VueERA {
 
 	public VueERA() {
 		fenetreERA = new JFrame();
+		fenetreERA.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreERA.setResizable(false);
 		fenetreERA.setBounds(100, 100, 1400, 900);
 		fenetreERA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelHeader = new JPanel();
+		panelHeader.setBackground(Couleur.BLEU1);
 		fenetreERA.getContentPane().add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
 		
 		JPanel panelMenu = new JPanel();
+		panelMenu.setBackground(Color.WHITE);
 		FlowLayout fl_panelMenu = (FlowLayout) panelMenu.getLayout();
 		fl_panelMenu.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelMenu);
 		
 		JButton btnCalendrier = new JButton("Calendrier");
-		btnCalendrier.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnCalendrier.setForeground(Color.WHITE);
+		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnCalendrier.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnCalendrier);
 		
 		JButton btnERA = new JButton("Ecuries / Responsables / Arbitres");
-		btnERA.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnERA.setForeground(Color.WHITE);
+		btnERA.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnERA.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnERA);
 		
 		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnEquipes.setForeground(Color.WHITE);
+		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnEquipes.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEquipes);
 		
 		JButton btnJoueurs = new JButton("Joueurs");
-		btnJoueurs.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnJoueurs.setForeground(Color.WHITE);
+		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
 		JButton btnClassement = new JButton("Classement");
-		btnClassement.setFont(new Font("Roboto", Font.PLAIN, 15));
+		btnClassement.setForeground(Color.WHITE);
+		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnClassement.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnClassement);
 		
 		JPanel panelDeconnexion = new JPanel();
+		panelDeconnexion.setBackground(Color.WHITE);
 		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
 		JButton btnDeconnexion = new JButton("Se d\u00E9connecter");
-		btnDeconnexion.setFont(new Font("Roboto", Font.PLAIN, 13));
+		btnDeconnexion.setForeground(Color.WHITE);
+		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnDeconnexion.setBackground(Couleur.ROUGE);
 		panelDeconnexion.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();
+		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreERA.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		// ----------------------------- ECURIE ----------------------------- //
 		JPanel panelEcuries = new JPanel();
-		panelEcuries.setBackground(Color.LIGHT_GRAY);
+		panelEcuries.setBorder(new LineBorder(Color.WHITE));
+		panelEcuries.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelEcuries);
 		GridBagLayout gbl_panelEcuries = new GridBagLayout();
 		gbl_panelEcuries.columnWidths = new int[]{461, 0};
@@ -115,6 +137,7 @@ public class VueERA {
 		panelEcuries.setLayout(gbl_panelEcuries);
 		
 		JPanel EPanelHeaderContenu = new JPanel();
+		EPanelHeaderContenu.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_EPanelHeaderContenu = new GridBagConstraints();
 		gbc_EPanelHeaderContenu.anchor = GridBagConstraints.SOUTH;
 		gbc_EPanelHeaderContenu.fill = GridBagConstraints.HORIZONTAL;
@@ -125,15 +148,16 @@ public class VueERA {
 		EPanelHeaderContenu.setLayout(new BoxLayout(EPanelHeaderContenu, BoxLayout.X_AXIS));
 		
 		JPanel EPanelTitre = new JPanel();
-		EPanelTitre.setBackground(Color.LIGHT_GRAY);
+		EPanelTitre.setBackground(Couleur.BLEU1);
 		EPanelHeaderContenu.add(EPanelTitre);
 		
 		JLabel ETitre = new JLabel("Ecuries inscrites");
-		ETitre.setFont(new Font("Roboto", Font.PLAIN, 18));
+		ETitre.setForeground(Color.WHITE);
+		ETitre.setFont(new Font("Roboto", Font.BOLD, 20));
 		EPanelTitre.add(ETitre);
 		
 		JPanel EPanelRecherche = new JPanel();
-		EPanelRecherche.setBackground(Color.LIGHT_GRAY);
+		EPanelRecherche.setBackground(Couleur.BLEU1);
 		FlowLayout fl_EPanelRecherche = (FlowLayout) EPanelRecherche.getLayout();
 		fl_EPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		EPanelHeaderContenu.add(EPanelRecherche);
@@ -144,14 +168,15 @@ public class VueERA {
 		rechercheEcurie.setColumns(10);
 		
 		JButton btnRechercheEcurie = new JButton("Rechercher");
-		btnRechercheEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
+		btnRechercheEcurie.setForeground(Color.WHITE);
+		btnRechercheEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnRechercheEcurie.setBackground(Couleur.BLEU2);
 		EPanelRecherche.add(btnRechercheEcurie);
 		
 		JPanel panelListeEcuries = new JPanel();
-		panelListeEcuries.setBackground(Color.LIGHT_GRAY);
+		panelListeEcuries.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListeEcuries = (FlowLayout) panelListeEcuries.getLayout();
 		fl_panelListeEcuries.setVgap(10);
-		fl_panelListeEcuries.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panelListeEcuries = new GridBagConstraints();
 		gbc_panelListeEcuries.fill = GridBagConstraints.BOTH;
 		gbc_panelListeEcuries.insets = new Insets(0, 0, 5, 0);
@@ -161,11 +186,15 @@ public class VueERA {
 		
 		this.modeleEcuries = new DefaultListModel<String>();
 		listeEcuries = new JList<String>(modeleEcuries);
+		listeEcuries.setVisibleRowCount(10);
 		listeEcuries.setFont(new Font("Roboto", Font.PLAIN, 13));
-		panelListeEcuries.add(listeEcuries);
+		listeEcuries.setFixedCellHeight(50);
+		listeEcuries.setFixedCellWidth(400);
+		JScrollPane scrollPane = new JScrollPane(listeEcuries);
+		panelListeEcuries.add(scrollPane);
 		
 		JPanel EPanelModification = new JPanel();
-		EPanelModification.setBackground(Color.LIGHT_GRAY);
+		EPanelModification.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_EPanelModification = new GridBagConstraints();
 		gbc_EPanelModification.fill = GridBagConstraints.HORIZONTAL;
 		gbc_EPanelModification.insets = new Insets(0, 0, 5, 0);
@@ -174,13 +203,13 @@ public class VueERA {
 		panelEcuries.add(EPanelModification, gbc_EPanelModification);
 		
 		JPanel EPanelEntree = new JPanel();
-		EPanelEntree.setBackground(Color.LIGHT_GRAY);
+		EPanelEntree.setBackground(Couleur.BLEU1);
 		EPanelModification.add(EPanelEntree);
 		EPanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
 		
 		JLabel lblNomEcurie = new JLabel("Nom \u00E9curie");
 		lblNomEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblNomEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
 		EPanelEntree.add(lblNomEcurie);
 		
 		nomEcurie = new JTextField();
@@ -190,7 +219,7 @@ public class VueERA {
 		
 		JLabel lblMdpEcurie = new JLabel("Mot de passe");
 		lblMdpEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblMdpEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
 		EPanelEntree.add(lblMdpEcurie);
 		
 		mdpEcurie = new JPasswordField();
@@ -202,15 +231,19 @@ public class VueERA {
 		EPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JButton EBtnValider = new JButton("Valider");
-		EBtnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		EBtnValider.setForeground(Color.WHITE);
+		EBtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		EBtnValider.setBackground(Couleur.VERT);
 		EPanelValider.add(EBtnValider);
 		
 		JButton btnAnnulerEcurie = new JButton("Annuler");
-		btnAnnulerEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnAnnulerEcurie.setForeground(Color.WHITE);
+		btnAnnulerEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnAnnulerEcurie.setBackground(Couleur.GRIS);
 		EPanelValider.add(btnAnnulerEcurie);
 		
 		JPanel EPanelBoutons = new JPanel();
-		EPanelBoutons.setBackground(Color.LIGHT_GRAY);
+		EPanelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_EPanelBoutons = new GridBagConstraints();
 		gbc_EPanelBoutons.fill = GridBagConstraints.HORIZONTAL;
 		gbc_EPanelBoutons.gridx = 0;
@@ -219,15 +252,21 @@ public class VueERA {
 		EPanelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnCreerEcurie = new JButton("Cr\u00E9er une nouvelle \u00E9curie");
-		btnCreerEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnCreerEcurie.setForeground(Color.WHITE);
+		btnCreerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnCreerEcurie.setBackground(Couleur.BLEU2);
 		EPanelBoutons.add(btnCreerEcurie);
 		
 		JButton btnSupprimerEcurie = new JButton("Supprimer l'\u00E9curie s\u00E9lectionn\u00E9e");
-		btnSupprimerEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnSupprimerEcurie.setForeground(Color.WHITE);
+		btnSupprimerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnSupprimerEcurie.setBackground(Couleur.GRIS);
 		EPanelBoutons.add(btnSupprimerEcurie);
 
 		// ----------------------------- RESPONSABLE ----------------------------- //
 		JPanel panelResponsables = new JPanel();
+		panelResponsables.setBorder(new LineBorder(Color.WHITE));
+		panelResponsables.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelResponsables);
 		GridBagLayout gbl_panelResponsables = new GridBagLayout();
 		gbl_panelResponsables.columnWidths = new int[]{461, 0};
@@ -237,6 +276,7 @@ public class VueERA {
 		panelResponsables.setLayout(gbl_panelResponsables);
 		
 		JPanel RPanelHeaderContenu = new JPanel();
+		RPanelHeaderContenu.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_RPanelHeaderContenu = new GridBagConstraints();
 		gbc_RPanelHeaderContenu.anchor = GridBagConstraints.SOUTH;
 		gbc_RPanelHeaderContenu.fill = GridBagConstraints.HORIZONTAL;
@@ -247,13 +287,17 @@ public class VueERA {
 		RPanelHeaderContenu.setLayout(new BoxLayout(RPanelHeaderContenu, BoxLayout.X_AXIS));
 		
 		JPanel RPanelTitre = new JPanel();
+		RPanelTitre.setBackground(Couleur.BLEU1);
+		FlowLayout flowLayout_1 = (FlowLayout) RPanelTitre.getLayout();
 		RPanelHeaderContenu.add(RPanelTitre);
 		
 		JLabel RTitre = new JLabel("Responsables inscrits");
-		RTitre.setFont(new Font("Roboto", Font.PLAIN, 18));
+		RTitre.setForeground(Color.WHITE);
+		RTitre.setFont(new Font("Roboto", Font.BOLD, 20));
 		RPanelTitre.add(RTitre);
 		
 		JPanel RPanelRecherche = new JPanel();
+		RPanelRecherche.setBackground(Couleur.BLEU1);
 		FlowLayout fl_RPanelRecherche = (FlowLayout) RPanelRecherche.getLayout();
 		fl_RPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		RPanelHeaderContenu.add(RPanelRecherche);
@@ -264,13 +308,15 @@ public class VueERA {
 		rechercheResponsable.setColumns(10);
 		
 		JButton btnRechercheResponsable = new JButton("Rechercher");
-		btnRechercheResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		btnRechercheResponsable.setForeground(Color.WHITE);
+		btnRechercheResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnRechercheResponsable.setBackground(Couleur.BLEU2);
 		RPanelRecherche.add(btnRechercheResponsable);
 		
 		JPanel panelListeResponsables = new JPanel();
+		panelListeResponsables.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListeResponsables = (FlowLayout) panelListeResponsables.getLayout();
 		fl_panelListeResponsables.setVgap(10);
-		fl_panelListeResponsables.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panelListeResponsables = new GridBagConstraints();
 		gbc_panelListeResponsables.fill = GridBagConstraints.BOTH;
 		gbc_panelListeResponsables.insets = new Insets(0, 0, 5, 0);
@@ -280,10 +326,15 @@ public class VueERA {
 		
 		this.modeleResponsables = new DefaultListModel<String>();
 		listeResponsables = new JList<String>(modeleResponsables);
+		listeResponsables.setVisibleRowCount(10);
 		listeResponsables.setFont(new Font("Roboto", Font.PLAIN, 13));
-		panelListeResponsables.add(listeResponsables);
+		listeResponsables.setFixedCellHeight(50);
+		listeResponsables.setFixedCellWidth(400);
+		JScrollPane scrollPane2 = new JScrollPane(listeResponsables);
+		panelListeResponsables.add(scrollPane2);
 		
 		JPanel RPanelModification = new JPanel();
+		RPanelModification.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout = (FlowLayout) RPanelModification.getLayout();
 		GridBagConstraints gbc_RPanelModification = new GridBagConstraints();
 		gbc_RPanelModification.fill = GridBagConstraints.HORIZONTAL;
@@ -293,12 +344,13 @@ public class VueERA {
 		panelResponsables.add(RPanelModification, gbc_RPanelModification);
 		
 		JPanel RPanelEntree = new JPanel();
+		RPanelEntree.setBackground(Couleur.BLEU1);
 		RPanelModification.add(RPanelEntree);
 		RPanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
 		JLabel lblNomResponsable = new JLabel("Nom responsable");
 		lblNomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblNomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		RPanelEntree.add(lblNomResponsable);
 		
 		nomResponsable = new JTextField();
@@ -308,7 +360,7 @@ public class VueERA {
 		
 		JLabel lblPrenomResponsable = new JLabel("Pr\u00E9nom responsable");
 		lblPrenomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPrenomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblPrenomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		RPanelEntree.add(lblPrenomResponsable);
 		
 		prenomResponsable = new JTextField();
@@ -318,7 +370,7 @@ public class VueERA {
 		
 		JLabel lblMdpResponsable = new JLabel("Mot de passe");
 		lblMdpResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblMdpResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		RPanelEntree.add(lblMdpResponsable);
 		
 		mdpResponsable = new JPasswordField();
@@ -330,14 +382,20 @@ public class VueERA {
 		RPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JButton RBtnValider = new JButton("Valider");
-		RBtnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		RBtnValider.setForeground(Color.WHITE);
+		RBtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		RBtnValider.setBackground(Couleur.VERT);
 		RPanelValider.add(RBtnValider);
 		
 		JButton RBtnAnnuler = new JButton("Annuler");
-		RBtnAnnuler.setFont(new Font("Roboto", Font.PLAIN, 11));
+		RBtnAnnuler.setForeground(Color.WHITE);
+		RBtnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
+		RBtnAnnuler.setBackground(Couleur.GRIS);
 		RPanelValider.add(RBtnAnnuler);
 		
 		JPanel RPanelBoutons = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) RPanelBoutons.getLayout();
+		RPanelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_RPanelBoutons = new GridBagConstraints();
 		gbc_RPanelBoutons.fill = GridBagConstraints.HORIZONTAL;
 		gbc_RPanelBoutons.gridx = 0;
@@ -345,16 +403,21 @@ public class VueERA {
 		panelResponsables.add(RPanelBoutons, gbc_RPanelBoutons);
 		
 		JButton btnCreerResponsable = new JButton("Cr\u00E9er un nouveau responsable");
-		btnCreerResponsable.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnCreerResponsable.setForeground(Color.WHITE);
+		btnCreerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnCreerResponsable.setBackground(Couleur.BLEU2);
 		RPanelBoutons.add(btnCreerResponsable);
 		
 		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable s\u00E9lectionn\u00E9");
-		btnSupprimerResponsable.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnSupprimerResponsable.setForeground(Color.WHITE);
+		btnSupprimerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnSupprimerResponsable.setBackground(Couleur.GRIS);
 		RPanelBoutons.add(btnSupprimerResponsable);
 
 		// ----------------------------- ARBITRE ----------------------------- //
 		JPanel panelArbitres = new JPanel();
-		panelArbitres.setBackground(new Color(192, 192, 192));
+		panelArbitres.setBorder(new LineBorder(Color.WHITE));
+		panelArbitres.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelArbitres);
 		GridBagLayout gbl_panelArbitres = new GridBagLayout();
 		gbl_panelArbitres.columnWidths = new int[]{461, 0};
@@ -374,15 +437,16 @@ public class VueERA {
 		APanelHeaderContenu.setLayout(new BoxLayout(APanelHeaderContenu, BoxLayout.X_AXIS));
 		
 		JPanel APanelTitre = new JPanel();
-		APanelTitre.setBackground(new Color(192, 192, 192));
+		APanelTitre.setBackground(Couleur.BLEU1);
 		APanelHeaderContenu.add(APanelTitre);
 		
 		JLabel ATitre = new JLabel("Arbitres inscrits");
-		ATitre.setFont(new Font("Roboto", Font.PLAIN, 18));
+		ATitre.setForeground(Color.WHITE);
+		ATitre.setFont(new Font("Roboto", Font.BOLD, 20));
 		APanelTitre.add(ATitre);
 		
 		JPanel APanelRecherche = new JPanel();
-		APanelRecherche.setBackground(new Color(192, 192, 192));
+		APanelRecherche.setBackground(Couleur.BLEU1);
 		FlowLayout fl_APanelRecherche = (FlowLayout) APanelRecherche.getLayout();
 		fl_APanelRecherche.setAlignment(FlowLayout.RIGHT);
 		APanelHeaderContenu.add(APanelRecherche);
@@ -393,13 +457,14 @@ public class VueERA {
 		rechercheArbitre.setColumns(10);
 		
 		JButton ABtnRecherche = new JButton("Rechercher");
-		ABtnRecherche.setFont(new Font("Roboto", Font.PLAIN, 13));
+		ABtnRecherche.setForeground(Color.WHITE);
+		ABtnRecherche.setFont(new Font("Roboto", Font.BOLD, 13));
+		ABtnRecherche.setBackground(Couleur.BLEU2);
 		APanelRecherche.add(ABtnRecherche);
 		
 		JPanel panelListeArbitres = new JPanel();
-		panelListeArbitres.setBackground(new Color(192, 192, 192));
+		panelListeArbitres.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListeArbitres = (FlowLayout) panelListeArbitres.getLayout();
-		fl_panelListeArbitres.setAlignment(FlowLayout.LEFT);
 		fl_panelListeArbitres.setVgap(10);
 		GridBagConstraints gbc_panelListeArbitres = new GridBagConstraints();
 		gbc_panelListeArbitres.fill = GridBagConstraints.BOTH;
@@ -410,11 +475,15 @@ public class VueERA {
 		
 		this.modeleArbitres = new DefaultListModel<String>();
 		listeArbitres = new JList<String>(modeleArbitres);
+		listeArbitres.setVisibleRowCount(10);
 		listeArbitres.setFont(new Font("Roboto", Font.PLAIN, 13));
-		panelListeArbitres.add(listeArbitres);
+		listeArbitres.setFixedCellHeight(50);
+		listeArbitres.setFixedCellWidth(400);
+		JScrollPane scrollPane3 = new JScrollPane(listeArbitres);
+		panelListeArbitres.add(scrollPane3);
 		
 		JPanel APanelModification = new JPanel();
-		APanelModification.setBackground(new Color(192, 192, 192));
+		APanelModification.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_APanelModification = new GridBagConstraints();
 		gbc_APanelModification.fill = GridBagConstraints.HORIZONTAL;
 		gbc_APanelModification.insets = new Insets(0, 0, 5, 0);
@@ -423,13 +492,13 @@ public class VueERA {
 		panelArbitres.add(APanelModification, gbc_APanelModification);
 		
 		JPanel APanelEntree = new JPanel();
-		APanelEntree.setBackground(new Color(192, 192, 192));
+		APanelEntree.setBackground(Couleur.BLEU1);
 		APanelModification.add(APanelEntree);
 		APanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
 		JLabel lblNomArbitre = new JLabel("Nom arbitre");
 		lblNomArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblNomArbitre.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblNomArbitre);
 		
 		nomArbitre = new JTextField();
@@ -439,7 +508,7 @@ public class VueERA {
 		
 		JLabel lblNewLabel = new JLabel("Pr\u00E9nom arbitre");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblNewLabel);
 		
 		textField = new JTextField();
@@ -449,7 +518,7 @@ public class VueERA {
 		
 		JLabel lblMdpArbitre = new JLabel("Mot de passe");
 		lblMdpArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
+		lblMdpArbitre.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblMdpArbitre);
 		
 		mdpArbitre = new JPasswordField();
@@ -461,15 +530,19 @@ public class VueERA {
 		APanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JButton ABtnValider = new JButton("Valider");
-		ABtnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		ABtnValider.setForeground(Color.WHITE);
+		ABtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		ABtnValider.setBackground(Couleur.VERT);
 		APanelValider.add(ABtnValider);
 		
 		JButton ABtnAnnuler = new JButton("Annuler");
-		ABtnAnnuler.setFont(new Font("Roboto", Font.PLAIN, 11));
+		ABtnAnnuler.setForeground(Color.WHITE);
+		ABtnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
+		ABtnAnnuler.setBackground(Couleur.GRIS);
 		APanelValider.add(ABtnAnnuler);
 		
 		JPanel APanelBoutons = new JPanel();
-		APanelBoutons.setBackground(new Color(192, 192, 192));
+		APanelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_APanelBoutons = new GridBagConstraints();
 		gbc_APanelBoutons.fill = GridBagConstraints.HORIZONTAL;
 		gbc_APanelBoutons.gridx = 0;
@@ -477,11 +550,15 @@ public class VueERA {
 		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
 		
 		JButton btnCreerArbitre = new JButton("Cr\u00E9er un nouvel arbitre");
-		btnCreerArbitre.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnCreerArbitre.setForeground(Color.WHITE);
+		btnCreerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnCreerArbitre.setBackground(Couleur.BLEU2);
 		APanelBoutons.add(btnCreerArbitre);
 		
 		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre s\u00E9lectionn\u00E9");
-		btnSupprimerArbitre.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnSupprimerArbitre.setForeground(Color.WHITE);
+		btnSupprimerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
+		btnSupprimerArbitre.setBackground(Couleur.GRIS);
 		APanelBoutons.add(btnSupprimerArbitre);
 		
 		ControleurERA controleur = new ControleurERA(this);

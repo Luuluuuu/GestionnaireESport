@@ -34,7 +34,7 @@ public class VueConnexion extends JFrame {
 	public VueConnexion() {
 		
 		fenetreConnexion = new JFrame();
-		fenetreConnexion.getContentPane().setBackground(new Color(123,149,184));
+		fenetreConnexion.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreConnexion.setResizable(false);
 		fenetreConnexion.setBounds(100, 100, 600, 750);
 		fenetreConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,13 +46,13 @@ public class VueConnexion extends JFrame {
 		
 		JLabel logo = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("logo.png")).getImage();
-		panelLogo.setBackground(new Color(123,149,184));
+		panelLogo.setBackground(Couleur.BLEU1);
 		panelLogo.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		logo.setIcon(new ImageIcon(img));
 		panelLogo.add(logo);
 		
 		JPanel panelConnexion = new JPanel();
-		panelConnexion.setBackground(new Color(123,149,184));
+		panelConnexion.setBackground(Couleur.BLEU1);
 		fenetreConnexion.getContentPane().add(panelConnexion, BorderLayout.CENTER);
 		GridBagLayout gbl_panelConnexion = new GridBagLayout();
 		gbl_panelConnexion.columnWidths = new int[]{603, 0};
@@ -62,7 +62,7 @@ public class VueConnexion extends JFrame {
 		panelConnexion.setLayout(gbl_panelConnexion);
 		
 		JPanel panelTxtUsername = new JPanel();
-		panelTxtUsername.setBackground(new Color(123,149,184));
+		panelTxtUsername.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelTxtUsername = new GridBagConstraints();
 		gbc_panelTxtUsername.anchor = GridBagConstraints.SOUTH;
 		gbc_panelTxtUsername.fill = GridBagConstraints.HORIZONTAL;
@@ -80,7 +80,7 @@ public class VueConnexion extends JFrame {
 		panelTxtUsername.add(nomUtilisateur);
 		
 		JPanel panelEntreeUsername = new JPanel();
-		panelEntreeUsername.setBackground(new Color(123,149,184));
+		panelEntreeUsername.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelEntreeUsername = (FlowLayout) panelEntreeUsername.getLayout();
 		fl_panelEntreeUsername.setVgap(0);
 		fl_panelEntreeUsername.setHgap(0);
@@ -98,7 +98,7 @@ public class VueConnexion extends JFrame {
 		entreeNomUtilisateur.setColumns(25);
 		
 		JPanel panelTxtMdp = new JPanel();
-		panelTxtMdp.setBackground(new Color(123,149,184));
+		panelTxtMdp.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelTxtMdp = (FlowLayout) panelTxtMdp.getLayout();
 		fl_panelTxtMdp.setAlignment(FlowLayout.LEFT);
 		fl_panelTxtMdp.setVgap(0);
@@ -117,7 +117,7 @@ public class VueConnexion extends JFrame {
 		panelTxtMdp.add(motDePasse);
 		
 		JPanel panelEntreeMdp = new JPanel();
-		panelEntreeMdp.setBackground(new Color(123,149,184));
+		panelEntreeMdp.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelEntreeMdp = (FlowLayout) panelEntreeMdp.getLayout();
 		fl_panelEntreeMdp.setVgap(0);
 		fl_panelEntreeMdp.setHgap(0);
@@ -135,7 +135,7 @@ public class VueConnexion extends JFrame {
 		panelEntreeMdp.add(entreeMotDePasse);
 		
 		JPanel panelBtnConnexion = new JPanel();
-		panelBtnConnexion.setBackground(new Color(123,149,184));
+		panelBtnConnexion.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelBtnConnexion = new GridBagConstraints();
 		gbc_panelBtnConnexion.fill = GridBagConstraints.BOTH;
 		gbc_panelBtnConnexion.gridx = 0;
@@ -147,7 +147,7 @@ public class VueConnexion extends JFrame {
 		btnConnexion.setForeground(Color.WHITE);
 		btnConnexion.setFont(new Font("Roboto", Font.BOLD, 16));
 		btnConnexion.setPreferredSize(new Dimension(150, 40));
-		btnConnexion.setBackground(new Color(75,81,230));
+		btnConnexion.setBackground(Couleur.BLEU2);
 		panelBtnConnexion.add(btnConnexion);
 		btnConnexion.addActionListener(controleur);
 		
