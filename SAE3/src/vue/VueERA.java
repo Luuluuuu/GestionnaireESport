@@ -716,6 +716,9 @@ public class VueERA {
 	public String getNomResponsable() {return this.nomResponsable.getText();}
 	public String getNomArbitre() {return this.nomArbitre.getText();}
 	
+	public String getPrenomResponsable() {return this.prenomResponsable.getText();}
+	public String getPrenomArbitre() {return this.prenomArbitre.getText();}
+	
 	public String getRecherche() {
 		String recherche;
 		switch (ControleurERA.entite) {
@@ -952,7 +955,7 @@ public class VueERA {
 		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la "+operation+" ?","Confirmation",JOptionPane.YES_NO_OPTION);
 	}
 	
-	public void tournoiExiste() {
-        JOptionPane.showMessageDialog(null, "L'écurie existe déjà !", "Erreur", JOptionPane.ERROR_MESSAGE);
+	public void existe() {
+        JOptionPane.showMessageDialog(null, "Cet entité existe déjà !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -14,7 +14,8 @@ public class TestResponsable {
 
 	@Before
 	public void setUp() throws Exception {
-		this.responsable = new Responsable(0, "perbost", "jean", 5);
+		this.responsable = new Responsable(0, "perbost", "jean");
+		this.responsable.setAnneesExperience(5);
 	}
 
 	@After

@@ -143,33 +143,35 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			}
 		break;
 		case VALIDER:
-			if (!(this.vue.getNomEcurie().isEmpty())) {
-				switch (ControleurERA.entite) {
-				case ECURIE:
+			switch (ControleurERA.entite) {
+			case ECURIE:
+				if (!(this.vue.getNomEcurie().isEmpty())) {
 					if (this.vue.estSelectionneEcurie()) {
 						this.modifierEcurie();
 					}else{
 						this.creerEcurie();
 					}
-					break;
-				case RESPONSABLE:
+				} else {this.vue.estVide();}
+				break;
+			case RESPONSABLE:
+				if (!(this.vue.getPrenomResponsable().isEmpty() && this.vue.getNomResponsable().isEmpty())) {
 					if (this.vue.estSelectionneResponsable()) {
-						this.creerResponsable();
-					}else{
 						this.modifierResponsable();
-					}
-					break;
-				case ARBITRE:
-					if (this.vue.estSelectionneArbitre()) {
-						this.creerArbitre();
 					}else{
-						this.modifierArbitre();
+						this.creerResponsable();
 					}
-					break;
-				default:
-				}
-			} else {
-				this.vue.estVide();
+				} else {this.vue.estVide();}
+				break;
+			case ARBITRE:
+				if (!(this.vue.getPrenomResponsable().isEmpty() && this.vue.getNomResponsable().isEmpty())) {
+					if (this.vue.estSelectionneArbitre()) {
+						this.modifierArbitre();
+					}else{
+						this.creerArbitre();
+					}
+				} else {this.vue.estVide();}
+				break;
+			default:
 			}
 			break;
 		default:
@@ -182,7 +184,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		JList<String> liste = (JList<String>) e.getSource();
 		this.vue.setEntite(liste);
-			if (!(liste.isSelectionEmpty())) {
+		if (!(liste.isSelectionEmpty())) {
 			switch (ControleurERA.entite) {
 			case ECURIE:
 				this.vue.setNomSelectionneEcurie();
@@ -234,14 +236,33 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					this.vue.setNomEcurie("");
 					this.vue.viderMotDePasse();
 				} catch (SQLException e1) {e1.printStackTrace();}
-			} else {this.vue.tournoiExiste();}
+			} else {this.vue.existe();}
 		} else {
 			this.vue.estVide();
 		}
 	}
 	
 	private void creerResponsable() {
-		
+		if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
+			if (!(ControleurCalendrier.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_responsableid.NEXTVAL FROM dual");
+					Responsable r = null;
+					if (rs.next()) {
+						r = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
+						ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+						this.vue.ajouterResponsable(r.getPrenomNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', "+Year.now().getValue()+")");
+					}
+					r.creerLogin(this.vue.getMotDePasseResponsable());
+					this.vue.setNomResponsable("","");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.existe();}
+		} else {
+			this.vue.estVide();
+		}
 	}
 
 	private void modifierResponsable() {
