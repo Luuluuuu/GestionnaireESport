@@ -66,53 +66,53 @@ public class VueCalendrier extends JFrame{
 	public VueCalendrier() {
 		// CREATION DE LA FENETRE //
 		fenetreCalendrier = new JFrame();
-		fenetreCalendrier.getContentPane().setBackground(new Color(123,149,184));
+		fenetreCalendrier.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreCalendrier.setResizable(false);
 		fenetreCalendrier.setBounds(100, 100, 1400, 900);
 		fenetreCalendrier.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// HEADER //
 		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(new Color(123,149,184));
+		panelHeader.setBackground(Couleur.BLEU1);
 		fenetreCalendrier.getContentPane().add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
 		
 		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(123,149,184));
+		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		JButton btnCalendrier = new JButton("Calendrier");
 		btnCalendrier.setForeground(Color.WHITE);
 		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnCalendrier.setBackground(new Color(75,81,230));
+		btnCalendrier.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnCalendrier);
 		
 		JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
 		btnEcuries.setForeground(Color.WHITE);
 		btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEcuries.setBackground(new Color(75,81,230));
+		btnEcuries.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEcuries);
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(new Color(75,81,230));
+		btnEquipes.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEquipes);
 		
 		JButton btnJoueurs = new JButton("Joueurs");
 		btnJoueurs.setForeground(Color.WHITE);
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnJoueurs.setBackground(new Color(75,81,230));
+		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(new Color(75,81,230));
+		btnClassement.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnClassement);
 		
 		JPanel panelDeconnexion = new JPanel();
-		panelDeconnexion.setBackground(new Color(123,149,184));
+		panelDeconnexion.setBackground(Color.WHITE);
 		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
@@ -120,16 +120,16 @@ public class VueCalendrier extends JFrame{
 		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(new Color(174,22,0));
+		btnDeconnexion.setBackground(Couleur.ROUGE);
 		panelDeconnexion.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();
-		panelContenu.setBackground(new Color(123,149,184));
+		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreCalendrier.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panelTournoi = new JPanel();
-		panelTournoi.setBackground(new Color(123,149,184));
+		panelTournoi.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelTournoi);
 		GridBagLayout gbl_panelTournoi = new GridBagLayout();
 		gbl_panelTournoi.columnWidths = new int[]{692, 0};
@@ -139,7 +139,7 @@ public class VueCalendrier extends JFrame{
 		panelTournoi.setLayout(gbl_panelTournoi);
 		
 		JPanel panelTitreT = new JPanel();
-		panelTitreT.setBackground(new Color(123,149,184));
+		panelTitreT.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelTitreT = (FlowLayout) panelTitreT.getLayout();
 		fl_panelTitreT.setVgap(0);
 		fl_panelTitreT.setHgap(50);
@@ -160,7 +160,7 @@ public class VueCalendrier extends JFrame{
 		panelTitreT.add(Tournois);
 		
 		JPanel panelListe = new JPanel();
-		panelListe.setBackground(new Color(123,149,184));
+		panelListe.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListe = (FlowLayout) panelListe.getLayout();
 		fl_panelListe.setHgap(50);
 		fl_panelListe.setAlignment(FlowLayout.LEFT);
@@ -179,7 +179,7 @@ public class VueCalendrier extends JFrame{
 		panelListe.add(listeTournois);
 		
 		JPanel panelBoutons = new JPanel();
-		panelBoutons.setBackground(new Color(123,149,184));
+		panelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelBoutons = new GridBagConstraints();
 		gbc_panelBoutons.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelBoutons.gridx = 0;
@@ -190,13 +190,13 @@ public class VueCalendrier extends JFrame{
 		JButton btnCreer = new JButton("Créer un nouveau tournoi");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnCreer.setBackground(new Color(75,81,230));
+		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
 		JButton btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnSupprimer.setBackground(new Color(75,81,230));
+		btnSupprimer.setBackground(Couleur.GRIS);
 		panelBoutons.add(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
@@ -211,7 +211,7 @@ public class VueCalendrier extends JFrame{
 		panelModif.setLayout(gbl_panelModif);
 			
 		JPanel panelTitreM = new JPanel();
-		panelTitreM.setBackground(new Color(123,149,184));
+		panelTitreM.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelTitreM = (FlowLayout) panelTitreM.getLayout();
 		fl_panelTitreM.setVgap(0);
 		fl_panelTitreM.setHgap(50);
@@ -230,7 +230,7 @@ public class VueCalendrier extends JFrame{
 		panelTitreM.add(titreModif);
 		
 		JPanel panelNom = new JPanel();
-		panelNom.setBackground(new Color(123,149,184));
+		panelNom.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelNom = new GridBagConstraints();
 		gbc_panelNom.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelNom.insets = new Insets(0, 0, 5, 0);
@@ -245,7 +245,7 @@ public class VueCalendrier extends JFrame{
 		panelNom.setLayout(gbl_panelNom);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(123,149,184));
+		panel.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
@@ -260,7 +260,7 @@ public class VueCalendrier extends JFrame{
 		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(123,149,184));
+		panel_1.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
@@ -275,7 +275,7 @@ public class VueCalendrier extends JFrame{
 		entreeNom.setColumns(20);
 		
 		JPanel panelDate = new JPanel();
-		panelDate.setBackground(new Color(123,149,184));
+		panelDate.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelDate = new GridBagConstraints();
 		gbc_panelDate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelDate.insets = new Insets(0, 0, 5, 0);
@@ -290,7 +290,7 @@ public class VueCalendrier extends JFrame{
 		panelDate.setLayout(gbl_panelDate);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(new Color(123,149,184));
+		panel_4.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_5 = (FlowLayout) panel_4.getLayout();
 		flowLayout_5.setHgap(65);
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
@@ -307,7 +307,7 @@ public class VueCalendrier extends JFrame{
 		panel_4.add(date);
 		
 		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(123,149,184));
+		panel_5.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_6 = (FlowLayout) panel_5.getLayout();
 		flowLayout_6.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
@@ -323,7 +323,7 @@ public class VueCalendrier extends JFrame{
 		entreeDate.setColumns(20);
 		
 		JPanel panelHeure = new JPanel();
-		panelHeure.setBackground(new Color(123,149,184));
+		panelHeure.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelHeure = new GridBagConstraints();
 		gbc_panelHeure.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelHeure.insets = new Insets(0, 0, 5, 0);
@@ -338,7 +338,7 @@ public class VueCalendrier extends JFrame{
 		panelHeure.setLayout(gbl_panelHeure);
 		
 		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(new Color(123,149,184));
+		panel_6.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_7 = (FlowLayout) panel_6.getLayout();
 		flowLayout_7.setHgap(65);
 		flowLayout_7.setAlignment(FlowLayout.LEFT);
@@ -355,7 +355,7 @@ public class VueCalendrier extends JFrame{
 		panel_6.add(heure);
 		
 		JPanel panel_7 = new JPanel();
-		panel_7.setBackground(new Color(123,149,184));
+		panel_7.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_8 = (FlowLayout) panel_7.getLayout();
 		flowLayout_8.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
@@ -371,7 +371,7 @@ public class VueCalendrier extends JFrame{
 		entreeHeure.setColumns(20);
 		
 		JPanel panelEchelle = new JPanel();
-		panelEchelle.setBackground(new Color(123,149,184));
+		panelEchelle.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelEchelle = new GridBagConstraints();
 		gbc_panelEchelle.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelEchelle.insets = new Insets(0, 0, 5, 0);
@@ -386,7 +386,7 @@ public class VueCalendrier extends JFrame{
 		panelEchelle.setLayout(gbl_panelEchelle);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(123,149,184));
+		panel_2.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_9 = (FlowLayout) panel_2.getLayout();
 		flowLayout_9.setHgap(65);
 		flowLayout_9.setAlignment(FlowLayout.LEFT);
@@ -402,7 +402,7 @@ public class VueCalendrier extends JFrame{
 		panel_2.add(echelle);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(123,149,184));
+		panel_3.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_1 = (FlowLayout) panel_3.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
@@ -421,7 +421,7 @@ public class VueCalendrier extends JFrame{
 		entreeEchelle.addItem("internationale");
 		
 		JPanel panelResponsable = new JPanel();
-		panelResponsable.setBackground(new Color(123,149,184));
+		panelResponsable.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelResponsable = new GridBagConstraints();
 		gbc_panelResponsable.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelResponsable.insets = new Insets(0, 0, 5, 0);
@@ -436,7 +436,7 @@ public class VueCalendrier extends JFrame{
 		panelResponsable.setLayout(gbl_panelResponsable);
 		
 		JPanel panel_8 = new JPanel();
-		panel_8.setBackground(new Color(123,149,184));
+		panel_8.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_10 = (FlowLayout) panel_8.getLayout();
 		flowLayout_10.setHgap(65);
 		flowLayout_10.setAlignment(FlowLayout.LEFT);
@@ -452,7 +452,7 @@ public class VueCalendrier extends JFrame{
 		panel_8.add(responsable);
 		
 		JPanel panel_9 = new JPanel();
-		panel_9.setBackground(new Color(123,149,184));
+		panel_9.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_12 = (FlowLayout) panel_9.getLayout();
 		flowLayout_12.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_9 = new GridBagConstraints();
@@ -468,7 +468,7 @@ public class VueCalendrier extends JFrame{
 		entreeResponsable.addItem("- Sélectionnez un responsable -");
 		
 		JPanel panelArbitre = new JPanel();
-		panelArbitre.setBackground(new Color(123,149,184));
+		panelArbitre.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelArbitre = new GridBagConstraints();
 		gbc_panelArbitre.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelArbitre.insets = new Insets(0, 0, 5, 0);
@@ -483,7 +483,7 @@ public class VueCalendrier extends JFrame{
 		panelArbitre.setLayout(gbl_panelArbitre);
 		
 		JPanel panel_10 = new JPanel();
-		panel_10.setBackground(new Color(123,149,184));
+		panel_10.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_11 = (FlowLayout) panel_10.getLayout();
 		flowLayout_11.setHgap(65);
 		flowLayout_11.setAlignment(FlowLayout.LEFT);
@@ -499,7 +499,7 @@ public class VueCalendrier extends JFrame{
 		panel_10.add(arbitre);
 		
 		JPanel panel_11 = new JPanel();
-		panel_11.setBackground(new Color(123,149,184));
+		panel_11.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_13 = (FlowLayout) panel_11.getLayout();
 		flowLayout_13.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_11 = new GridBagConstraints();
@@ -515,7 +515,7 @@ public class VueCalendrier extends JFrame{
 		entreeArbitre.addItem("- Sélectionnez un arbitre -");
 		
 		JPanel panelJeu = new JPanel();
-		panelJeu.setBackground(new Color(123,149,184));
+		panelJeu.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelJeu = new GridBagConstraints();
 		gbc_panelJeu.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelJeu.insets = new Insets(0, 0, 5, 0);
@@ -530,7 +530,7 @@ public class VueCalendrier extends JFrame{
 		panelJeu.setLayout(gbl_panelJeu);
 		
 		JPanel panel_12 = new JPanel();
-		panel_12.setBackground(new Color(123,149,184));
+		panel_12.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
 		flowLayout_2.setHgap(65);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
@@ -547,7 +547,7 @@ public class VueCalendrier extends JFrame{
 		panel_12.add(jeu);
 		
 		panel_13 = new JPanel();
-		panel_13.setBackground(new Color(123,149,184));
+		panel_13.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panel_13 = new GridBagConstraints();
 		gbc_panel_13.fill = GridBagConstraints.BOTH;
 		gbc_panel_13.gridx = 1;
@@ -556,7 +556,7 @@ public class VueCalendrier extends JFrame{
 		panel_13.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panelValider = new JPanel();
-		panelValider.setBackground(new Color(123,149,184));
+		panelValider.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelValider = (FlowLayout) panelValider.getLayout();
 		fl_panelValider.setVgap(0);
 		fl_panelValider.setHgap(150);
@@ -569,13 +569,13 @@ public class VueCalendrier extends JFrame{
 		JButton btnValider = new JButton("Valider");
 		btnValider.setForeground(Color.WHITE);
 		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnValider.setBackground(new Color(110, 255, 110));
+		btnValider.setBackground(Couleur.VERT);
 		panelValider.add(btnValider);
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.setForeground(Color.WHITE);
 		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnAnnuler.setBackground(new Color(255, 38, 38));
+		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR

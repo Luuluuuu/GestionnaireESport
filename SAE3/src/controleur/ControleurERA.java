@@ -20,10 +20,12 @@ import modele.Responsable;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
+import vue.VueEquipe;
+import vue.VueJoueur;
 
 
 public class ControleurERA implements ActionListener, ListSelectionListener {
-	public enum Entite {ECURIE("Ecurie"),RESPONSABLE("Responsable"),ARBITRE("Arbitre");
+	public enum Entite {ECURIE("Ecurie"),RESPONSABLE("Responsable"),ARBITRE("Arbitre") ;
 		private String nom;
 		Entite(String nom) {
 			this.nom = nom;
@@ -32,7 +34,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	};
 	public enum Etat {
 		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
-		RECHERCHER, VALIDER, ANNULER
+		RECHERCHER, VALIDER, ANNULER, EQUIPES 
 	}
  
 	private VueERA vue;
@@ -82,6 +84,17 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
+		case EQUIPES :
+			VueEquipe fenEQUIPE = new VueEquipe();
+			fenEQUIPE.getFrame().setVisible(true);
+			VueERA.fermerFenetre(this.vue.fenetreERA);
+		break;
+		case JOUEURS :
+			VueJoueur fenJOUEUR = new VueJoueur();
+			fenJOUEUR.getFrame().setVisible(true);
+			VueERA.fermerFenetre(this.vue.fenetreERA);
+		break;
+		
 		case ANNULER:
 		case CREER :
 			this.vue.setNom("","");
@@ -105,6 +118,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE NOMARBITRE || ' ' || PRENOMARBITRE = '"+this.vue.getNomSelectionneArbitre()+"'");
 					ControleurCalendrier.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
 					break;
+					
 				}
 				this.vue.supprimerEntite();
 				this.vue.viderMotDePasse();
