@@ -48,8 +48,7 @@ public class VueERA {
 	private JTextField nomArbitre;
 	private JPasswordField mdpArbitre;
 	private JTextField prenomResponsable;
-	private JTextField textField;
-
+	private JTextField prenomArbitre;
 
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -441,11 +440,11 @@ public class VueERA {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Roboto", Font.PLAIN, 13));
 		APanelEntree.add(lblNewLabel);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Roboto", Font.PLAIN, 13));
-		APanelEntree.add(textField);
-		textField.setColumns(10);
+
+		prenomArbitre = new JTextField();
+		prenomArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
+		APanelEntree.add(prenomArbitre);
+		prenomArbitre.setColumns(10);
 		
 		JLabel lblMdpArbitre = new JLabel("Mot de passe");
 		lblMdpArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -538,9 +537,7 @@ public class VueERA {
 		this.listeArbitres.setName(Entite.ARBITRE.getNom());
 	}
 	
-	public static void fermerFenetre(JFrame f) {
-		f.setVisible(false);
-	}
+	public static void fermerFenetre(JFrame f) {f.setVisible(false);}
 	
 	// AJOUTER UNE ENTITE //
 	public void ajouterEntite(String e) {
@@ -712,42 +709,35 @@ public class VueERA {
 		this.listeArbitres.setModel(modeleArbitres);
 	}
 	
-	public void setNomSelectionne() {
-		switch (ControleurERA.entite) {
-		case ECURIE:
-			setNomSelectionneEcurie();
-			break;
-		case RESPONSABLE:
-			setNomSelectionneResponsable();
-			break;
-		case ARBITRE:
-			setNomSelectionneArbitre();
-			break;
-		default:
-			break;
-		}
-	}
 	public void setNomSelectionneEcurie() {this.nomEcurie.setText(this.listeEcuries.getSelectedValue());}
-	public void setNomSelectionneResponsable() {this.nomResponsable.setText(this.listeResponsables.getSelectedValue());}
+	public void setNomSelectionneResponsable() {
+		this.nomResponsable.setText(this.listeResponsables.getSelectedValue());
+		}
 	public void setNomSelectionneArbitre() {this.nomArbitre.setText(this.listeArbitres.getSelectedValue());}
 	
-	public void setNom(String nom) {
+	public void setNom(String nom,String prenom) {
 		switch (ControleurERA.entite) {
 		case ECURIE:
 			setNomEcurie(nom);
 			break;
 		case RESPONSABLE:
-			setNomResponsable(nom);
+			setNomResponsable(nom,prenom);
 			break;
 		case ARBITRE:
-			setNomArbitre(nom);
+			setNomArbitre(nom,prenom);
 			break;
 		default:
 		}
 	}
 	public void setNomEcurie(String nom) {this.nomEcurie.setText(nom);}
-	public void setNomResponsable(String nom) {this.nomResponsable.setText(nom);}
-	public void setNomArbitre(String nom) {this.nomArbitre.setText(nom);}
+	public void setNomResponsable(String nom,String prenom) {
+		this.nomResponsable.setText(nom);
+		this.prenomResponsable.setText(prenom);
+	}
+	public void setNomArbitre(String nom,String prenom) {
+		this.nomArbitre.setText(nom);
+		this.prenomArbitre.setText(prenom);
+	}
 	
 	public void viderMotDePasse() {
 		this.mdpEcurie.setText("");
@@ -755,16 +745,29 @@ public class VueERA {
 		this.mdpArbitre.setText("");
 	}
 	
-	// LISTE //
-	public boolean estSelectionne() {
-		return !(this.listeEcuries.isSelectionEmpty());
+	public void deselectionner() {
+		switch (ControleurERA.entite) {
+		case ECURIE:
+			this.listeEcuries.clearSelection();
+			break;
+		case RESPONSABLE:
+			this.listeResponsables.clearSelection();
+			break;
+		case ARBITRE:
+			this.listeArbitres.clearSelection();
+			break;
+		default:
+		}
 	}
+	
+	// LISTE //
+	public boolean estSelectionne() {return !(this.listeEcuries.isSelectionEmpty());}
 	
 	// ETATS //
 	public Etat getEtat(JButton b) {
 		this.setEntite(b);
 		if (b.getText().contains("Créer")) {
-			this.listeEcuries.clearSelection();
+			this.deselectionner();
 			return Etat.CREER;
 		} else if (b.getText().contains("Modifier")) {
 			return Etat.MODIFIER;
@@ -783,7 +786,7 @@ public class VueERA {
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		} else if (b.getText() == "Annuler") {
-			this.listeEcuries.clearSelection();
+			this.deselectionner();
 			return Etat.ANNULER;
 		} 
 		return null;
@@ -798,8 +801,7 @@ public class VueERA {
 			ControleurERA.entite = Entite.ARBITRE;
 		}
 	}
-	
-	public void setEntite(JList l) {
+	public void setEntite(JList<String> l) {
 		switch (l.getName()) {
 		case "Ecurie":
 			ControleurERA.entite = Entite.ECURIE;

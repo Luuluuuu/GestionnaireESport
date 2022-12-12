@@ -29,12 +29,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		}
 		public String getNom() {return this.nom;}
 	};
-	
 	public enum Etat {
 		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
 		RECHERCHER, VALIDER, ANNULER
 	}
-
+ 
 	private VueERA vue;
 	private Etat etat;
 	public static Entite entite;
@@ -84,7 +83,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		switch (this.etat) {
 		case ANNULER:
 		case CREER :
-			this.vue.setNom("");
+			this.vue.setNom("","");
 			this.vue.viderMotDePasse();
 		break;
 		case SUPPRIMER :
@@ -178,8 +177,25 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		this.vue.setEntite((JList<String>) e.getSource());
-		this.vue.setNomSelectionne();
+		JList<String> liste = (JList<String>) e.getSource();
+		this.vue.setEntite(liste);
+			if (!(liste.isSelectionEmpty())) {
+			switch (ControleurERA.entite) {
+			case ECURIE:
+				this.vue.setNomSelectionneEcurie();
+				break;
+			case RESPONSABLE:
+				Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+				this.vue.setNomResponsable(r.getNom(),r.getPrenom());
+				break;
+			case ARBITRE:
+				Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+				this.vue.setNomArbitre(a.getNom(),a.getPrenom());
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 }
