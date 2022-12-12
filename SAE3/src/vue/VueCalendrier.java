@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
@@ -90,6 +91,7 @@ public class VueCalendrier extends JFrame{
 		btnEcuries.setForeground(Color.WHITE);
 		btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnEcuries.setBackground(new Color(75,81,230));
+		panelMenu.add(btnEcuries);
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
@@ -153,7 +155,7 @@ public class VueCalendrier extends JFrame{
 		// LISTE DES TOURNOIS //
 		JLabel Tournois = new JLabel("Tournois");
 		Tournois.setForeground(Color.WHITE);
-		Tournois.setFont(new Font("Roboto", Font.BOLD, 18));
+		Tournois.setFont(new Font("Roboto", Font.BOLD, 20));
 		Tournois.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTitreT.add(Tournois);
 		
@@ -186,11 +188,15 @@ public class VueCalendrier extends JFrame{
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
 		JButton btnCreer = new JButton("Créer un nouveau tournoi");
-		btnCreer.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnCreer.setForeground(Color.WHITE);
+		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnCreer.setBackground(new Color(75,81,230));
 		panelBoutons.add(btnCreer);
 		
 		JButton btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
-		btnSupprimer.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnSupprimer.setForeground(Color.WHITE);
+		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnSupprimer.setBackground(new Color(75,81,230));
 		panelBoutons.add(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
@@ -220,7 +226,7 @@ public class VueCalendrier extends JFrame{
 		
 		titreModif = new JLabel("Créer un tournoi");
 		titreModif.setForeground(Color.WHITE);
-		titreModif.setFont(new Font("Roboto", Font.BOLD, 18));
+		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreM.add(titreModif);
 		
 		JPanel panelNom = new JPanel();
@@ -248,8 +254,8 @@ public class VueCalendrier extends JFrame{
 		panelNom.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 65, 5));
 		
-		JLabel nom = new JLabel("Nom du tournoi*");
-		nom.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel nom = new JLabel("Nom du tournoi");
+		nom.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel.add(nom);
 		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -295,9 +301,9 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_4.gridy = 0;
 		panelDate.add(panel_4, gbc_panel_4);
 		
-		JLabel date = new JLabel("Date du tournoi*");
+		JLabel date = new JLabel("Date du tournoi");
 		date.setHorizontalAlignment(SwingConstants.CENTER);
-		date.setFont(new Font("Roboto", Font.PLAIN, 14));
+		date.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_4.add(date);
 		
 		JPanel panel_5 = new JPanel();
@@ -343,9 +349,9 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_6.gridy = 0;
 		panelHeure.add(panel_6, gbc_panel_6);
 		
-		JLabel heure = new JLabel("Heure du tournoi*");
+		JLabel heure = new JLabel("Heure du tournoi");
 		heure.setHorizontalAlignment(SwingConstants.CENTER);
-		heure.setFont(new Font("Roboto", Font.PLAIN, 14));
+		heure.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_6.add(heure);
 		
 		JPanel panel_7 = new JPanel();
@@ -391,8 +397,8 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_2.gridy = 0;
 		panelEchelle.add(panel_2, gbc_panel_2);
 		
-		JLabel echelle = new JLabel("Echelle du tournoi*");
-		echelle.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel echelle = new JLabel("Echelle du tournoi");
+		echelle.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_2.add(echelle);
 		
 		JPanel panel_3 = new JPanel();
@@ -441,8 +447,8 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_8.gridy = 0;
 		panelResponsable.add(panel_8, gbc_panel_8);
 		
-		JLabel responsable = new JLabel("Responsable du tournoi*");
-		responsable.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel responsable = new JLabel("Responsable du tournoi");
+		responsable.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_8.add(responsable);
 		
 		JPanel panel_9 = new JPanel();
@@ -488,8 +494,8 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_10.gridy = 0;
 		panelArbitre.add(panel_10, gbc_panel_10);
 		
-		JLabel arbitre = new JLabel("Arbitre du tournoi*");
-		arbitre.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel arbitre = new JLabel("Arbitre du tournoi");
+		arbitre.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_10.add(arbitre);
 		
 		JPanel panel_11 = new JPanel();
@@ -536,8 +542,8 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_12.gridy = 0;
 		panelJeu.add(panel_12, gbc_panel_12);
 		
-		JLabel jeu = new JLabel("Ajouter des jeux*");
-		jeu.setFont(new Font("Roboto", Font.PLAIN, 14));
+		JLabel jeu = new JLabel("Ajouter des jeux");
+		jeu.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_12.add(jeu);
 		
 		panel_13 = new JPanel();
@@ -561,11 +567,15 @@ public class VueCalendrier extends JFrame{
 		panelModif.add(panelValider, gbc_panelValider);
 		
 		JButton btnValider = new JButton("Valider");
-		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnValider.setForeground(Color.WHITE);
+		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnValider.setBackground(new Color(110, 255, 110));
 		panelValider.add(btnValider);
 		
 		JButton btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnAnnuler.setForeground(Color.WHITE);
+		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnAnnuler.setBackground(new Color(255, 38, 38));
 		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR
@@ -603,7 +613,8 @@ public class VueCalendrier extends JFrame{
 	
 	public static void ajouterJeu(String nom) {
 		JCheckBox cb = new JCheckBox(nom);
-		cb.setFont(new Font("Roboto", Font.PLAIN, 11));
+		cb.setFont(new Font("Roboto", Font.PLAIN, 13));
+		cb.setBackground(new Color(123,149,184));
 		panel_13.add(cb);
 		listeCheck.put(nom,cb);
 	}
