@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurCalendrier;
-import controleur.ControleurCalendrier.Etat;
+import controleur.ControleurJoueur.Etat;
 import controleur.ControleurEquipe;
 import controleur.ControleurJoueur;
 import modele.Connexion;
@@ -509,6 +509,7 @@ public class VueJoueur extends JFrame{
 		}		else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
 		}
+		
 		else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		}

@@ -776,6 +776,8 @@ public class VueERA {
 			return Etat.CALENDRIER;
 		} else if (b.getText() == "Joueurs") {
 			return Etat.JOUEURS;
+		} else if (b.getText() == "Equipes") {
+				return Etat.EQUIPES ;
 		} else if (b.getText() == "Classement") {
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Rechercher") {
@@ -797,6 +799,8 @@ public class VueERA {
 		} else if (b.getName() == "Arbitre") {
 			ControleurERA.entite = Entite.ARBITRE;
 		}
+		
+		
 	}
 	
 	public void setEntite(JList l) {
