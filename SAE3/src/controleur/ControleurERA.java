@@ -165,7 +165,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 				} else {this.vue.estVide();}
 				break;
 			case ARBITRE:
-				if (!(this.vue.getPrenomResponsable().isEmpty() && this.vue.getNomResponsable().isEmpty())) {
+				if (!(this.vue.getPrenomArbitre().isEmpty() && this.vue.getNomArbitre().isEmpty())) {
 					if (this.vue.estSelectionneArbitre()) {
 						this.modifierArbitre();
 					}else{
@@ -186,6 +186,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		switch (this.etat) {
 		case SUPPRIMER:
+			System.out.println(this.etat);
 			this.etat = Etat.CREER;
 			this.vue.setNom("","");
 			this.vue.viderMotDePasse();
@@ -263,7 +264,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 						ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
 						this.vue.ajouterResponsable(r.getPrenomNom());
 						rs.close();
-						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', "+Year.now().getValue()+")");
+						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', 0)");
 					}
 					r.creerLogin(this.vue.getMotDePasseResponsable());
 					this.vue.setNomResponsable("","");
@@ -281,7 +282,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
 				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 			}
-			Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionne());
+			Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
 			ControleurCalendrier.listeResponsables.remove(r.getPrenomNom());
 			r.setNom(this.vue.getNomResponsable());
 			r.setPrenom(this.vue.getPrenomResponsable());
@@ -293,10 +294,46 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	}
 	
 	private void creerArbitre() {
-		
+		if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
+			if (!(ControleurCalendrier.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_arbitreid.NEXTVAL FROM dual");
+					Arbitre a = null;
+					if (rs.next()) {
+						a = new Arbitre(rs.getInt(1),this.vue.getNomArbitre(),this.vue.getPrenomArbitre());
+						a.setPseudo(a.getPrenom());
+						ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+						this.vue.ajouterArbitre(a.getPrenomNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre VALUES('"+a.getNom()+"', '"+a.getPrenom()+"', '"+a.getPseudo()+"', 0,seq_arbitreid.CURRVAL)");
+					}
+					a.creerLogin(this.vue.getMotDePasseArbitre());
+					this.vue.setNomArbitre("","");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.existe();}
+		} else {
+			this.vue.estVide();
+		}
 	}
 	
 	private void modifierArbitre() {
-		
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET NOMARBITRE = '"+this.vue.getNomArbitre()+
+					"', PRENOMARBITRE = '"+this.vue.getPrenomArbitre()+
+					"' WHERE IDARBITRE ="+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+			if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
+						"' WHERE IDARBITRE = "+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+			}
+			Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+			ControleurCalendrier.listeResponsables.remove(a.getPrenomNom());
+			a.setNom(this.vue.getNomArbitre());
+			a.setPrenom(this.vue.getPrenomArbitre());
+			ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+			this.vue.modifierArbitre();
+			this.vue.setNomArbitre("","");
+			this.vue.viderMotDePasse();
+		}
 	}
 }

@@ -686,11 +686,11 @@ public class VueERA {
 		this.listeEcuries.clearSelection();
 	}
 	public void modifierResponsable() {
-		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),this.getNomResponsable() + " " + this.getPrenomResponsable());
+		modeleResponsables.set(this.listeResponsables.getSelectedIndex(), this.getPrenomResponsable() + " " + this.getNomResponsable());
 		this.listeResponsables.clearSelection();
 	}
 	public void modifierArbitre() {
-		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getNomArbitre() + " " + this.getPrenomArbitre());
+		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getPrenomArbitre() + " " + this.getNomArbitre());
 		this.listeArbitres.clearSelection();
 	}
 	

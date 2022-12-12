@@ -106,7 +106,9 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ARBITRE");
 		try {
 			while (rs.next()) {
-				Arbitre a = new Arbitre(rs.getInt(5),rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4));
+				Arbitre a = new Arbitre(rs.getInt(5),rs.getString(1),rs.getString(2));
+				a.setPseudo(rs.getString(3));
+				a.setanneesExperience(rs.getInt(4));
 				ControleurCalendrier.listeArbitres.put(a.getPrenomNom(),a);
 				this.listeArbitresID.put(a.getID(), a);
 				this.vue.ajouterArbitre(a.getPrenomNom());

@@ -25,11 +25,11 @@ public class Utilisateur {
     		break;
     	case JOUEUR:
     		Connexion.getInstance().executerRequete("INSERT INTO SAE_USER (IDUSER,LOGIN,MOTDEPASSE,IDJOUEUR) VALUES (SEQ_USERID.NEXTVAL,'"
-        			+ identifiant + "'," + mdp.hashCode() +"',"+ ID+")");
+        			+ identifiant + "','" + mdp.hashCode() +"',"+ ID+")");
     		break;
     	case ARBITRE:
     		Connexion.getInstance().executerRequete("INSERT INTO SAE_USER (IDUSER,LOGIN,MOTDEPASSE,IDARBITRE) VALUES (SEQ_USERID.NEXTVAL,'"
-        			+ identifiant + "'," + mdp.hashCode() +"',"+ ID+")");
+        			+ identifiant + "','" + mdp.hashCode() +"',"+ ID+")");
 		default:
 			break;
     	}
