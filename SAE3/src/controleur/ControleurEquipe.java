@@ -140,13 +140,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
-		
 		switch (this.etat) {
 		case RECHERCHER:
-			b.setForeground(Color.RED);
 			String[] tabRecherche = {""};
 			if(this.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
 					|| this.listeEquipes.containsKey(this.vue.getTextRecherche().toLowerCase())) {
@@ -166,6 +163,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.setNomEquipe("");
 				this.vue.setJeu("- Sélectionnez un jeu -");
 			} else {
+				//valeur test drx
+				Connexion.getInstance().executerRequete("INSERT INTO sae_equipe (idEquipe, nomequipe, anneeDeCreation,nombrePoints,nombreJoueurs,nationalité,idjeu,idecurie) VALUES (1,'DRX','2021',12,2,'France',1,18)");
 				this.vue.ajouterEquipe(this.vue.getNom());
 			}
 			break;
@@ -177,8 +176,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				ResultSet rs = c.retournerRequete("select sae_joueur.nomjoueur from sae_joueur,sae_equipe where sae_joueur.idequipe=sae_equipe.idequipe and sae_equipe.nomequipe='"+this.vue.getEquipeSelectionne()+"'");
 				try {
 					while (rs.next()) {
-						System.out.println(this.vue.getEquipeSelectionne());
-						System.out.println(rs.getString(1));
 						Connexion.getInstance().executerRequete("delete sae_joueur where nomjoueur='"+rs.getString(1)+"'	");
 					}
 				} catch (SQLException z) {
@@ -195,12 +192,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				} catch (SQLException z) {	
 					z.printStackTrace();
 				}
+			
 				this.vue.supprimerEquipe(this.vue.getEquipeSelectionne());
 				//Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = "+t.getID());
 				//this.vue.creerTournoi();
 			}
-			
-			
 		default:
 			
 		}

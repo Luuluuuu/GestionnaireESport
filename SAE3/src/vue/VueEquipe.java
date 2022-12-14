@@ -473,7 +473,6 @@ public class VueEquipe extends JFrame{
 		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-		btnValider.addActionListener(controleur);
 
 	}
 	
@@ -486,8 +485,8 @@ public class VueEquipe extends JFrame{
 	}
 	
 	//EQUIPE
-	public void ajouterEquipe(String e) {
-		this.modeleEquipes.addElement(e);
+	public void ajouterEquipe(String equ) {
+		this.modeleEquipes.addElement(equ);
 	}
 	
 	public void supprimerEquipe(String e) {
