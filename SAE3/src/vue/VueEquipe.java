@@ -474,7 +474,8 @@ public class VueEquipe extends JFrame{
 		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-
+		btnCalendrier.addActionListener(controleur);
+		btnJoueurs.addActionListener(controleur);
 	}
 	
 	//JOUEURS
@@ -578,7 +579,6 @@ public class VueEquipe extends JFrame{
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;
-	
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		}
