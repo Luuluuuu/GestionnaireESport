@@ -19,6 +19,8 @@ import modele.Ecurie;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Joueur;
+import vue.VueCalendrier;
+import vue.VueERA;
 import vue.VueEquipe;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
