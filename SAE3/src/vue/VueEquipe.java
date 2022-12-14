@@ -50,7 +50,7 @@ public class VueEquipe extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
 	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
-	private static List<JCheckBox> listeCheck = new ArrayList<JCheckBox>();
+	private static List<JComboBox> listeComboJoueurs = new ArrayList<JComboBox>();
 	private static JPanel panel_13;
 	private JTextField recherche = new JTextField();
 	private JComboBox<String> entreeEcurie = new JComboBox();
@@ -489,12 +489,9 @@ public class VueEquipe extends JFrame{
 	public void ajouterEquipe(String equ) {
 		this.modeleEquipes.addElement(equ);
 	}
-	public void supprimerEquipe(String e) {
-        for(int i=0;i<modeleEquipes.size();i++) {
-            if(this.modeleEquipes.get(i).equals(e)) {
-                this.modeleEquipes.remove(i);
-            }
-        }
+	public void supprimerEquipe() {
+		this.modeleEquipes.removeElement(this.entreeNom.getText());
+		this.deselectionner();
     }
 	
 	//ECURIE
@@ -535,6 +532,10 @@ public class VueEquipe extends JFrame{
 	
 	public void setJeu(String e) {
 		this.entreeJeu.setSelectedItem(e);
+	}
+	
+	public void deselectionner() {
+		this.listeEquipes.clearSelection();
 	}
 	
 	
@@ -590,6 +591,27 @@ public class VueEquipe extends JFrame{
 			return Etat.RECHERCHER;
 		}
 		return null;
+	}
+
+	public void creerEquipe() {
+		this.deselectionner();
+		VueEquipe.afficherPanel(panelModif);
+		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
+		VueEquipe.supprimerTexte(this.entreeNom);
+		this.setEcurie("- Sélectionnez une écurie -");
+		entreeEcurie.setForeground(new Color(0,0,0));
+		this.setJeu("- Sélectionnez un jeu -");
+		entreeJeu.setForeground(new Color(0,0,0));
+		this.setJoueurs(new ArrayList<String>());
+	}
+
+	private void setJoueurs(ArrayList<String> arrayList) {
+		for (JComboBox checkBox : VueEquipe.listeComboJoueurs.values()) {
+			checkBox.setSelected(false);
+		}
+		for (String nomJeu : jeux) {
+			VueCalendrier.listeCheck.get(nomJeu).setSelected(true);
+		}
 	}
 	
 }

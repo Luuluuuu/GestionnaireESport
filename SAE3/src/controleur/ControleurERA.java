@@ -51,20 +51,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEcuries() {
-		/*ControleurERA.listeEcuries = new HashMap<String,Ecurie>();
-		try {
-			Connexion c = Connexion.getInstance();
-			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
-			while (rs.next()) {
-				Ecurie e = new Ecurie(rs.getInt(1),rs.getString(2));
-				e.setAnneeDeCreation(rs.getInt(3));
-				listeEcuries.put(e.getNom(),e);
-				this.vue.ajouterEcurie(e.getNom());
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
 		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
 			this.vue.ajouterEcurie(nomEcurie);
 		}

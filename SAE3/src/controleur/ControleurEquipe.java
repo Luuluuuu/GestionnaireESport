@@ -15,7 +15,9 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Tournoi;
 import vue.VueCalendrier;
+import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
 
@@ -38,22 +40,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		this.initialiserListeJeux();
 	}
 	
-	public void initialiserListeEquipes() {
-		/*this.listeEquipes = new HashMap<String,Equipe>();
-		try {
-			Connexion c = Connexion.getInstance();
-			ResultSet rs = c.retournerRequete("select * from sae_equipe ");
-			while (rs.next()) {
-				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)));
-				e.ajouterJoueur(null);
-				this.listeEquipes.put(e.getNom(),e);
-				this.vue.ajouterEquipe(e.getNom()); 
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
-		
+	public void initialiserListeEquipes() {		
 		for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
 			this.vue.ajouterEquipe(nomEquipe);
 		}
@@ -130,7 +117,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			}
 			break;
 		case VALIDER:
-			//Vérifie que tout les champs sont remplie
+			//Vérifie que tous les champs sont remplis
 			if(this.vue.getNom().equals("")
 					|| this.vue.getEcurie().equals("- Sélectionnez une écurie -")
 					|| this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
@@ -143,34 +130,23 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.ajouterEquipe(this.vue.getNom());
 			}
 			break;
+		case DECONNECTER :
+			Connexion.fermerConnexion();
+			VueEquipe fen = new VueEquipe();
+			fen.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
+		case CREER:
+			this.vue.creerEquipe();
+			break;
 		case SUPPRIMER:
-			//gerer le faite que la deuxieme requete se lance avant que la premire
-			//soit terminé
 			if ((this.vue.getEquipeSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
-				Connexion c = Connexion.getInstance();
-				ResultSet rs = c.retournerRequete("select sae_joueur.nomjoueur from sae_joueur,sae_equipe where sae_joueur.idequipe=sae_equipe.idequipe and sae_equipe.nomequipe='"+this.vue.getEquipeSelectionne()+"'");
-				try {
-					while (rs.next()) {
-						Connexion.getInstance().executerRequete("delete sae_joueur where nomjoueur='"+rs.getString(1)+"'	");
-					}
-				} catch (SQLException z) {
-					z.printStackTrace();
-				}
-				
-				Connexion h = Connexion.getInstance();
-				ResultSet rs1 = h.retournerRequete("SELECT * FROM SAE_EQUIPE WHERE nomequipe='"+this.vue.getEquipeSelectionne()+"'");
-
-				try {
-					while (rs1.next()) {
-						Connexion.getInstance().executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE ="+rs1.getInt(1));
-					}
-				} catch (SQLException z) {	
-					z.printStackTrace();
-				}
-			
-				this.vue.supprimerEquipe(this.vue.getEquipeSelectionne());
-				//Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = "+t.getID());
-				//this.vue.creerTournoi();
+				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+				this.vue.supprimerEquipe();
+				ControleurConnexion.listeEquipes.remove(equipe.getNom());
+				Connexion.getInstance().executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE ="+equipe.getID());
+				Connexion.getInstance().executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = "+equipe.getID());
+				this.vue.creerEquipe();
 			}
 		default:
 			

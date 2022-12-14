@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Equipe implements Comparable<Equipe> {
 	//Declaration d'attributs
+	private int ID;
     private String nom;
     private int pointsChampionnat;
     private List<Joueur> joueurs = new ArrayList<Joueur> ();
@@ -16,7 +17,8 @@ public class Equipe implements Comparable<Equipe> {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(String nom, int pointsChampionnat, Jeu jeu) {
+    public Equipe(int ID, String nom, int pointsChampionnat, Jeu jeu) {
+    	this.ID = ID;
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
     	this.jeu = jeu;
@@ -51,10 +53,14 @@ public class Equipe implements Comparable<Equipe> {
     	return this.jeu;
     }
     
-  //Retourne le jeu de l'equipe
+    //Retourne le jeu de l'equipe
     public String getNomJeu() {
     	return this.jeu.getNom();
     }
+ 
+	public int getID() {
+		return this.ID;
+	}
     
     //Modifie le jeu de l'equipe
     public void setJeu(Jeu jeu) {
@@ -111,5 +117,4 @@ public class Equipe implements Comparable<Equipe> {
 			return -1;
 		}
 	}
-
 }

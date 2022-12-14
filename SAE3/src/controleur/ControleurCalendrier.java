@@ -44,97 +44,22 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		this.initialiserListeJeux();
 		this.initialiserListeTournois();
 	}
-	
 	public void initialiserListeTournois() {
-		/*ControleurCalendrier.listeTournois = new HashMap<String,Tournoi>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
-				+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
-				+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
-		try {
-			// INITIALISER TOURNOI //
-			while (rs.next()) {
-				if (ControleurCalendrier.listeTournois.containsKey(rs.getString(2))) {
-					ControleurCalendrier.listeTournois.get(rs.getString(2)).ajouterJeu(ControleurCalendrier.listeJeuxID.get(rs.getInt("IDJEU")));
-				} else {
-					this.vue.ajouterTournoi(rs.getString("NOMTOURNOI"));
-					
-					Tournoi t = new Tournoi(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(7));
-					t.setArbitre(this.listeArbitresID.get(rs.getInt(5)));
-					t.setResponsable(this.listeResponsablesID.get(rs.getInt(6)));
-					t.ajouterJeu(ControleurCalendrier.listeJeuxID.get(rs.getInt("IDJEU")));
-					listeTournois.put(t.getNom(), t);
-				}
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
-		
 		for (String nomTournoi : ControleurConnexion.listeTournois.keySet()) {
 			this.vue.ajouterTournoi(nomTournoi);
 		}
 	}
-
 	public void initialiserListeResponsables() {
-		/*ControleurCalendrier.listeResponsables = new HashMap<String, Responsable>();
-		this.listeResponsablesID = new HashMap<Integer,Responsable>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_RESPONSABLE");
-		try {
-			while (rs.next()) {
-				Responsable r = new Responsable(rs.getInt(1),rs.getString(2), rs.getString(3));
-				r.setAnneesExperience(rs.getInt(4));
-				ControleurCalendrier.listeResponsables.put(r.getPrenomNom(),r);
-				this.listeResponsablesID.put(r.getID(), r);
-				this.vue.ajouterResponsable(r.getPrenomNom());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
 		for (String nomResponsable : ControleurConnexion.listeResponsables.keySet()) {
 			this.vue.ajouterResponsable(nomResponsable);
 		}
 	}
-	
 	public void initialiserListeArbitres() {
-		/*ControleurCalendrier.listeArbitres = new HashMap<String, Arbitre>();
-		this.listeArbitresID = new HashMap<Integer,Arbitre>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ARBITRE");
-		try {
-			while (rs.next()) {
-				Arbitre a = new Arbitre(rs.getInt(5),rs.getString(1),rs.getString(2));
-				a.setPseudo(rs.getString(3));
-				a.setanneesExperience(rs.getInt(4));
-				ControleurCalendrier.listeArbitres.put(a.getPrenomNom(),a);
-				this.listeArbitresID.put(a.getID(), a);
-				this.vue.ajouterArbitre(a.getPrenomNom());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
 		for (String nomArbitre : ControleurConnexion.listeArbitres.keySet()) {
 			this.vue.ajouterArbitre(nomArbitre);
 		}
 	}
-	
 	public void initialiserListeJeux() {
-		/*ControleurCalendrier.listeJeux = new HashMap<String, Jeu>();
-		ControleurCalendrier.listeJeuxID = new HashMap<Integer,Jeu>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JEU");
-		try {
-			while (rs.next()) {
-				Jeu j = new Jeu(rs.getInt(1),rs.getString(2),rs.getInt(3));
-				ControleurCalendrier.listeJeux.put(j.getNom(),j);
-				ControleurCalendrier.listeJeuxID.put(j.getID(), j);
-				VueCalendrier.ajouterJeu(j.getNom());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
-
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
