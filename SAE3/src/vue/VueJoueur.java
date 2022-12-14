@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
@@ -45,14 +46,15 @@ public class VueJoueur extends JFrame{
 	public JTextField entreePrenom;
 	public JPanel panelModif;
 	public JLabel titreModif;
-	private DefaultListModel<String> modeleTournois;
-	private JList<String> listeEquipes;
+	private DefaultListModel<String> modeleJoueurs = new DefaultListModel<String>();;
+	private JList<String> listeJoueurs;
 	private static List<JCheckBox> listeCheck = new ArrayList<JCheckBox>();
 	private JTextField recherche;
 	private JTextField entreeNom;
 	private JTextField entreePseudo;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField entreeDateNaissance = new JTextField();
+	private JTextField entreeNationalite = new JTextField();
+	private JButton btnValider = new JButton("Valider");
 	
 	public JFrame getFrame() {
 		return this.fenetreJoueur;
@@ -66,8 +68,7 @@ public class VueJoueur extends JFrame{
 		fenetreJoueur.setBounds(100, 100, 1400, 900);
 		fenetreJoueur.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// CONTROLEUR
-		ControleurJoueur controleur = new ControleurJoueur(this);
+		
 		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
@@ -116,7 +117,7 @@ public class VueJoueur extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se d�connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -189,12 +190,12 @@ public class VueJoueur extends JFrame{
 		gbc_panelListe.gridy = 1;
 		panelEquipe.add(panelListe, gbc_panelListe);
 		
-		modeleTournois = new DefaultListModel<String>();
-		listeEquipes = new JList<String>(modeleTournois);
-		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
-		listeEquipes.setFixedCellHeight(50);
-		listeEquipes.setFixedCellWidth(600);
-		panelListe.add(listeEquipes);
+		listeJoueurs = new JList<String>(modeleJoueurs);
+		listeJoueurs.setFont(new Font("Roboto", Font.PLAIN, 15));
+		listeJoueurs.setFixedCellHeight(50);
+		listeJoueurs.setFixedCellWidth(600);
+		JScrollPane scrollPane = new JScrollPane(this.listeJoueurs);
+		panelListe.add(scrollPane);
 		
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setBackground(Couleur.BLEU1);
@@ -445,10 +446,10 @@ public class VueJoueur extends JFrame{
 		gbc_panel_3.gridy = 0;
 		panelDateN.add(panel_3, gbc_panel_3);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_3.add(textField);
-		textField.setColumns(20);
+		
+		entreeDateNaissance.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_3.add(entreeDateNaissance);
+		entreeDateNaissance.setColumns(20);
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);
@@ -491,10 +492,10 @@ public class VueJoueur extends JFrame{
 		gbc_panel_10.gridy = 0;
 		panelNationalite.add(panel_10, gbc_panel_10);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_10.add(textField_1);
-		textField_1.setColumns(20);
+		
+		entreeNationalite.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_10.add(entreeNationalite);
+		entreeNationalite.setColumns(20);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);
@@ -507,29 +508,86 @@ public class VueJoueur extends JFrame{
 		gbc_panelValider.gridy = 6;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		JButton btnValider = new JButton("Valider");
-		btnValider.setForeground(Color.WHITE);
-		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnValider.setBackground(Couleur.VERT);
+
+		
+		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panelValider.add(btnValider);
+		btnValider.setName("btnValider");
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.setForeground(Color.WHITE);
 		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
+		// CONTROLEUR
+		ControleurJoueur controleur = new ControleurJoueur(this);
 		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
 		btnAnnuler.addActionListener(controleur);
-		btnValider.addActionListener(controleur);
+		
+		btnRechercher.addActionListener(controleur);
 		
 		
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// GESTION DES TOURNOIS
-		btnCreer.addActionListener(controleur);
-		btnSupprimer.addActionListener(controleur);
-		
-		btnEcuries.addActionListener(controleur);
+		this.listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
+		btnValider.addActionListener(controleur);
+	}
+	
+	//JOUEUR
+	public void ajouterJoueur(String j) {
+		this.modeleJoueurs.addElement(j);
+	}
+	
+	
+	// GETTERS //
+	public String getJoueurSelectionne() {
+		return this.listeJoueurs.getSelectedValue();
+	}
+	
+	public String getTextRecherche() {
+		return recherche.getText();
+	}
+	
+	public String getNom() {
+		return this.entreeNom.getText();
+	}
+	
+	public String getPrenom() {
+		return this.entreePrenom.getText();
+	}
+	
+	public String getPseudo() {
+		return this.entreePseudo.getText();
+	}
+	
+	public String getDateNaissance() {
+		return this.entreeDateNaissance.getText();
+	}
+	
+	public String getNationalite() {
+		return this.entreeNationalite.getText();
+	}
+	
+	// SETTER //
+	public void setNomJoueur(String j) {
+		this.entreeNom.setText(j);
+	}
+	
+	public void setPrenomJoueur(String j) {
+		this.entreePrenom.setText(j);
+	}
+	
+	public void setPseudoJoueur(String j) {
+		this.entreePseudo.setText(j);
+	}
+	
+	public void setDateNaissanceJoueur(String j) {
+		this.entreeDateNaissance.setText(j);
+	}
+	
+	public void setNationaliteJoueur(String j) {
+		this.entreeNationalite.setText(j);
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -548,7 +606,12 @@ public class VueJoueur extends JFrame{
 		t.setText(null);
 	}
 	
-	public static Etat getEtat(JButton b) {
+	//VOID
+	public void filtrageListeJoueur(String[] tab) {
+		this.listeJoueurs.setListData(tab);
+	}
+	
+	public Etat getEtat(JButton b) {
 		if (b.getText() == "Créer une nouvelle équipe") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
