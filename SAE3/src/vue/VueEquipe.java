@@ -489,7 +489,6 @@ public class VueEquipe extends JFrame{
 	public void ajouterEquipe(String equ) {
 		this.modeleEquipes.addElement(equ);
 	}
-	
 	public void supprimerEquipe(String e) {
         for(int i=0;i<modeleEquipes.size();i++) {
             if(this.modeleEquipes.get(i).equals(e)) {
@@ -503,7 +502,6 @@ public class VueEquipe extends JFrame{
 		this.entreeEcurie.addItem(e);
 	}
 
-	
 	//JEU
 	public void ajouterJeu(String j) {
 		this.entreeJeu.addItem(j);
@@ -511,7 +509,6 @@ public class VueEquipe extends JFrame{
 	
 	// GETTERS //
 	public String getEquipeSelectionne() {
-		//System.out.println(this.listeEquipes.getSelectedValue());
 		return this.listeEquipes.getSelectedValue();
 	}
 	

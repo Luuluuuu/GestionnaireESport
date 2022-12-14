@@ -56,9 +56,9 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			//ResultSet rs1 = c.retournerRequete("select * from sae_jeu,sae_equipe where sae_jeu.idjeu = sae_equipe.idjeu");
 			//new Jeu(rs1.getInt(1),rs1.getString(2)
 			//changer les valeur fixe de jeu et de la liste de joueur
-			ResultSet rs = c.retournerRequete("select * from sae_equipe");
+			ResultSet rs = c.retournerRequete("select * from sae_equipe ");
 			while (rs.next()) {
-				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), new Jeu(0,"aa",1), this.listeJoueurs);
+				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)), this.listeJoueurs);
 				this.listeEquipes.put(e.getNom(),e);
 				this.vue.ajouterEquipe(e.getNom()); 
 			}
@@ -69,7 +69,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEcuries() {
-		this.listeEcuries = new HashMap<String,Ecurie>();
+		/*this.listeEcuries = new HashMap<String,Ecurie>();
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
@@ -81,21 +81,15 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}*/
+		for (String nomEcurie : ControleurERA.listeEcuries.keySet()) {
+			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
 	public void initialiserListeJeux() {
-		this.listeJeux = new HashMap<String, Jeu>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JEU");
-		try {
-			while (rs.next()) {
-				Jeu j = new Jeu(rs.getInt(1),rs.getString(2),rs.getInt(3));
-				this.listeJeux.put(j.getNom(),j);
-				this.vue.ajouterJeu(j.getNom());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
+			this.vue.ajouterJeu(nomJeu);
 		}
 	}
 	
@@ -208,16 +202,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		switch(this.etat) {
-		
-		
 		case SUPPRIMER:
-
 		default:
 			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
-				this.vue.setNomEquipe(this.vue.getEquipeSelectionne());
-				this.vue.setJeu(this.getNomJeuByName(this.vue.getEquipeSelectionne()));
+				Equipe ecurie = this.listeEquipes.get(this.vue.getEquipeSelectionne());
+				this.vue.setNomEquipe(ecurie.getNom());
+				this.vue.setJeu(ecurie.getNomJeu());
 				this.vue.setEcurie(this.getNomEcurieByName(this.vue.getEquipeSelectionne()));
 			}
 		}

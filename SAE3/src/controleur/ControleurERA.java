@@ -69,13 +69,13 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeResponsables() {
-		for (String nomResponsable : ControleurCalendrier.listeResponsables.keySet()) {
+		for (String nomResponsable : ControleurConnexion.listeResponsables.keySet()) {
 			this.vue.ajouterResponsable(nomResponsable);
 		}
 	}
 	
 	public void initialiserListeArbitres() {
-		for (String nomArbitres : ControleurCalendrier.listeArbitres.keySet()) {
+		for (String nomArbitres : ControleurConnexion.listeArbitres.keySet()) {
 			this.vue.ajouterArbitre(nomArbitres);
 		}
 	}
@@ -110,14 +110,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					ControleurERA.listeEcuries.remove(this.vue.getNomSelectionneEcurie());
 					break;
 				case RESPONSABLE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE WHERE NOMRESPONSABLE || ' ' || PRENOMRESPONSABLE = '"+this.vue.getNomSelectionneResponsable()+"'");
-					ControleurCalendrier.listeResponsables.remove(this.vue.getNomSelectionneResponsable());
+					ControleurConnexion.listeResponsables.remove(this.vue.getNomSelectionneResponsable());
 					break;
 				case ARBITRE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDARBITRE = "+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
 					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE NOMARBITRE || ' ' || PRENOMARBITRE = '"+this.vue.getNomSelectionneArbitre()+"'");
-					ControleurCalendrier.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
+					ControleurConnexion.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
 					break;
 					
 				}
@@ -186,7 +186,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		switch (this.etat) {
 		case SUPPRIMER:
-			System.out.println(this.etat);
 			this.etat = Etat.CREER;
 			this.vue.setNom("","");
 			this.vue.viderMotDePasse();
@@ -200,11 +199,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					this.vue.setNomSelectionneEcurie();
 					break;
 				case RESPONSABLE:
-					Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+					Responsable r = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable());
 					this.vue.setNomResponsable(r.getNom(),r.getPrenom());
 					break;
 				case ARBITRE:
-					Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+					Arbitre a = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre());
 					this.vue.setNomArbitre(a.getNom(),a.getPrenom());
 					break;
 				default:
@@ -255,13 +254,13 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	
 	private void creerResponsable() {
 		if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
-			if (!(ControleurCalendrier.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
+			if (!(ControleurConnexion.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_responsableid.NEXTVAL FROM dual");
 					Responsable r = null;
 					if (rs.next()) {
 						r = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
-						ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+						ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
 						this.vue.ajouterResponsable(r.getPrenomNom());
 						rs.close();
 						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', 0)");
@@ -278,15 +277,15 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 
 	private void modifierResponsable() {
 		if (this.vue.confirmer("modification")==0) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 			}
-			Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
-			ControleurCalendrier.listeResponsables.remove(r.getPrenomNom());
+			Responsable r = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+			ControleurConnexion.listeResponsables.remove(r.getPrenomNom());
 			r.setNom(this.vue.getNomResponsable());
 			r.setPrenom(this.vue.getPrenomResponsable());
-			ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+			ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
 			this.vue.modifierResponsable();
 			this.vue.setNomResponsable("","");
 			this.vue.viderMotDePasse();
@@ -295,14 +294,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	
 	private void creerArbitre() {
 		if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
-			if (!(ControleurCalendrier.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
+			if (!(ControleurConnexion.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_arbitreid.NEXTVAL FROM dual");
 					Arbitre a = null;
 					if (rs.next()) {
 						a = new Arbitre(rs.getInt(1),this.vue.getNomArbitre(),this.vue.getPrenomArbitre());
 						a.setPseudo(a.getPrenom());
-						ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+						ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
 						this.vue.ajouterArbitre(a.getPrenomNom());
 						rs.close();
 						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre VALUES('"+a.getNom()+"', '"+a.getPrenom()+"', '"+a.getPseudo()+"', 0,seq_arbitreid.CURRVAL)");
@@ -321,16 +320,16 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET NOMARBITRE = '"+this.vue.getNomArbitre()+
 					"', PRENOMARBITRE = '"+this.vue.getPrenomArbitre()+
-					"' WHERE IDARBITRE ="+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+					"' WHERE IDARBITRE ="+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
 			if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
 				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
-						"' WHERE IDARBITRE = "+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+						"' WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
 			}
-			Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
-			ControleurCalendrier.listeResponsables.remove(a.getPrenomNom());
+			Arbitre a = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+			ControleurConnexion.listeResponsables.remove(a.getPrenomNom());
 			a.setNom(this.vue.getNomArbitre());
 			a.setPrenom(this.vue.getPrenomArbitre());
-			ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+			ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
 			this.vue.modifierArbitre();
 			this.vue.setNomArbitre("","");
 			this.vue.viderMotDePasse();
