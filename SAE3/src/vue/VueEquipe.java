@@ -473,13 +473,20 @@ public class VueEquipe extends JFrame{
 		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-		btnValider.addActionListener(controleur);
 
 	}
 	
+	//JOUEURS
+	public static void ajouterJoueur(String nom) {
+		JComboBox<String> joueur = new JComboBox<String>();
+		joueur.setPreferredSize(new Dimension(205, 20));
+		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_13.add(joueur);
+	}
+	
 	//EQUIPE
-	public void ajouterEquipe(String e) {
-		this.modeleEquipes.addElement(e);
+	public void ajouterEquipe(String equ) {
+		this.modeleEquipes.addElement(equ);
 	}
 	
 	public void supprimerEquipe(String e) {

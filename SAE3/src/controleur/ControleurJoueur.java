@@ -110,11 +110,13 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.setDateNaissanceJoueur("");
 				this.vue.setNationaliteJoueur("");
 			} else {
+				Connexion.getInstance().executerRequete("insert into SAE_Joueur (idJoueur,nomjoueur,prenomjoueur,pseudojoueur,dateNaissance,nationalité,idequipe) values (2,'perbost','théo','darkThéo','01/02/95','Allemagne',1)");
 				this.vue.ajouterJoueur(this.vue.getNom());
 			}
 			break;
 		case SUPPRIMER:
 			if ((this.vue.getJoueurSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
+				Connexion.getInstance().executerRequete("delete sae_joueur where nomjoueur='"+this.vue.getJoueurSelectionne()+"'	");
 				this.vue.supprimerJoueur(this.vue.getJoueurSelectionne());
 			}
 		default:

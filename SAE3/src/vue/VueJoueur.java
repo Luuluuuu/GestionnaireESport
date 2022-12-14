@@ -193,6 +193,7 @@ public class VueJoueur extends JFrame{
 		panelEquipe.add(panelListe, gbc_panelListe);
 		
 		listeJoueurs = new JList<String>(modeleJoueurs);
+		listeJoueurs.setVisibleRowCount(12);
 		listeJoueurs.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeJoueurs.setFixedCellHeight(50);
 		listeJoueurs.setFixedCellWidth(600);
