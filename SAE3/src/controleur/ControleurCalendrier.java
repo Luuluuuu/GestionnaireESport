@@ -5,7 +5,6 @@ import vue.VueERA;
 import vue.VueEquipe;
 import vue.VueJoueur;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -79,6 +78,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	public void initialiserListeResponsables() {
@@ -252,7 +252,8 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			VueCalendrier.supprimerTexte(this.vue.entreeHeure);
 			break;
 		default:
-			JList<String> list = (JList<String>) e.getSource();
+			@SuppressWarnings
+			("unchecked") JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
 				this.etat = Etat.MODIFIER;
 				VueCalendrier.afficherPanel(this.vue.panelModif);

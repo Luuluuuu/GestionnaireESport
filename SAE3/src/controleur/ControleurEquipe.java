@@ -136,6 +136,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
+		case ECURIE :
+			VueERA fenERA = new VueERA();
+			fenERA.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		case CALENDRIER :
+			VueCalendrier fenCalendrier = new VueCalendrier();
+			fenCalendrier.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		case RECHERCHER:
 			String[] tabRecherche = {""};
 			if(this.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
@@ -198,6 +206,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		switch(this.etat) {
+		
+		
 		case SUPPRIMER:
 
 		default:

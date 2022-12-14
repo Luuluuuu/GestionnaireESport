@@ -521,8 +521,9 @@ public class VueJoueur extends JFrame{
 		btnAnnuler.addActionListener(controleur);
 		
 		btnRechercher.addActionListener(controleur);
-		
-		
+		btnEquipes.addActionListener(controleur);
+		btnEcuries.addActionListener(controleur);
+		btnCalendrier.addActionListener(controleur);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// GESTION DES TOURNOIS
@@ -628,8 +629,8 @@ public class VueJoueur extends JFrame{
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer le joueur sélectionné") {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries") {
-			return Etat.ECURIE;
+		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+			return Etat.ECURIE; 
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		}		else if (b.getText() == "Calendrier") {
@@ -638,8 +639,9 @@ public class VueJoueur extends JFrame{
 			return Etat.JOUEURS;
 		}else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
+		}else if (b.getText()=="Equipes") {
+			return Etat.EQUIPES;
 		}
-
 		return null;
 	}
 	
