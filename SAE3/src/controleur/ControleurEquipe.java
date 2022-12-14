@@ -22,6 +22,7 @@ import modele.Joueur;
 import vue.VueCalendrier;
 import vue.VueERA;
 import vue.VueEquipe;
+import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
@@ -142,6 +143,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			VueERA fenERA = new VueERA();
 			fenERA.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		case JOUEURS :
+			VueJoueur fenJoueur = new VueJoueur();
+			fenJoueur.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
