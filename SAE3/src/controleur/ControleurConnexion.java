@@ -12,6 +12,7 @@ import modele.Connexion;
 import modele.Ecurie;
 import modele.Equipe;
 import modele.Jeu;
+import modele.Joueur;
 import modele.Responsable;
 import modele.Tournoi;
 import modele.Utilisateur;
@@ -27,10 +28,12 @@ public class ControleurConnexion implements ActionListener {
 	static 	Map<String, Jeu>			listeJeux;
 	static 	Map<String, Ecurie> 		listeEcuries;
 	static	Map<String, Equipe> 		listeEquipes;
+	static	Map<String, Joueur> 		listeJoueurs;
 	
 	private Map<Integer, Responsable> 	listeResponsablesID;
 	private Map<Integer, Arbitre>		listeArbitresID;
-	static Map<Integer, Jeu>			listeJeuxID;
+	static 	Map<Integer, Jeu>			listeJeuxID;
+	static	Map<Integer, Equipe> 		listeEquipesID;
 	
 	public ControleurConnexion(VueConnexion vue) {
 		this.vue = vue;
@@ -66,6 +69,8 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeJeux();
 		this.initialiserListeTournois();
 		this.initialiserListeEcuries();
+		this.initialiserListeEquipes();
+		this.initialiserListeJoueurs();
 	}
 
 	private void initialiserListeTournois() {
@@ -160,4 +165,42 @@ public class ControleurConnexion implements ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
+	public void initialiserListeEquipes() {
+		ControleurConnexion.listeEquipes = new HashMap<String,Equipe>();
+		ControleurConnexion.listeEquipesID = new HashMap<Integer,Equipe>();
+		try {
+			Connexion c = Connexion.getInstance();
+			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_EQUIPE");
+			while (rs.next()) {
+				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)));
+				ControleurConnexion.listeEquipesID.put(rs.getInt(1), e);
+				ControleurConnexion.listeEquipes.put(e.getNom(),e);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void initialiserListeJoueurs() {
+		ControleurConnexion.listeJoueurs = new HashMap<String,Joueur>();
+		try {
+			Connexion c = Connexion.getInstance();
+			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JOUEUR");
+			while (rs.next()) {
+				Joueur j = new Joueur(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+				ControleurConnexion.listeJoueurs.put(j.getNom(),j);
+				
+				Equipe e = ControleurConnexion.listeEquipesID.get(rs.getInt(7));
+				ControleurConnexion.listeEquipesID.get(rs.getInt(7)).ajouterJoueur(j);;
+				ControleurConnexion.listeEquipes.get(e.getNom()).ajouterJoueur(j);
+				
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

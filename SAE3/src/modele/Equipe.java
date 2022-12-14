@@ -16,10 +16,9 @@ public class Equipe implements Comparable<Equipe> {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(String nom, int pointsChampionnat, Jeu jeu, List<Joueur> joueurs) {
+    public Equipe(String nom, int pointsChampionnat, Jeu jeu) {
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
-    	this.joueurs = joueurs;
     	this.jeu = jeu;
     }
     
@@ -68,7 +67,7 @@ public class Equipe implements Comparable<Equipe> {
     }
 
     //Retourne la liste des poules auquelles est inscrites l'equipe
-    public List<Poule> getPoule() {
+    public List<Poule> getPoules() {
         return this.poule;
     }
     

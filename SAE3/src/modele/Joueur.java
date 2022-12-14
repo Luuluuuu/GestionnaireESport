@@ -34,6 +34,11 @@ public class Joueur {
     public String getPrenom() {
         return this.prenom;
     }
+    
+    /*Retourne le prenom, le pseudo et le nom du joueur*/
+    public String getPrenomPseudoNom() {
+        return this.prenom + " (" + this.pseudo + ") " + this.nom;
+    }
 
     /*Retourne le pseudo du joueur*/
     public String getPseudo() {
