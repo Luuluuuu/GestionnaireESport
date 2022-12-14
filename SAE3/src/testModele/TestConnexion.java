@@ -28,7 +28,7 @@ public class TestConnexion {
 	@After
 	public void tearDown() {
 		try {
-			this.c.fermerConnexion();
+			Connexion.fermerConnexion();
 			this.c = null;
 		} catch(Exception e) {
 			Assert.fail("La fermeture de la connexion a echoue.");

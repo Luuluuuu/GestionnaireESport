@@ -20,26 +20,21 @@ import modele.Joueur;
 public class TestEcurie {
 
 	private Ecurie ecurie;
-	private List<Joueur> joueurs;
-	private List<Equipe> equipes;
 	private Joueur joueur;
 	private Jeu jeu;
 	private Equipe equipe;
 	
 	@Before
 	public void setUp() throws Exception{
-		this.joueurs = new ArrayList<Joueur> ();
-		this.equipes = new ArrayList<Equipe> ();
 		this.ecurie = new Ecurie(1,"Kcorp");
 		this.joueur = new Joueur("maltra","léo","léo123","06/02/98","Allemagne");
 		this.jeu = new Jeu(1,"league of legends", 5);
-		this.equipe = new Equipe("DRX",12, jeu, joueurs);
+		this.equipe = new Equipe("DRX",12, jeu);
+		this.equipe.ajouterJoueur(joueur);
 	}
 	
 	@After
 	public void tearDown() throws Exception{
-		this.joueurs = null;
-		this.equipes = null;
 		this.ecurie = null;
 		this.joueur = null;
 		this.equipe = null;
@@ -62,7 +57,6 @@ public class TestEcurie {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -87,7 +81,7 @@ public class TestEcurie {
 	public void testSupprimerEquipe() {
 		this.ecurie.ajouterEquipe(this.equipe);
 		this.ecurie.supprimerEquipe(this.equipe);
-		assertTrue(this.equipes.isEmpty());
+		assertTrue(this.ecurie.getEquipes().isEmpty());
 	}
 	
 	@Test
@@ -97,14 +91,16 @@ public class TestEcurie {
 	
 	@Test
 	public void testGetEquipe() {
-		this.joueurs.add(this.joueur);
 		this.ecurie.ajouterEquipe(this.equipe);
 		assertTrue(this.ecurie.getEquipes().contains(this.equipe));
 	}
 	
 	@Test
 	public void testGetListeEquipe() {
-		assertEquals(this.ecurie.getEquipes(), this.equipes);
+		this.ecurie.ajouterEquipe(this.equipe);
+		List<Equipe> equipes = new ArrayList<Equipe>();
+		equipes.add(this.equipe);
+		assertEquals(this.ecurie.getEquipes(), equipes);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

@@ -16,10 +16,10 @@ public class Equipe implements Comparable<Equipe> {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(String nom, int pointsChampionnat, Jeu jeu, List<Joueur> joueurs) {
+    public Equipe(String nom, int pointsChampionnat, Jeu jeu) {
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
-    	this.joueurs = joueurs;
+    	this.jeu = jeu;
     }
     
     /*Retourne le nom de l'equipe de type String*/
@@ -51,6 +51,11 @@ public class Equipe implements Comparable<Equipe> {
     	return this.jeu;
     }
     
+  //Retourne le jeu de l'equipe
+    public String getNomJeu() {
+    	return this.jeu.getNom();
+    }
+    
     //Modifie le jeu de l'equipe
     public void setJeu(Jeu jeu) {
     	this.jeu = jeu;
@@ -62,7 +67,7 @@ public class Equipe implements Comparable<Equipe> {
     }
 
     //Retourne la liste des poules auquelles est inscrites l'equipe
-    public List<Poule> getPoule() {
+    public List<Poule> getPoules() {
         return this.poule;
     }
     
