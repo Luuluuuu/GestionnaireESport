@@ -16,10 +16,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
@@ -35,19 +38,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VueEquipe extends JFrame{
 	
 	public JFrame fenetreEquipe;
-	public JTextField entreeNom;
+	private JTextField entreeNom = new JTextField();
 	public JPanel panelModif;
 	public JLabel titreModif;
-	private DefaultListModel<String> modeleTournois;
-	private JList<String> listeEquipes;
+	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
+	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
 	private static List<JCheckBox> listeCheck = new ArrayList<JCheckBox>();
 	private static JPanel panel_13;
-	private JTextField recherche;
+	private JTextField recherche = new JTextField();
+	private JComboBox<String> entreeEcurie = new JComboBox();
+	private JComboBox<String> entreeJeu = new JComboBox();
+	private JButton btnRechercher = new JButton("Rechercher");
+	private JButton btnValider = new JButton("Valider");
 	
+
 	public JFrame getFrame() {
 		return this.fenetreEquipe;
 	}
@@ -59,9 +69,6 @@ public class VueEquipe extends JFrame{
 		fenetreEquipe.setResizable(false);
 		fenetreEquipe.setBounds(100, 100, 1400, 900);
 		fenetreEquipe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		// CONTROLEUR
-		ControleurEquipe controleur = new ControleurEquipe(this);
 		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
@@ -160,17 +167,14 @@ public class VueEquipe extends JFrame{
 		panelRecherche.setBackground(Couleur.BLEU1);
 		panelTitreT.add(panelRecherche);
 		
-		recherche = new JTextField();
-		recherche.setFont(new Font("Roboto", Font.PLAIN, 13));
+		recherche.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panelRecherche.add(recherche);
 		recherche.setColumns(15);
-		
-		JButton btnRechercher = new JButton("Rechercher");
-		btnRechercher.setForeground(Color.WHITE);
-		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnRechercher.setBackground(Couleur.BLEU2);
+		btnRechercher.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnRechercher.setText("Rechercher");
 		panelRecherche.add(btnRechercher);
 		
+
 		JPanel panelListe = new JPanel();
 		panelListe.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListe = (FlowLayout) panelListe.getLayout();
@@ -183,12 +187,13 @@ public class VueEquipe extends JFrame{
 		gbc_panelListe.gridy = 1;
 		panelEquipe.add(panelListe, gbc_panelListe);
 		
-		modeleTournois = new DefaultListModel<String>();
-		listeEquipes = new JList<String>(modeleTournois);
+		
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		panelListe.add(listeEquipes);
+		JScrollPane scrollPane = new JScrollPane(this.listeEquipes);
+		panelListe.add(scrollPane);
+
 		
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setBackground(Couleur.BLEU1);
@@ -206,6 +211,7 @@ public class VueEquipe extends JFrame{
 		panelBoutons.add(btnCreer);
 		
 		JButton btnSupprimer = new JButton("Supprimer l'\u00E9quipe s\u00E9lectionn\u00E9e");
+		btnSupprimer.setText("Supprimer l'équipe sélectionnée");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -280,11 +286,14 @@ public class VueEquipe extends JFrame{
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 0;
 		panelNomEcurie.add(panel_1, gbc_panel_1);
+		entreeEcurie.setToolTipText("");
 		
-		JComboBox<String> entreeEcurie = new JComboBox();
-		entreeEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
-		entreeEcurie.setPreferredSize(new Dimension(205, 20));
+		//this.entreeEcurie 
+		this.entreeEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+		this.entreeEcurie.setPreferredSize(new Dimension(205, 20));
 		panel_1.add(entreeEcurie);
+		this.entreeEcurie.addItem("- Sélectionnez une écurie -");
+		
 		
 		JPanel panelNom = new JPanel();
 		panelNom.setBackground(Couleur.BLEU1);
@@ -328,7 +337,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel_5.gridy = 0;
 		panelNom.add(panel_5, gbc_panel_5);
 		
-		entreeNom = new JTextField();
+		
 		entreeNom.setToolTipText("");
 		entreeNom.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_5.add(entreeNom);
@@ -375,10 +384,11 @@ public class VueEquipe extends JFrame{
 		gbc_panel_7.gridx = 1;
 		gbc_panel_7.gridy = 0;
 		panelJeu.add(panel_7, gbc_panel_7);
+		entreeJeu.setFont(new Font("Dialog", Font.PLAIN, 11));
 		
-		JComboBox<String> entreeJeu = new JComboBox();
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panel_7.add(entreeJeu);
+		this.entreeJeu.addItem("- Sélectionnez un jeu -");
 		
 		JPanel panelJoueurs = new JPanel();
 		panelJoueurs.setBackground(Couleur.BLEU1);
@@ -432,11 +442,12 @@ public class VueEquipe extends JFrame{
 		gbc_panelValider.gridy = 5;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		JButton btnValider = new JButton("Valider");
-		btnValider.setForeground(Color.WHITE);
-		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnValider.setBackground(Couleur.VERT);
+
+		
+		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnValider.setText("Valider");
 		panelValider.add(btnValider);
+		btnValider.setName("btnValider");
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.setForeground(Color.WHITE);
@@ -444,19 +455,90 @@ public class VueEquipe extends JFrame{
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
 		
+
+		// CONTROLEUR
+		ControleurEquipe controleur = new ControleurEquipe(this);
+
 		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 		
-		
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
+		// TOURNOIS
+		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
 		// GESTION DES TOURNOIS
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
 		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
-		btnJoueurs.addActionListener(controleur);
+		btnRechercher.addActionListener(controleur);
+		btnValider.addActionListener(controleur);
+
+	}
+	
+	//EQUIPE
+	public void ajouterEquipe(String e) {
+		this.modeleEquipes.addElement(e);
+	}
+	
+	public void supprimerEquipe(String e) {
+        for(int i=0;i<modeleEquipes.size();i++) {
+            if(this.modeleEquipes.get(i).equals(e)) {
+                this.modeleEquipes.remove(i);
+            }
+        }
+    }
+	
+	//ECURIE
+	public void ajouterEcurie(String e) {
+		this.entreeEcurie.addItem(e);
+	}
+
+	
+	//JEU
+	public void ajouterJeu(String j) {
+		this.entreeJeu.addItem(j);
+	}
+	
+	// GETTERS //
+	public String getEquipeSelectionne() {
+		//System.out.println(this.listeEquipes.getSelectedValue());
+		return this.listeEquipes.getSelectedValue();
+	}
+	
+	public String getEcurie() {
+		return (String) this.entreeEcurie.getSelectedItem();
+	}
+	
+	public String getJeu() {
+		return (String) this.entreeJeu.getSelectedItem();
+	}
+	
+	public String getNom() {
+		return this.entreeNom.getText();
+	}
+	
+	// SETTER //
+	public void setNomEquipe(String e) {
+		this.entreeNom.setText(e);
+	}
+	
+	public void setEcurie(String e) {
+		this.entreeEcurie.setSelectedItem(e);
+	}
+	
+	public void setJeu(String e) {
+		this.entreeJeu.setSelectedItem(e);
+	}
+	
+	
+	public String getTextRecherche() {
+		return recherche.getText();
+	}
+	
+	public void filtrageListeEquipe(String[] tab) {
+		this.listeEquipes.setListData(tab);
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -482,7 +564,11 @@ public class VueEquipe extends JFrame{
 		panel_13.add(joueur);
 	}
 	
-	public static Etat getEtat(JButton b) {
+	public int confirmerSuppression() {
+		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la suppression ?","Confirmation",JOptionPane.YES_NO_OPTION);
+	}
+	
+	public Etat getEtat(JButton b) {
 		if (b.getText() == "Créer une nouvelle équipe") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
@@ -502,6 +588,8 @@ public class VueEquipe extends JFrame{
 		}
 		else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
+		} else if (b.getText()=="Rechercher") {
+			return Etat.RECHERCHER;
 		}
 		return null;
 	}

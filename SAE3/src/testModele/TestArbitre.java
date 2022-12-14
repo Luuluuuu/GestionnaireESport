@@ -24,7 +24,9 @@ public class TestArbitre {
 
 	@Before
 	public void setUp() throws Exception {
-		this.arbitre = new Arbitre(0,"lopez","téo","téo123",7);
+		this.arbitre = new Arbitre(0,"lopez","téo");
+		this.arbitre.setPseudo("téo123");
+		this.arbitre.setanneesExperience(7);
 		this.tournoi = new Tournoi(0,"Tournoi E-Sport","23/11/2022","14:00","internationale");
 		this.tournois = new ArrayList<Tournoi> ();
 	}
@@ -43,7 +45,9 @@ public class TestArbitre {
 	
 	@Test
 	public void testCreeLogin() throws SQLException {
-		Arbitre ab = new Arbitre(1,"duval","jean","jean123",7);
+		Arbitre ab = new Arbitre(1,"duval","jean");
+		ab.setPseudo("jean123");
+		ab.setanneesExperience(7);
 		ab.creerLogin("$iutinfo");
 		Connexion c = Connexion.getInstance();
 		ResultSet rs = c.retournerRequete("SELECT * FROM sae_user,sae_arbitre WHERE sae_user.idarbitre=sae_arbitre.idarbitre and sae_arbitre.nomarbitre='duval'");

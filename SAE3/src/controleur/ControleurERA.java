@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,12 +32,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		}
 		public String getNom() {return this.nom;}
 	};
-	
 	public enum Etat {
 		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
 		RECHERCHER, VALIDER, ANNULER, EQUIPES 
 	}
-
+ 
 	private VueERA vue;
 	private Etat etat;
 	public static Entite entite;
@@ -44,6 +44,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	
 	public ControleurERA(VueERA vue) {
 		this.vue = vue;
+		this.etat = Etat.CREER;
 		
 		this.initialiserListeEcuries();
 		this.initialiserListeResponsables();
@@ -97,7 +98,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		
 		case ANNULER:
 		case CREER :
-			this.vue.setNom("");
+			this.vue.setNom("","");
 			this.vue.viderMotDePasse();
 		break;
 		case SUPPRIMER :
@@ -120,6 +121,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					break;
 					
 				}
+				this.vue.setNom("","");
 				this.vue.supprimerEntite();
 				this.vue.viderMotDePasse();
 			}
@@ -142,58 +144,196 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 				this.vue.setDefaultListModel();
 			}
 		break;
-		/*case VALIDER:
-			if (!(this.vue.getNomEcurie().isEmpty())) {
-					if (this.vue.estSelectionne()) {
-						if (this.vue.confirmer("modification")==0) {
-							Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+this.listeEcuries.get(this.vue.getNomSelectionne()).getID());
-							if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-								Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+this.listeEcuries.get(this.vue.getNomSelectionne()).getID());
-							}
-							Ecurie ecurie = this.listeEcuries.get(this.vue.getNomSelectionne());
-							this.listeEcuries.remove(ecurie.getNom());
-							ecurie.setNom(this.vue.getNomEcurie());
-							this.listeEcuries.put(ecurie.getNom(), ecurie);
-							this.vue.modifierEcurie();
-							this.vue.setNomEcurie("");
-							this.vue.viderMotDePasse();
-						}
+		case VALIDER:
+			switch (ControleurERA.entite) {
+			case ECURIE:
+				if (!(this.vue.getNomEcurie().isEmpty())) {
+					if (this.vue.estSelectionneEcurie()) {
+						this.modifierEcurie();
 					}else{
-						if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-							if (!(this.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
-								try {
-									ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
-									Ecurie ecurie = null;
-									if (rs.next()) {
-										ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
-										this.listeEcuries.put(ecurie.getNom(), ecurie);
-										this.vue.ajouterEcurie(ecurie.getNom());
-										rs.close();
-										Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
-									}
-									ecurie.creerLogin(this.vue.getMotDePasseEcurie());
-									this.vue.setNomEcurie("");
-									this.vue.viderMotDePasse();
-								} catch (SQLException e1) {e1.printStackTrace();}
-							} else {this.vue.tournoiExiste();}
-						} else {
-							this.vue.estVide();
-						}
+						this.creerEcurie();
 					}
-			} else {
-				this.vue.estVide();
+				} else {this.vue.estVide();}
+				break;
+			case RESPONSABLE:
+				if (!(this.vue.getPrenomResponsable().isEmpty() && this.vue.getNomResponsable().isEmpty())) {
+					if (this.vue.estSelectionneResponsable()) {
+						this.modifierResponsable();
+					}else{
+						this.creerResponsable();
+					}
+				} else {this.vue.estVide();}
+				break;
+			case ARBITRE:
+				if (!(this.vue.getPrenomArbitre().isEmpty() && this.vue.getNomArbitre().isEmpty())) {
+					if (this.vue.estSelectionneArbitre()) {
+						this.modifierArbitre();
+					}else{
+						this.creerArbitre();
+					}
+				} else {this.vue.estVide();}
+				break;
+			default:
 			}
-			break;*/
+			break;
 		default:
 		}
 		
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		this.vue.setEntite((JList<String>) e.getSource());
-		this.vue.setNomSelectionne();
+		switch (this.etat) {
+		case SUPPRIMER:
+			System.out.println(this.etat);
+			this.etat = Etat.CREER;
+			this.vue.setNom("","");
+			this.vue.viderMotDePasse();
+			break;
+		default:
+			JList<String> liste = (JList<String>) e.getSource();
+			this.vue.setEntite(liste);
+			if (!(liste.isSelectionEmpty())) {
+				switch (ControleurERA.entite) {
+				case ECURIE:
+					this.vue.setNomSelectionneEcurie();
+					break;
+				case RESPONSABLE:
+					Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+					this.vue.setNomResponsable(r.getNom(),r.getPrenom());
+					break;
+				case ARBITRE:
+					Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+					this.vue.setNomArbitre(a.getNom(),a.getPrenom());
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 
+	public void modifierEcurie() {
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			}
+			Ecurie ecurie = ControleurERA.listeEcuries.get(this.vue.getNomSelectionne());
+			ControleurERA.listeEcuries.remove(ecurie.getNom());
+			ecurie.setNom(this.vue.getNomEcurie());
+			ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+			this.vue.modifierEcurie();
+			this.vue.setNomEcurie("");
+			this.vue.viderMotDePasse();
+		}
+	}
+	
+	public void creerEcurie() {
+		if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
+			if (!(ControleurERA.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
+					Ecurie ecurie = null;
+					if (rs.next()) {
+						ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
+						ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+						this.vue.ajouterEcurie(ecurie.getNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
+					}
+					ecurie.creerLogin(this.vue.getMotDePasseEcurie());
+					this.vue.setNomEcurie("");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.existe();}
+		} else {
+			this.vue.estVide();
+		}
+	}
+	
+	private void creerResponsable() {
+		if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
+			if (!(ControleurCalendrier.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_responsableid.NEXTVAL FROM dual");
+					Responsable r = null;
+					if (rs.next()) {
+						r = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
+						ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+						this.vue.ajouterResponsable(r.getPrenomNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', 0)");
+					}
+					r.creerLogin(this.vue.getMotDePasseResponsable());
+					this.vue.setNomResponsable("","");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.existe();}
+		} else {
+			this.vue.estVide();
+		}
+	}
+
+	private void modifierResponsable() {
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			}
+			Responsable r = ControleurCalendrier.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+			ControleurCalendrier.listeResponsables.remove(r.getPrenomNom());
+			r.setNom(this.vue.getNomResponsable());
+			r.setPrenom(this.vue.getPrenomResponsable());
+			ControleurCalendrier.listeResponsables.put(r.getPrenomNom(), r);
+			this.vue.modifierResponsable();
+			this.vue.setNomResponsable("","");
+			this.vue.viderMotDePasse();
+		}
+	}
+	
+	private void creerArbitre() {
+		if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
+			if (!(ControleurCalendrier.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_arbitreid.NEXTVAL FROM dual");
+					Arbitre a = null;
+					if (rs.next()) {
+						a = new Arbitre(rs.getInt(1),this.vue.getNomArbitre(),this.vue.getPrenomArbitre());
+						a.setPseudo(a.getPrenom());
+						ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+						this.vue.ajouterArbitre(a.getPrenomNom());
+						rs.close();
+						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre VALUES('"+a.getNom()+"', '"+a.getPrenom()+"', '"+a.getPseudo()+"', 0,seq_arbitreid.CURRVAL)");
+					}
+					a.creerLogin(this.vue.getMotDePasseArbitre());
+					this.vue.setNomArbitre("","");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+			} else {this.vue.existe();}
+		} else {
+			this.vue.estVide();
+		}
+	}
+	
+	private void modifierArbitre() {
+		if (this.vue.confirmer("modification")==0) {
+			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET NOMARBITRE = '"+this.vue.getNomArbitre()+
+					"', PRENOMARBITRE = '"+this.vue.getPrenomArbitre()+
+					"' WHERE IDARBITRE ="+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+			if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
+						"' WHERE IDARBITRE = "+ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+			}
+			Arbitre a = ControleurCalendrier.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+			ControleurCalendrier.listeResponsables.remove(a.getPrenomNom());
+			a.setNom(this.vue.getNomArbitre());
+			a.setPrenom(this.vue.getPrenomArbitre());
+			ControleurCalendrier.listeArbitres.put(a.getPrenomNom(), a);
+			this.vue.modifierArbitre();
+			this.vue.setNomArbitre("","");
+			this.vue.viderMotDePasse();
+		}
+	}
 }

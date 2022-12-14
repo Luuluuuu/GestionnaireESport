@@ -22,12 +22,10 @@ public class Arbitre {
      * 		ses anneeExp de type int
      * 		un mdp de type String (généré par le gestionnaire d'E-Sporter)
     */
-    public Arbitre(int ID, String nom, String prenom, String pseudo, int anneesExperience) throws SQLException {
+    public Arbitre(int ID, String nom, String prenom) throws SQLException {
     	this.ID = ID;
     	this.nom = nom;
     	this.prenom = prenom;
-    	this.pseudo = pseudo;
-    	this.anneesExperience = anneesExperience;
     }
 
 	//compose un login sous forme nom.prenom_compose et l'enregistre dans le tableau des Utilisateurs

@@ -1,18 +1,23 @@
 package modele;
 
+import modele.Utilisateur.Profil;
+
 public class Responsable {
 	private int ID;
     private String nom;
     private String prenom;
     private int anneesExperience;
 
-    public Responsable(int ID, String nom, String prenom, int anneesExperience) {
+    public Responsable(int ID, String nom, String prenom) {
     	this.ID = ID;
     	this.nom = nom;
     	this.prenom = prenom;
-    	this.anneesExperience = anneesExperience;
     }
 
+    public void creerLogin(String mdp) {
+    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.ECURIE, this.ID);
+    }
+    
     // GETTERS //
     public int getID() {
         return this.ID;
