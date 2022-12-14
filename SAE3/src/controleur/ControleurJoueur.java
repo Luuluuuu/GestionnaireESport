@@ -12,13 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-//import controleur.ControleurJoueur.Etat;
-import controleur.ControleurEquipe.Etat;
 import modele.Connexion;
-import modele.Equipe;
-import modele.Jeu;
 import modele.Joueur;
-import vue.VueEquipe;
 import vue.VueJoueur;
 
 
@@ -109,6 +104,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		case SUPPRIMER:
 
 		default:
+			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
 				Joueur joueur = this.listeJoueurs.get(this.vue.getJoueurSelectionne());

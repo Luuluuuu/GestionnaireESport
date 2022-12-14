@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import controleur.ControleurConnexion;
 
+@SuppressWarnings("serial")
 public class VueConnexion extends JFrame {
 	
 	public JFrame fenetreConnexion;

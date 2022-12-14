@@ -2,7 +2,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe implements Comparable {
+public class Equipe implements Comparable<Equipe> {
 	//Declaration d'attributs
     private String nom;
     private int pointsChampionnat;
@@ -97,8 +97,7 @@ public class Equipe implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		Equipe e = (Equipe) o;
+	public int compareTo(Equipe e) {
 		if (this.pointsChampionnat==e.getPointsChampionnat()) {
 			return 0;
 		} else if(this.pointsChampionnat>e.getPointsChampionnat()) {

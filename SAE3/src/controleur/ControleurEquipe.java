@@ -1,6 +1,5 @@
 package controleur;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -15,18 +14,12 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import controleur.ControleurJoueur.Etat;
-import modele.Arbitre;
 import modele.Connexion;
 import modele.Ecurie;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Joueur;
-import modele.Tournoi;
-import vue.VueCalendrier;
-import vue.VueERA;
 import vue.VueEquipe;
-import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
@@ -208,6 +201,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		case SUPPRIMER:
 
 		default:
+			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
 				this.vue.setNomEquipe(this.vue.getEquipeSelectionne());

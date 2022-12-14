@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import oracle.jdbc.driver.*;
 
+@SuppressWarnings("unused")
 public class Connexion {
 	private static Connection connx;
 	public static Connexion instance;
@@ -26,8 +27,8 @@ public class Connexion {
 		
 		try {
 			//Ouverture d'une connexion
-			this.connx = DriverManager.getConnection(connectString, login, mdpasse);
-			this.st = this.connx.createStatement();
+			Connexion.connx = DriverManager.getConnection(connectString, login, mdpasse);
+			Connexion.st = Connexion.connx.createStatement();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

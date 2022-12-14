@@ -2,8 +2,6 @@ package vue;
 
 import java.awt.EventQueue;
 
-import modele.Connexion;
-
 public class Application {
 	
 	public static void main(String[] args) {

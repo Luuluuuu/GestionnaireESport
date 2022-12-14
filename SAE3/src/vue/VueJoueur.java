@@ -1,9 +1,7 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,11 +11,9 @@ import java.awt.Image;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -28,19 +24,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
-import controleur.ControleurCalendrier;
 import controleur.ControleurJoueur.Etat;
-import controleur.ControleurEquipe;
 import controleur.ControleurJoueur;
-import modele.Connexion;
 
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
+@SuppressWarnings("serial")
 public class VueJoueur extends JFrame{
 	
 	public JFrame fenetreJoueur;

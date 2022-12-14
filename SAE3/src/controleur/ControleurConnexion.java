@@ -9,9 +9,7 @@ import modele.Utilisateur;
 import vue.VueConnexion;
 import vue.VueCalendrier;
 
-public class ControleurConnexion implements ActionListener {
-	private enum Etat{}
-	
+public class ControleurConnexion implements ActionListener {	
 	private VueConnexion vue;
 	
 	public ControleurConnexion(VueConnexion vue) {

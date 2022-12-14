@@ -1,7 +1,6 @@
 package vue;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,7 +11,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,28 +19,20 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurCalendrier;
 import controleur.ControleurCalendrier.Etat;
-import modele.Connexion;
 
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
-import java.awt.Cursor;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Rectangle;
 
+@SuppressWarnings("serial")
 public class VueCalendrier extends JFrame{
 	
 	public JFrame fenetreCalendrier;

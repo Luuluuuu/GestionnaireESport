@@ -41,6 +41,7 @@ import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@SuppressWarnings("serial")
 public class VueEquipe extends JFrame{
 	
 	public JFrame fenetreEquipe;
