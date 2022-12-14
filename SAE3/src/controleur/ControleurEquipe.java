@@ -143,16 +143,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
-		//b.setForeground(Color.RED);
+		
 		switch (this.etat) {
 		case RECHERCHER:
-			//mauvais sens clé valeur
-			//String[] array = this.listeEquipes.values().toArray(new String[this.listeEquipes.size()]);
-			
+			b.setForeground(Color.RED);
 			String[] tabRecherche = {""};
 			if(this.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
 					|| this.listeEquipes.containsKey(this.vue.getTextRecherche().toLowerCase())) {
-				tabRecherche[0] = this.vue.getTextRecherche().toUpperCase(); //changer le aa par la valeur cherché
+				tabRecherche[0] = this.vue.getTextRecherche().toUpperCase(); 
 				this.vue.filtrageListeEquipe(tabRecherche);
 			}
 			if(this.vue.getTextRecherche()=="") {
@@ -160,7 +158,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			}
 			break;
 		case VALIDER:
-			
 			//Vérifie que tout les champs sont remplie
 			if(this.vue.getNom().equals("")
 					|| this.vue.getEcurie().equals("- Sélectionnez une écurie -")
@@ -199,10 +196,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					z.printStackTrace();
 				}
 				this.vue.supprimerEquipe(this.vue.getEquipeSelectionne());
-				
 				//Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = "+t.getID());
 				//this.vue.creerTournoi();
 			}
+			
 			
 		default:
 			

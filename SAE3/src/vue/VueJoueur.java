@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -176,6 +177,7 @@ public class VueJoueur extends JFrame{
 		btnRechercher.setForeground(Color.WHITE);
 		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercher.setBackground(Couleur.BLEU2);
+		btnRechercher.setText("Rechercher");
 		panelRecherche.add(btnRechercher);
 		
 		JPanel panelListe = new JPanel();
@@ -212,7 +214,8 @@ public class VueJoueur extends JFrame{
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le joueur s\u00E9lectionn\u00E9");
+		JButton btnSupprimer = new JButton("Supprimer le joueur sélectionné");
+		btnSupprimer.setText("Supprimer le joueur sélectionné");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -511,6 +514,7 @@ public class VueJoueur extends JFrame{
 
 		
 		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnValider.setText("Valider");
 		panelValider.add(btnValider);
 		btnValider.setName("btnValider");
 		
@@ -532,6 +536,7 @@ public class VueJoueur extends JFrame{
 		// GESTION DES TOURNOIS
 		this.listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
 		btnValider.addActionListener(controleur);
+		btnSupprimer.addActionListener(controleur);
 	}
 	
 	//JOUEUR
@@ -539,6 +544,13 @@ public class VueJoueur extends JFrame{
 		this.modeleJoueurs.addElement(j);
 	}
 	
+	public void supprimerJoueur(String e) {
+        for(int i=0;i<modeleJoueurs.size();i++) {
+            if(this.modeleJoueurs.get(i).equals(e)) {
+                this.modeleJoueurs.remove(i);
+            }
+        }
+    }
 	
 	// GETTERS //
 	public String getJoueurSelectionne() {
@@ -611,14 +623,18 @@ public class VueJoueur extends JFrame{
 		this.listeJoueurs.setListData(tab);
 	}
 	
+	public int confirmerSuppression() {
+		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la suppression ?","Confirmation",JOptionPane.YES_NO_OPTION);
+	}
+	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer une nouvelle équipe") {
+		if (b.getText() == "Créer un nouveau joueur") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
 		} else if (b.getText() == "Se dÃ©connecter") {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
+		} else if (b.getText() == "Supprimer le joueur sélectionné") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries") {
 			return Etat.ECURIE;
@@ -626,12 +642,12 @@ public class VueJoueur extends JFrame{
 			return Etat.VALIDER;
 		}		else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
-		}
-		
-		else if (b.getText()=="Joueurs") {
+		}  else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
+		}else if (b.getText()=="Rechercher") {
+			return Etat.RECHERCHER;
 		}
-		
+
 		return null;
 	}
 	

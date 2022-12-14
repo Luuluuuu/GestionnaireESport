@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 //import controleur.ControleurJoueur.Etat;
@@ -59,7 +60,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
-		//this.etat = this.vue.getEtat(b);
+		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
 		case RECHERCHER:
 			String[] tabRecherche = {""};
@@ -92,7 +93,9 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			}
 			break;
 		case SUPPRIMER:
-			b.setForeground(Color.RED);
+			if ((this.vue.getJoueurSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
+				this.vue.supprimerJoueur(this.vue.getJoueurSelectionne());
+			}
 		default:
 			
 		}
@@ -100,12 +103,21 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		Joueur joueur = this.listeJoueurs.get(this.vue.getJoueurSelectionne());
-		this.vue.setNomJoueur(joueur.getNom());
-		this.vue.setPrenomJoueur(joueur.getPrenom());
-		this.vue.setPseudoJoueur(joueur.getPseudo());
-		this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
-		this.vue.setNationaliteJoueur(joueur.getNationalite());
+		switch(this.etat) {
+		case SUPPRIMER:
+
+		default:
+			JList<String> list = (JList<String>) e.getSource();
+			if (!(list.isSelectionEmpty())) {
+				Joueur joueur = this.listeJoueurs.get(this.vue.getJoueurSelectionne());
+				this.vue.setNomJoueur(joueur.getNom());
+				this.vue.setPrenomJoueur(joueur.getPrenom());
+				this.vue.setPseudoJoueur(joueur.getPseudo());
+				this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
+				this.vue.setNationaliteJoueur(joueur.getNationalite());
+			}
+		}
+		
 	}
 
 }
