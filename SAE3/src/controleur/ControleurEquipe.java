@@ -145,6 +145,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		this.etat = this.vue.getEtat(b);
 		
 		switch (this.etat) {
+		case ECURIE :
+			VueERA fenERA = new VueERA();
+			fenERA.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		case CALENDRIER :
+			VueCalendrier fenCalendrier = new VueCalendrier();
+			fenCalendrier.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		case RECHERCHER:
 			b.setForeground(Color.RED);
 			String[] tabRecherche = {""};
@@ -209,6 +217,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		switch(this.etat) {
+		
+		
 		case SUPPRIMER:
 
 		default:
