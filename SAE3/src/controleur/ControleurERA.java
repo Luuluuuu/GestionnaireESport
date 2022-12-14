@@ -40,7 +40,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	private VueERA vue;
 	private Etat etat;
 	public static Entite entite;
-	static Map<String, Ecurie> listeEcuries;
 	
 	public ControleurERA(VueERA vue) {
 		this.vue = vue;
@@ -52,7 +51,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEcuries() {
-		ControleurERA.listeEcuries = new HashMap<String,Ecurie>();
+		/*ControleurERA.listeEcuries = new HashMap<String,Ecurie>();
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
@@ -65,6 +64,9 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}*/
+		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
+			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
@@ -105,9 +107,9 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			if (!(this.vue.getNom().isEmpty()) && this.vue.confirmer("suppression")==0) {
 				switch (entite) {
 				case ECURIE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionneEcurie()).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionneEcurie()).getID());
 					Connexion.getInstance().executerRequete("DELETE SAE_ECURIE WHERE NOMECURIE = '"+this.vue.getNomSelectionneEcurie()+"'");
-					ControleurERA.listeEcuries.remove(this.vue.getNomSelectionneEcurie());
+					ControleurConnexion.listeEcuries.remove(this.vue.getNomSelectionneEcurie());
 					break;
 				case RESPONSABLE:
 					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
@@ -215,14 +217,14 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 
 	public void modifierEcurie() {
 		if (this.vue.confirmer("modification")==0) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
 			if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+ControleurERA.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
 			}
-			Ecurie ecurie = ControleurERA.listeEcuries.get(this.vue.getNomSelectionne());
-			ControleurERA.listeEcuries.remove(ecurie.getNom());
+			Ecurie ecurie = ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne());
+			ControleurConnexion.listeEcuries.remove(ecurie.getNom());
 			ecurie.setNom(this.vue.getNomEcurie());
-			ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+			ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
 			this.vue.modifierEcurie();
 			this.vue.setNomEcurie("");
 			this.vue.viderMotDePasse();
@@ -231,13 +233,13 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 	
 	public void creerEcurie() {
 		if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-			if (!(ControleurERA.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
+			if (!(ControleurConnexion.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
 					Ecurie ecurie = null;
 					if (rs.next()) {
 						ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
-						ControleurERA.listeEcuries.put(ecurie.getNom(), ecurie);
+						ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
 						this.vue.ajouterEcurie(ecurie.getNom());
 						rs.close();
 						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");

@@ -65,6 +65,7 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeArbitres();
 		this.initialiserListeJeux();
 		this.initialiserListeTournois();
+		this.initialiserListeEcuries();
 	}
 
 	private void initialiserListeTournois() {
@@ -128,7 +129,7 @@ public class ControleurConnexion implements ActionListener {
 		}
 	}
 
-	public void initialiserListeJeux() {
+	private void initialiserListeJeux() {
 		ControleurConnexion.listeJeux = new HashMap<String, Jeu>();
 		ControleurConnexion.listeJeuxID = new HashMap<Integer,Jeu>();
 		Connexion c = Connexion.getInstance();
@@ -139,6 +140,22 @@ public class ControleurConnexion implements ActionListener {
 				ControleurConnexion.listeJeux.put(j.getNom(),j);
 				ControleurConnexion.listeJeuxID.put(j.getID(), j);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void initialiserListeEcuries() {
+		ControleurConnexion.listeEcuries = new HashMap<String,Ecurie>();
+		try {
+			Connexion c = Connexion.getInstance();
+			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
+			while (rs.next()) {
+				Ecurie e = new Ecurie(rs.getInt(1),rs.getString(2));
+				e.setAnneeDeCreation(rs.getInt(3));
+				ControleurConnexion.listeEcuries.put(e.getNom(),e);
+			}
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
