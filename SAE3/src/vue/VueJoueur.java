@@ -191,6 +191,7 @@ public class VueJoueur extends JFrame{
 		
 		modeleTournois = new DefaultListModel<String>();
 		listeEquipes = new JList<String>(modeleTournois);
+		listeEquipes.setVisibleRowCount(10);
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);

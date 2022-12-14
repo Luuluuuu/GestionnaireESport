@@ -475,6 +475,13 @@ public class VueEquipe extends JFrame{
 		t.setText(null);
 	}
 	
+	public static void ajouterJoueur(String nom) {
+		JComboBox<String> joueur = new JComboBox<String>();
+		joueur.setPreferredSize(new Dimension(205, 20));
+		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_13.add(joueur);
+	}
+	
 	public static Etat getEtat(JButton b) {
 		if (b.getText() == "Créer une nouvelle équipe") {
 			return Etat.CREER;
