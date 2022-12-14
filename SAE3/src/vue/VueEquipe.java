@@ -477,6 +477,14 @@ public class VueEquipe extends JFrame{
 
 	}
 	
+	//JOUEURS
+	public static void ajouterJoueur(String nom) {
+		JComboBox<String> joueur = new JComboBox<String>();
+		joueur.setPreferredSize(new Dimension(205, 20));
+		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_13.add(joueur);
+	}
+	
 	//EQUIPE
 	public void ajouterEquipe(String e) {
 		this.modeleEquipes.addElement(e);
@@ -555,13 +563,6 @@ public class VueEquipe extends JFrame{
 	
 	public static void supprimerTexte(JTextField t) {
 		t.setText(null);
-	}
-	
-	public static void ajouterJoueur(String nom) {
-		JComboBox<String> joueur = new JComboBox<String>();
-		joueur.setPreferredSize(new Dimension(205, 20));
-		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_13.add(joueur);
 	}
 	
 	public int confirmerSuppression() {
