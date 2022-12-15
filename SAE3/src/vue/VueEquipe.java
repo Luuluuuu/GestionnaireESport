@@ -48,6 +48,7 @@ public class VueEquipe extends JFrame{
 	private JComboBox<String> entreeJeu = new JComboBox<String>();
 	private JButton btnRechercher = new JButton("Rechercher");
 	private JButton btnValider = new JButton("Valider");
+	private JTextField entreeNationalite;
 	
 
 	public JFrame getFrame() {
@@ -159,10 +160,13 @@ public class VueEquipe extends JFrame{
 		panelRecherche.setBackground(Couleur.BLEU1);
 		panelTitreT.add(panelRecherche);
 		
-		recherche.setFont(new Font("Roboto", Font.PLAIN, 11));
+		recherche.setFont(new Font("Roboto", Font.PLAIN, 13));
 		panelRecherche.add(recherche);
 		recherche.setColumns(15);
-		btnRechercher.setFont(new Font("Roboto", Font.PLAIN, 11));
+		
+		btnRechercher.setBackground(Couleur.BLEU2);
+		btnRechercher.setForeground(Color.WHITE);
+		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercher.setText("Rechercher");
 		panelRecherche.add(btnRechercher);
 		
@@ -178,6 +182,7 @@ public class VueEquipe extends JFrame{
 		gbc_panelListe.gridx = 0;
 		gbc_panelListe.gridy = 1;
 		panelEquipe.add(panelListe, gbc_panelListe);
+		listeEquipes.setVisibleRowCount(12);
 		
 		
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
@@ -214,10 +219,10 @@ public class VueEquipe extends JFrame{
 		panelModif.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelModif);
 		GridBagLayout gbl_panelModif = new GridBagLayout();
+		gbl_panelModif.rowHeights = new int[] {100, 70, 70, 70, 70, 344, 100};
 		gbl_panelModif.columnWidths = new int[]{692, 0};
-		gbl_panelModif.rowHeights = new int[] {100, 70, 70, 70, 414, 0, 100, 0};
-		gbl_panelModif.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelModif.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panelModif.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panelModif.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		panelModif.setLayout(gbl_panelModif);
 		
 		JPanel panelTitreM = new JPanel();
@@ -382,17 +387,63 @@ public class VueEquipe extends JFrame{
 		panel_7.add(entreeJeu);
 		this.entreeJeu.addItem("- Sélectionnez un jeu -");
 		
+		JPanel panelNationalite = new JPanel();
+		panelNationalite.setBackground(Couleur.BLEU1);
+		GridBagConstraints gbc_panelNationalite = new GridBagConstraints();
+		gbc_panelNationalite.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panelNationalite.insets = new Insets(0, 0, 5, 0);
+		gbc_panelNationalite.gridx = 0;
+		gbc_panelNationalite.gridy = 4;
+		panelModif.add(panelNationalite, gbc_panelNationalite);
+		GridBagLayout gbl_panelNationalite = new GridBagLayout();
+		gbl_panelNationalite.columnWidths = new int[] {250, 442, 0};
+		gbl_panelNationalite.rowHeights = new int[] {30, 0};
+		gbl_panelNationalite.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelNationalite.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panelNationalite.setLayout(gbl_panelNationalite);
+		
+		JPanel panel_2 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+		flowLayout_1.setHgap(55);
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		panel_2.setBackground(Couleur.BLEU1);
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_2.gridx = 0;
+		gbc_panel_2.gridy = 0;
+		panelNationalite.add(panel_2, gbc_panel_2);
+		
+		JLabel nationalite = new JLabel("Nationalit\u00E9");
+		nationalite.setFont(new Font("Roboto", Font.BOLD, 14));
+		panel_2.add(nationalite);
+		
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_3.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.LEFT);
+		panel_3.setBackground(Couleur.BLEU1);
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 1;
+		gbc_panel_3.gridy = 0;
+		panelNationalite.add(panel_3, gbc_panel_3);
+		
+		entreeNationalite = new JTextField();
+		entreeNationalite.setFont(new Font("Roboto", Font.PLAIN, 11));
+		panel_3.add(entreeNationalite);
+		entreeNationalite.setColumns(20);
+		
 		JPanel panelJoueurs = new JPanel();
 		panelJoueurs.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelJoueurs = new GridBagConstraints();
 		gbc_panelJoueurs.fill = GridBagConstraints.BOTH;
 		gbc_panelJoueurs.insets = new Insets(0, 0, 5, 0);
 		gbc_panelJoueurs.gridx = 0;
-		gbc_panelJoueurs.gridy = 4;
+		gbc_panelJoueurs.gridy = 5;
 		panelModif.add(panelJoueurs, gbc_panelJoueurs);
 		GridBagLayout gbl_panelJoueurs = new GridBagLayout();
 		gbl_panelJoueurs.columnWidths = new int[] {250, 442, 0};
-		gbl_panelJoueurs.rowHeights = new int[] {405, 0};
+		gbl_panelJoueurs.rowHeights = new int[] {335, 0};
 		gbl_panelJoueurs.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panelJoueurs.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelJoueurs.setLayout(gbl_panelJoueurs);
@@ -410,7 +461,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel_12.gridy = 0;
 		panelJoueurs.add(panel_12, gbc_panel_12);
 		
-		JLabel joueur = new JLabel("Ajouter des joueurs");
+		JLabel joueur = new JLabel("Liste des joueurs");
 		joueur.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_12.add(joueur);
 		
@@ -421,7 +472,11 @@ public class VueEquipe extends JFrame{
 		gbc_panel_13.gridx = 1;
 		gbc_panel_13.gridy = 0;
 		panelJoueurs.add(panel_13, gbc_panel_13);
-		panel_13.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_13.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 20));
+		
+		JList list = new JList();
+		list.setBackground(Couleur.BLEU1);
+		panel_13.add(list);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);
@@ -434,9 +489,9 @@ public class VueEquipe extends JFrame{
 		gbc_panelValider.gridy = 6;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-
-		
-		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
+		btnValider.setBackground(Couleur.VERT);
+		btnValider.setForeground(Color.WHITE);
+		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnValider.setText("Valider");
 		panelValider.add(btnValider);
 		btnValider.setName("btnValider");
@@ -446,15 +501,12 @@ public class VueEquipe extends JFrame{
 		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
-		
 
 		// CONTROLEUR
 		ControleurEquipe controleur = new ControleurEquipe(this);
-
 		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
-		
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// TOURNOIS
