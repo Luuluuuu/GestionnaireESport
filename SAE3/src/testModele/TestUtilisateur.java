@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import modele.Connexion;
-import modele.Poule;
 import modele.Utilisateur;
 import modele.Utilisateur.Profil;
 
@@ -34,7 +33,7 @@ public class TestUtilisateur {
 
 	@Test
 	public void testAjouterUtilisateur() {
-		this.utilisateur.ajouterUtilisateur(("vidal"+"."+"jean"), "$iutinfo", Profil.ARBITRE, 1);
+		Utilisateur.ajouterUtilisateur(("vidal"+"."+"jean"), "$iutinfo", Profil.ARBITRE, 1);
 		Connexion c = Connexion.getInstance();
 		//faire la requete par rapport a un utilisateur et tester tout les choix
 		ResultSet rs = c.retournerRequete("SELECT * FROM sae_user,sae_arbitre WHERE sae_user.idarbitre=sae_arbitre.idarbitre and sae_arbitre.nomarbitre='duval'");
@@ -45,7 +44,6 @@ public class TestUtilisateur {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

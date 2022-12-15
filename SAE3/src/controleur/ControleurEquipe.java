@@ -13,8 +13,6 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
-import modele.Jeu;
-import modele.Tournoi;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;

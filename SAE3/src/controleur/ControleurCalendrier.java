@@ -9,18 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import modele.Arbitre;
 import modele.Connexion;
 import modele.Jeu;
-import modele.Responsable;
 import modele.Tournoi;
 
 public class ControleurCalendrier implements ActionListener, ListSelectionListener {

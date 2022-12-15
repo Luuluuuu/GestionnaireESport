@@ -2,10 +2,7 @@ package testModele;
 
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.sql.ResultSet;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import modele.Arbitre;
 import modele.Connexion;
-import modele.Ecurie;
 import modele.Tournoi;
 
 public class TestArbitre {
@@ -57,7 +56,6 @@ public class TestArbitre {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

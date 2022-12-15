@@ -27,10 +27,6 @@ import javax.swing.event.ListSelectionListener;
 import controleur.ControleurJoueur.Etat;
 import controleur.ControleurJoueur;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JCheckBox;
-
 @SuppressWarnings("serial")
 public class VueJoueur extends JFrame{
 	
@@ -40,7 +36,6 @@ public class VueJoueur extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleJoueurs = new DefaultListModel<String>();;
 	private JList<String> listeJoueurs;
-	private static List<JCheckBox> listeCheck = new ArrayList<JCheckBox>();
 	private JTextField recherche;
 	private JTextField entreeNom;
 	private JTextField entreePseudo;
