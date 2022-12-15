@@ -41,7 +41,7 @@ public class VueEquipe extends JFrame{
 	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
 	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
 	private static Map<String, JComboBox> listeComboJoueurs = new HashMap<String, JComboBox>();
-	private DefaultComboBoxModel<String> modeleComboJoueurs = new DefaultComboBoxModel<String>();
+	private DefaultListModel<String> modeleJoueurs;
 	private static JPanel panel_13;
 	private JTextField recherche = new JTextField();
 	private JComboBox<String> entreeEcurie = new JComboBox<String>();
@@ -474,9 +474,10 @@ public class VueEquipe extends JFrame{
 		panelJoueurs.add(panel_13, gbc_panel_13);
 		panel_13.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 20));
 		
-		JList list = new JList();
-		list.setBackground(Couleur.BLEU1);
-		panel_13.add(list);
+		modeleJoueurs = new DefaultListModel<String>();
+		JList<String> listeJoueurs = new JList<String>(modeleJoueurs);
+		listeJoueurs.setBackground(Couleur.BLEU1);
+		panel_13.add(listeJoueurs);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);
@@ -511,7 +512,7 @@ public class VueEquipe extends JFrame{
 		btnDeconnexion.addActionListener(controleur);
 		// TOURNOIS
 		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
-		// GESTION DES TOURNOIS
+		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
 		btnCalendrier.addActionListener(controleur);
@@ -523,7 +524,11 @@ public class VueEquipe extends JFrame{
 	
 	//JOUEURS
 	public void ajouterJoueur(String nom) {
-		this.modeleComboJoueurs.addElement(nom);
+		this.modeleJoueurs.addElement(nom);
+	}
+	
+	public void viderModeleJoueurs() {
+		this.modeleJoueurs.clear();;
 	}
 	
 	public static void ajouterComboJoueur(String nom) {

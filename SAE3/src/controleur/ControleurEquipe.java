@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Joueur;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -36,7 +37,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		this.initialiserListeEcuries();
 		this.initialiserListeJeux();
 		this.initialiserListeEquipes();
-		this.initialiserListeJoueurs();
 	}
 	
 	public void initialiserListeEquipes() {		
@@ -57,9 +57,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		}
 	}
 	
-	public void initialiserListeJoueurs() {
-		for (String nomJoueur : ControleurConnexion.listeJoueurs.keySet()) {
-			this.vue.ajouterJoueur(nomJoueur);
+	public void initialiserListeJoueurs(Equipe equipe) {
+		this.vue.viderModeleJoueurs();
+		for (Joueur joueur : equipe.getJoueurs()) {
+			this.vue.ajouterJoueur(joueur.getPrenomPseudoNom());
 		}
 	}
 
@@ -166,6 +167,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.setNomEquipe(equipe.getNom());
 				this.vue.setJeu(equipe.getNomJeu());
 				this.vue.setEcurie(equipe.getEcurie().getNom());
+				this.initialiserListeJoueurs(equipe);
 			}
 		}
 	}

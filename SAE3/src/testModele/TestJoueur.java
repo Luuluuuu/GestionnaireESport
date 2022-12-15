@@ -6,10 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import modele.Ecurie;
+import modele.Equipe;
+import modele.Jeu;
 import modele.Joueur;
 
 public class TestJoueur {
-	
+
 	private Joueur joueur;
 
 	@Before
