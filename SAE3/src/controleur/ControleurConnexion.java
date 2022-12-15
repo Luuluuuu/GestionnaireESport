@@ -176,7 +176,7 @@ public class ControleurConnexion implements ActionListener {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_EQUIPE");
 			while (rs.next()) {
-				Equipe e = new Equipe(rs.getInt(1), rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)),
+				Equipe e = new Equipe(rs.getInt(1), rs.getString(2), rs.getInt(4), rs.getString(6), ControleurConnexion.listeJeuxID.get(rs.getInt(7)),
 						ControleurConnexion.listeEcuriesID.get(rs.getInt(8)));
 				ControleurConnexion.listeEquipesID.put(rs.getInt(1), e);
 				ControleurConnexion.listeEquipes.put(e.getNom(),e);
@@ -196,9 +196,7 @@ public class ControleurConnexion implements ActionListener {
 				Joueur j = new Joueur(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 				ControleurConnexion.listeJoueurs.put(j.getNom(),j);
 				
-				Equipe e = ControleurConnexion.listeEquipesID.get(rs.getInt(7));
-				ControleurConnexion.listeEquipesID.get(rs.getInt(7)).ajouterJoueur(j);;
-				ControleurConnexion.listeEquipes.get(e.getNom()).ajouterJoueur(j);
+				ControleurConnexion.listeEquipesID.get(rs.getInt(7)).ajouterJoueur(j);
 				
 			}
 			rs.close();

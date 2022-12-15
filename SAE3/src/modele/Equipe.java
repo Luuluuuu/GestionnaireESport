@@ -11,6 +11,7 @@ public class Equipe implements Comparable<Equipe> {
     private Jeu jeu;
     private Ecurie ecurie;
     private List<Poule> poule = new ArrayList<Poule> ();
+    private String nationalite;
 
     /*Constructeur d'Equipe
      * Entree :
@@ -18,10 +19,11 @@ public class Equipe implements Comparable<Equipe> {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(int ID, String nom, int pointsChampionnat, Jeu jeu, Ecurie ecurie) {
+    public Equipe(int ID, String nom, int pointsChampionnat,String nationalite, Jeu jeu, Ecurie ecurie) {
     	this.ID = ID;
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
+    	this.nationalite = nationalite;
     	this.jeu = jeu;
     	this.ecurie = ecurie;
     }
@@ -65,6 +67,10 @@ public class Equipe implements Comparable<Equipe> {
     public String getNomJeu() {
     	return this.jeu.getNom();
     }
+    
+	public String getNationalite() {
+		return this.nationalite;
+	}
  
 	public int getID() {
 		return this.ID;

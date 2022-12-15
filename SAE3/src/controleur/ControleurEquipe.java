@@ -97,7 +97,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.estVide();
 			} else {
 				// Instancie un tournoi
-				Equipe equipe = new Equipe(0,this.vue.getNom(),0,ControleurConnexion.listeJeux.get(this.vue.getJeu()),
+				Equipe equipe = new Equipe(0,this.vue.getNom(),0,this.vue.getNationalite(),ControleurConnexion.listeJeux.get(this.vue.getJeu()),
 						ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
 				//Vérifie si c'est une creation ou une modification
 				if (this.vue.titreModif.getText().equals("Créer une équipe")) {
@@ -112,7 +112,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 							e1.printStackTrace();
 						}
 						Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
-						+Year.now().getValue()+", 0, 0, 'français',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+						+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
 						+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");;
 						
 						ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
@@ -167,6 +167,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.setNomEquipe(equipe.getNom());
 				this.vue.setJeu(equipe.getNomJeu());
 				this.vue.setEcurie(equipe.getEcurie().getNom());
+				this.vue.setNationalite(equipe.getNationalite());
 				this.initialiserListeJoueurs(equipe);
 			}
 		}

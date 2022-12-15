@@ -29,7 +29,7 @@ public class TestEquipe {
 	@Before
 	public void setUp() throws Exception {
 		this.ecurie = new Ecurie(1,"Kcorp");
-		this.equipe = new Equipe(2, "fnatic", 32, jeu, ecurie);
+		this.equipe = new Equipe(2, "fnatic", 32, "allemand", jeu, ecurie);
 		this.poules = new ArrayList<Poule> ();
 		this.equipes = new ArrayList<Equipe> ();
 		this.poule = new Poule(this.equipes, true);

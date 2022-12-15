@@ -116,4 +116,9 @@ public class Joueur {
 				this.getPrenom().equals(j.getPrenom()) &&
 				this.getPseudo().equals(j.getPseudo());
 	}
+	
+	@Override
+	public String toString() {
+		return this.getPrenomPseudoNom();
+	}
 }

@@ -573,13 +573,17 @@ public class VueEquipe extends JFrame{
 	public String getEcurie() {
 		return (String) this.entreeEcurie.getSelectedItem();
 	}
+
+	public String getNom() {
+		return this.entreeNom.getText();
+	}
 	
 	public String getJeu() {
 		return (String) this.entreeJeu.getSelectedItem();
 	}
-	
-	public String getNom() {
-		return this.entreeNom.getText();
+
+	public String getNationalite() {
+		return this.entreeNationalite.getText();
 	}
 	
 	public String getRecherche() {
@@ -599,10 +603,8 @@ public class VueEquipe extends JFrame{
 		this.entreeJeu.setSelectedItem(e);
 	}
 	
-	private void setJoueurs() {
-		for (JComboBox<String> comboBox : VueEquipe.listeComboJoueurs.values()) {
-			comboBox.setSelectedItem("- Sélectionnez un joueur -");
-		}
+	public void setNationalite(String nationalite) {
+		this.entreeNationalite.setText(nationalite);
 	}
 
 	public void setDefaultListModel() {
@@ -677,11 +679,12 @@ public class VueEquipe extends JFrame{
 		VueEquipe.afficherPanel(panelModif);
 		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
 		VueEquipe.supprimerTexte(this.entreeNom);
+		VueEquipe.supprimerTexte(this.entreeNationalite);
 		this.setEcurie("- Sélectionnez une écurie -");
 		entreeEcurie.setForeground(new Color(0,0,0));
 		this.setJeu("- Sélectionnez un jeu -");
 		entreeJeu.setForeground(new Color(0,0,0));
-		this.setJoueurs();
+		this.viderModeleJoueurs();
 	}
 	
 	// MESSAGE //
