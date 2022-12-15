@@ -9,6 +9,7 @@ public class Equipe implements Comparable<Equipe> {
     private int pointsChampionnat;
     private List<Joueur> joueurs = new ArrayList<Joueur> ();
     private Jeu jeu;
+    private Ecurie ecurie;
     private List<Poule> poule = new ArrayList<Poule> ();
 
     /*Constructeur d'Equipe
@@ -17,11 +18,12 @@ public class Equipe implements Comparable<Equipe> {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(int ID, String nom, int pointsChampionnat, Jeu jeu) {
+    public Equipe(int ID, String nom, int pointsChampionnat, Jeu jeu, Ecurie ecurie) {
     	this.ID = ID;
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
     	this.jeu = jeu;
+    	this.ecurie = ecurie;
     }
     
     /*Retourne le nom de l'equipe de type String*/
@@ -52,6 +54,12 @@ public class Equipe implements Comparable<Equipe> {
     public Jeu getJeu() {
     	return this.jeu;
     }
+
+    //Retourne le jeu de l'equipe
+    public Ecurie getEcurie() {
+    	return this.ecurie;
+    }
+    
     
     //Retourne le jeu de l'equipe
     public String getNomJeu() {
@@ -62,12 +70,7 @@ public class Equipe implements Comparable<Equipe> {
 		return this.ID;
 	}
     
-    //Modifie le jeu de l'equipe
-    public void setJeu(Jeu jeu) {
-    	this.jeu = jeu;
-    }
-
-    //Retourne les points de l'equipe au championnat
+	 //Retourne les points de l'equipe au championnat
     public int getPointsChampionnat() {
         return this.pointsChampionnat;
     }
@@ -76,6 +79,15 @@ public class Equipe implements Comparable<Equipe> {
     public List<Poule> getPoules() {
         return this.poule;
     }
+    
+    //Modifie le jeu de l'equipe
+    public void setJeu(Jeu jeu) {
+    	this.jeu = jeu;
+    }
+
+	public void setID(int ID) {
+		this.ID = ID;
+	}
     
     //Ajoute une poule à la liste des poules de l'equipe
     public void ajouterPoule(Poule poule) {

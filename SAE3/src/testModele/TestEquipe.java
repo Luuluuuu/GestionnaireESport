@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import modele.Ecurie;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Joueur;
@@ -16,6 +17,7 @@ import modele.Poule;
 
 public class TestEquipe {
 
+	private Ecurie ecurie;
 	private Equipe equipe;
 	private List<Joueur> joueurs= new ArrayList<Joueur> ();
     private Jeu jeu;
@@ -26,7 +28,8 @@ public class TestEquipe {
     
 	@Before
 	public void setUp() throws Exception {
-		this.equipe = new Equipe("fnatic", 32, jeu);
+		this.ecurie = new Ecurie(1,"Kcorp");
+		this.equipe = new Equipe(2, "fnatic", 32, jeu, ecurie);
 		this.poules = new ArrayList<Poule> ();
 		this.equipes = new ArrayList<Equipe> ();
 		this.poule = new Poule(this.equipes, true);

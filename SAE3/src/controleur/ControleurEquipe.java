@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.Year;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -15,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Jeu;
 import modele.Tournoi;
 import vue.VueCalendrier;
 import vue.VueConnexion;
@@ -36,9 +35,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
 	// Initialiser les listes
 	public void initialiserListes() {
-		this.initialiserListeEquipes();
 		this.initialiserListeEcuries();
 		this.initialiserListeJeux();
+		this.initialiserListeEquipes();
+		this.initialiserListeJoueurs();
 	}
 	
 	public void initialiserListeEquipes() {		
@@ -59,38 +59,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		}
 	}
 	
-	public String getNomJeuByName(String nj) {
-		String result;
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("select sae_jeu.nomjeu, sae_equipe.nomequipe  from sae_jeu, sae_equipe where sae_jeu.idjeu = sae_equipe.idjeu");
-		try {
-			while (rs.next()) {
-				if(rs.getString(2).equals(nj)) {
-					return result = rs.getString(1);
-				}
-				
-			} 
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public void initialiserListeJoueurs() {
+		for (String nomJoueur : ControleurConnexion.listeJoueurs.keySet()) {
+			this.vue.ajouterJoueur(nomJoueur);
 		}
-		return null;
-	}
-	
-	public String getNomEcurieByName(String ec) {
-		String result;
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("select sae_ecurie.nomecurie, sae_equipe.nomequipe  from sae_ecurie, sae_equipe where sae_ecurie.idecurie = sae_equipe.idecurie");
-		try {
-			while (rs.next()) {
-				if(rs.getString(2).equals(ec)) {
-					return result = rs.getString(1);
-				}
-				
-			} 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	@Override
@@ -112,33 +84,59 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			fenCalendrier.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		case RECHERCHER:
-			String[] tabRecherche = {""};
-			if(ControleurConnexion.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
-					|| ControleurConnexion.listeEquipes.containsKey(this.vue.getTextRecherche().toLowerCase())) {
-				tabRecherche[0] = this.vue.getTextRecherche().toUpperCase(); 
-				this.vue.filtrageListeEquipe(tabRecherche);
+			if (this.vue.getRecherche()!="") {
+				this.vue.filtrerRecherche();
+			} else {
+				this.vue.setDefaultListModel();
 			}
-			if(this.vue.getTextRecherche()=="") {
-				//trouver un moyen de remettre la liste de base
-			}
+			this.vue.creerEquipe();
 			break;
 		case VALIDER:
 			//Vérifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("")
-					|| this.vue.getEcurie().equals("- Sélectionnez une écurie -")
-					|| this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
-				this.vue.setEcurie("- Sélectionnez une écurie -");
-				this.vue.setNomEquipe("");
-				this.vue.setJeu("- Sélectionnez un jeu -");
+			if(this.vue.getNom().equals("") || this.vue.getEcurie().equals("- Sélectionnez une écurie -")
+			|| this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
+				this.vue.estVide();
 			} else {
-				//valeur test drx
-				Connexion.getInstance().executerRequete("INSERT INTO sae_equipe (idEquipe, nomequipe, anneeDeCreation,nombrePoints,nombreJoueurs,nationalité,idjeu,idecurie) VALUES (1,'DRX','2021',12,2,'France',1,18)");
-				this.vue.ajouterEquipe(this.vue.getNom());
-			}
+				// Instancie un tournoi
+				Equipe equipe = new Equipe(0,this.vue.getNom(),0,ControleurConnexion.listeJeux.get(this.vue.getJeu()),
+						ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
+				//Vérifie si c'est une creation ou une modification
+				if (this.vue.titreModif.getText().equals("Créer une équipe")) {
+					// SI CREATION
+					if (!(ControleurConnexion.listeEquipes.containsKey(equipe.getNom()))) {
+						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer a l'equipe
+						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_equipeId.nextval FROM dual");
+						try {
+							if (rs.next()) {equipe.setID(rs.getInt(1));}
+							rs.close();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
+						+Year.now().getValue()+", 0, 0, 'français',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+						+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");;
+						
+						ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
+						ControleurConnexion.listeEquipesID.put(equipe.getID(),equipe);
+						this.vue.ajouterEquipe(equipe.getNom());
+				} else {
+					// SINON MODIFICATION
+					equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
+					Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
+							"', NATIONALITE = 'français', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+							+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
+					
+					ControleurConnexion.listeEquipes.remove(this.vue.getEquipeSelectionne());
+					ControleurConnexion.listeEquipes.put(equipe.getNom(), equipe);
+					ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
+					this.vue.modifierEquipe();
+					}
+				this.vue.creerEquipe();
+			}}
 			break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();
-			VueEquipe fen = new VueEquipe();
+			VueConnexion fen = new VueConnexion();
 			fen.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		break;
@@ -155,7 +153,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.creerEquipe();
 			}
 		default:
-			
 		}
 	}
 
@@ -167,10 +164,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
-				Equipe ecurie = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-				this.vue.setNomEquipe(ecurie.getNom());
-				this.vue.setJeu(ecurie.getNomJeu());
-				this.vue.setEcurie(this.getNomEcurieByName(this.vue.getEquipeSelectionne()));
+				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+				this.vue.setNomEquipe(equipe.getNom());
+				this.vue.setJeu(equipe.getNomJeu());
+				this.vue.setEcurie(equipe.getEcurie().getNom());
 			}
 		}
 	}

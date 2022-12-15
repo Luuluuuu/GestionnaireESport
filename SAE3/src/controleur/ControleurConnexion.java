@@ -34,6 +34,7 @@ public class ControleurConnexion implements ActionListener {
 	private Map<Integer, Arbitre>		listeArbitresID;
 	static 	Map<Integer, Jeu>			listeJeuxID;
 	static	Map<Integer, Equipe> 		listeEquipesID;
+	static	Map<Integer, Ecurie>		listeEcuriesID;
 	
 	public ControleurConnexion(VueConnexion vue) {
 		this.vue = vue;
@@ -152,6 +153,7 @@ public class ControleurConnexion implements ActionListener {
 	
 	private void initialiserListeEcuries() {
 		ControleurConnexion.listeEcuries = new HashMap<String,Ecurie>();
+		ControleurConnexion.listeEcuriesID = new HashMap<Integer,Ecurie>();
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
@@ -159,6 +161,7 @@ public class ControleurConnexion implements ActionListener {
 				Ecurie e = new Ecurie(rs.getInt(1),rs.getString(2));
 				e.setAnneeDeCreation(rs.getInt(3));
 				ControleurConnexion.listeEcuries.put(e.getNom(),e);
+				ControleurConnexion.listeEcuriesID.put(e.getID(),e);
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -173,7 +176,8 @@ public class ControleurConnexion implements ActionListener {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_EQUIPE");
 			while (rs.next()) {
-				Equipe e = new Equipe(rs.getInt(1), rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)));
+				Equipe e = new Equipe(rs.getInt(1), rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)),
+						ControleurConnexion.listeEcuriesID.get(rs.getInt(8)));
 				ControleurConnexion.listeEquipesID.put(rs.getInt(1), e);
 				ControleurConnexion.listeEquipes.put(e.getNom(),e);
 			}

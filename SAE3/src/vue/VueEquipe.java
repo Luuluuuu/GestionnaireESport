@@ -16,7 +16,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,19 +26,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
-import controleur.ControleurCalendrier;
 import controleur.ControleurEquipe.Etat;
 import controleur.ControleurEquipe;
-import modele.Connexion;
 
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class VueEquipe extends JFrame{
@@ -50,11 +41,12 @@ public class VueEquipe extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
 	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
-	private static List<JComboBox> listeComboJoueurs = new ArrayList<JComboBox>();
+	private static Map<String, JComboBox> listeComboJoueurs = new HashMap<String, JComboBox>();
+	private DefaultComboBoxModel<String> modeleComboJoueurs = new DefaultComboBoxModel<String>();
 	private static JPanel panel_13;
 	private JTextField recherche = new JTextField();
-	private JComboBox<String> entreeEcurie = new JComboBox();
-	private JComboBox<String> entreeJeu = new JComboBox();
+	private JComboBox<String> entreeEcurie = new JComboBox<String>();
+	private JComboBox<String> entreeJeu = new JComboBox<String>();
 	private JButton btnRechercher = new JButton("Rechercher");
 	private JButton btnValider = new JButton("Valider");
 	
@@ -224,9 +216,9 @@ public class VueEquipe extends JFrame{
 		panelContenu.add(panelModif);
 		GridBagLayout gbl_panelModif = new GridBagLayout();
 		gbl_panelModif.columnWidths = new int[]{692, 0};
-		gbl_panelModif.rowHeights = new int[] {100, 70, 70, 70, 414, 100, 0};
-		gbl_panelModif.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panelModif.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelModif.rowHeights = new int[] {100, 70, 70, 70, 414, 0, 100, 0};
+		gbl_panelModif.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_panelModif.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		panelModif.setLayout(gbl_panelModif);
 		
 		JPanel panelTitreM = new JPanel();
@@ -440,7 +432,7 @@ public class VueEquipe extends JFrame{
 		GridBagConstraints gbc_panelValider = new GridBagConstraints();
 		gbc_panelValider.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panelValider.gridx = 0;
-		gbc_panelValider.gridy = 5;
+		gbc_panelValider.gridy = 6;
 		panelModif.add(panelValider, gbc_panelValider);
 		
 
@@ -479,21 +471,33 @@ public class VueEquipe extends JFrame{
 	}
 	
 	//JOUEURS
-	public static void ajouterJoueur(String nom) {
+	public void ajouterJoueur(String nom) {
+		this.modeleComboJoueurs.addElement(nom);
+	}
+	
+	public static void ajouterComboJoueur(String nom) {
 		JComboBox<String> joueur = new JComboBox<String>();
+		joueur.addItem("- Sélectionnez un joueur -");
 		joueur.setPreferredSize(new Dimension(205, 20));
 		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_13.add(joueur);
+		VueEquipe.listeComboJoueurs.put(nom,joueur);
 	}
 	
 	//EQUIPE
-	public void ajouterEquipe(String equ) {
-		this.modeleEquipes.addElement(equ);
+	public void ajouterEquipe(String nomEquipe) {
+		this.modeleEquipes.addElement(nomEquipe);
 	}
+	
+	public void modifierEquipe() {
+		this.modeleEquipes.set(this.listeEquipes.getSelectedIndex(),this.getNom());		
+	}
+	
 	public void supprimerEquipe() {
 		this.modeleEquipes.removeElement(this.entreeNom.getText());
 		this.deselectionner();
     }
+	
 	
 	//ECURIE
 	public void ajouterEcurie(String e) {
@@ -522,6 +526,10 @@ public class VueEquipe extends JFrame{
 		return this.entreeNom.getText();
 	}
 	
+	public String getRecherche() {
+		return recherche.getText();
+	}
+	
 	// SETTER //
 	public void setNomEquipe(String e) {
 		this.entreeNom.setText(e);
@@ -535,17 +543,32 @@ public class VueEquipe extends JFrame{
 		this.entreeJeu.setSelectedItem(e);
 	}
 	
+	private void setJoueurs() {
+		for (JComboBox<String> comboBox : VueEquipe.listeComboJoueurs.values()) {
+			comboBox.setSelectedItem("- Sélectionnez un joueur -");
+		}
+	}
+
+	public void setDefaultListModel() {
+		this.listeEquipes.setModel(modeleEquipes);
+	}
+	
 	public void deselectionner() {
 		this.listeEquipes.clearSelection();
 	}
 	
-	
-	public String getTextRecherche() {
-		return recherche.getText();
-	}
-	
 	public void filtrageListeEquipe(String[] tab) {
 		this.listeEquipes.setListData(tab);
+	}
+	
+	public void filtrerRecherche() {
+		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
+	    for (int i = 0; i < this.modeleEquipes.size(); i++) {
+	    	if (this.modeleEquipes.get(i).contains(this.recherche.getText())){
+	    		modeleFiltre.addElement(this.modeleEquipes.get(i));
+	    	}
+	    }
+	    this.listeEquipes.setModel(modeleFiltre);
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -602,16 +625,11 @@ public class VueEquipe extends JFrame{
 		entreeEcurie.setForeground(new Color(0,0,0));
 		this.setJeu("- Sélectionnez un jeu -");
 		entreeJeu.setForeground(new Color(0,0,0));
-		this.setJoueurs(new ArrayList<String>());
-	}
-
-	private void setJoueurs(ArrayList<String> arrayList) {
-		for (JComboBox checkBox : VueEquipe.listeComboJoueurs.values()) {
-			checkBox.setSelected(false);
-		}
-		for (String nomJeu : jeux) {
-			VueCalendrier.listeCheck.get(nomJeu).setSelected(true);
-		}
+		this.setJoueurs();
 	}
 	
+	// MESSAGE //
+	public void estVide() {
+        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
 }
