@@ -22,7 +22,7 @@ import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPE}
 	private VueEquipe vue;
 	private Etat etat;
 	
@@ -162,13 +162,23 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		default:
 			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
-			if (!(list.isSelectionEmpty())) {
-				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-				this.vue.setNomEquipe(equipe.getNom());
-				this.vue.setJeu(equipe.getNomJeu());
-				this.vue.setEcurie(equipe.getEcurie().getNom());
-				this.vue.setNationalite(equipe.getNationalite());
-				this.initialiserListeJoueurs(equipe);
+			switch(list.getName()) {
+			case "Equipe":
+				if (!(list.isSelectionEmpty())) {
+					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+					this.vue.setNomEquipe(equipe.getNom());
+					this.vue.setJeu(equipe.getNomJeu());
+					this.vue.setEcurie(equipe.getEcurie().getNom());
+					this.vue.setNationalite(equipe.getNationalite());
+					this.initialiserListeJoueurs(equipe);
+				}
+				break;
+			case "Joueurs":
+			    if (!e.getValueIsAdjusting()) {	// gere les doubles clics
+					VueJoueur fenJoueur = new VueJoueur();
+					fenJoueur.getFrame().setVisible(true);
+					VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			    }
 			}
 		}
 	}

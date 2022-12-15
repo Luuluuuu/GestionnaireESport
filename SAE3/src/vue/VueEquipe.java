@@ -40,7 +40,7 @@ public class VueEquipe extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
 	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
-	private static Map<String, JComboBox> listeComboJoueurs = new HashMap<String, JComboBox>();
+	
 	private DefaultListModel<String> modeleJoueurs;
 	private static JPanel panel_13;
 	private JTextField recherche = new JTextField();
@@ -188,6 +188,7 @@ public class VueEquipe extends JFrame{
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
+		listeEquipes.setName("Equipe");
 		JScrollPane scrollPane = new JScrollPane(this.listeEquipes);
 		panelListe.add(scrollPane);
 
@@ -476,6 +477,7 @@ public class VueEquipe extends JFrame{
 		
 		modeleJoueurs = new DefaultListModel<String>();
 		JList<String> listeJoueurs = new JList<String>(modeleJoueurs);
+		listeJoueurs.setName("Joueurs");
 		listeJoueurs.setBackground(Couleur.BLEU1);
 		panel_13.add(listeJoueurs);
 		
@@ -505,13 +507,14 @@ public class VueEquipe extends JFrame{
 
 		// CONTROLEUR
 		ControleurEquipe controleur = new ControleurEquipe(this);
-		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
+		// VALIDER OU ANNULER INFORMATIONS SUR L'EQUIPE
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
-		// TOURNOIS
+		// LISTE
 		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
+		listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
@@ -529,15 +532,6 @@ public class VueEquipe extends JFrame{
 	
 	public void viderModeleJoueurs() {
 		this.modeleJoueurs.clear();;
-	}
-	
-	public static void ajouterComboJoueur(String nom) {
-		JComboBox<String> joueur = new JComboBox<String>();
-		joueur.addItem("- Sélectionnez un joueur -");
-		joueur.setPreferredSize(new Dimension(205, 20));
-		joueur.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_13.add(joueur);
-		VueEquipe.listeComboJoueurs.put(nom,joueur);
 	}
 	
 	//EQUIPE
@@ -673,7 +667,7 @@ public class VueEquipe extends JFrame{
 		}
 		return null;
 	}
-
+	
 	public void creerEquipe() {
 		this.deselectionner();
 		VueEquipe.afficherPanel(panelModif);
