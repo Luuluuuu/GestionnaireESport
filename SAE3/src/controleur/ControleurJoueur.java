@@ -18,6 +18,8 @@ import modele.Connexion;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Joueur;
+import vue.VueCalendrier;
+import vue.VueERA;
 import vue.VueEquipe;
 import vue.VueJoueur;
 
@@ -25,7 +27,7 @@ import vue.VueJoueur;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES}
 	private VueJoueur vue;
 	private Etat etat;
 	private	Map<String, Joueur> listeJoueurs;
@@ -62,6 +64,25 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
+		case EQUIPES :
+			VueEquipe fenEQUIPE = new VueEquipe();
+			fenEQUIPE.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
+		case JOUEURS :
+			VueJoueur fenJoueur = new VueJoueur();
+			fenJoueur.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
+		case ECURIE :
+			VueERA fenERA = new VueERA();
+			fenERA.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		case CALENDRIER :
+			VueCalendrier fenCalendrier = new VueCalendrier();
+			fenCalendrier.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
 		case RECHERCHER:
 			String[] tabRecherche = {""};
 			if(this.listeJoueurs.containsKey(this.vue.getTextRecherche().toUpperCase())
@@ -109,6 +130,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		case SUPPRIMER:
 
 		default:
+			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
 				Joueur joueur = this.listeJoueurs.get(this.vue.getJoueurSelectionne());

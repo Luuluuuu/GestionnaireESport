@@ -26,7 +26,7 @@ public class TestEquipe {
     
 	@Before
 	public void setUp() throws Exception {
-		this.equipe = new Equipe("fnatic", 32, jeu, joueurs);
+		this.equipe = new Equipe("fnatic", 32, jeu);
 		this.poules = new ArrayList<Poule> ();
 		this.equipes = new ArrayList<Equipe> ();
 		this.poule = new Poule(this.equipes, true);
@@ -64,8 +64,8 @@ public class TestEquipe {
 	
 	@Test
 	public void testAjouterJoueur() {
-		this.equipe.ajouterJoueur(joueur);
-		assertTrue(this.joueurs.contains(this.joueur));
+		this.equipe.ajouterJoueur(this.joueur);
+		assertTrue(this.equipe.getJoueurs().contains(this.joueur));
 	}
 	
 	@Test
@@ -87,13 +87,13 @@ public class TestEquipe {
 	
 	@Test
 	public void testGetPoule() {
-		assertEquals(this.equipe.getPoule(), this.poules);
+		assertEquals(this.equipe.getPoules(), this.poules);
 	}
 	
 	@Test
 	public void testAjouterPoule() {
 		this.equipe.ajouterPoule(this.poule);
-		assertTrue(this.equipe.getPoule().contains(this.poule));
+		assertTrue(this.equipe.getPoules().contains(this.poule));
 		
 	}
 	

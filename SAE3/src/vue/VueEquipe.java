@@ -41,6 +41,7 @@ import javax.swing.JCheckBox;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@SuppressWarnings("serial")
 public class VueEquipe extends JFrame{
 	
 	public JFrame fenetreEquipe;
@@ -525,7 +526,8 @@ public class VueEquipe extends JFrame{
 		btnCalendrier.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-
+		btnCalendrier.addActionListener(controleur);
+		btnJoueurs.addActionListener(controleur);
 	}
 	
 	//JOUEURS
@@ -540,7 +542,6 @@ public class VueEquipe extends JFrame{
 	public void ajouterEquipe(String equ) {
 		this.modeleEquipes.addElement(equ);
 	}
-	
 	public void supprimerEquipe(String e) {
         for(int i=0;i<modeleEquipes.size();i++) {
             if(this.modeleEquipes.get(i).equals(e)) {
@@ -554,7 +555,6 @@ public class VueEquipe extends JFrame{
 		this.entreeEcurie.addItem(e);
 	}
 
-	
 	//JEU
 	public void ajouterJeu(String j) {
 		this.entreeJeu.addItem(j);
@@ -562,7 +562,6 @@ public class VueEquipe extends JFrame{
 	
 	// GETTERS //
 	public String getEquipeSelectionne() {
-		//System.out.println(this.listeEquipes.getSelectedValue());
 		return this.listeEquipes.getSelectedValue();
 	}
 	
@@ -631,7 +630,6 @@ public class VueEquipe extends JFrame{
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;
-	
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		}

@@ -2,7 +2,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe implements Comparable {
+public class Equipe implements Comparable<Equipe> {
 	//Declaration d'attributs
     private String nom;
     private int pointsChampionnat;
@@ -16,10 +16,10 @@ public class Equipe implements Comparable {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(String nom, int pointsChampionnat, Jeu jeu, List<Joueur> joueurs) {
+    public Equipe(String nom, int pointsChampionnat, Jeu jeu) {
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
-    	this.joueurs = joueurs;
+    	this.jeu = jeu;
     }
     
     /*Retourne le nom de l'equipe de type String*/
@@ -51,6 +51,11 @@ public class Equipe implements Comparable {
     	return this.jeu;
     }
     
+  //Retourne le jeu de l'equipe
+    public String getNomJeu() {
+    	return this.jeu.getNom();
+    }
+    
     //Modifie le jeu de l'equipe
     public void setJeu(Jeu jeu) {
     	this.jeu = jeu;
@@ -62,7 +67,7 @@ public class Equipe implements Comparable {
     }
 
     //Retourne la liste des poules auquelles est inscrites l'equipe
-    public List<Poule> getPoule() {
+    public List<Poule> getPoules() {
         return this.poule;
     }
     
@@ -97,8 +102,7 @@ public class Equipe implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		Equipe e = (Equipe) o;
+	public int compareTo(Equipe e) {
 		if (this.pointsChampionnat==e.getPointsChampionnat()) {
 			return 0;
 		} else if(this.pointsChampionnat>e.getPointsChampionnat()) {

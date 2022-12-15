@@ -1,5 +1,4 @@
 package vue;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,8 +18,6 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -29,7 +26,6 @@ import controleur.ControleurERA.Entite;
 import controleur.ControleurERA.Etat;
 
 import java.awt.Color;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 public class VueERA {
@@ -287,6 +283,7 @@ public class VueERA {
 		
 		JPanel RPanelTitre = new JPanel();
 		RPanelTitre.setBackground(Couleur.BLEU1);
+		@SuppressWarnings("unused")
 		FlowLayout flowLayout_1 = (FlowLayout) RPanelTitre.getLayout();
 		RPanelHeaderContenu.add(RPanelTitre);
 		
@@ -334,6 +331,7 @@ public class VueERA {
 		
 		JPanel RPanelModification = new JPanel();
 		RPanelModification.setBackground(Couleur.BLEU1);
+		@SuppressWarnings("unused")
 		FlowLayout flowLayout = (FlowLayout) RPanelModification.getLayout();
 		GridBagConstraints gbc_RPanelModification = new GridBagConstraints();
 		gbc_RPanelModification.fill = GridBagConstraints.HORIZONTAL;
@@ -393,6 +391,7 @@ public class VueERA {
 		RPanelValider.add(RBtnAnnuler);
 		
 		JPanel RPanelBoutons = new JPanel();
+		@SuppressWarnings("unused")
 		FlowLayout flowLayout_2 = (FlowLayout) RPanelBoutons.getLayout();
 		RPanelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_RPanelBoutons = new GridBagConstraints();

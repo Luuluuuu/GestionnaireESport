@@ -1,12 +1,10 @@
 package controleur;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +13,8 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import controleur.ControleurJoueur.Etat;
-import modele.Arbitre;
 import modele.Connexion;
-import modele.Ecurie;
 import modele.Equipe;
-import modele.Jeu;
-import modele.Joueur;
-import modele.Tournoi;
 import vue.VueCalendrier;
 import vue.VueERA;
 import vue.VueEquipe;
@@ -33,16 +25,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS}
 	private VueEquipe vue;
 	private Etat etat;
-	private	Map<String, Equipe> listeEquipes;
-	//private Map<Integer, Arbitre> listeEquipesID;
-	private Map<String, Ecurie> listeEcuries;
-	private Map<String, Jeu> listeJeux;
-	private List<Joueur> listeJoueurs = new ArrayList<Joueur>();
 	
 	public ControleurEquipe(VueEquipe vue) {
 		this.vue = vue;
 		this.initialiserListes();
-		this.listeJoueurs.add(new Joueur("aa", "bb", "aa", "2000", "fr"));
 		this.etat = Etat.RECHERCHER;
 	}
 	
@@ -54,53 +40,35 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEquipes() {
-		this.listeEquipes = new HashMap<String,Equipe>();
+		/*this.listeEquipes = new HashMap<String,Equipe>();
 		try {
 			Connexion c = Connexion.getInstance();
-			//requette sql qui recupère le nom du jeu via l'id pour crée l'objet jeu
-			//ResultSet rs1 = c.retournerRequete("select * from sae_jeu,sae_equipe where sae_jeu.idjeu = sae_equipe.idjeu");
-			//new Jeu(rs1.getInt(1),rs1.getString(2)
-			//changer les valeur fixe de jeu et de la liste de joueur
-			ResultSet rs = c.retournerRequete("select * from sae_equipe");
+			ResultSet rs = c.retournerRequete("select * from sae_equipe ");
 			while (rs.next()) {
-				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), new Jeu(0,"aa",1), this.listeJoueurs);
+				Equipe e = new Equipe(rs.getString(2), rs.getInt(4), ControleurConnexion.listeJeuxID.get(rs.getInt(7)));
+				e.ajouterJoueur(null);
 				this.listeEquipes.put(e.getNom(),e);
 				this.vue.ajouterEquipe(e.getNom()); 
 			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}*/
+		
+		for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
+			this.vue.ajouterEquipe(nomEquipe);
 		}
 	}
 	
 	public void initialiserListeEcuries() {
-		this.listeEcuries = new HashMap<String,Ecurie>();
-		try {
-			Connexion c = Connexion.getInstance();
-			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_ECURIE");
-			while (rs.next()) {
-				Ecurie e = new Ecurie(rs.getInt(1),rs.getString(2));
-				this.listeEcuries.put(e.getNom(),e);
-				this.vue.ajouterEcurie(e.getNom()); 
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
+			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
 	public void initialiserListeJeux() {
-		this.listeJeux = new HashMap<String, Jeu>();
-		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JEU");
-		try {
-			while (rs.next()) {
-				Jeu j = new Jeu(rs.getInt(1),rs.getString(2),rs.getInt(3));
-				this.listeJeux.put(j.getNom(),j);
-				this.vue.ajouterJeu(j.getNom());
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
+			this.vue.ajouterJeu(nomJeu);
 		}
 	}
 	
@@ -143,10 +111,23 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
+		case ECURIE :
+			VueERA fenERA = new VueERA();
+			fenERA.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		case JOUEURS :
+			VueJoueur fenJoueur = new VueJoueur();
+			fenJoueur.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
+		case CALENDRIER :
+			VueCalendrier fenCalendrier = new VueCalendrier();
+			fenCalendrier.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		case RECHERCHER:
 			String[] tabRecherche = {""};
-			if(this.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
-					|| this.listeEquipes.containsKey(this.vue.getTextRecherche().toLowerCase())) {
+			if(ControleurConnexion.listeEquipes.containsKey(this.vue.getTextRecherche().toUpperCase())
+					|| ControleurConnexion.listeEquipes.containsKey(this.vue.getTextRecherche().toLowerCase())) {
 				tabRecherche[0] = this.vue.getTextRecherche().toUpperCase(); 
 				this.vue.filtrageListeEquipe(tabRecherche);
 			}
@@ -206,12 +187,13 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		switch(this.etat) {
 		case SUPPRIMER:
-
 		default:
+			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
-				this.vue.setNomEquipe(this.vue.getEquipeSelectionne());
-				this.vue.setJeu(this.getNomJeuByName(this.vue.getEquipeSelectionne()));
+				Equipe ecurie = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+				this.vue.setNomEquipe(ecurie.getNom());
+				this.vue.setJeu(ecurie.getNomJeu());
 				this.vue.setEcurie(this.getNomEcurieByName(this.vue.getEquipeSelectionne()));
 			}
 		}
