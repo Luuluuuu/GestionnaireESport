@@ -17,6 +17,7 @@ import modele.Responsable;
 import modele.Tournoi;
 import modele.Utilisateur;
 import vue.VueConnexion;
+import vue.VueVide;
 import vue.VueCalendrier;
 
 public class ControleurConnexion implements ActionListener {	
@@ -48,10 +49,15 @@ public class ControleurConnexion implements ActionListener {
 				if (Utilisateur.mdpCorrect(this.vue.getLogin(), this.vue.getMotDePasse())) {
 					// INITIALISER LES LISTES //
 					initialiserListes();
-					
-					VueCalendrier fen = new VueCalendrier();
-					fen.getFrame().setVisible(true);
-					VueConnexion.fermerFenetre(this.vue.fenetreConnexion);					
+					if (this.vue.getLogin().equals("admin")) {
+						VueCalendrier fen = new VueCalendrier();
+						fen.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);			
+					} else {
+						VueVide fen = new VueVide();
+						fen.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);		
+					}
 				} else {
 					this.vue.connexionEchoue();
 				}

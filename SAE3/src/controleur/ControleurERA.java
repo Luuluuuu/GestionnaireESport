@@ -96,12 +96,12 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					break;
 				case RESPONSABLE:
 					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE WHERE NOMRESPONSABLE || ' ' || PRENOMRESPONSABLE = '"+this.vue.getNomSelectionneResponsable()+"'");
+					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE WHERE IDRESPONSABLE = '"+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID()+"'");
 					ControleurConnexion.listeResponsables.remove(this.vue.getNomSelectionneResponsable());
 					break;
 				case ARBITRE:
 					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE NOMARBITRE || ' ' || PRENOMARBITRE = '"+this.vue.getNomSelectionneArbitre()+"'");
+					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE IDARBITRE = '"+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID()+"'");
 					ControleurConnexion.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
 					break;
 					
@@ -228,6 +228,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
 					}
 					ecurie.creerLogin(this.vue.getMotDePasseEcurie());
+					ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
 					this.vue.setNomEcurie("");
 					this.vue.viderMotDePasse();
 				} catch (SQLException e1) {e1.printStackTrace();}
@@ -251,6 +252,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', 0)");
 					}
 					r.creerLogin(this.vue.getMotDePasseResponsable());
+					ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
 					this.vue.setNomResponsable("","");
 					this.vue.viderMotDePasse();
 				} catch (SQLException e1) {e1.printStackTrace();}
@@ -292,6 +294,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre VALUES('"+a.getNom()+"', '"+a.getPrenom()+"', '"+a.getPseudo()+"', 0,seq_arbitreid.CURRVAL)");
 					}
 					a.creerLogin(this.vue.getMotDePasseArbitre());
+					ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
 					this.vue.setNomArbitre("","");
 					this.vue.viderMotDePasse();
 				} catch (SQLException e1) {e1.printStackTrace();}
