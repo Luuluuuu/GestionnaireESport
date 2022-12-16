@@ -1,5 +1,9 @@
 package modele;
 
+import java.awt.AWTEvent;
+
+import modele.Utilisateur.Profil;
+
 public class Joueur {
 	//Déclaration d'attributs
     private int ID;
@@ -8,6 +12,7 @@ public class Joueur {
     private String pseudo;
     private String dateNaissance;
     private String nationalite;
+    private Equipe equipe;
     
     /* Constructeur de Joueur
      * Entrees :
@@ -17,13 +22,14 @@ public class Joueur {
      * 	dateNaissance	String	date de naissance du joueur
      * 	nationalite		String	nationalite du joueur
     */
-    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite) {
+    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite, Equipe equipe) {
     	this.ID = ID;
         this.nom = nom;
         this.prenom = prenom;
         this.pseudo = pseudo;
         this.dateNaissance = dateNaissance;
         this.nationalite = nationalite;
+        this.equipe = equipe;
     }
     
     //Getters
@@ -130,5 +136,13 @@ public class Joueur {
 
 	public int getID() {
 		return this.ID;
+	}
+
+	public Equipe getEquipe() {
+		return this.equipe;
+	}
+
+	public void creerLogin(String mdp) {
+    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.JOUEUR, this.ID);
 	}
 }

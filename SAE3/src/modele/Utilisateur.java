@@ -12,7 +12,7 @@ public class Utilisateur {
     }
     
     public static void ajouterUtilisateur(String nom, String mdp,Profil profil, int ID) {
-    	String identifiant = nom.replaceAll("\\s+", "_").toLowerCase();
+    	String identifiant = (nom.replaceAll("\\s+", "_")).toLowerCase();
     	Utilisateur.liste.put(identifiant,mdp.hashCode());
     	switch (profil) {
     	case RESPONSABLE:

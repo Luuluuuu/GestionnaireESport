@@ -40,11 +40,18 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	// Initialiser les listes
 	public void initialiserListes() {
 		this.initialiserListeJoueurs();
+		this.intialiserListeEquipes();
 	}
 	
 	public void initialiserListeJoueurs() {		
 		for (String nomJoueur : ControleurConnexion.listeJoueurs.keySet()) {
 			this.vue.ajouterJoueur(nomJoueur);
+		}
+	}
+	
+	public void intialiserListeEquipes() {		
+		for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
+			this.vue.ajouterEquipe(nomEquipe);
 		}
 	}
 	
@@ -92,17 +99,15 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			break;
 		case VALIDER:
 			//Vérifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("")
-					|| this.vue.getPrenom().equals("")
-					|| this.vue.getPseudo().equals("")
-					|| this.vue.getDateNaissance().equals("")
-					|| this.vue.getNationalite().equals("")) {
+			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- Sélectionnez une équipe -")
+					|| this.vue.getPrenom().equals("") || this.vue.getPseudo().equals("")
+					|| this.vue.getDateNaissance().equals("") || this.vue.getNationalite().equals("")) {
 				this.vue.estVide();
 				b.setForeground(Color.RED);
 			} else {
 				// Instancie un tournoi
 				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),this.vue.getPseudo(), this.vue.getDateNaissance(),
-						this.vue.getNationalite());
+						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()));
 				//Vérifie si c'est une creation ou une modification
 				if (this.vue.titreModif.getText().equals("Créer un joueur")) {
 					// SI CREATION
@@ -119,9 +124,10 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 						}
 						Connexion.getInstance().executerRequete("INSERT INTO sae_joueur VALUES (seq_joueurid.currval, '"+joueur.getNom()
 						+"', '"+joueur.getPrenom()+"', '"+joueur.getPseudo()+"', TO_DATE('"+joueur.getDateNaissance()+"','DD-MM-YYYY'), '"
-						+joueur.getNationalite()+"', 1, '')");
+						+joueur.getNationalite()+"', "+joueur.getEquipe().getID()+", '')");
 						
-						ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(),joueur);	
+						ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(),joueur);
+						joueur.creerLogin(this.vue.getMotDePasse());
 						this.vue.ajouterJoueur(joueur.getPrenomPseudoNom());
 					}
 				} else {
@@ -130,20 +136,32 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 					Connexion.getInstance().executerRequete("UPDATE SAE_JOUEUR SET NOMJOUEUR = '"+joueur.getNom()+
 							"', PRENOMJOUEUR = '"+joueur.getPrenom()+"', PSEUDOJOUEUR = '"+joueur.getPseudo()+
 							"', DATENAISSANCE = TO_DATE('"+joueur.getDateNaissance()+"','DD-MM-YYYY'), NATIONALITE = '"+
-							joueur.getNationalite()+"' WHERE IDJOUEUR = "+joueur.getID());
+							joueur.getNationalite()+"', IDEQUIPE = "+ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()).getID()+
+							" WHERE IDJOUEUR = "+joueur.getID());
+					// CREER IDENTIFIANTS JOUEUR
+					String identifiant = ((this.vue.getNom()+"."+this.vue.getPrenom()).replaceAll("\\s+", "_")).toLowerCase();
+					if (!(this.vue.getMotDePasse().isEmpty())) {
+						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+identifiant
+								+ "', MOTDEPASSE='"+this.vue.getMotDePasse().hashCode()+
+								"' WHERE IDJOUEUR = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+					} else {
+						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+identifiant+
+						"' WHERE IDJOUEUR = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+					}
 					ControleurConnexion.listeJoueurs.remove(this.vue.getJoueurSelectionne());
 					ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(), joueur);
-					this.vue.modifierEquipe();
-					
+					this.vue.modifierJoueur();
 				}
 					this.vue.creerJoueur();
-					b.setForeground(Color.BLACK);
+					this.vue.viderMotDePasse();
+					b.setForeground(Color.WHITE);
 			}
 			break;
 		case SUPPRIMER:
 			if ((this.vue.getJoueurSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
-				Connexion.getInstance().executerRequete("delete sae_joueur where prenomJoueur||' ('||pseudoJoueur||') '||nomJoueur='"
-														+this.vue.getJoueurSelectionne()+"'");
+				Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE idjoueur = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+				Connexion.getInstance().executerRequete("delete sae_joueur where idjoueur="
+							+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 				this.vue.supprimerJoueur();
 			}
 			this.vue.creerJoueur();
@@ -156,6 +174,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		switch(this.etat) {
 		case SUPPRIMER:
+			this.etat = Etat.CREER;
 		break;
 		default:
 			@SuppressWarnings("unchecked")
@@ -163,6 +182,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			if (!(list.isSelectionEmpty())) {
 				VueJoueur.afficherTexte(this.vue.titreModif, "Modifier un joueur");
 				Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
+				this.vue.setEquipe(joueur.getEquipe().getNom());
 				this.vue.setNomJoueur(joueur.getNom());
 				this.vue.setPrenomJoueur(joueur.getPrenom());
 				this.vue.setPseudoJoueur(joueur.getPseudo());

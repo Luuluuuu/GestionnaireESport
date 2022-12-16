@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,6 +47,8 @@ public class VueJoueur extends JFrame{
 	private JTextField entreeNationalite = new JTextField();
 	private JButton btnValider = new JButton("Valider");
 	private JPasswordField entreeMdp;
+	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
+	private JComboBox<String> entreeEquipe;
 	
 	public JFrame getFrame() {
 		return this.fenetreJoueur;
@@ -282,6 +285,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_8.gridy = 0;
 		panelEquipe.add(panel_8, gbc_panel_8);
 		
+		// EQUIPE
 		JLabel equipe = new JLabel("Equipe");
 		equipe.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_8.add(equipe);
@@ -296,9 +300,10 @@ public class VueJoueur extends JFrame{
 		gbc_panel_11.gridy = 0;
 		panelEquipe.add(panel_11, gbc_panel_11);
 		
-		JComboBox entreeEquipe = new JComboBox();
+		entreeEquipe = new JComboBox<String>(modeleEquipes);
 		entreeEquipe.setPreferredSize(new Dimension(205, 20));
 		entreeEquipe.setFont(new Font("Roboto", Font.PLAIN, 11));
+		modeleEquipes.addElement("- Sélectionnez une équipe -");
 		panel_11.add(entreeEquipe);
 		
 		JPanel panelNom = new JPanel();
@@ -627,7 +632,7 @@ public class VueJoueur extends JFrame{
 		this.modeleJoueurs.addElement(j);
 	}
 	
-	public void modifierEquipe() {
+	public void modifierJoueur() {
 		this.modeleJoueurs.set(this.listeJoueurs.getSelectedIndex(),this.getPrenom()+" ("+this.getPseudo()+") "+this.getNom());	
 	}
 	
@@ -760,9 +765,30 @@ public class VueJoueur extends JFrame{
 		VueJoueur.supprimerTexte(this.entreePseudo);
 		VueJoueur.supprimerTexte(this.entreeDateNaissance);
 		VueJoueur.supprimerTexte(this.entreeNationalite);
+		this.entreeEquipe.setSelectedItem("- Sélectionnez une équipe -");
 	}
 
 	public void estVide() {
-		
+        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public String getNomEquipe() {
+		return (String) this.entreeEquipe.getSelectedItem();
+	}
+
+	public void setEquipe(String nom) {
+		this.entreeEquipe.setSelectedItem(nom);
+	}
+
+	public void ajouterEquipe(String nomEquipe) {
+		this.modeleEquipes.addElement(nomEquipe);
+	}
+
+	public String getMotDePasse() {
+		return String.valueOf(this.entreeMdp.getPassword());
+	}
+
+	public void viderMotDePasse() {
+		this.entreeMdp.setText("");
 	}
 }

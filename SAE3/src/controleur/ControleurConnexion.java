@@ -201,7 +201,7 @@ public class ControleurConnexion implements ActionListener {
 					+ "NATIONALITE,IDEQUIPE FROM SAE_JOUEUR");
 			while (rs.next()) {
 				Joueur j = new Joueur(rs.getInt("IDJOUEUR"),rs.getString("NOMJOUEUR"), rs.getString("PRENOMJOUEUR"), rs.getString("PSEUDOJOUEUR"), 
-						rs.getString(5), rs.getString("NATIONALITE"));
+						rs.getString(5), rs.getString("NATIONALITE"), ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")));
 				ControleurConnexion.listeJoueurs.put(j.getPrenomPseudoNom(),j);
 				ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")).ajouterJoueur(j);
 			}
