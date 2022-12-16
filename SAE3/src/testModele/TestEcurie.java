@@ -28,7 +28,7 @@ public class TestEcurie {
 	public void setUp() throws Exception{
 		this.ecurie = new Ecurie(1,"Kcorp");
 		this.jeu = new Jeu(1,"league of legends", 5);
-		this.joueur = new Joueur("maltra","léo","léo123","06/02/98","Allemagne");
+		this.joueur = new Joueur(2,"maltra","léo","léo123","06/02/98","Allemagne");
 		this.equipe = new Equipe(2, "DRX",12, "allemand", jeu, ecurie);
 		this.equipe.ajouterJoueur(joueur);
 	}

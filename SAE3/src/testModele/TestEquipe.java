@@ -33,7 +33,7 @@ public class TestEquipe {
 		this.poules = new ArrayList<Poule> ();
 		this.equipes = new ArrayList<Equipe> ();
 		this.poule = new Poule(this.equipes, true);
-		this.joueur = new Joueur("maltra","léo","léo123","06/02/98","Allemagne");
+		this.joueur = new Joueur(2,"maltra","léo","léo123","06/02/98","Allemagne");
 	}
 
 	@After

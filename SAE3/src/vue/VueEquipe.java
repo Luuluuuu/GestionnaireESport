@@ -50,7 +50,6 @@ public class VueEquipe extends JFrame{
 	private JButton btnValider = new JButton("Valider");
 	private JTextField entreeNationalite;
 	
-
 	public JFrame getFrame() {
 		return this.fenetreEquipe;
 	}

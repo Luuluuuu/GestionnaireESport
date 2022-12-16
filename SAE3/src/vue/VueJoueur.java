@@ -104,7 +104,7 @@ public class VueJoueur extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -195,7 +195,7 @@ public class VueJoueur extends JFrame{
 		panelEquipe.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("Cr\u00E9er un nouveau joueur");
+		JButton btnCreer = new JButton("Créer un nouveau joueur");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnCreer.setBackground(Couleur.BLEU2);
@@ -498,8 +498,6 @@ public class VueJoueur extends JFrame{
 		gbc_panelValider.gridy = 6;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-
-		
 		btnValider.setFont(new Font("Roboto", Font.PLAIN, 11));
 		btnValider.setText("Valider");
 		panelValider.add(btnValider);
@@ -512,16 +510,16 @@ public class VueJoueur extends JFrame{
 		panelValider.add(btnAnnuler);
 		// CONTROLEUR
 		ControleurJoueur controleur = new ControleurJoueur(this);
-		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
+		// VALIDER OU ANNULER INFORMATIONS SUR LE JOUEUR
 		btnAnnuler.addActionListener(controleur);
-		
+		btnCreer.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
 		btnEquipes.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnCalendrier.addActionListener(controleur);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
-		// GESTION DES TOURNOIS
+		// GESTION DES JOUEURS
 		this.listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
 		btnValider.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
@@ -532,12 +530,13 @@ public class VueJoueur extends JFrame{
 		this.modeleJoueurs.addElement(j);
 	}
 	
-	public void supprimerJoueur(String e) {
-        for(int i=0;i<modeleJoueurs.size();i++) {
-            if(this.modeleJoueurs.get(i).equals(e)) {
-                this.modeleJoueurs.remove(i);
-            }
-        }
+	public void modifierEquipe() {
+		this.modeleJoueurs.set(this.listeJoueurs.getSelectedIndex(),this.getPrenom()+" ("+this.getPseudo()+") "+this.getNom());	
+	}
+	
+	public void supprimerJoueur() {
+		this.modeleJoueurs.removeElement(this.getJoueurSelectionne());
+		this.deselectionner();
     }
 	
 	// GETTERS //
@@ -590,6 +589,11 @@ public class VueJoueur extends JFrame{
 		this.entreeNationalite.setText(j);
 	}
 	
+	public void setDefaultListModel() {
+		this.listeJoueurs.setModel(modeleJoueurs);
+	}
+	
+	// FENETRE //
 	public static void afficherPanel(JPanel p) {
 		p.setVisible(true);
 	}
@@ -606,9 +610,15 @@ public class VueJoueur extends JFrame{
 		t.setText(null);
 	}
 	
-	//VOID
-	public void filtrageListeJoueur(String[] tab) {
-		this.listeJoueurs.setListData(tab);
+	//FILTRE
+	public void filtrerRecherche() {
+		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
+	    for (int i = 0; i < this.modeleJoueurs.size(); i++) {
+	    	if (this.modeleJoueurs.get(i).contains(this.recherche.getText())){
+	    		modeleFiltre.addElement(this.modeleJoueurs.get(i));
+	    	}
+	    }
+	    this.listeJoueurs.setModel(modeleFiltre);
 	}
 	
 	public int confirmerSuppression() {
@@ -620,7 +630,7 @@ public class VueJoueur extends JFrame{
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se dÃ©connecter") {
+		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer le joueur sélectionné") {
 			return Etat.SUPPRIMER;
@@ -639,5 +649,23 @@ public class VueJoueur extends JFrame{
 		}
 		return null;
 	}
+
+	private void deselectionner() {
+		this.listeJoueurs.clearSelection();
+	}	
 	
+	public void creerJoueur() {
+		this.deselectionner();
+		VueJoueur.afficherPanel(panelModif);
+		VueJoueur.afficherTexte(this.titreModif, "Créer un joueur");
+		VueJoueur.supprimerTexte(this.entreeNom);
+		VueJoueur.supprimerTexte(this.entreePrenom);
+		VueJoueur.supprimerTexte(this.entreePseudo);
+		VueJoueur.supprimerTexte(this.entreeDateNaissance);
+		VueJoueur.supprimerTexte(this.entreeNationalite);
+	}
+
+	public void estVide() {
+		
+	}
 }

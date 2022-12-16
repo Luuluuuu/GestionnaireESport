@@ -122,7 +122,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					// SINON MODIFICATION
 					equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
 					Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
-							"', NATIONALITE = 'français', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+							"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
 							+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
 					
 					ControleurConnexion.listeEquipes.remove(this.vue.getEquipeSelectionne());
@@ -165,6 +165,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
+					VueJoueur.afficherTexte(this.vue.titreModif, "Modifier une équipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());
