@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,7 +24,7 @@ import javax.swing.SwingConstants;
 import controleur.ControleurConnexion;
 
 @SuppressWarnings("serial")
-public class VueConnexion extends JFrame {
+public class VueConnexion extends JFrame implements KeyListener{
 	
 	public JFrame fenetreConnexion;
 	private JTextField entreeNomUtilisateur;
@@ -151,6 +153,29 @@ public class VueConnexion extends JFrame {
 		btnConnexion.setBackground(Couleur.BLEU2);
 		panelBtnConnexion.add(btnConnexion);
 		btnConnexion.addActionListener(controleur);
+		btnConnexion.addKeyListener(this);
+		entreeNomUtilisateur.addKeyListener(this);
+		entreeMotDePasse.addKeyListener(this);
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+
+	}
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			ControleurConnexion c = new ControleurConnexion(this);
+			c.actionPerformed(null);
+			System.out.println("ok");
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
 		
 	}
 	

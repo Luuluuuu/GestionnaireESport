@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import oracle.jdbc.driver.*;
 
 @SuppressWarnings("unused")
@@ -55,6 +57,9 @@ public class Connexion {
 		try {
 			st.executeQuery(req);
 		}catch (SQLException e){
+			if(e.getMessage().contains("ORA-02290")) {
+				JOptionPane.showMessageDialog(null, "La date n'est pas valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
 			e.printStackTrace();
 		}
 	}

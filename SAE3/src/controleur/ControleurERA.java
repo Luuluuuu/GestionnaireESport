@@ -81,7 +81,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			fenJOUEUR.getFrame().setVisible(true);
 			VueERA.fermerFenetre(this.vue.fenetreERA);
 		break;
-		
 		case ANNULER:
 		case CREER :
 			this.vue.setNom("","");

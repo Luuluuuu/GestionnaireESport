@@ -191,13 +191,13 @@ public class ControleurConnexion implements ActionListener {
 		ControleurConnexion.listeJoueurs = new HashMap<String,Joueur>();
 		try {
 			Connexion c = Connexion.getInstance();
-			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_JOUEUR");
+			ResultSet rs = c.retournerRequete("SELECT IDJOUEUR, NOMJOUEUR,PRENOMJOUEUR,PSEUDOJOUEUR,to_char(DATENAISSANCE,'DD-MM-YYYY'),"
+					+ "NATIONALITE,IDEQUIPE FROM SAE_JOUEUR");
 			while (rs.next()) {
-				Joueur j = new Joueur(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
-				ControleurConnexion.listeJoueurs.put(j.getNom(),j);
-				
-				ControleurConnexion.listeEquipesID.get(rs.getInt(7)).ajouterJoueur(j);
-				
+				Joueur j = new Joueur(rs.getInt("IDJOUEUR"),rs.getString("NOMJOUEUR"), rs.getString("PRENOMJOUEUR"), rs.getString("PSEUDOJOUEUR"), 
+						rs.getString(5), rs.getString("NATIONALITE"));
+				ControleurConnexion.listeJoueurs.put(j.getPrenomPseudoNom(),j);
+				ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")).ajouterJoueur(j);
 			}
 			rs.close();
 		} catch (SQLException e) {

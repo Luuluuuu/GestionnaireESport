@@ -17,7 +17,7 @@ public class TestJoueur {
 
 	@Before
 	public void setUp() throws Exception {
-		this.joueur = new Joueur("maltra","léo","léo123","06/02/98","Allemagne");
+		this.joueur = new Joueur(2,"maltra","léo","léo123","06/02/98","Allemagne");
 	}
 
 	@After

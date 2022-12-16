@@ -2,6 +2,7 @@ package modele;
 
 public class Joueur {
 	//Déclaration d'attributs
+    private int ID;
     private String nom;
     private String prenom;
     private String pseudo;
@@ -16,7 +17,8 @@ public class Joueur {
      * 	dateNaissance	String	date de naissance du joueur
      * 	nationalite		String	nationalite du joueur
     */
-    public Joueur(String nom, String prenom, String pseudo, String dateNaissance, String nationalite) {
+    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite) {
+    	this.ID = ID;
         this.nom = nom;
         this.prenom = prenom;
         this.pseudo = pseudo;
@@ -96,6 +98,10 @@ public class Joueur {
         this.nationalite = nationalite;
     }
 
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+
     /*Retourne VRAI si le joueur est egal a obj
      * FAUX sinon*/
 	@Override
@@ -120,5 +126,9 @@ public class Joueur {
 	@Override
 	public String toString() {
 		return this.getPrenomPseudoNom();
+	}
+
+	public int getID() {
+		return this.ID;
 	}
 }
