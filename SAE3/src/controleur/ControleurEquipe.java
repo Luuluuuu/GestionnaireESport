@@ -118,8 +118,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 						ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
 						ControleurConnexion.listeEquipesID.put(equipe.getID(),equipe);
 						this.vue.ajouterEquipe(equipe.getNom());
-				} else {
+					}}
+				else {
 					// SINON MODIFICATION
+					System.out.println("aled");
 					equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
 					Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
 							"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
@@ -131,7 +133,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					this.vue.modifierEquipe();
 					}
 				this.vue.creerEquipe();
-			}}
+			}
 			break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();

@@ -289,7 +289,7 @@ public class VueEquipe extends JFrame{
 		this.entreeEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
 		this.entreeEcurie.setPreferredSize(new Dimension(205, 20));
 		panel_1.add(entreeEcurie);
-		this.entreeEcurie.addItem("- Sélectionnez une écurie -");
+		this.entreeEcurie.addItem("- S\u00E9lectionnez une \u00E9curie -");
 		
 		
 		JPanel panelNom = new JPanel();
@@ -385,7 +385,7 @@ public class VueEquipe extends JFrame{
 		
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panel_7.add(entreeJeu);
-		this.entreeJeu.addItem("- Sélectionnez un jeu -");
+		this.entreeJeu.addItem("- S\u00E9lectionnez un jeu -");
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);

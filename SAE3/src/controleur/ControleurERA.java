@@ -125,6 +125,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		case RECHERCHER:
 			if (this.vue.getRecherche()!="") {
 				this.vue.filtrerRecherche();
+				this.vue.setNom("","");
 			} else {
 				this.vue.setDefaultListModel();
 			}
@@ -202,7 +203,8 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
 			if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+"' WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN = '"+this.vue.getMotDePasseEcurie()+"'MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+
+						"' WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
 			}
 			Ecurie ecurie = ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne());
 			ControleurConnexion.listeEcuries.remove(ecurie.getNom());
@@ -266,7 +268,8 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomResponsable()+"."+this.vue.getPrenomResponsable()+
+						"' MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
 			}
 			Responsable r = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable());
 			ControleurConnexion.listeResponsables.remove(r.getPrenomNom());
@@ -310,7 +313,8 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 					"', PRENOMARBITRE = '"+this.vue.getPrenomArbitre()+
 					"' WHERE IDARBITRE ="+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
 			if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomArbitre()+"."+this.vue.getPrenomArbitre()
+						+ "' MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
 						"' WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
 			}
 			Arbitre a = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre());
