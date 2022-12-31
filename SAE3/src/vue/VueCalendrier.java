@@ -191,7 +191,7 @@ public class VueCalendrier extends JFrame{
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
-		panelModif.setBackground(new Color(123,149,184));
+		panelModif.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelModif);
 		GridBagLayout gbl_panelModif = new GridBagLayout();
 		gbl_panelModif.columnWidths = new int[]{692, 0};
