@@ -42,6 +42,7 @@ public class VueEquipe extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleEquipes= new DefaultListModel<String>();
 	private JList<String> listeEquipes = new JList<String>(modeleEquipes);
+	private JList<String> listeJoueurs;
 	
 	private DefaultListModel<String> modeleJoueurs;
 	private static JPanel panel_13;
@@ -482,7 +483,7 @@ public class VueEquipe extends JFrame{
 		panel_13.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 20));
 		
 		modeleJoueurs = new DefaultListModel<String>();
-		JList<String> listeJoueurs = new JList<String>(modeleJoueurs);
+		listeJoueurs = new JList<String>(modeleJoueurs);
 		listeJoueurs.setName("Joueurs");
 		listeJoueurs.setBackground(Couleur.BLEU1);
 		panel_13.add(listeJoueurs);
@@ -563,6 +564,10 @@ public class VueEquipe extends JFrame{
 	// GETTERS //
 	public String getEquipeSelectionne() {
 		return this.listeEquipes.getSelectedValue();
+	}
+	
+	public String getJoueurSelectionne() {
+		return this.listeJoueurs.getSelectedValue();
 	}
 	
 	public String getEcurie() {
@@ -688,4 +693,5 @@ public class VueEquipe extends JFrame{
 	public void estVide() {
         JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
     }
+
 }

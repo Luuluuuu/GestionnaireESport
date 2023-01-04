@@ -190,6 +190,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			    if (!e.getValueIsAdjusting()) {	// gere les doubles clics
 					VueJoueur fenJoueur = new VueJoueur();
 					fenJoueur.getFrame().setVisible(true);
+					VueJoueur.afficherTexte(this.vue.titreModif, "Modifier un joueur");
+					Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
+					fenJoueur.setEquipe(joueur.getEquipe().getNom());
+					fenJoueur.setNomJoueur(joueur.getNom());
+					fenJoueur.setPrenomJoueur(joueur.getPrenom());
+					fenJoueur.setPseudoJoueur(joueur.getPseudo());
+					fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
+					fenJoueur.setNationaliteJoueur(joueur.getNationalite());
 					VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 			    }
 			}
