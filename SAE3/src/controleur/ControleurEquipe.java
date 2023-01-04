@@ -121,22 +121,32 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
-						Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
-						+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-						+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");;
-						
+						if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+							Connexion.getInstance().executerRequete("INSERT INTO sae_equipe (idequipe,nomequipe,anneedecreation,nombrepoints,nombrejoueurs,nationalite,idjeu)"
+									+ "VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
+							+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+							+")");
+						}else {
+							Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
+							+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+							+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");
+						}
 						ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
 						ControleurConnexion.listeEquipesID.put(equipe.getID(),equipe);
 						this.vue.ajouterEquipe(equipe.getNom());
-					}}
-				else {
+					}
+				}else {
 					// SINON MODIFICATION
-					System.out.println("aled");
 					equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
-					Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
-							"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-							+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
-					
+					if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+						Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
+								"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+								+"WHERE IDEQUIPE = "+equipe.getID());
+					} else {
+						Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
+								"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+								+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
+					}
 					ControleurConnexion.listeEquipes.remove(this.vue.getEquipeSelectionne());
 					ControleurConnexion.listeEquipes.put(equipe.getNom(), equipe);
 					ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
