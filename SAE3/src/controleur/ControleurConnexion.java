@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import modele.Arbitre;
@@ -16,8 +18,11 @@ import modele.Joueur;
 import modele.Responsable;
 import modele.Tournoi;
 import modele.Utilisateur;
+import modele.Utilisateur.Profil;
 import vue.VueConnexion;
-import vue.VueVide;
+import vue.VueEquipe;
+import vue.VueJoueur;
+import vue.VueRentrerPoints;
 import vue.VueCalendrier;
 
 public class ControleurConnexion implements ActionListener {	
@@ -37,6 +42,11 @@ public class ControleurConnexion implements ActionListener {
 	static	Map<Integer, Equipe> 		listeEquipesID;
 	static	Map<Integer, Ecurie>		listeEcuriesID;
 	
+	static 	List<String>				listeEquipesParEcurie;
+	static 	List<String>				listeJoueursParEcurie;
+	
+	public 	static Utilisateur.Profil 	profilUtilisateur;
+	
 	public ControleurConnexion(VueConnexion vue) {
 		this.vue = vue;
 		Connexion.getInstance();
@@ -46,20 +56,36 @@ public class ControleurConnexion implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (this.vue.estRemplie()) {
 			try {
-				if (Utilisateur.mdpCorrect(this.vue.getLogin(), this.vue.getMotDePasse())) {
-					// INITIALISER LES LISTES //
-					initialiserListes();
-					if (this.vue.getLogin().equals("admin")) {
-						VueCalendrier fen = new VueCalendrier();
-						fen.getFrame().setVisible(true);
-						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);			
-					} else {
-						VueVide fen = new VueVide();
-						fen.getFrame().setVisible(true);
-						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);		
-					}
+				profilUtilisateur = Utilisateur.mdpCorrect(this.vue.getLogin(), this.vue.getMotDePasse());
+				if (profilUtilisateur == null) {
+					this.vue.connexionEchoue();					
 				} else {
-					this.vue.connexionEchoue();
+					switch (profilUtilisateur) {
+					case GESTIONNAIRE:
+						initialiserListes();
+						VueCalendrier fenAdmin = new VueCalendrier();
+						fenAdmin.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);		
+						break;
+					case RESPONSABLE:
+						initialiserListes();
+						break;
+					case ARBITRE:
+						initialiserListes();
+						VueRentrerPoints fenArbitre = new VueRentrerPoints();
+						fenArbitre.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);
+						break;
+					case ECURIE:
+						initialiserListes();
+						VueEquipe fenEquipe = new VueEquipe();
+						fenEquipe.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);
+						break;
+					case JOUEUR:
+						initialiserListes();
+						break;
+					}
 				}
 			} catch (SQLException ee) {
 				ee.printStackTrace();
@@ -178,6 +204,9 @@ public class ControleurConnexion implements ActionListener {
 	public void initialiserListeEquipes() {
 		ControleurConnexion.listeEquipes = new HashMap<String,Equipe>();
 		ControleurConnexion.listeEquipesID = new HashMap<Integer,Equipe>();
+		if (profilUtilisateur == Profil.ECURIE) {
+			listeEquipesParEcurie = new ArrayList<String>();
+		}
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_EQUIPE");
@@ -186,6 +215,10 @@ public class ControleurConnexion implements ActionListener {
 						ControleurConnexion.listeEcuriesID.get(rs.getInt(8)));
 				ControleurConnexion.listeEquipesID.put(rs.getInt(1), e);
 				ControleurConnexion.listeEquipes.put(e.getNom(),e);
+				
+				if (profilUtilisateur == Profil.ECURIE && rs.getInt(8) == Utilisateur.IDCourant) {
+					listeEquipesParEcurie.add(e.getNom());
+				}
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -195,15 +228,23 @@ public class ControleurConnexion implements ActionListener {
 	
 	public void initialiserListeJoueurs() {
 		ControleurConnexion.listeJoueurs = new HashMap<String,Joueur>();
+		if (profilUtilisateur == Profil.ECURIE) {
+			listeJoueursParEcurie = new ArrayList<String>();
+		}
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT IDJOUEUR, NOMJOUEUR,PRENOMJOUEUR,PSEUDOJOUEUR,to_char(DATENAISSANCE,'DD-MM-YYYY'),"
 					+ "NATIONALITE,IDEQUIPE FROM SAE_JOUEUR");
 			while (rs.next()) {
+				Equipe equipe = ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE"));
 				Joueur j = new Joueur(rs.getInt("IDJOUEUR"),rs.getString("NOMJOUEUR"), rs.getString("PRENOMJOUEUR"), rs.getString("PSEUDOJOUEUR"), 
-						rs.getString(5), rs.getString("NATIONALITE"), ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")));
+						rs.getString(5), rs.getString("NATIONALITE"), equipe);
 				ControleurConnexion.listeJoueurs.put(j.getPrenomPseudoNom(),j);
 				ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")).ajouterJoueur(j);
+				
+				if (profilUtilisateur == Profil.ECURIE && listeEquipesParEcurie.contains(equipe.getNom())) {
+					listeJoueursParEcurie.add(j.getPrenomPseudoNom());
+				}
 			}
 			rs.close();
 		} catch (SQLException e) {

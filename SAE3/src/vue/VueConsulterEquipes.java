@@ -189,7 +189,7 @@ public class VueConsulterEquipes {
 		JComboBox selectionJeu = new JComboBox();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- Sélectionnez un jeu -");
+		selectionJeu.addItem("- SÃ©lectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();

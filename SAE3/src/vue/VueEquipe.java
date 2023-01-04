@@ -26,6 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurEquipe.Etat;
+import modele.Utilisateur.Profil;
+import controleur.ControleurConnexion;
 import controleur.ControleurEquipe;
 
 import java.util.HashMap;
@@ -61,6 +63,9 @@ public class VueEquipe extends JFrame{
 		fenetreEquipe.setResizable(false);
 		fenetreEquipe.setBounds(100, 100, 1400, 900);
 		fenetreEquipe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// CONTROLEUR
+		ControleurEquipe controleur = new ControleurEquipe(this);
 		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
@@ -72,19 +77,21 @@ public class VueEquipe extends JFrame{
 		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
-		JButton btnCalendrier = new JButton("Calendrier");
-		btnCalendrier.setForeground(Color.WHITE);
-		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnCalendrier.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnCalendrier);
-		
-		JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
-		btnEcuries.setForeground(Color.WHITE);
-		btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEcuries.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnEcuries);
-		
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+			JButton btnCalendrier = new JButton("Calendrier");
+			btnCalendrier.setForeground(Color.WHITE);
+			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
+			btnCalendrier.setBackground(Couleur.BLEU2);
+			panelMenu.add(btnCalendrier);
+			btnCalendrier.addActionListener(controleur);
+			
+			JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
+			btnEcuries.setForeground(Color.WHITE);
+			btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
+			btnEcuries.setBackground(Couleur.BLEU2);
+			panelMenu.add(btnEcuries);
+			btnEcuries.addActionListener(controleur);
+		}
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -269,27 +276,27 @@ public class VueEquipe extends JFrame{
 		panelNomEcurie.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
-		JLabel nomEcurie = new JLabel("S\u00E9lectionner l'\u00E9curie");
-		nomEcurie.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel.add(nomEcurie);
-		nomEcurie.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Couleur.BLEU1);
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 1;
-		gbc_panel_1.gridy = 0;
-		panelNomEcurie.add(panel_1, gbc_panel_1);
-		entreeEcurie.setToolTipText("");
-		
-		//this.entreeEcurie 
-		this.entreeEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
-		this.entreeEcurie.setPreferredSize(new Dimension(205, 20));
-		panel_1.add(entreeEcurie);
-		this.entreeEcurie.addItem("- S\u00E9lectionnez une \u00E9curie -");
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+			JLabel nomEcurie = new JLabel("S\u00E9lectionner l'\u00E9curie");
+			nomEcurie.setFont(new Font("Roboto", Font.BOLD, 14));
+			panel.add(nomEcurie);
+			nomEcurie.setHorizontalAlignment(SwingConstants.CENTER);
+	
+			JPanel panel_1 = new JPanel();
+			panel_1.setBackground(Couleur.BLEU1);
+			FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+			flowLayout.setAlignment(FlowLayout.LEFT);
+			GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+			gbc_panel_1.fill = GridBagConstraints.BOTH;
+			gbc_panel_1.gridx = 1;
+			gbc_panel_1.gridy = 0;
+			panelNomEcurie.add(panel_1, gbc_panel_1);
+			entreeEcurie.setToolTipText("");
+
+			this.entreeEcurie.setFont(new Font("Roboto", Font.PLAIN, 11));
+			this.entreeEcurie.setPreferredSize(new Dimension(205, 20));
+			panel_1.add(entreeEcurie);
+		}
 		
 		
 		JPanel panelNom = new JPanel();
@@ -504,8 +511,6 @@ public class VueEquipe extends JFrame{
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
 
-		// CONTROLEUR
-		ControleurEquipe controleur = new ControleurEquipe(this);
 		// VALIDER OU ANNULER INFORMATIONS SUR L'EQUIPE
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
@@ -517,10 +522,7 @@ public class VueEquipe extends JFrame{
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
-		btnCalendrier.addActionListener(controleur);
-		btnEcuries.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-		btnCalendrier.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
 	}
 	
@@ -589,7 +591,9 @@ public class VueEquipe extends JFrame{
 	}
 	
 	public void setEcurie(String e) {
-		this.entreeEcurie.setSelectedItem(e);
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+			this.entreeEcurie.setSelectedItem(e);
+		}	
 	}
 	
 	public void setJeu(String e) {

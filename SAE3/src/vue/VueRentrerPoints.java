@@ -31,6 +31,8 @@ public class VueRentrerPoints {
 	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
+	
+	private JComboBox selectionJeu;
 
 	/**
 	 * Launch the application.
@@ -47,8 +49,12 @@ public class VueRentrerPoints {
 			}
 		});
 	}
+	
+	public JFrame getFrame() {
+		return this.fenetreRentrerPoints;
+	}
 
-	private VueRentrerPoints() {
+	public VueRentrerPoints() {
 		fenetreRentrerPoints = new JFrame();
 		fenetreRentrerPoints.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreRentrerPoints.setResizable(false);
@@ -168,11 +174,11 @@ public class VueRentrerPoints {
 		fl_panel_2.setVgap(0);
 		panelTitrePoule.add(panel_2);
 		
-		JComboBox selectionJeu = new JComboBox();
-		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
-		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- Sélectionnez un jeu -");
-		panel_2.add(selectionJeu);
+		this.selectionJeu = new JComboBox();
+		this.selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
+		this.selectionJeu.setPreferredSize(new Dimension(205, 20));
+		this.selectionJeu.addItem("- SÃ©lectionnez un jeu -");
+		panel_2.add(this.selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();
 		panelListePoules.setBackground(Couleur.BLEU1);

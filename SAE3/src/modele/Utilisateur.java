@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Utilisateur {
 	public enum Profil{ARBITRE,RESPONSABLE,GESTIONNAIRE,JOUEUR,ECURIE}
     private static HashMap<String,Integer> liste = new HashMap<String,Integer>();
+    public static int IDCourant;
 
     public Utilisateur() {
     }
@@ -35,12 +36,34 @@ public class Utilisateur {
     	}
     }
 
-    public static boolean mdpCorrect(String identifiantSaisi, String mdpSaisi) throws SQLException {
+    public static Profil mdpCorrect(String identifiantSaisi, String mdpSaisi) throws SQLException {
 		ResultSet rs = Connexion.getInstance().retournerRequete("SELECT * FROM SAE_USER WHERE LOGIN = '"+identifiantSaisi+"'");
     	if (rs.next()) {
 			String resultat = rs.getString(3);
-			rs.close();
-	    	return resultat.equals(String.valueOf(mdpSaisi.hashCode()));}
-	    else {return false;}
+	    	if (resultat.equals(String.valueOf(mdpSaisi.hashCode()))) {
+	    		// Vérification du profil utilisateur
+	    		if (identifiantSaisi.equals("admin")) {
+	    			return Profil.GESTIONNAIRE;
+	    		}
+	    		if (rs.getInt("IDRESPONSABLE") != 0) {
+	    			IDCourant = rs.getInt("IDRESPONSABLE");
+	    			return Profil.RESPONSABLE;
+	    		}
+	    		if (rs.getInt("IDARBITRE") != 0) {
+	    			IDCourant = rs.getInt("IDARBITRE");
+	    			return Profil.ARBITRE;
+	    		}
+	    		if (rs.getInt("IDECURIE") != 0) {
+	    			IDCourant = rs.getInt("IDECURIE");
+	    			return Profil.ECURIE;
+	    		}
+	    		if (rs.getInt("IDJOUEUR") != 0) {
+	    			IDCourant = rs.getInt("IDJOUEUR");
+	    			return Profil.JOUEUR;
+	    		}
+	    	};
+	    	rs.close();
+	    }
+	    return null;
     }
 }

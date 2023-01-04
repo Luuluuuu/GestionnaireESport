@@ -5,18 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Year;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
 import modele.Equipe;
 import modele.Joueur;
+import modele.Utilisateur;
+import modele.Utilisateur.Profil;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -44,14 +42,29 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeJoueurs() {		
-		for (String nomJoueur : ControleurConnexion.listeJoueurs.keySet()) {
-			this.vue.ajouterJoueur(nomJoueur);
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			for (String nomJoueur : ControleurConnexion.listeJoueursParEcurie) {
+				this.vue.ajouterJoueur(nomJoueur);
+			}
+		}
+		else {
+			for (String nomJoueur : ControleurConnexion.listeJoueurs.keySet()) {
+				this.vue.ajouterJoueur(nomJoueur);
+			}
 		}
 	}
 	
-	public void intialiserListeEquipes() {		
-		for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
-			this.vue.ajouterEquipe(nomEquipe);
+	public void intialiserListeEquipes() {
+		this.vue.ajouterEquipe("- Sélectionnez une équipe -");
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			for (String nomEquipe : ControleurConnexion.listeEquipesParEcurie) {
+				this.vue.ajouterEquipe(nomEquipe);
+			}
+		}
+		else {
+			for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
+				this.vue.ajouterEquipe(nomEquipe);
+			}
 		}
 	}
 	

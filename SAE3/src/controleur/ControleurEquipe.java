@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
 import modele.Equipe;
 import modele.Joueur;
+import modele.Utilisateur.Profil;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -39,19 +40,28 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		this.initialiserListeEquipes();
 	}
 	
-	public void initialiserListeEquipes() {		
-		for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
-			this.vue.ajouterEquipe(nomEquipe);
+	public void initialiserListeEquipes() {	
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			for (String nomEquipe : ControleurConnexion.listeEquipesParEcurie) {
+				this.vue.ajouterEquipe(nomEquipe);
+			}
+		}
+		else {
+			for (String nomEquipe : ControleurConnexion.listeEquipes.keySet()) {
+				this.vue.ajouterEquipe(nomEquipe);
+			}
 		}
 	}
 	
 	public void initialiserListeEcuries() {
+		this.vue.ajouterEcurie("- S\u00E9lectionnez une \u00E9curie -");
 		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
 			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
 	public void initialiserListeJeux() {
+		this.vue.ajouterJeu("- S\u00E9lectionnez un jeu -");
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
