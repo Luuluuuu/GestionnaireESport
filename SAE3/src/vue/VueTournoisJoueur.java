@@ -189,6 +189,7 @@ public class VueTournoisJoueur {
 		panel_3.add(panel_4, gbc_panel_4);
 		
 		JLabel tournoisEnCours = new JLabel("Tournois en cours");
+		tournoisEnCours.setForeground(Color.WHITE);
 		tournoisEnCours.setFont(new Font("Roboto", Font.BOLD, 20));
 		panel_4.add(tournoisEnCours);
 		
@@ -232,6 +233,7 @@ public class VueTournoisJoueur {
 		panel_2.add(panel_6, gbc_panel_6);
 		
 		JLabel mesTournois = new JLabel("Mes tournois");
+		mesTournois.setForeground(Color.WHITE);
 		mesTournois.setFont(new Font("Roboto", Font.BOLD, 20));
 		panel_6.add(mesTournois);
 		
@@ -275,6 +277,7 @@ public class VueTournoisJoueur {
 		panel_1.add(panel_9, gbc_panel_9);
 		
 		JLabel tournoisAVenir = new JLabel("Tournois \u00E0 venir");
+		tournoisAVenir.setForeground(Color.WHITE);
 		tournoisAVenir.setFont(new Font("Roboto", Font.BOLD, 20));
 		panel_9.add(tournoisAVenir);
 		

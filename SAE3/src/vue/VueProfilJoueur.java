@@ -106,6 +106,7 @@ public class VueProfilJoueur {
 		panelJoueur.add(photo, gbc_photo);
 		
 		JLabel pseudo = new JLabel("PSEUDO");
+		pseudo.setForeground(Color.WHITE);
 		pseudo.setFont(new Font("Roboto", Font.BOLD, 24));
 		pseudo.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_pseudo = new GridBagConstraints();
@@ -192,6 +193,7 @@ public class VueProfilJoueur {
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
 		JLabel titreEquipe = new JLabel("Mon \u00E9quipe (insererNom)");
+		titreEquipe.setForeground(Color.WHITE);
 		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreEquipe.add(titreEquipe);
 		
@@ -240,6 +242,7 @@ public class VueProfilJoueur {
 		panelStats.add(panelTitreStats, gbc_panelTitreStats);
 		
 		JLabel titreStats = new JLabel("Statistiques \u00E9quipe");
+		titreStats.setForeground(Color.WHITE);
 		titreStats.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreStats.add(titreStats);
 		
