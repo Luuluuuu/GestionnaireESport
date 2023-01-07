@@ -2,43 +2,42 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
+
+import controleur.ControleurProfilJoueur;
+import controleur.ControleurProfilJoueur.Etat;
+import modele.Joueur;
+
 import javax.swing.JList;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Window;
 
 public class VueProfilJoueur {
 
 	private JFrame fenetreProfilJoueur;
+	private JLabel titreEquipe;
+	private JLabel pseudo;
+	private JLabel photo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueProfilJoueur window = new VueProfilJoueur();
-					window.fenetreProfilJoueur.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	private DefaultListModel<String> modeleJoueursEquipe = new DefaultListModel<String>();
+	
+	public Window getFrame() {
+		return this.fenetreProfilJoueur;
 	}
 
-	private VueProfilJoueur() {
+	public VueProfilJoueur() {
 		fenetreProfilJoueur = new JFrame();
 		fenetreProfilJoueur.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreProfilJoueur.setResizable(false);
@@ -96,7 +95,7 @@ public class VueProfilJoueur {
 		gbl_panelJoueur.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panelJoueur.setLayout(gbl_panelJoueur);
 		
-		JLabel photo = new JLabel("insererPhoto");
+		photo = new JLabel("insererPhoto");
 		photo.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_photo = new GridBagConstraints();
 		gbc_photo.fill = GridBagConstraints.BOTH;
@@ -105,7 +104,7 @@ public class VueProfilJoueur {
 		gbc_photo.gridy = 0;
 		panelJoueur.add(photo, gbc_photo);
 		
-		JLabel pseudo = new JLabel("PSEUDO");
+		pseudo = new JLabel("PSEUDO");
 		pseudo.setForeground(Color.WHITE);
 		pseudo.setFont(new Font("Roboto", Font.BOLD, 24));
 		pseudo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -192,7 +191,7 @@ public class VueProfilJoueur {
 		gbc_panelTitreEquipe.gridy = 0;
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
-		JLabel titreEquipe = new JLabel("Mon \u00E9quipe (insererNom)");
+		titreEquipe = new JLabel("Mon \u00E9quipe (insererNom)");
 		titreEquipe.setForeground(Color.WHITE);
 		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreEquipe.add(titreEquipe);
@@ -209,7 +208,7 @@ public class VueProfilJoueur {
 		gbc_panelJoueursEquipe.gridy = 1;
 		panelEquipe.add(panelJoueursEquipe, gbc_panelJoueursEquipe);
 		
-		JList listeJoueursEquipe = new JList();
+		JList<String> listeJoueursEquipe = new JList<String>(modeleJoueursEquipe);
 		listeJoueursEquipe.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelJoueursEquipe.add(listeJoueursEquipe);
 		
@@ -261,6 +260,29 @@ public class VueProfilJoueur {
 		JList listeStats = new JList();
 		listeStats.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelListeStats.add(listeStats);
+		
+		// CONTROLEUR //
+		ControleurProfilJoueur controleur = new ControleurProfilJoueur(this);
+		
+		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public void setInfosJoueur(String cheminImage, String pseudo, String nomEquipe) {
+		this.photo.setIcon(new ImageIcon(this.getClass().getResource("/photos/image.jfif")));
+		this.pseudo.setText(pseudo);
+		this.titreEquipe.setText("Mon \u00E9quipe (" + nomEquipe + ")"); 
+	}
+
+	public Etat getEtat(JButton b) {
+		switch (b.getText()) {
+		case ("Se déconnecter") :
+			return Etat.DECONNECTER;
+		}
+		return null;
+	}
+
+	public void ajouterJoueur(String nomJoueur) {
+		this.modeleJoueursEquipe.addElement(nomJoueur);
 	}
 
 }

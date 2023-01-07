@@ -13,6 +13,7 @@ public class Joueur {
     private String dateNaissance;
     private String nationalite;
     private Equipe equipe;
+    private String photo;
     
     /* Constructeur de Joueur
      * Entrees :
@@ -22,7 +23,7 @@ public class Joueur {
      * 	dateNaissance	String	date de naissance du joueur
      * 	nationalite		String	nationalite du joueur
     */
-    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite, Equipe equipe) {
+    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite, Equipe equipe, String photo) {
     	this.ID = ID;
         this.nom = nom;
         this.prenom = prenom;
@@ -30,6 +31,7 @@ public class Joueur {
         this.dateNaissance = dateNaissance;
         this.nationalite = nationalite;
         this.equipe = equipe;
+        this.photo = photo;
     }
     
     //Getters
@@ -144,5 +146,9 @@ public class Joueur {
 
 	public void creerLogin(String mdp) {
     	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.JOUEUR, this.ID);
+	}
+
+	public String getPhoto() {
+		return this.photo;
 	}
 }

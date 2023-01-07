@@ -120,7 +120,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			} else {
 				// Instancie un tournoi
 				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),this.vue.getPseudo(), this.vue.getDateNaissance(),
-						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()));
+						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
 				//Vérifie si c'est une creation ou une modification
 				if (this.vue.titreModif.getText().equals("Créer un joueur")) {
 					// SI CREATION

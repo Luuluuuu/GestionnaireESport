@@ -22,6 +22,7 @@ import modele.Utilisateur.Profil;
 import vue.VueConnexion;
 import vue.VueEquipe;
 import vue.VueJoueur;
+import vue.VueProfilJoueur;
 import vue.VueRentrerPoints;
 import vue.VueCalendrier;
 
@@ -43,7 +44,7 @@ public class ControleurConnexion implements ActionListener {
 	static	Map<Integer, Ecurie>		listeEcuriesID;
 	
 	static 	List<String>				listeEquipesParEcurie;
-	static 	List<String>				listeJoueursParEcurie;
+	static 	List<String>			listeJoueursParEcurie;
 	
 	public 	static Utilisateur.Profil 	profilUtilisateur;
 	
@@ -84,6 +85,9 @@ public class ControleurConnexion implements ActionListener {
 						break;
 					case JOUEUR:
 						initialiserListes();
+						VueProfilJoueur fenJoueur = new VueProfilJoueur();
+						fenJoueur.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);
 						break;
 					}
 				}
@@ -216,7 +220,7 @@ public class ControleurConnexion implements ActionListener {
 				ControleurConnexion.listeEquipesID.put(rs.getInt(1), e);
 				ControleurConnexion.listeEquipes.put(e.getNom(),e);
 				
-				if (profilUtilisateur == Profil.ECURIE && rs.getInt(8) == Utilisateur.IDCourant) {
+				if ((profilUtilisateur == Profil.ECURIE) && rs.getInt(8) == Utilisateur.IDCourant) {
 					listeEquipesParEcurie.add(e.getNom());
 				}
 			}
@@ -230,20 +234,22 @@ public class ControleurConnexion implements ActionListener {
 		ControleurConnexion.listeJoueurs = new HashMap<String,Joueur>();
 		if (profilUtilisateur == Profil.ECURIE) {
 			listeJoueursParEcurie = new ArrayList<String>();
-		}
+		} 
 		try {
 			Connexion c = Connexion.getInstance();
 			ResultSet rs = c.retournerRequete("SELECT IDJOUEUR, NOMJOUEUR,PRENOMJOUEUR,PSEUDOJOUEUR,to_char(DATENAISSANCE,'DD-MM-YYYY'),"
-					+ "NATIONALITE,IDEQUIPE FROM SAE_JOUEUR");
+					+ "NATIONALITE,IDEQUIPE, PHOTOJOUEUR FROM SAE_JOUEUR");
 			while (rs.next()) {
 				Equipe equipe = ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE"));
 				Joueur j = new Joueur(rs.getInt("IDJOUEUR"),rs.getString("NOMJOUEUR"), rs.getString("PRENOMJOUEUR"), rs.getString("PSEUDOJOUEUR"), 
-						rs.getString(5), rs.getString("NATIONALITE"), equipe);
+						rs.getString(5), rs.getString("NATIONALITE"), equipe, rs.getString("PHOTOJOUEUR"));
 				ControleurConnexion.listeJoueurs.put(j.getPrenomPseudoNom(),j);
 				ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE")).ajouterJoueur(j);
 				
-				if (profilUtilisateur == Profil.ECURIE && listeEquipesParEcurie.contains(equipe.getNom())) {
-					listeJoueursParEcurie.add(j.getPrenomPseudoNom());
+				if (profilUtilisateur == Profil.ECURIE) {
+					if (listeEquipesParEcurie.contains(equipe.getNom())) {
+						listeJoueursParEcurie.add(j.getPrenomPseudoNom());
+					}
 				}
 			}
 			rs.close();

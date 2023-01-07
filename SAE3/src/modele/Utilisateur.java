@@ -43,22 +43,27 @@ public class Utilisateur {
 	    	if (resultat.equals(String.valueOf(mdpSaisi.hashCode()))) {
 	    		// Vérification du profil utilisateur
 	    		if (identifiantSaisi.equals("admin")) {
+	    	    	rs.close();
 	    			return Profil.GESTIONNAIRE;
 	    		}
 	    		if (rs.getInt("IDRESPONSABLE") != 0) {
 	    			IDCourant = rs.getInt("IDRESPONSABLE");
+	    	    	rs.close();
 	    			return Profil.RESPONSABLE;
 	    		}
 	    		if (rs.getInt("IDARBITRE") != 0) {
 	    			IDCourant = rs.getInt("IDARBITRE");
+	    	    	rs.close();
 	    			return Profil.ARBITRE;
 	    		}
 	    		if (rs.getInt("IDECURIE") != 0) {
 	    			IDCourant = rs.getInt("IDECURIE");
+	    	    	rs.close();
 	    			return Profil.ECURIE;
 	    		}
 	    		if (rs.getInt("IDJOUEUR") != 0) {
 	    			IDCourant = rs.getInt("IDJOUEUR");
+	    	    	rs.close();
 	    			return Profil.JOUEUR;
 	    		}
 	    	};
