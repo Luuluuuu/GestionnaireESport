@@ -33,28 +33,32 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		this.etat = Etat.CREER;
 	}
 	
-	// Initialiser les listes
+	// INTIALISER LES LISTES
 	public void initialiserListes() {
 		this.initialiserListeResponsables();
 		this.initialiserListeArbitres();
 		this.initialiserListeJeux();
 		this.initialiserListeTournois();
 	}
+	
 	public void initialiserListeTournois() {
 		for (String nomTournoi : ControleurConnexion.listeTournois.keySet()) {
 			this.vue.ajouterTournoi(nomTournoi);
 		}
 	}
+	
 	public void initialiserListeResponsables() {
 		for (String nomResponsable : ControleurConnexion.listeResponsables.keySet()) {
 			this.vue.ajouterResponsable(nomResponsable);
 		}
 	}
+	
 	public void initialiserListeArbitres() {
 		for (String nomArbitre : ControleurConnexion.listeArbitres.keySet()) {
 			this.vue.ajouterArbitre(nomArbitre);
 		}
 	}
+	
 	public void initialiserListeJeux() {
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
