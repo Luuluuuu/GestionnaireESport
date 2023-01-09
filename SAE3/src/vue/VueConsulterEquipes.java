@@ -19,8 +19,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
 
 public class VueConsulterEquipes {
 
@@ -48,7 +48,7 @@ public class VueConsulterEquipes {
 		});
 	}
 
-	private VueConsulterEquipes() {
+	public VueConsulterEquipes() {
 		fenetreConsulterEquipes = new JFrame();
 		fenetreConsulterEquipes.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreConsulterEquipes.setResizable(false);
@@ -256,7 +256,7 @@ public class VueConsulterEquipes {
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		panelListeEquipes.add(listeEquipes);
+		panelListeEquipes.add(listeEquipes);	
 	}
 
 }
