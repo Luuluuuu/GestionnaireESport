@@ -187,7 +187,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
-					VueJoueur.afficherTexte(this.vue.titreModif, "Modifier une équipe");
+					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une équipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());
@@ -200,7 +200,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			    if (!e.getValueIsAdjusting()) {	// gere les doubles clics
 					VueJoueur fenJoueur = new VueJoueur();
 					fenJoueur.getFrame().setVisible(true);
-					VueJoueur.afficherTexte(this.vue.titreModif, "Modifier un joueur");
+					VueJoueur.afficherTexte(fenJoueur.titreModif, "Modifier un joueur");
 					Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
 					fenJoueur.setEquipe(joueur.getEquipe().getNom());
 					fenJoueur.setNomJoueur(joueur.getNom());
