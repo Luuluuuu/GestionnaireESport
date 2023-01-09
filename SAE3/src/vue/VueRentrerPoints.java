@@ -17,36 +17,25 @@ import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.List;
+
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurRentrerPoints;
+import controleur.ControleurRentrerPoints.Etat;
+
 public class VueRentrerPoints {
 
-	private JFrame fenetreRentrerPoints;
+	public JFrame fenetreRentrerPoints;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
 	private DefaultListModel<String> modelePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
 	
-	private JComboBox selectionJeu;
+	private JComboBox<String> selectionJeu;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueRentrerPoints window = new VueRentrerPoints();
-					window.fenetreRentrerPoints.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	public JFrame getFrame() {
 		return this.fenetreRentrerPoints;
 	}
@@ -171,7 +160,7 @@ public class VueRentrerPoints {
 		fl_panel_2.setVgap(0);
 		panelTitrePoule.add(panel_2);
 		
-		this.selectionJeu = new JComboBox();
+		this.selectionJeu = new JComboBox<String>();
 		this.selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		this.selectionJeu.setPreferredSize(new Dimension(205, 20));
 		this.selectionJeu.addItem("- Sélectionnez un jeu -");
@@ -347,6 +336,35 @@ public class VueRentrerPoints {
 		btnValider.setForeground(Color.WHITE);
 		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
 		panelValider.add(btnValider);
+		
+		// CONTROLEUR //
+		ControleurRentrerPoints controleur = new ControleurRentrerPoints(this);
+		
+		// LISTES
+		listeTournois.addListSelectionListener(controleur);
+	}
+	
+	// TOURNOIS //
+	public String getTournoiSelectionne() {
+		return this.listeTournois.getSelectedValue();
 	}
 
+	public void ajouterTournoi(String nomTournoi) {
+		this.modeleTournois.addElement(nomTournoi);
+	}
+	
+	// JEUX //	
+	public  void setJeux(List<String> jeux) {
+		for (String nomJeu : jeux) {
+			this.selectionJeu.addItem(nomJeu);
+		}
+	}
+	
+	// ETAT //
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		}
+		return null;
+	}
 }

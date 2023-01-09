@@ -31,7 +31,7 @@ public class TestEquipe {
 		this.ecurie = new Ecurie(1,"Kcorp");
 		this.equipe = new Equipe(2, "fnatic", 32, "allemand", jeu, ecurie);
 		this.poule = new Poule(this.equipes, true);
-		this.joueur = new Joueur(2,"maltra","léo","léo123","06/02/98","Allemagne",this.equipe);
+		this.joueur = new Joueur(2,"maltra","léo","léo123","06/02/98","Allemagne",this.equipe,null);
 	}
 
 	@After
