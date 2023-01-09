@@ -38,7 +38,7 @@ public class VueProfilJoueur {
 		});
 	}
 
-	private VueProfilJoueur() {
+	public VueProfilJoueur() {
 		fenetreProfilJoueur = new JFrame();
 		fenetreProfilJoueur.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreProfilJoueur.setResizable(false);

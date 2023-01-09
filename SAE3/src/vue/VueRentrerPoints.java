@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,10 +18,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VueRentrerPoints {
 
@@ -278,10 +274,6 @@ public class VueRentrerPoints {
 		panel_3.add(panel_8, BorderLayout.NORTH);
 		
 		JButton btnPouleFinale = new JButton("POULE FINALE");
-		btnPouleFinale.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnPouleFinale.setForeground(Color.WHITE);
 		btnPouleFinale.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnPouleFinale.setBackground(Couleur.BLEU2);
