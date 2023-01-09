@@ -28,14 +28,14 @@ import java.io.IOException;
 
 public class VueProfilJoueur {
 
-	private JFrame fenetreProfilJoueur;
+	public JFrame fenetreProfilJoueur;
 	private JLabel titreEquipe;
 	private JLabel pseudo;
 	private JLabel photo;
 
 	private DefaultListModel<String> modeleJoueursEquipe = new DefaultListModel<String>();
 	
-	public Window getFrame() {
+	public JFrame getFrame() {
 		return this.fenetreProfilJoueur;
 	}
 
@@ -266,6 +266,9 @@ public class VueProfilJoueur {
 		// CONTROLEUR //
 		ControleurProfilJoueur controleur = new ControleurProfilJoueur(this);
 		
+		btnEquipes.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
 		btnDeconnexion.addActionListener(controleur);
 	}
 	
@@ -279,11 +282,20 @@ public class VueProfilJoueur {
 		this.pseudo.setText(pseudo);
 		this.titreEquipe.setText("Mon \u00E9quipe (" + nomEquipe + ")"); 
 	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
 
 	public Etat getEtat(JButton b) {
-		switch (b.getText()) {
-		case ("Se dÃ©connecter") :
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
+		} else if (b.getText() == "Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText() == "Equipes") {
+			return Etat.EQUIPES;
+		} else if (b.getText() == "Tournois") {
+			return Etat.TOURNOIS;
 		}
 		return null;
 	}

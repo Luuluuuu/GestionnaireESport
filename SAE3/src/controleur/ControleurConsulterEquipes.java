@@ -10,7 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
 import vue.VueConnexion;
 import vue.VueConsulterEquipes;
-import vue.VueEquipe;
 
 public class ControleurConsulterEquipes implements ActionListener, ListSelectionListener {
 

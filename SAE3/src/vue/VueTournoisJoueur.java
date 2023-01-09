@@ -19,27 +19,19 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurTournoisJoueur;
+import controleur.ControleurTournoisJoueur.Etat;
+
 public class VueTournoisJoueur {
 
-	private JFrame fenetreTournoisJoueur;
+	public JFrame fenetreTournoisJoueur;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueTournoisJoueur window = new VueTournoisJoueur();
-					window.fenetreTournoisJoueur.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public JFrame getFrame() {
+		return this.fenetreTournoisJoueur;
 	}
 
-	private VueTournoisJoueur() {
+	public VueTournoisJoueur() {
 		fenetreTournoisJoueur = new JFrame();
 		fenetreTournoisJoueur.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreTournoisJoueur.setResizable(false);
@@ -294,6 +286,31 @@ public class VueTournoisJoueur {
 		
 		JList list_2 = new JList();
 		panel_8.add(list_2);
+		
+		// CONTROLEUR //
+		ControleurTournoisJoueur controleur = new ControleurTournoisJoueur(this);
+		
+		btnProfil.addActionListener(controleur);
+		btnEquipes.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
+		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText() == "Mon profil") {
+			return Etat.PROFIL;
+		} else if (b.getText() == "Equipes") {
+			return Etat.EQUIPES;
+		}
+		return null;
 	}
 
 }

@@ -5,13 +5,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import modele.Connexion;
 import modele.Joueur;
 import modele.Utilisateur;
+import vue.VueCalendrier;
+import vue.VueClassement;
+import vue.VueClassementJoueur;
 import vue.VueConnexion;
+import vue.VueERA;
+import vue.VueEquipe;
+import vue.VueEquipesJoueur;
+import vue.VueInscriptionTournoi;
+import vue.VueJoueur;
 import vue.VueProfilJoueur;
+import vue.VueTournoisJoueur;
 
 public class ControleurProfilJoueur implements ActionListener{
-	public enum Etat{DECONNECTER}
+	public enum Etat{DECONNECTER, EQUIPES, TOURNOIS, CLASSEMENT}
 	
 	private VueProfilJoueur vue;
 	private Etat etat;
@@ -45,13 +55,31 @@ public class ControleurProfilJoueur implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.etat = this.vue.getEtat((JButton) e.getSource());
+		JButton b = (JButton) e.getSource();
+		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
-		case DECONNECTER:
-			VueConnexion fenConnexion = new VueConnexion();
-			fenConnexion.getFrame().setVisible(true);
-			this.vue.getFrame().setVisible(false);
-			break;
+		case EQUIPES :
+			VueEquipesJoueur fenEquipe = new VueEquipesJoueur();
+			fenEquipe.getFrame().setVisible(true);
+			VueProfilJoueur.fermerFenetre(this.vue.fenetreProfilJoueur);
+		break;
+		case TOURNOIS :
+			VueTournoisJoueur fenTournois = new VueTournoisJoueur();
+			fenTournois.getFrame().setVisible(true);
+			VueProfilJoueur.fermerFenetre(this.vue.fenetreProfilJoueur);
+		break;
+		case CLASSEMENT :
+			VueClassementJoueur fenClassement = new VueClassementJoueur();
+			fenClassement.getFrame().setVisible(true);
+			VueProfilJoueur.fermerFenetre(this.vue.fenetreProfilJoueur);
+		break;
+		case DECONNECTER :
+			Connexion.fermerConnexion();
+			VueConnexion fen = new VueConnexion();
+			fen.getFrame().setVisible(true);
+			VueProfilJoueur.fermerFenetre(this.vue.fenetreProfilJoueur);
+		break;
+		default:
 		}
 	}
 	

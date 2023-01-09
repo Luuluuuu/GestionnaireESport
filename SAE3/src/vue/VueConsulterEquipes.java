@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
@@ -34,21 +33,9 @@ public class VueConsulterEquipes {
 	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueConsulterEquipes window = new VueConsulterEquipes();
-					window.fenetreConsulterEquipes.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public JFrame getFrame() {
+		return this.fenetreConsulterEquipes;
 	}
 
 	public VueConsulterEquipes() {

@@ -15,6 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import controleur.ControleurProfilJoueur;
+import controleur.ControleurEquipesJoueur;
+import controleur.ControleurEquipesJoueur.Etat;
+
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -22,23 +27,11 @@ import javax.swing.JList;
 
 public class VueEquipesJoueur {
 
-	private JFrame fenetreEquipesJoueur;
+	public JFrame fenetreEquipesJoueur;
 	private JTextField texteRecherche;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueEquipesJoueur window = new VueEquipesJoueur();
-					window.fenetreEquipesJoueur.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public JFrame getFrame() {
+		return this.fenetreEquipesJoueur;
 	}
 
 	public VueEquipesJoueur() {
@@ -237,6 +230,31 @@ public class VueEquipesJoueur {
 		
 		JList listeEquipes = new JList();
 		panelListe.add(listeEquipes);
+		
+		// CONTROLEUR //
+		ControleurEquipesJoueur controleur = new ControleurEquipesJoueur(this);
+		
+		btnProfil.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
+		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText() == "Mon profil") {
+			return Etat.PROFIL;
+		} else if (b.getText() == "Tournois") {
+			return Etat.TOURNOIS;
+		}
+		return null;
 	}
 
 }

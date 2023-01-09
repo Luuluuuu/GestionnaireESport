@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -15,6 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import controleur.ControleurClassementJoueur;
+import controleur.ControleurClassementJoueur.Etat;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -22,22 +25,11 @@ import javax.swing.JList;
 
 public class VueClassementJoueur {
 
-	private JFrame fenetreClassementJoueur;
+	public JFrame fenetreClassementJoueur;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueClassementJoueur window = new VueClassementJoueur();
-					window.fenetreClassementJoueur.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	public JFrame getFrame() {
+		return this.fenetreClassementJoueur;
 	}
 
 	public VueClassementJoueur() {
@@ -233,6 +225,31 @@ public class VueClassementJoueur {
 		
 		JList listePodium = new JList();
 		panelListe.add(listePodium);
+		
+		// CONTROLEUR //
+		ControleurClassementJoueur controleur = new ControleurClassementJoueur(this);
+		
+		btnProfil.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
+		btnEquipes.addActionListener(controleur);
+		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Equipes") {
+			return Etat.EQUIPES;
+		} else if (b.getText() == "Mon profil") {
+			return Etat.PROFIL;
+		} else if (b.getText() == "Tournois") {
+			return Etat.TOURNOIS;
+		}
+		return null;
 	}
 
 }
