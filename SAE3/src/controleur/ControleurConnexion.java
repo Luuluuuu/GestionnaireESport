@@ -69,8 +69,6 @@ public class ControleurConnexion implements ActionListener {
 						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);		
 						break;
 					case RESPONSABLE:
-						initialiserListes();
-						break;
 					case ARBITRE:
 						initialiserListes();
 						VueRentrerPoints fenArbitre = new VueRentrerPoints();

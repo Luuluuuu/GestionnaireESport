@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Window;
+import java.io.IOException;
 
 public class VueProfilJoueur {
 
@@ -95,7 +97,7 @@ public class VueProfilJoueur {
 		gbl_panelJoueur.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panelJoueur.setLayout(gbl_panelJoueur);
 		
-		photo = new JLabel("insererPhoto");
+		photo = new JLabel();
 		photo.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_photo = new GridBagConstraints();
 		gbc_photo.fill = GridBagConstraints.BOTH;
@@ -268,7 +270,12 @@ public class VueProfilJoueur {
 	}
 	
 	public void setInfosJoueur(String cheminImage, String pseudo, String nomEquipe) {
-		this.photo.setIcon(new ImageIcon(this.getClass().getResource("/photos/image.jfif")));
+		try {
+			Image img = ImageIO.read(this.getClass().getResource(cheminImage));
+			this.photo.setIcon(new ImageIcon(img.getScaledInstance(150, -1,  Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.pseudo.setText(pseudo);
 		this.titreEquipe.setText("Mon \u00E9quipe (" + nomEquipe + ")"); 
 	}

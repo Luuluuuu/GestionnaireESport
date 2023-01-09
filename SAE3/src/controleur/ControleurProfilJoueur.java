@@ -28,14 +28,19 @@ public class ControleurProfilJoueur implements ActionListener{
 		}
 		
 		this.vue.setInfosJoueur(joueur.getPhoto(), joueur.getPseudo(), joueur.getEquipe().getNom());
+		this.initialiserListeJoueurs();
 	}
 	
 	public void initialiserListeJoueurs() {
 		for (Joueur j : ControleurConnexion.listeJoueurs.values()) {
-			if (j.getEquipe().equals(this.joueur.getEquipe())) {
-				this.vue.ajouterJoueur(j.getNom());
+			if (j.getEquipe().equals(this.joueur.getEquipe()) && !(j.equals(this.joueur))) {
+				this.vue.ajouterJoueur(j.getPrenomPseudoNom());
 			}
 		}
+	}
+	
+	public void intialiserListePoules() {
+		
 	}
 	
 	@Override
