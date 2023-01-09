@@ -20,6 +20,7 @@ import modele.Tournoi;
 import modele.Utilisateur;
 import modele.Utilisateur.Profil;
 import vue.VueConnexion;
+import vue.VueConsulterEquipes;
 import vue.VueEquipe;
 import vue.VueJoueur;
 import vue.VueProfilJoueur;
@@ -69,6 +70,11 @@ public class ControleurConnexion implements ActionListener {
 						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);		
 						break;
 					case RESPONSABLE:
+						initialiserListes();
+						VueConsulterEquipes fenResponsable = new VueConsulterEquipes();
+						fenResponsable.getFrame().setVisible(true);
+						VueConnexion.fermerFenetre(this.vue.fenetreConnexion);
+						break;
 					case ARBITRE:
 						initialiserListes();
 						VueRentrerPoints fenArbitre = new VueRentrerPoints();
@@ -111,9 +117,22 @@ public class ControleurConnexion implements ActionListener {
 	private void initialiserListeTournois() {
 		ControleurConnexion.listeTournois = new HashMap<String,Tournoi>();
 		Connexion c = Connexion.getInstance();
-		ResultSet rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
+		ResultSet rs;
+		/*if (this.profilUtilisateur == Profil.ARBITRE) {
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), \"\r\n"
+					+ "+ \"sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, \"\r\n"
+					+ "+ \"sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi"
+					+ "WHERE ");
+		} else {
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
+					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
+					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
+		}*/
+		
+		rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
 				+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
 				+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
+		
 		try {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
