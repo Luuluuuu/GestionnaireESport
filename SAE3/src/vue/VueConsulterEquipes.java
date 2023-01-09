@@ -21,10 +21,13 @@ import java.awt.Insets;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 
+import controleur.ControleurConsulterEquipes;
+import controleur.ControleurConsulterEquipes.Etat;
+
 
 public class VueConsulterEquipes {
 
-	private JFrame fenetreConsulterEquipes;
+	public JFrame fenetreConsulterEquipes;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
 	private DefaultListModel<String> modelePoules;
@@ -256,7 +259,25 @@ public class VueConsulterEquipes {
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		panelListeEquipes.add(listeEquipes);	
+		panelListeEquipes.add(listeEquipes);
+		
+		// CONTROLEUR
+		ControleurConsulterEquipes controleur = new ControleurConsulterEquipes(this);
+		// DECONNEXION
+		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
+	
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		}
+		
+		return null;
 	}
 
 }
