@@ -20,12 +20,13 @@ import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
 import vue.VueJoueur;
+import vue.VueClassement;
 
 
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,CLASSEMENT}
 	private VueJoueur vue;
 	private Etat etat;
 
@@ -78,10 +79,10 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			fenEQUIPE.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
-		case JOUEURS :
-			/*VueJoueur fenJoueur = new VueJoueur();
-			fenJoueur.getFrame().setVisible(true);
-			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);*/
+		case CLASSEMENT :
+			VueClassement fenClassement = new VueClassement();
+			fenClassement.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
 		case ECURIE :
 			VueERA fenERA = new VueERA();

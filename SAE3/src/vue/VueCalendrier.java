@@ -580,9 +580,11 @@ public class VueCalendrier extends JFrame{
 		// VALIDER OU ANNULER INFORMATIONS SUR LE TOURNOI
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
+		// BOUTONS MENU
 		btnEquipes.addActionListener(controleur);
 		btnEcuries.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
 	}
 	
 	public static void afficherPanel(JPanel p) {

@@ -623,6 +623,7 @@ public class VueJoueur extends JFrame{
 		btnCreer.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
 		btnEquipes.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// GESTION DES JOUEURS
@@ -751,6 +752,8 @@ public class VueJoueur extends JFrame{
 			return Etat.RECHERCHER;
 		}else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
+		} else if (b.getText()=="Classement") {
+			return Etat.CLASSEMENT;
 		}
 		return null;
 	}

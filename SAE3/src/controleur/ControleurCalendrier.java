@@ -1,5 +1,6 @@
 package controleur;
 import vue.VueCalendrier;
+import vue.VueClassement;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
@@ -86,11 +87,11 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			fenJoueur.getFrame().setVisible(true);
 			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
 		break;
-/*		case CLASSEMENT :
+		case CLASSEMENT :
 			VueClassement fenClassement = new VueClassement();
 			fenClassement.getFrame().setVisible(true);
 			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
-		break; */
+		break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();

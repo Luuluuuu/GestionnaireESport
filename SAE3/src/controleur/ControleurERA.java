@@ -16,6 +16,7 @@ import modele.Connexion;
 import modele.Ecurie;
 import modele.Responsable;
 import vue.VueCalendrier;
+import vue.VueClassement;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
@@ -79,6 +80,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		case JOUEURS :
 			VueJoueur fenJOUEUR = new VueJoueur();
 			fenJOUEUR.getFrame().setVisible(true);
+			VueERA.fermerFenetre(this.vue.fenetreERA);
+		break;
+		case CLASSEMENT :
+			VueClassement fenClassement = new VueClassement();
+			fenClassement.getFrame().setVisible(true);
 			VueERA.fermerFenetre(this.vue.fenetreERA);
 		break;
 		case ANNULER:

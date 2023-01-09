@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -13,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controleur.ControleurConnexion;
-import modele.Utilisateur.Profil;
+import controleur.ControleurClassement.Etat;
+import controleur.ControleurClassement;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -28,21 +27,7 @@ import javax.swing.SwingConstants;
 
 public class VueClassement {
 
-	private JFrame fenetreClassement;
-
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueClassement window = new VueClassement();
-					window.fenetreClassement.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JFrame fenetreClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreClassement;
@@ -234,5 +219,39 @@ public class VueClassement {
 		
 		JList listePodium = new JList();
 		panelListe.add(listePodium);
+		
+		// CONTROLEUR
+		ControleurClassement controleur = new ControleurClassement(this);
+		// DECONNEXION
+		btnDeconnexion.addActionListener(controleur);
+		// BOUTONS MENU
+		// btnCalendrier.addActionListener(controleur);
+		// btnEcuries.addActionListener(controleur);
+		// btnTournois.addActionListener(controleur);
+		btnEquipes.addActionListener(controleur);
+		btnJoueurs.addActionListener(controleur);
+	}
+	
+	public static void fermerFenetre(JFrame f) {
+		f.setVisible(false);
+	}
+	
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+			return Etat.ECURIE;
+		} else if (b.getText() == "Calendrier") {
+			return Etat.CALENDRIER;
+		} else if (b.getText() == "Equipes") {
+			return Etat.EQUIPES;
+		} else if (b.getText() == "Joueurs") {
+			return Etat.JOUEURS;
+		} else if (b.getText() == "Tournois") {
+			return Etat.TOURNOIS;
+		}
+		
+		return null;
 	}
 }

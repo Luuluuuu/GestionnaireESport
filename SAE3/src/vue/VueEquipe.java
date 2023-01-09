@@ -525,6 +525,7 @@ public class VueEquipe extends JFrame{
 		btnSupprimer.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
 	}
 	
 	//JOUEURS
@@ -657,19 +658,19 @@ public class VueEquipe extends JFrame{
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			return Etat.ECURIE;}
-		else if (b.getText() == "Se déconnecter") {
+			return Etat.ECURIE;
+		}else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
-		}
-		else if (b.getText() == "Calendrier") {
+		}else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
-		}
-		else if (b.getText()=="Joueurs") {
+		}else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
+		} else if (b.getText()=="Classement") {
+			return Etat.CLASSEMENT;
 		} else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}

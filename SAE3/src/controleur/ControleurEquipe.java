@@ -16,6 +16,7 @@ import modele.Equipe;
 import modele.Joueur;
 import modele.Utilisateur.Profil;
 import vue.VueCalendrier;
+import vue.VueClassement;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
@@ -23,7 +24,7 @@ import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPE}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT}
 	private VueEquipe vue;
 	private Etat etat;
 	
@@ -83,6 +84,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			VueERA fenERA = new VueERA();
 			fenERA.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
 		case JOUEURS :
 			VueJoueur fenJoueur = new VueJoueur();
 			fenJoueur.getFrame().setVisible(true);
@@ -91,6 +93,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
+		case CLASSEMENT :
+			VueClassement fenClassement = new VueClassement();
+			fenClassement.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		case RECHERCHER:
 			if (this.vue.getRecherche()!="") {
