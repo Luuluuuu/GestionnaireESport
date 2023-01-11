@@ -186,21 +186,108 @@ public class VueConsulterEquipes {
 		
 		JPanel panelListePoules = new JPanel();
 		panelListePoules.setBackground(Couleur.BLEU1);
-		FlowLayout fl_panelListePoules = (FlowLayout) panelListePoules.getLayout();
-		fl_panelListePoules.setAlignment(FlowLayout.LEFT);
-		fl_panelListePoules.setHgap(50);
 		GridBagConstraints gbc_panelListePoules = new GridBagConstraints();
 		gbc_panelListePoules.fill = GridBagConstraints.BOTH;
 		gbc_panelListePoules.gridx = 0;
 		gbc_panelListePoules.gridy = 1;
 		panelPoule.add(panelListePoules, gbc_panelListePoules);
+		GridBagLayout gbl_panelListePoules = new GridBagLayout();
+		gbl_panelListePoules.columnWidths = new int[]{688, 0};
+		gbl_panelListePoules.rowHeights = new int[] {208, 104, 0};
+		gbl_panelListePoules.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panelListePoules.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panelListePoules.setLayout(gbl_panelListePoules);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Couleur.BLEU1);
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		panelListePoules.add(panel, gbc_panel);
+		panel.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Couleur.BLEU1);
+		panel.add(panel_5);
+		panel_5.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 35));
+		
+		JButton btnPoule1 = new JButton("POULE 1");
+		btnPoule1.setForeground(Color.WHITE);
+		btnPoule1.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnPoule1.setBackground(Couleur.BLEU2);
+		btnPoule1.setPreferredSize(new Dimension(200,50));
+		panel_5.add(btnPoule1);
+		
+		JPanel panel_6 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_6.getLayout();
+		flowLayout.setHgap(20);
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		flowLayout.setVgap(35);
+		panel_6.setBackground(Couleur.BLEU1);
+		panel.add(panel_6);
+		
+		JButton btnPoule2 = new JButton("POULE 2");
+		btnPoule2.setForeground(Color.WHITE);
+		btnPoule2.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnPoule2.setBackground(Couleur.BLEU2);
+		btnPoule2.setPreferredSize(new Dimension(200,50));
+		panel_6.add(btnPoule2);
+		
+		JPanel panel_7 = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel_7.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		flowLayout_1.setHgap(20);
+		flowLayout_1.setVgap(20);
+		panel_7.setBackground(Couleur.BLEU1);
+		panel.add(panel_7);
+		
+		JButton btnPoule3 = new JButton("POULE 3");
+		btnPoule3.setForeground(Color.WHITE);
+		btnPoule3.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnPoule3.setBackground(Couleur.BLEU2);
+		btnPoule3.setPreferredSize(new Dimension(200,50));
+		panel_7.add(btnPoule3);
+		
+		JPanel panel_4 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		flowLayout_2.setHgap(20);
+		flowLayout_2.setVgap(20);
+		panel_4.setBackground(Couleur.BLEU1);
+		panel.add(panel_4);
+		
+		JButton btnPoule4 = new JButton("POULE 4");
+		btnPoule4.setForeground(Color.WHITE);
+		btnPoule4.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnPoule4.setBackground(Couleur.BLEU2);
+		btnPoule4.setPreferredSize(new Dimension(200,50));
+		panel_4.add(btnPoule4);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Couleur.BLEU1);
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 1;
+		panelListePoules.add(panel_3, gbc_panel_3);
+		panel_3.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_8 = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panel_8.getLayout();
+		flowLayout_3.setVgap(0);
+		panel_8.setBackground(Couleur.BLEU1);
+		panel_3.add(panel_8, BorderLayout.NORTH);
+		
+		JButton btnPouleFinale = new JButton("POULE FINALE");
+		btnPouleFinale.setForeground(Color.WHITE);
+		btnPouleFinale.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnPouleFinale.setBackground(Couleur.BLEU2);
+		btnPouleFinale.setPreferredSize(new Dimension(440,50));
+		panel_8.add(btnPouleFinale);
 		
 		modelePoules = new DefaultListModel<String>();
-		listePoules = new JList<String>(modelePoules);
-		listePoules.setFont(new Font("Roboto", Font.PLAIN, 15));
-		listePoules.setFixedCellHeight(50);
-		listePoules.setFixedCellWidth(600);
-		panelListePoules.add(listePoules);
 		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);
