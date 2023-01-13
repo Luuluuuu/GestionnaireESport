@@ -19,6 +19,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionListener;
+
+import controleur.ControleurInscriptionTournoi;
+import controleur.ControleurInscriptionTournoi.Etat;
+
 import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
@@ -29,19 +34,6 @@ public class VueInscriptionTournoi extends JFrame{
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VueInscriptionTournoi window = new VueInscriptionTournoi();
-					window.fenetreInscriptionTournoi.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
@@ -65,17 +57,17 @@ public class VueInscriptionTournoi extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnCalendrier = new JButton("Calendrier");
-		btnCalendrier.setForeground(Color.WHITE);
-		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnCalendrier.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnCalendrier);
-		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnEquipes.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEquipes);
+		
+		JButton btnJoueurs = new JButton("Joueurs");
+		btnJoueurs.setForeground(Color.WHITE);
+		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnJoueurs.setBackground(Couleur.BLEU2);
+		panelMenu.add(btnJoueurs);
 		
 		JButton btnTournois = new JButton("Tournois");
 		btnTournois.setForeground(Color.WHITE);
@@ -237,6 +229,28 @@ public class VueInscriptionTournoi extends JFrame{
 		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
+		
+		// CONTROLEUR
+		ControleurInscriptionTournoi controleur = new ControleurInscriptionTournoi(this);
+		// DECONNEXION
+		btnDeconnexion.addActionListener(controleur);
+		// GESTION DES BOUTONS
+		btnEquipes.addActionListener(controleur);
+		btnJoueurs.addActionListener(controleur);
+		btnClassement.addActionListener(controleur);
+	}
+	
+	public Etat getEtat(JButton b) {
+		if (b.getText() == "Se déconnecter") {
+			return Etat.DECONNECTER;
+		}else if (b.getText()=="Joueurs") {
+			return Etat.JOUEURS;
+		} else if (b.getText()=="Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText()=="Equipes") {
+			return Etat.EQUIPE;
+		}
+		return null;
 	}
 	
 }

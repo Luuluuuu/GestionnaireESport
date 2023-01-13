@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controleur.ControleurClassement.Etat;
+import controleur.ControleurConnexion;
+import modele.Utilisateur.Profil;
 import controleur.ControleurClassement;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -41,6 +43,9 @@ public class VueClassement {
 		fenetreClassement.setBounds(100, 100, 1400, 900);
 		fenetreClassement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		// CONTROLEUR
+		ControleurClassement controleur = new ControleurClassement(this);
+		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
 		panelHeader.setBackground(Couleur.BLEU1);
@@ -52,7 +57,7 @@ public class VueClassement {
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		/*if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
 			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -66,7 +71,7 @@ public class VueClassement {
 			btnEcuries.setBackground(Couleur.BLEU2);
 			panelMenu.add(btnEcuries);
 			btnEcuries.addActionListener(controleur);
-		}*/
+		}
 		
 		
 		JButton btnEquipes = new JButton("Equipes");
@@ -81,14 +86,14 @@ public class VueClassement {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		/*if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
 			JButton btnTournois = new JButton("Tournois");
 			btnTournois.setForeground(Color.WHITE);
 			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
 			btnTournois.setBackground(Couleur.BLEU2);
 			panelMenu.add(btnTournois);
 			btnTournois.addActionListener(controleur);
-		}*/
+		}
 		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
@@ -220,14 +225,9 @@ public class VueClassement {
 		JList listePodium = new JList();
 		panelListe.add(listePodium);
 		
-		// CONTROLEUR
-		ControleurClassement controleur = new ControleurClassement(this);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// BOUTONS MENU
-		// btnCalendrier.addActionListener(controleur);
-		// btnEcuries.addActionListener(controleur);
-		// btnTournois.addActionListener(controleur);
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
 	}
