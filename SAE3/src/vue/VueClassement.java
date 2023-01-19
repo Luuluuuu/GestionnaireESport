@@ -162,20 +162,20 @@ public class VueClassement {
 		
 		nomPremier.setForeground(Color.WHITE);
 		nomPremier.setHorizontalAlignment(SwingConstants.CENTER);
-		nomPremier.setFont(new Font("Roboto", Font.BOLD, 15));
-		nomPremier.setBounds(301, 293, 130, 32);
+		nomPremier.setFont(new Font("Roboto", Font.BOLD, 14));
+		nomPremier.setBounds(263, 293, 206, 32);
 		panelImgPodium.add(nomPremier);
 		
 		nomDeuxieme.setForeground(Color.WHITE);
 		nomDeuxieme.setHorizontalAlignment(SwingConstants.CENTER);
-		nomDeuxieme.setFont(new Font("Roboto", Font.BOLD, 15));
-		nomDeuxieme.setBounds(101, 374, 130, 32);
+		nomDeuxieme.setFont(new Font("Roboto", Font.BOLD, 14));
+		nomDeuxieme.setBounds(56, 374, 206, 32);
 		panelImgPodium.add(nomDeuxieme);
 		
 		nomTroisieme.setForeground(Color.WHITE);
 		nomTroisieme.setHorizontalAlignment(SwingConstants.CENTER);
-		nomTroisieme.setFont(new Font("Roboto", Font.BOLD, 15));
-		nomTroisieme.setBounds(469, 447, 130, 24);
+		nomTroisieme.setFont(new Font("Roboto", Font.BOLD, 14));
+		nomTroisieme.setBounds(451, 447, 164, 24);
 		panelImgPodium.add(nomTroisieme);
 		
 		JPanel panelFinPodium = new JPanel();
@@ -218,6 +218,8 @@ public class VueClassement {
 		panelFinPodium.add(panelListe, gbc_panelListe);
 		
 		listePodium = new JList<String>(this.modelePodium);
+		listePodium.setFixedCellHeight(40);
+		listePodium.setFixedCellWidth(600);
 		panelListe.add(listePodium);
 		
 		// DECONNEXION
@@ -258,19 +260,19 @@ public class VueClassement {
 	public void setPodium(int place, String nomEquipe, int nbPoints) {
 		switch (place) {
 		case 1:
-			this.nomPremier.setText("<html>1er<br/>" + 
-									nomEquipe + "<br/>" +
-									nbPoints + "</html>");
+			this.nomPremier.setText("<html>" + 
+									nomEquipe + " (" +
+									nbPoints + ")</html>");
 			break;
 		case 2:
-			this.nomDeuxieme.setText("<html>2e<br/>" + 
-					nomEquipe + "<br/>" +
-					nbPoints + "</html>");
+			this.nomDeuxieme.setText("<html>" + 
+					nomEquipe + " (" +
+					nbPoints + ")</html>");
 			break;
 		case 3:
-			this.nomTroisieme.setText("<html>3e<br/>" + 
-					nomEquipe + "<br/>" +
-					nbPoints + "</html>");
+			this.nomTroisieme.setText("<html>" + 
+					nomEquipe + " (" +
+					nbPoints + ")</html>");
 			break;
 		default:
 			break;

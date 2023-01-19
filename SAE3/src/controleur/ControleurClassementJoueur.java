@@ -2,6 +2,8 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 
@@ -32,6 +34,25 @@ public enum Etat{DECONNECTER, PROFIL, TOURNOIS, EQUIPES}
 		}
 		
 		this.vue.setInfosJoueur(joueur.getPhoto(), joueur.getPseudo(), joueur.getEquipe().getNom());
+		this.initialiserListeClassement("IDJEU");
+	}
+	
+	public void initialiserListeClassement(String idJeu) {
+		this.vue.viderClassement();
+		int place = 1;
+		try {
+			ResultSet rs = Connexion.getInstance().retournerRequete("SELECT NOMEQUIPE, NOMBREPOINTS FROM SAE_EQUIPE WHERE IDJEU = "+idJeu+" ORDER BY NOMBREPOINTS DESC");
+			while (rs.next()) {
+				if (place <= 3) {
+					this.vue.setPodium(place,rs.getString(1),rs.getInt(2));
+				} else {
+					this.vue.ajouterEquipe(place + " | " + rs.getString(1) + "(" + rs.getString(2) + ")");
+				}
+				place++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

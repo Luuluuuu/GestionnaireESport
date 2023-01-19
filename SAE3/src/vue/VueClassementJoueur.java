@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +31,11 @@ public class VueClassementJoueur {
 	public JFrame fenetreClassementJoueur;
 	private JLabel pseudo;
 	private JLabel photo;
+	private JLabel nomPremier = new JLabel("1er");
+	private JLabel nomDeuxieme = new JLabel("2e");
+	private JLabel nomTroisieme = new JLabel("3e");
+	private DefaultListModel<String> modelePodium = new DefaultListModel<String>();
+	private JList<String> listePodium;
 
 	
 	public JFrame getFrame() {
@@ -198,25 +204,22 @@ public class VueClassementJoueur {
 		imgPodium.setIcon(new ImageIcon(img));
 		panelPodium.add(imgPodium);
 		
-		JLabel nomPremier = new JLabel("1er");
-		nomPremier.setHorizontalAlignment(SwingConstants.CENTER);
-		nomPremier.setBounds(300, 205, 120, 28);
 		nomPremier.setForeground(Color.WHITE);
-		nomPremier.setFont(new Font("Roboto", Font.BOLD, 15));
+		nomPremier.setHorizontalAlignment(SwingConstants.CENTER);
+		nomPremier.setFont(new Font("Roboto", Font.BOLD, 14));
+		nomPremier.setBounds(300, 205, 120, 28);
 		panelPodium.add(nomPremier);
 		
-		JLabel nomDeuxieme = new JLabel("2e");
-		nomDeuxieme.setHorizontalAlignment(SwingConstants.CENTER);
 		nomDeuxieme.setForeground(Color.WHITE);
+		nomDeuxieme.setHorizontalAlignment(SwingConstants.CENTER);
+		nomDeuxieme.setFont(new Font("Roboto", Font.BOLD, 14));
 		nomDeuxieme.setBounds(146, 266, 120, 28);
-		nomDeuxieme.setFont(new Font("Roboto", Font.BOLD, 15));
 		panelPodium.add(nomDeuxieme);
 		
-		JLabel nomTroisieme = new JLabel("3e");
-		nomTroisieme.setHorizontalAlignment(SwingConstants.CENTER);
 		nomTroisieme.setForeground(Color.WHITE);
+		nomTroisieme.setHorizontalAlignment(SwingConstants.CENTER);
+		nomTroisieme.setFont(new Font("Roboto", Font.BOLD, 14));
 		nomTroisieme.setBounds(431, 324, 120, 18);
-		nomTroisieme.setFont(new Font("Roboto", Font.BOLD, 15));
 		panelPodium.add(nomTroisieme);
 		
 		JPanel panelListe = new JPanel();
@@ -227,7 +230,9 @@ public class VueClassementJoueur {
 		flowLayout_1.setHgap(50);
 		panelClassement.add(panelListe);
 		
-		JList listePodium = new JList();
+		listePodium = new JList<String>(this.modelePodium);
+		listePodium.setFixedCellHeight(30);
+		listePodium.setFixedCellWidth(550);
 		panelListe.add(listePodium);
 		
 		// CONTROLEUR //
@@ -264,6 +269,39 @@ public class VueClassementJoueur {
 			return Etat.TOURNOIS;
 		}
 		return null;
+	}
+	
+	public void ajouterEquipe(String nomEquipe) {
+		this.modelePodium.addElement(nomEquipe);
+	}
+
+	public void setPodium(int place, String nomEquipe, int nbPoints) {
+		switch (place) {
+		case 1:
+			this.nomPremier.setText("<html>" + 
+									nomEquipe + " (" +
+									nbPoints + ")</html>");
+			break;
+		case 2:
+			this.nomDeuxieme.setText("<html>" + 
+					nomEquipe + " (" +
+					nbPoints + ")</html>");
+			break;
+		case 3:
+			this.nomTroisieme.setText("<html>" + 
+					nomEquipe + " (" +
+					nbPoints + ")</html>");
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public void viderClassement() {
+		this.modelePodium.clear();
+		this.nomPremier.setText("1er");
+		this.nomDeuxieme.setText("2e");
+		this.nomTroisieme.setText("3e");
 	}
 
 }
