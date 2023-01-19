@@ -61,23 +61,23 @@ public class VueInscriptionTournoi extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
-		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnEquipes.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEquipes);
 		
-		JButton btnJoueurs = new JButton("Joueur");
+		JButton btnJoueurs = new JButton("Joueurs");
 		btnJoueurs.setForeground(Color.WHITE);
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
+		
+		JButton btnTournois = new JButton("Tournois");
+		btnTournois.setForeground(Color.WHITE);
+		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnTournois.setBackground(Couleur.BLEU2);
+		panelMenu.add(btnTournois);
 		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
