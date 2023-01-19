@@ -99,5 +99,5 @@ public class Jeu implements Cloneable{
 		return cloned;
 		
 	}
-	
+
 }

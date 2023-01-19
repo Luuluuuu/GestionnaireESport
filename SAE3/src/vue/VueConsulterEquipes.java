@@ -35,6 +35,7 @@ public class VueConsulterEquipes {
 	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
+	private JComboBox<String> selectionJeu;
 	
 	public JFrame getFrame() {
 		return this.fenetreConsulterEquipes;
@@ -122,6 +123,7 @@ public class VueConsulterEquipes {
 		gbc_panelListeTournois.gridy = 1;
 		panelTournoi.add(panelListeTournois, gbc_panelListeTournois);
 		
+		// TOURNOIS //
 		modeleTournois = new DefaultListModel<String>();
 		listeTournois = new JList<String>(modeleTournois);
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
@@ -178,7 +180,7 @@ public class VueConsulterEquipes {
 		fl_panel_2.setVgap(0);
 		panelTitrePoule.add(panel_2);
 		
-		JComboBox selectionJeu = new JComboBox();
+		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
 		selectionJeu.addItem("- Sélectionnez un jeu -");
@@ -341,6 +343,10 @@ public class VueConsulterEquipes {
 		ControleurConsulterEquipes controleur = new ControleurConsulterEquipes(this);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
+		
+		// COMPOSANTS DE DONNEES
+		this.listeTournois.addListSelectionListener(controleur);
+		this.selectionJeu.addActionListener(controleur);
 	}
 	
 	public static void fermerFenetre(JFrame f) {
@@ -349,11 +355,42 @@ public class VueConsulterEquipes {
 	
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		}
 		
 		return null;
+	}
+	
+	// Ajouter le nom de tournoi à la liste
+	public void ajouterTournoi(String nomTournoi) {
+		this.modeleTournois.addElement(nomTournoi);
+	}
+	
+	// ajouter le nom du jeu au jcombobox
+	public void ajouterJeu(String nomJeu) {
+		this.selectionJeu.addItem(nomJeu);
+	}
+
+	// Supprime tous les éléments de la sélection
+	public void viderJeux() {
+		this.selectionJeu.removeAllItems();
+	}
+
+	public String getTournoiSelectionne() {
+		return this.listeTournois.getSelectedValue();
+	}
+
+	public void viderEquipes() {
+		this.modeleEquipes.clear();
+	}
+
+	public String getJeuSelectionne() {
+		return (String) this.selectionJeu.getSelectedItem();
+	}
+
+	public void ajouterEquipe(String nomEquipe) {
+		this.modeleEquipes.addElement(nomEquipe);
 	}
 
 }

@@ -111,15 +111,9 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeEcuries();
 		this.initialiserListeEquipes();
 		this.initialiserListeJoueurs();
-		this.initialiserInscriptions();
 		this.initialiserListeEquipesJeu();
 	}
-
-	private void initialiserInscriptions() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	private void initialiserListeTournois() {
 		ControleurConnexion.listeTournois = new HashMap<String,Tournoi>();
 		Connexion c = Connexion.getInstance();
