@@ -9,7 +9,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +24,8 @@ import controleur.ControleurEquipesJoueur;
 import controleur.ControleurEquipesJoueur.Etat;
 
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JList;
@@ -29,6 +34,8 @@ public class VueEquipesJoueur {
 
 	public JFrame fenetreEquipesJoueur;
 	private JTextField texteRecherche;
+	private JLabel pseudo;
+	private JLabel photo;
 	
 	public JFrame getFrame() {
 		return this.fenetreEquipesJoueur;
@@ -92,7 +99,7 @@ public class VueEquipesJoueur {
 		gbl_panelJoueur.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panelJoueur.setLayout(gbl_panelJoueur);
 		
-		JLabel photo = new JLabel("insererPhoto");
+		photo = new JLabel();
 		photo.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_photo = new GridBagConstraints();
 		gbc_photo.fill = GridBagConstraints.BOTH;
@@ -101,7 +108,7 @@ public class VueEquipesJoueur {
 		gbc_photo.gridy = 0;
 		panelJoueur.add(photo, gbc_photo);
 		
-		JLabel pseudo = new JLabel("PSEUDO");
+		pseudo = new JLabel("PSEUDO");
 		pseudo.setForeground(Color.WHITE);
 		pseudo.setFont(new Font("Roboto", Font.BOLD, 24));
 		pseudo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -238,6 +245,16 @@ public class VueEquipesJoueur {
 		btnTournois.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
 		btnDeconnexion.addActionListener(controleur);
+	}
+	
+	public void setInfosJoueur(String cheminImage, String pseudo, String nomEquipe) {
+		try {
+			Image img = ImageIO.read(this.getClass().getResource(cheminImage));
+			this.photo.setIcon(new ImageIcon(img.getScaledInstance(150, -1,  Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.pseudo.setText(pseudo);
 	}
 	
 	public static void fermerFenetre(JFrame f) {

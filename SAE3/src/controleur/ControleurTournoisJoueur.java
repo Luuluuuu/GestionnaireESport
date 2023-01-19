@@ -7,6 +7,8 @@ import javax.swing.JButton;
 
 import controleur.ControleurEquipesJoueur.Etat;
 import modele.Connexion;
+import modele.Joueur;
+import modele.Utilisateur;
 import vue.VueClassementJoueur;
 import vue.VueConnexion;
 import vue.VueEquipesJoueur;
@@ -18,9 +20,19 @@ public enum Etat{DECONNECTER, PROFIL, EQUIPES, CLASSEMENT}
 	
 	private VueTournoisJoueur vue;
 	private Etat etat;
+	private Joueur joueur;
 	
 	public ControleurTournoisJoueur(VueTournoisJoueur vue) {
 		this.vue = vue;
+		
+		// INITIALISE LE JOUEUR CONNECTE
+		for (Joueur j : ControleurConnexion.listeJoueurs.values()) {
+			if (j.getID() == Utilisateur.IDCourant) {
+				this.joueur = j;
+			}
+		}
+		
+		this.vue.setInfosJoueur(joueur.getPhoto(), joueur.getPseudo(), joueur.getEquipe().getNom());
 	}
 	
 	@Override
