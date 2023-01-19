@@ -341,8 +341,14 @@ public class VueConsulterEquipes {
 		
 		// CONTROLEUR
 		ControleurConsulterEquipes controleur = new ControleurConsulterEquipes(this);
-		// DECONNEXION
+		
+		// BOUTONS
 		btnDeconnexion.addActionListener(controleur);
+		btnPoule1.addActionListener(controleur);
+		btnPoule2.addActionListener(controleur);
+		btnPoule3.addActionListener(controleur);
+		btnPoule4.addActionListener(controleur);
+		btnPouleFinale.addActionListener(controleur);
 		
 		// COMPOSANTS DE DONNEES
 		this.listeTournois.addListSelectionListener(controleur);
@@ -357,6 +363,16 @@ public class VueConsulterEquipes {
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
+		} if (b.getText().equals("POULE 1")) {
+			return Etat.POULE1;
+		} if (b.getText().equals("POULE 2")) {
+			return Etat.POULE2;
+		} if (b.getText().equals("POULE 3")) {
+			return Etat.POULE3;
+		} if (b.getText().equals("POULE 4")) {
+			return Etat.POULE4;
+		} if (b.getText().equals("POULE FINALE")) {
+			return Etat.POULEF;
 		}
 		
 		return null;

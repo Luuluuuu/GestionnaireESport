@@ -110,4 +110,11 @@ public class Jeu implements Cloneable{
 		indiceCourant++;
 	}
 
+	public Equipe[] getEquipePouleI(int i) {
+		if (this.poules[i-1] == null) {
+			return new Equipe[0];
+		}
+		return this.poules[i-1].getEquipes();
+	}
+
 }

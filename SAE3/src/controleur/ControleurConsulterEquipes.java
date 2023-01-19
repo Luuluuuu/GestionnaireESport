@@ -20,7 +20,7 @@ import vue.VueConsulterEquipes;
 
 public class ControleurConsulterEquipes implements ActionListener, ListSelectionListener {
 
-	public enum Etat {DECONNECTER, PDF, JEU}
+	public enum Etat {DECONNECTER, PDF, JEU, POULE1, POULE2, POULE3, POULE4, POULEF}
 	
 	private VueConsulterEquipes vue;
 	private Etat etat;
@@ -44,6 +44,9 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 		} else {
 			this.etat = Etat.JEU;
 		}
+		Jeu j;
+		Tournoi t;
+		Jeu j2;
 		switch (this.etat) {
 		case DECONNECTER:
 			Connexion.fermerConnexion();
@@ -53,16 +56,65 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 		break;
 		case JEU:
 			this.vue.viderEquipes();
-			Jeu j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
-			Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
-			Jeu j2 = t.getJeu(j);
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
 			
 			for (Equipe equipe : ControleurConnexion.listeEquipes.values()) {
-				if (equipe.getJeu().getNom().equals(this.vue.getJeuSelectionne())) {					
+				if (equipe.getJeu().getNom().equals(this.vue.getJeuSelectionne())) {
 					this.vue.ajouterEquipe(equipe.getNom());
 				}
 			}
-			this.etat = null;
+			break;
+		case POULE1:
+			this.vue.viderEquipes();
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
+			
+			for (Equipe equipe : j2.getEquipePouleI(1)) {
+				this.vue.ajouterEquipe(equipe.getNom());
+			}
+			break;
+		case POULE2:
+			this.vue.viderEquipes();
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
+			
+			for (Equipe equipe : j2.getEquipePouleI(2)) {
+				this.vue.ajouterEquipe(equipe.getNom());
+			}
+			break;
+		case POULE3:
+			this.vue.viderEquipes();
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
+			
+			for (Equipe equipe : j2.getEquipePouleI(3)) {
+				this.vue.ajouterEquipe(equipe.getNom());
+			}
+			break;
+		case POULE4:
+			this.vue.viderEquipes();
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
+			
+			for (Equipe equipe : j2.getEquipePouleI(4)) {
+				this.vue.ajouterEquipe(equipe.getNom());
+			}
+			break;
+		case POULEF:
+			this.vue.viderEquipes();
+			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
+			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
+			j2 = t.getJeu(j);
+			
+			for (Equipe equipe : j2.getEquipePouleI(5)) {
+				this.vue.ajouterEquipe(equipe.getNom());
+			}
 			break;
 		default:
 			break;

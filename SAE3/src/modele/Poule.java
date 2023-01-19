@@ -11,7 +11,7 @@ public class Poule {
 
     public Poule(int ID) {
     	this.ID = ID;
-    	this.equipes = new Equipe[5];
+    	this.equipes = new Equipe[4];
     	this.indiceCourant = 0;
     }
     
@@ -53,6 +53,10 @@ public class Poule {
 
 	public int getID() {
 		return this.ID;
+	}
+
+	public Equipe[] getEquipes() {
+		return this.equipes;
 	}
     
 }
