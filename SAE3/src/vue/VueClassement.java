@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,6 +32,13 @@ import javax.swing.SwingConstants;
 public class VueClassement {
 
 	public JFrame fenetreClassement;
+	
+	private JLabel nomPremier = new JLabel("1er");
+	private JLabel nomDeuxieme = new JLabel("2e");
+	private JLabel nomTroisieme = new JLabel("3e");
+	private DefaultListModel<String> modelePodium = new DefaultListModel<String>();
+	private JList<String> listePodium;
+	private JComboBox<String> triJeux = new JComboBox<String>();
 	
 	public JFrame getFrame() {
 		return this.fenetreClassement;
@@ -152,21 +160,18 @@ public class VueClassement {
 		imgPodium.setIcon(new ImageIcon(img));
 		panelImgPodium.add(imgPodium);
 		
-		JLabel nomPremier = new JLabel("1er");
 		nomPremier.setForeground(Color.WHITE);
 		nomPremier.setHorizontalAlignment(SwingConstants.CENTER);
 		nomPremier.setFont(new Font("Roboto", Font.BOLD, 15));
 		nomPremier.setBounds(301, 293, 130, 32);
 		panelImgPodium.add(nomPremier);
 		
-		JLabel nomDeuxieme = new JLabel("2e");
 		nomDeuxieme.setForeground(Color.WHITE);
 		nomDeuxieme.setHorizontalAlignment(SwingConstants.CENTER);
 		nomDeuxieme.setFont(new Font("Roboto", Font.BOLD, 15));
 		nomDeuxieme.setBounds(101, 374, 130, 32);
 		panelImgPodium.add(nomDeuxieme);
 		
-		JLabel nomTroisieme = new JLabel("3e");
 		nomTroisieme.setForeground(Color.WHITE);
 		nomTroisieme.setHorizontalAlignment(SwingConstants.CENTER);
 		nomTroisieme.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -197,7 +202,6 @@ public class VueClassement {
 		gbc_panelTriJeu.gridy = 0;
 		panelFinPodium.add(panelTriJeu, gbc_panelTriJeu);
 		
-		JComboBox triJeux = new JComboBox();
 		triJeux.setPreferredSize(new Dimension(205, 20));
 		panelTriJeu.add(triJeux);
 		
@@ -213,7 +217,7 @@ public class VueClassement {
 		gbc_panelListe.gridy = 1;
 		panelFinPodium.add(panelListe, gbc_panelListe);
 		
-		JList<String> listePodium = new JList<String>();
+		listePodium = new JList<String>(this.modelePodium);
 		panelListe.add(listePodium);
 		
 		// DECONNEXION
@@ -221,6 +225,8 @@ public class VueClassement {
 		// BOUTONS MENU
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		// COMBOBOX DE JEUX
+		this.triJeux.addActionListener(controleur);
 	}
 	
 	public static void fermerFenetre(JFrame f) {
@@ -243,5 +249,46 @@ public class VueClassement {
 		}
 		
 		return null;
+	}
+	
+	public void ajouterEquipe(String nomEquipe) {
+		this.modelePodium.addElement(nomEquipe);
+	}
+
+	public void setPodium(int place, String nomEquipe, int nbPoints) {
+		switch (place) {
+		case 1:
+			this.nomPremier.setText("<html>1er<br/>" + 
+									nomEquipe + "<br/>" +
+									nbPoints + "</html>");
+			break;
+		case 2:
+			this.nomDeuxieme.setText("<html>2e<br/>" + 
+					nomEquipe + "<br/>" +
+					nbPoints + "</html>");
+			break;
+		case 3:
+			this.nomTroisieme.setText("<html>3e<br/>" + 
+					nomEquipe + "<br/>" +
+					nbPoints + "</html>");
+			break;
+		default:
+			break;
+		}
+	}
+
+	public String getJeu() {
+		return (String) this.triJeux.getSelectedItem();
+	}
+
+	public void ajouterJeu(String nomJeu) {
+		this.triJeux.addItem(nomJeu);
+	}
+	
+	public void viderClassement() {
+		this.modelePodium.clear();
+		this.nomPremier.setText("1er");
+		this.nomDeuxieme.setText("2e");
+		this.nomTroisieme.setText("3e");
 	}
 }
