@@ -94,6 +94,15 @@ public class VueJoueur extends JFrame{
 			panelMenu.add(btnEcuries);
 			btnEcuries.addActionListener(controleur);
 		}
+
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			JButton btnInscription = new JButton("Tournois");
+			btnInscription.setForeground(Color.WHITE);
+			btnInscription.setFont(new Font("Roboto", Font.BOLD, 15));
+			btnInscription.setBackground(Couleur.BLEU2);
+			panelMenu.add(btnInscription);
+			btnInscription.addActionListener(controleur);
+		}
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
@@ -765,6 +774,8 @@ public class VueJoueur extends JFrame{
 			return Etat.EQUIPES;
 		} else if (b.getText()=="Classement") {
 			return Etat.CLASSEMENT;
+		}else if (b.getText() == "Tournois") {
+			return Etat.TOURNOIS;
 		}
 		return null;
 	}

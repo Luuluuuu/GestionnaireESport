@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurInscriptionTournoi;
 import controleur.ControleurInscriptionTournoi.Etat;
@@ -32,8 +30,11 @@ public class VueInscriptionTournoi extends JFrame{
 	public JFrame fenetreInscriptionTournoi;
 	public JPanel panelModif;
 	public JLabel titreModif;
-	private DefaultListModel<String> modeleTournois;
+	private DefaultListModel<String> modeleTournois = new DefaultListModel<String>();
 	private JList<String> listeTournois;
+	private DefaultListModel<String> modeleEquipes = new DefaultListModel<String>();
+	private JList<String> listeEquipes;
+	private JComboBox<String> selectionJeu;
 	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
@@ -46,6 +47,9 @@ public class VueInscriptionTournoi extends JFrame{
 		fenetreInscriptionTournoi.setResizable(false);
 		fenetreInscriptionTournoi.setBounds(100, 100, 1400, 900);
 		fenetreInscriptionTournoi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ControleurInscriptionTournoi controleur = new ControleurInscriptionTournoi(this);
+		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
 		panelHeader.setBackground(Couleur.BLEU1);
@@ -57,23 +61,23 @@ public class VueInscriptionTournoi extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
+		JButton btnTournois = new JButton("Tournois");
+		btnTournois.setForeground(Color.WHITE);
+		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnTournois.setBackground(Couleur.BLEU2);
+		panelMenu.add(btnTournois);
+		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnEquipes.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnEquipes);
 		
-		JButton btnJoueurs = new JButton("Joueurs");
+		JButton btnJoueurs = new JButton("Joueur");
 		btnJoueurs.setForeground(Color.WHITE);
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
-		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
 		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
@@ -139,7 +143,6 @@ public class VueInscriptionTournoi extends JFrame{
 		gbc_panelListe.gridx = 0;
 		gbc_panelListe.gridy = 1;
 		panelTournoi.add(panelListe, gbc_panelListe);
-		modeleTournois = new DefaultListModel<String>();
 		listeTournois = new JList<String>(modeleTournois);
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
@@ -175,7 +178,7 @@ public class VueInscriptionTournoi extends JFrame{
 		fl_panel_1.setVgap(0);
 		panelTitreM.add(panel_1);
 		
-		JLabel titrePoule = new JLabel("SÈlectionnez l'Èquipe ‡ inscrire");
+		JLabel titrePoule = new JLabel("S√©lectionnez l'√©quipe √† inscrire");
 		titrePoule.setForeground(Color.WHITE);
 		titrePoule.setFont(new Font("Roboto", Font.BOLD, 20));
 		panel_1.add(titrePoule);
@@ -188,10 +191,10 @@ public class VueInscriptionTournoi extends JFrame{
 		fl_panel_2.setVgap(0);
 		panelTitreM.add(panel_2);
 		
-		JComboBox selectionJeu = new JComboBox();
+		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- SÈlectionnez un jeu -");
+		selectionJeu.addItem("- S√©lectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelEquipe = new JPanel();
@@ -204,8 +207,8 @@ public class VueInscriptionTournoi extends JFrame{
 		panelModif.add(panelEquipe, gbc_panelEquipe);
 		panelEquipe.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 5));
 		
-		JList list = new JList();
-		panelEquipe.add(list);
+		listeEquipes = new JList<String>(this.modeleEquipes);
+		panelEquipe.add(listeEquipes);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);
@@ -230,16 +233,19 @@ public class VueInscriptionTournoi extends JFrame{
 		btnAnnuler.setBackground(Couleur.GRIS);
 		panelValider.add(btnAnnuler);
 		
-		// CONTROLEUR
-		ControleurInscriptionTournoi controleur = new ControleurInscriptionTournoi(this);
-		// DECONNEXION
-		btnDeconnexion.addActionListener(controleur);
-		// GESTION DES BOUTONS
+		// ECOUTE SUR LES COMPOSANTS //
+		this.listeTournois.addListSelectionListener(controleur);
+		this.listeEquipes.addListSelectionListener(controleur);
+		this.selectionJeu.addActionListener(controleur);
+		
+		// BOUTONS //
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
+		btnDeconnexion.addActionListener(controleur);
 	}
-	
+
+	// RECEVOIR L'ETAT SELON LE TEXTE DU BOUTON //
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se d√©connecter") {
 			return Etat.DECONNECTER;
@@ -248,9 +254,32 @@ public class VueInscriptionTournoi extends JFrame{
 		} else if (b.getText()=="Classement") {
 			return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
-			return Etat.EQUIPE;
+			return Etat.EQUIPES;
 		}
-		return null;
+		return Etat.JEU;
+	}
+	
+	// AJOUTER UN TOURNOI A LA LISTE //
+	public void ajouterTournoi(String nomTournoi) {
+		this.modeleTournois.addElement(nomTournoi);
+	}
+
+	// AJOUTER UN JEU A LA LISTE //
+	public void ajouterJeu(String nomJeu) {
+		this.selectionJeu.addItem(nomJeu);
+	}
+	
+	// AJOUTER UNE EQUIPE A LA LISTE //
+	public void ajouterEquipe(String nomEquipe) {
+		this.modeleEquipes.addElement(nomEquipe);
+	}
+	
+	public String getTournoiSelectionne() {
+		return this.listeTournois.getSelectedValue();
+	}
+
+	public String getJeuSelectionne() {
+		return (String) this.selectionJeu.getSelectedItem();
 	}
 	
 }

@@ -74,6 +74,15 @@ public class Tournoi {
     	return this.jeux;
     }
     
+    public Jeu getJeu(Jeu jeu) {
+    	for (Jeu j : this.jeux) {
+    		if (j.equals(jeu)){
+    			return j;
+    		}
+    	}
+		return null;
+    }
+    
     // SETTERS //
     public void setID(int ID) {
     	this.ID=ID;
@@ -115,5 +124,15 @@ public class Tournoi {
     */
     public void ajouterJeu(Jeu jeu) {
     	this.jeux.add(jeu);
+    }
+    
+    /* Inscrire une équipe au tournoi
+     * Entree :
+     * 	Jeu jeu dans lequel inscrire l'équipe
+     * 	Equipe equipe à inscrire au tournoi
+     */
+    public void inscrireEquipe(Jeu jeu, Equipe equipe) {
+    	Jeu j = this.getJeu(jeu);
+    	j.inscrire(equipe);
     }
 }

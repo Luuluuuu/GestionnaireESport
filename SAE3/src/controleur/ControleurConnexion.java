@@ -22,7 +22,6 @@ import modele.Utilisateur.Profil;
 import vue.VueConnexion;
 import vue.VueConsulterEquipes;
 import vue.VueEquipe;
-import vue.VueJoueur;
 import vue.VueProfilJoueur;
 import vue.VueRentrerPoints;
 import vue.VueCalendrier;
@@ -45,7 +44,7 @@ public class ControleurConnexion implements ActionListener {
 	static	Map<Integer, Ecurie>		listeEcuriesID;
 	
 	static 	List<String>				listeEquipesParEcurie;
-	static 	List<String>			listeJoueursParEcurie;
+	static 	List<String>				listeJoueursParEcurie;
 	
 	public 	static Utilisateur.Profil 	profilUtilisateur;
 	
@@ -112,27 +111,33 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeEcuries();
 		this.initialiserListeEquipes();
 		this.initialiserListeJoueurs();
+		this.initialiserInscriptions();
+	}
+
+	private void initialiserInscriptions() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void initialiserListeTournois() {
 		ControleurConnexion.listeTournois = new HashMap<String,Tournoi>();
 		Connexion c = Connexion.getInstance();
 		ResultSet rs;
-		/*if (this.profilUtilisateur == Profil.ARBITRE) {
-			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), \"\r\n"
-					+ "+ \"sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, \"\r\n"
-					+ "+ \"sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi"
-					+ "WHERE ");
-		} else {
+		if (ControleurConnexion.profilUtilisateur == Profil.ARBITRE) {
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'),"
+					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi,"
+					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi "
+					+ "WHERE sae_tournoi.idarbitre = " + Utilisateur.IDCourant);
+		} else if (ControleurConnexion.profilUtilisateur == Profil.RESPONSABLE){
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'),"
+					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi,"
+					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi "
+					+ "WHERE sae_tournoi.idresponsable = " + Utilisateur.IDCourant);
+		}else {
 			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
 					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
 					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
-		}*/
-		
-		rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
-				+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
-				+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
-		
+		}
 		try {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
