@@ -4,7 +4,7 @@ import java.util.List;
 
 import modele.Utilisateur.Profil;
 
-public class Ecurie {
+public class Ecurie implements Cloneable {
 	//Declaration de variables
     private String nom;
     private int anneeDeCreation;
@@ -88,5 +88,16 @@ public class Ecurie {
     /*Renvoie la liste des equipes de l'ecurie*/
     public List<Equipe> getEquipes() {
     	return this.equipes;
+    }
+    
+    public Ecurie clone() {
+    	Ecurie cloned = null;
+    	try {
+			cloned = (Ecurie) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return cloned;
     }
 }

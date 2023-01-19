@@ -86,15 +86,6 @@ public class VueClassement {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-			JButton btnTournois = new JButton("Tournois");
-			btnTournois.setForeground(Color.WHITE);
-			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-			btnTournois.setBackground(Couleur.BLEU2);
-			panelMenu.add(btnTournois);
-			btnTournois.addActionListener(controleur);
-		}
-		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -222,7 +213,7 @@ public class VueClassement {
 		gbc_panelListe.gridy = 1;
 		panelFinPodium.add(panelListe, gbc_panelListe);
 		
-		JList listePodium = new JList();
+		JList<String> listePodium = new JList<String>();
 		panelListe.add(listePodium);
 		
 		// DECONNEXION

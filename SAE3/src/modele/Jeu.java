@@ -3,7 +3,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Jeu {
+public class Jeu implements Cloneable{
 	private int ID;
     private String nom;
     private int nbJoueurs;
@@ -73,8 +73,31 @@ public class Jeu {
 	 * Entree :
 	 * 	Equipe equipe à inscrire 
 	*/
-	public void inscrire(Equipe equipe) {
+	public void inscrire(Equipe equipe) throws IllegalArgumentException {
+		if (this.equipes.contains(equipe)) {
+			throw new IllegalArgumentException("Cette équipe est déjà inscrite !");
+		}
 		this.equipes.add(equipe);
 	}
 
+	public boolean contient(Equipe equipe) {
+		return this.equipes.contains(equipe);
+	}
+
+	@Override
+	public Jeu clone() {
+		Jeu cloned = null;
+		try {
+			cloned = (Jeu) super.clone();
+			cloned.equipes = new ArrayList<Equipe>();
+			for (Equipe equipe : this.equipes) {
+				cloned.inscrire(equipe.clone());
+			}
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return cloned;
+		
+	}
+	
 }
