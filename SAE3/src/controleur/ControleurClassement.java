@@ -38,7 +38,6 @@ public class ControleurClassement implements ActionListener, ListSelectionListen
 			fenEcurie.getFrame().setVisible(true);
 			VueClassement.fermerFenetre(this.vue.fenetreClassement);
 		break;
-		
 		case EQUIPES :
 			VueEquipe fenEquipe = new VueEquipe();
 			fenEquipe.getFrame().setVisible(true);

@@ -808,4 +808,4 @@ public class VueJoueur extends JFrame{
 	public void viderMotDePasse() {
 		this.entreeMdp.setText("");
 	}
-}
+	}

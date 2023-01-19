@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -79,7 +78,7 @@ public class VueInscriptionTournoi extends JFrame{
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
-			
+		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -248,9 +247,13 @@ public class VueInscriptionTournoi extends JFrame{
 
 	// RECEVOIR L'ETAT SELON LE TEXTE DU BOUTON //
 	public Etat getEtat(JButton b) {
-		if (b.getText().equals("Se désinscrire")) {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
-		} if (b.getText().equals("Equipes")) {
+		}else if (b.getText()=="Joueurs") {
+			return Etat.JOUEURS;
+		} else if (b.getText()=="Classement") {
+			return Etat.CLASSEMENT;
+		} else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
 		}
 		return Etat.JEU;

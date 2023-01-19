@@ -8,11 +8,16 @@ import javax.swing.JButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import modele.Connexion;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Tournoi;
 import modele.Utilisateur;
+import vue.VueClassement;
+import vue.VueConnexion;
+import vue.VueEquipe;
 import vue.VueInscriptionTournoi;
+import vue.VueJoueur;
 
 public class ControleurInscriptionTournoi implements ActionListener, ListSelectionListener {
 	public enum Etat{DECONNECTER, EQUIPES, JOUEURS, CLASSEMENT, TOURNOI, JEU};
@@ -36,14 +41,27 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
-		case DECONNECTER:
-			break;
-		case EQUIPES:
-			break;
-		case JOUEURS:
-			break;
-		case CLASSEMENT:
-			break;
+		case EQUIPES :
+			VueEquipe fenERA = new VueEquipe();
+			fenERA.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreInscriptionTournoi);
+		break;
+		case JOUEURS :
+			VueJoueur fenJoueur = new VueJoueur();
+			fenJoueur.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreInscriptionTournoi);
+		break;
+		case CLASSEMENT :
+			VueClassement fenClassement = new VueClassement();
+			fenClassement.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreInscriptionTournoi);
+		break;
+		case DECONNECTER :
+			Connexion.fermerConnexion();
+			VueConnexion fen = new VueConnexion();
+			fen.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreInscriptionTournoi);
+		break;
 		case JEU:
 			for (Equipe equipe : ControleurConnexion.listeEquipes.values()) {
 				if (equipe.getEcurie().getID() == Utilisateur.IDCourant && equipe.getJeu().getNom().equals(this.vue.getJeuSelectionne())) {
