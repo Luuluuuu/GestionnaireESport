@@ -95,11 +95,11 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			fenCalendrier.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
-		case TOURNOIS:
-			VueInscriptionTournoi fenTournoi = new VueInscriptionTournoi();
-			fenTournoi.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreJoueur);			
-			break;
+		case TOURNOIS :
+			VueInscriptionTournoi fenInscriptionTournoi = new VueInscriptionTournoi();
+			fenInscriptionTournoi.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();

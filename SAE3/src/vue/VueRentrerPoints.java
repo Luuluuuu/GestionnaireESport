@@ -340,6 +340,8 @@ public class VueRentrerPoints {
 		// CONTROLEUR //
 		ControleurRentrerPoints controleur = new ControleurRentrerPoints(this);
 		
+		btnDeconnexion.addActionListener(controleur);
+		
 		// LISTES
 		listeTournois.addListSelectionListener(controleur);
 	}
@@ -362,7 +364,7 @@ public class VueRentrerPoints {
 	
 	// ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se dÃ©connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		}
 		return null;
