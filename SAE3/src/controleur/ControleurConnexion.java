@@ -112,6 +112,7 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeEquipes();
 		this.initialiserListeJoueurs();
 		this.initialiserInscriptions();
+		this.initialiserListeEquipesJeu();
 	}
 
 	private void initialiserInscriptions() {
@@ -142,7 +143,9 @@ public class ControleurConnexion implements ActionListener {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
 				if (ControleurConnexion.listeTournois.containsKey(rs.getString(2))) {
-					ControleurConnexion.listeTournois.get(rs.getString(2)).ajouterJeu(ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")));
+					Jeu j = ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")).clone();
+					Tournoi t = ControleurConnexion.listeTournois.get(rs.getString(2));
+					t.ajouterJeu(j);
 				} else {					
 					Tournoi t = new Tournoi(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(7));
 					t.setArbitre(this.listeArbitresID.get(rs.getInt(5)));
@@ -156,6 +159,21 @@ public class ControleurConnexion implements ActionListener {
 			e.printStackTrace();
 		}
 		
+	}
+
+	private void initialiserListeEquipesJeu() {
+		for (Tournoi t : ControleurConnexion.listeTournois.values()) {
+			for (Jeu j : t.getJeux()) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT IDEQUIPE FROM SAE_INSCRIRE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID());
+					while (rs.next()) {
+						j.inscrire(ControleurConnexion.listeEquipesID.get(rs.getInt(1)));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private void initialiserListeResponsables() {

@@ -143,7 +143,9 @@ public class VueInscriptionTournoi extends JFrame{
 		gbc_panelListe.gridx = 0;
 		gbc_panelListe.gridy = 1;
 		panelTournoi.add(panelListe, gbc_panelListe);
+		
 		listeTournois = new JList<String>(modeleTournois);
+		listeTournois.setName("Tournoi");
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
 		listeTournois.setFixedCellWidth(600);
@@ -208,6 +210,7 @@ public class VueInscriptionTournoi extends JFrame{
 		panelEquipe.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 5));
 		
 		listeEquipes = new JList<String>(this.modeleEquipes);
+		listeEquipes.setName("Equipe");
 		panelEquipe.add(listeEquipes);
 		
 		JPanel panelValider = new JPanel();
@@ -243,33 +246,43 @@ public class VueInscriptionTournoi extends JFrame{
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
 		btnDeconnexion.addActionListener(controleur);
+		btnValider.addActionListener(controleur);
 	}
 
-	// RECEVOIR L'ETAT SELON LE TEXTE DU BOUTON //
+	// RECEVOIR L'ETAT //
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
-		}else if (b.getText()=="Joueurs") {
+		} else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
 			return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
+		} else if (b.getText()=="Valider") {
+			return Etat.VALIDER;
 		}
-		return Etat.JEU;
+		return null;
 	}
 	
-	// AJOUTER UN TOURNOI A LA LISTE //
+	public Etat getEtat(JList l) {
+		if (l.getName().equals("Tournoi")) {
+			return Etat.TOURNOI;
+		} if (l.getName().equals("Equipe")) {
+			return Etat.EQUIPE;
+		}
+		return null;
+	}
+	
+	// AJOUTER LES COMPOSANTS A LA LISTE //
 	public void ajouterTournoi(String nomTournoi) {
 		this.modeleTournois.addElement(nomTournoi);
 	}
 
-	// AJOUTER UN JEU A LA LISTE //
 	public void ajouterJeu(String nomJeu) {
 		this.selectionJeu.addItem(nomJeu);
 	}
 	
-	// AJOUTER UNE EQUIPE A LA LISTE //
 	public void ajouterEquipe(String nomEquipe) {
 		this.modeleEquipes.addElement(nomEquipe);
 	}
@@ -280,6 +293,33 @@ public class VueInscriptionTournoi extends JFrame{
 
 	public String getJeuSelectionne() {
 		return (String) this.selectionJeu.getSelectedItem();
+	}
+
+	public String getEquipeSelectionne() {
+		return this.listeEquipes.getSelectedValue();
+	}
+	
+	// VIDE LA LISTE DE JEUX AVANT DE LA REMPLIR //
+	public void viderJeux() {
+		this.selectionJeu.removeAllItems();
+	}
+
+	public void viderEquipes() {
+		this.modeleEquipes.clear();
+	}
+	
+	// DESELECTIONNE TOUS LES COMPOSANTS DE DONNEES DE LA PAGE //
+	public void deselectionner() {
+		this.listeEquipes.clearSelection();
+		this.selectionJeu.setSelectedItem("- Sélectionnez un jeu -");
+		this.listeTournois.clearSelection();
+	}
+	
+	// VERIFIE QUE TOUS LES CHAMPS SONT REMPLIS //
+	public boolean estRemplie() {
+		return (!this.listeTournois.isSelectionEmpty()) && 
+				(!this.listeEquipes.isSelectionEmpty()) && 
+				(!this.selectionJeu.getSelectedItem().equals("- Sélectionnez un jeu -"));
 	}
 	
 }

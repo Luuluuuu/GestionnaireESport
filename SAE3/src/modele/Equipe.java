@@ -2,7 +2,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe implements Comparable<Equipe> {
+public class Equipe implements Comparable<Equipe>, Cloneable {
 	//Declaration d'attributs
 	private int ID;
     private String nom;
@@ -10,7 +10,7 @@ public class Equipe implements Comparable<Equipe> {
     private List<Joueur> joueurs = new ArrayList<Joueur> ();
     private Jeu jeu;
     private Ecurie ecurie;
-    private List<Poule> poule = new ArrayList<Poule> ();
+    private List<Poule> poules = new ArrayList<Poule> ();
     private String nationalite;
 
     /*Constructeur d'Equipe
@@ -83,7 +83,7 @@ public class Equipe implements Comparable<Equipe> {
 
     //Retourne la liste des poules auquelles est inscrites l'equipe
     public List<Poule> getPoules() {
-        return this.poule;
+        return this.poules;
     }
     
     //Modifie le jeu de l'equipe
@@ -95,9 +95,14 @@ public class Equipe implements Comparable<Equipe> {
 		this.ID = ID;
 	}
     
+	// Modifie l'écurie
+	private void setEcurie(Ecurie ecurie) {
+		this.ecurie = ecurie;
+	}
+	
     //Ajoute une poule à la liste des poules de l'equipe
     public void ajouterPoule(Poule poule) {
-        this.poule.add(poule);
+        this.poules.add(poule);
     }
 
     /*Ajoute de nouveaux points aux points de l'équipe
@@ -135,4 +140,24 @@ public class Equipe implements Comparable<Equipe> {
 			return -1;
 		}
 	}
+	
+	@Override
+	public Equipe clone() throws CloneNotSupportedException {
+		Equipe cloned = (Equipe) super.clone();
+		
+		cloned.setEcurie(this.ecurie.clone());
+		
+		cloned.joueurs = new ArrayList<Joueur>();
+		for (Joueur j : this.joueurs) {
+			cloned.ajouterJoueur(j);
+		}
+		
+		cloned.poules = new ArrayList<Poule>();
+		for (Poule p : this.poules) {
+			cloned.ajouterPoule(p);
+		}
+		
+		return cloned;
+	}
+
 }
