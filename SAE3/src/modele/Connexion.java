@@ -73,4 +73,14 @@ public class Connexion {
 			e.printStackTrace();
 		}
 	}
+	
+	public Statement getStatement() {
+		try {
+			return Connexion.connx.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

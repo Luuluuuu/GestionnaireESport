@@ -8,6 +8,8 @@ public class Jeu implements Cloneable{
     private String nom;
     private int nbJoueurs;
     private List<Equipe> equipes;
+    private Poule[] poules;
+    private int indiceCourant;
     
 	/* Constructeur de Jeu
 	 * Entrees :
@@ -19,6 +21,8 @@ public class Jeu implements Cloneable{
     	this.nom = nom;
     	this.nbJoueurs = nbJoueurs;
     	this.equipes = new ArrayList<Equipe>();
+    	this.poules = new Poule[5];
+    	this.indiceCourant = 0;
     }
     
     //Getters
@@ -93,11 +97,17 @@ public class Jeu implements Cloneable{
 			for (Equipe equipe : this.equipes) {
 				cloned.inscrire(equipe.clone());
 			}
+			cloned.poules = this.poules.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		return cloned;
 		
+	}
+
+	public void ajouterPoule(Poule poule) {
+		this.poules[indiceCourant] = poule;
+		indiceCourant++;
 	}
 
 }

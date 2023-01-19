@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import modele.Ecurie;
 import modele.Equipe;
 import modele.Jeu;
 import modele.Joueur;
+import modele.Poule;
 import modele.Responsable;
 import modele.Tournoi;
 import modele.Utilisateur;
@@ -42,6 +44,7 @@ public class ControleurConnexion implements ActionListener {
 	static 	Map<Integer, Jeu>			listeJeuxID;
 	static	Map<Integer, Equipe> 		listeEquipesID;
 	static	Map<Integer, Ecurie>		listeEcuriesID;
+	static	Map<Integer, Poule>			listePoulesID;
 	
 	static 	List<String>				listeEquipesParEcurie;
 	static 	List<String>				listeJoueursParEcurie;
@@ -111,9 +114,10 @@ public class ControleurConnexion implements ActionListener {
 		this.initialiserListeEcuries();
 		this.initialiserListeEquipes();
 		this.initialiserListeJoueurs();
-		this.initialiserListeEquipesJeu();
+		this.intialiserListePoules();
+		this.initialiserListeEquipesPoulesJeu();
 	}
-	
+
 	private void initialiserListeTournois() {
 		ControleurConnexion.listeTournois = new HashMap<String,Tournoi>();
 		Connexion c = Connexion.getInstance();
@@ -148,20 +152,47 @@ public class ControleurConnexion implements ActionListener {
 					listeTournois.put(t.getNom(), t);
 				}
 			}
-			
+		rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 	}
+	
+	private void intialiserListePoules() {
+		ControleurConnexion.listePoulesID = new HashMap<Integer, Poule>();
+		try {
+			ResultSet rs = Connexion.getInstance().retournerRequete("SELECT * FROM SAE_POULE");
+			while (rs.next()) {
+				Poule poule = new Poule(rs.getInt(1));
+				ControleurConnexion.listePoulesID.put(rs.getInt(1), poule);
 
-	private void initialiserListeEquipesJeu() {
+				Statement st = Connexion.getInstance().getStatement();
+				ResultSet rs2 = st.executeQuery("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE = "+poule.getID());
+				while (rs2.next()) {
+					poule.ajouterEquipe(ControleurConnexion.listeEquipesID.get(rs2.getInt(1)));
+				}
+				st.close();
+				rs2.close();
+			}
+			rs.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void initialiserListeEquipesPoulesJeu() {
 		for (Tournoi t : ControleurConnexion.listeTournois.values()) {
 			for (Jeu j : t.getJeux()) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT IDEQUIPE FROM SAE_INSCRIRE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID());
 					while (rs.next()) {
 						j.inscrire(ControleurConnexion.listeEquipesID.get(rs.getInt(1)));
+					}
+					
+					rs = Connexion.getInstance().retournerRequete("SELECT IDPOULE FROM SAE_POULE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID()+" ORDER BY 1");
+					while (rs.next()) {
+						j.ajouterPoule(ControleurConnexion.listePoulesID.get(rs.getInt(1)));
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
