@@ -21,9 +21,9 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 	public ControleurConsulterEquipes(VueConsulterEquipes vue) {
 		this.vue = vue;
 	}
-	
+
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
@@ -36,10 +36,10 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 		}
 	}
 
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void valueChanged(ListSelectionEvent e) {
 		
 	}
-
+	
 }

@@ -349,10 +349,11 @@ public class VueConsulterEquipes {
 	
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		}
 		
 		return null;
 	}
+
 }

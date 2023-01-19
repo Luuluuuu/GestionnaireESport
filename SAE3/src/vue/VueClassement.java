@@ -13,7 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controleur.ControleurClassement.Etat;
+import modele.Utilisateur.Profil;
 import controleur.ControleurClassement;
+import controleur.ControleurConnexion;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -40,6 +43,9 @@ public class VueClassement {
 		fenetreClassement.setResizable(false);
 		fenetreClassement.setBounds(100, 100, 1400, 900);
 		fenetreClassement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// CONTROLEUR
+		ControleurClassement controleur = new ControleurClassement(this);
 		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
@@ -52,7 +58,7 @@ public class VueClassement {
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		/*if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
 			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -66,8 +72,16 @@ public class VueClassement {
 			btnEcuries.setBackground(Couleur.BLEU2);
 			panelMenu.add(btnEcuries);
 			btnEcuries.addActionListener(controleur);
-		}*/
+		}
 		
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			JButton btnInscription = new JButton("Tournois");
+			btnInscription.setForeground(Color.WHITE);
+			btnInscription.setFont(new Font("Roboto", Font.BOLD, 15));
+			btnInscription.setBackground(Couleur.BLEU2);
+			panelMenu.add(btnInscription);
+			btnInscription.addActionListener(controleur);
+		}
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
@@ -220,8 +234,6 @@ public class VueClassement {
 		JList listePodium = new JList();
 		panelListe.add(listePodium);
 		
-		// CONTROLEUR
-		ControleurClassement controleur = new ControleurClassement(this);
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
 		// BOUTONS MENU
@@ -235,7 +247,6 @@ public class VueClassement {
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
-	
 	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {

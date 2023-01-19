@@ -20,11 +20,12 @@ import vue.VueClassement;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
+import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT,TOURNOIS}
 	private VueEquipe vue;
 	private Etat etat;
 	
@@ -80,6 +81,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		JButton b = (JButton) e.getSource();
 		this.etat = this.vue.getEtat(b);
 		switch (this.etat) {
+		case CALENDRIER :
+			VueCalendrier fenCalendrier = new VueCalendrier();
+			fenCalendrier.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+		break;
 		case ECURIE :
 			VueERA fenERA = new VueERA();
 			fenERA.getFrame().setVisible(true);
@@ -90,11 +96,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			fenJoueur.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 		break;
-		case CALENDRIER :
-			VueCalendrier fenCalendrier = new VueCalendrier();
-			fenCalendrier.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
-		break;
+		case TOURNOIS:
+			VueInscriptionTournoi fenTournoi = new VueInscriptionTournoi();
+			fenTournoi.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);			
+			break;
 		case CLASSEMENT :
 			VueClassement fenClassement = new VueClassement();
 			fenClassement.getFrame().setVisible(true);
