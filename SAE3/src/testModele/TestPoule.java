@@ -20,7 +20,7 @@ public class TestPoule {
 
 	@Before
 	public void setUp() throws Exception {
-		this.poule = new Poule(equipes, true);
+		this.poule = new Poule(1);
 		this.equipes = new ArrayList<Equipe> ();
 	}
 

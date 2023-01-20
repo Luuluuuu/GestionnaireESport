@@ -170,7 +170,6 @@ public class VueConnexion extends JFrame implements KeyListener{
 		{
 			ControleurConnexion c = new ControleurConnexion(this);
 			c.actionPerformed(null);
-			System.out.println("ok");
 		}
 	}
 	@Override

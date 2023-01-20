@@ -262,7 +262,7 @@ public class VueEquipesJoueur {
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dÃ©connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
 			return Etat.CLASSEMENT;

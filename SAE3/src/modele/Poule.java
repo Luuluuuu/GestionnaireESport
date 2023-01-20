@@ -2,22 +2,30 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Poule {
+public class Poule implements Cloneable{
+	private int ID;
     private boolean finale;
     private Equipe gagnant;
-    private List<Equipe> equipes = new ArrayList<Equipe> ();
+    private Equipe[] equipes;
+    private int indiceCourant;
 
-    public Poule(List<Equipe> equipes,boolean finale) {
-    	this.equipes = equipes;
-    	this.finale = finale;
+    public Poule(int ID) {
+    	this.ID = ID;
+    	this.equipes = new Equipe[4];
+    	this.indiceCourant = 0;
+    }
+    
+    public void ajouterEquipe(Equipe e) {
+    	this.equipes[indiceCourant] = e;
+    	indiceCourant++;
     }
     
     public Equipe getGagnant() {
         return this.gagnant;
     }
 
-    public void setGagnant(Equipe value) {
-        this.gagnant = value;
+    public void setGagnant(Equipe e) {
+        this.gagnant = e;
     }
 
     public boolean getType() {
@@ -42,5 +50,24 @@ public class Poule {
 		Poule p = (Poule) obj;
 		return this.getType()==p.getType() && this.getGagnant().equals(p.getGagnant());
 	}
+
+	public int getID() {
+		return this.ID;
+	}
+
+	public Equipe[] getEquipes() {
+		return this.equipes;
+	}
     
+	@Override
+	public Poule clone() {
+		Poule cloned = null;
+		try {
+			cloned = (Poule) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cloned;
+	}
 }

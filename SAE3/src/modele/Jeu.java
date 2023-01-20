@@ -8,6 +8,9 @@ public class Jeu implements Cloneable{
     private String nom;
     private int nbJoueurs;
     private List<Equipe> equipes;
+    private Poule[] poules;
+    private int indiceCourant;
+    private final int TAILLEMAXPOULE = 5;
     
 	/* Constructeur de Jeu
 	 * Entrees :
@@ -19,6 +22,8 @@ public class Jeu implements Cloneable{
     	this.nom = nom;
     	this.nbJoueurs = nbJoueurs;
     	this.equipes = new ArrayList<Equipe>();
+    	this.poules = new Poule[TAILLEMAXPOULE];
+    	this.indiceCourant = 0;
     }
     
     //Getters
@@ -79,7 +84,8 @@ public class Jeu implements Cloneable{
 		}
 		this.equipes.add(equipe);
 	}
-
+	
+	// Vérifie si une équipe est inscrite
 	public boolean contient(Equipe equipe) {
 		return this.equipes.contains(equipe);
 	}
@@ -93,11 +99,65 @@ public class Jeu implements Cloneable{
 			for (Equipe equipe : this.equipes) {
 				cloned.inscrire(equipe.clone());
 			}
+			cloned.poules = new Poule[TAILLEMAXPOULE];
+			for (int i = 0; i < TAILLEMAXPOULE; i++) {
+				cloned.ajouterPoule(new Poule(0));
+			}
+			indiceCourant = 0;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		return cloned;
 		
 	}
+
+	public void setIndiceCourant(int i) {
+		this.indiceCourant = i;
+	}
 	
+	public void ajouterPoule(Poule poule) {
+		if (indiceCourant < 5) {
+			this.poules[indiceCourant] = poule;
+			indiceCourant++;
+		}
+	}
+
+	public void ajouterPoule(int i, Poule poule) {
+		this.poules[i] = poule;
+	}
+	
+	public boolean existeEquipe(int i){
+		return this.poules[i-1] == null;
+	}
+	
+	public Equipe[] getEquipePouleI(int i) {
+		return this.poules[i-1].getEquipes();
+	}
+
+	public void setGagnant(int i, Equipe equipe) {
+		this.poules[i-1].setGagnant(equipe);
+	}
+
+	public void setPouleFinale() {
+		if (this.sontPoulesFinies()) {
+			this.poules[4].ajouterEquipe(this.poules[0].getGagnant());
+			this.poules[4].ajouterEquipe(this.poules[1].getGagnant());
+			this.poules[4].ajouterEquipe(this.poules[2].getGagnant());
+			this.poules[4].ajouterEquipe(this.poules[3].getGagnant());
+		}
+	}
+	
+	public boolean sontPoulesFinies() {
+		for (Poule poule : this.poules) {
+			if (poule.getGagnant() == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Poule getPoule(int i) {
+		return this.poules[i-1];
+	}
+
 }
