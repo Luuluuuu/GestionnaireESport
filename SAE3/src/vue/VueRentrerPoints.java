@@ -341,9 +341,11 @@ public class VueRentrerPoints {
 		ControleurRentrerPoints controleur = new ControleurRentrerPoints(this);
 		
 		btnDeconnexion.addActionListener(controleur);
+		btnValider.addActionListener(controleur);
 		
-		// LISTES
+		// LISTES / JCOMBOBOX
 		listeTournois.addListSelectionListener(controleur);
+		selectionJeu.addActionListener(controleur);
 	}
 	
 	// TOURNOIS //
@@ -357,6 +359,8 @@ public class VueRentrerPoints {
 	
 	// JEUX //	
 	public  void setJeux(List<String> jeux) {
+		this.selectionJeu.removeAll();
+		this.selectionJeu.addItem("- Sélectionnez un jeu -");
 		for (String nomJeu : jeux) {
 			this.selectionJeu.addItem(nomJeu);
 		}
@@ -364,9 +368,27 @@ public class VueRentrerPoints {
 	
 	// ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
+		} if (b.getText().equals("Valider")) {
+			return Etat.VALIDER;
 		}
 		return null;
+	}
+
+	public void viderEquipes() {
+		this.modeleEquipes.clear();
+	}
+
+	public String getJeuSelectionne() {
+		return (String) this.selectionJeu.getSelectedItem();
+	}
+
+	public void ajouterEquipe(String nomEquipe) {
+		this.modeleEquipes.addElement(nomEquipe);
+	}
+
+	public String getEquipeSelectionne() {
+		return this.listeEquipes.getSelectedValue();
 	}
 }

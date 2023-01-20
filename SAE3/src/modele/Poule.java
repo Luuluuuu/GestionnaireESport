@@ -2,7 +2,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Poule {
+public class Poule implements Cloneable{
 	private int ID;
     private boolean finale;
     private Equipe gagnant;
@@ -59,4 +59,15 @@ public class Poule {
 		return this.equipes;
 	}
     
+	@Override
+	public Poule clone() {
+		Poule cloned = null;
+		try {
+			cloned = (Poule) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cloned;
+	}
 }

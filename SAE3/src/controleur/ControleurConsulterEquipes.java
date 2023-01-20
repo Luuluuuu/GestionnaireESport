@@ -112,8 +112,10 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 			j2 = t.getJeu(j);
 			
-			for (Equipe equipe : j2.getEquipePouleI(5)) {
-				this.vue.ajouterEquipe(equipe.getNom());
+			if (j2.existeEquipe(5)) {
+				for (Equipe equipe : j2.getEquipePouleI(5)) {
+					this.vue.ajouterEquipe(equipe.getNom());
+				}
 			}
 			break;
 		default:

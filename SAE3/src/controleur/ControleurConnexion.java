@@ -140,15 +140,16 @@ public class ControleurConnexion implements ActionListener {
 		try {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
+				// TODO
 				if (ControleurConnexion.listeTournois.containsKey(rs.getString(2))) {
 					Jeu j = ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")).clone();
 					Tournoi t = ControleurConnexion.listeTournois.get(rs.getString(2));
 					t.ajouterJeu(j);
-				} else {					
+				} else {
 					Tournoi t = new Tournoi(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(7));
 					t.setArbitre(this.listeArbitresID.get(rs.getInt(5)));
 					t.setResponsable(this.listeResponsablesID.get(rs.getInt(6)));
-					t.ajouterJeu(ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")));
+					t.ajouterJeu(ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")).clone());
 					listeTournois.put(t.getNom(), t);
 				}
 			}
@@ -156,7 +157,6 @@ public class ControleurConnexion implements ActionListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private void intialiserListePoules() {
@@ -184,13 +184,15 @@ public class ControleurConnexion implements ActionListener {
 	private void initialiserListeEquipesPoulesJeu() {
 		for (Tournoi t : ControleurConnexion.listeTournois.values()) {
 			for (Jeu j : t.getJeux()) {
+				j.setIndiceCourant(0);
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT IDEQUIPE FROM SAE_INSCRIRE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID());
 					while (rs.next()) {
 						j.inscrire(ControleurConnexion.listeEquipesID.get(rs.getInt(1)));
 					}
-					
-					rs = Connexion.getInstance().retournerRequete("SELECT IDPOULE FROM SAE_POULE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID()+" ORDER BY 1");
+
+					String req = "SELECT IDPOULE FROM SAE_POULE WHERE IDJEU = "+j.getID()+" AND IDTOURNOI = "+t.getID()+" ORDER BY 1";
+					rs = Connexion.getInstance().retournerRequete(req);
 					while (rs.next()) {
 						j.ajouterPoule(ControleurConnexion.listePoulesID.get(rs.getInt(1)));
 					}
