@@ -1,4 +1,5 @@
 package modele;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -77,6 +78,16 @@ public class Connexion {
 	public Statement getStatement() {
 		try {
 			return Connexion.connx.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public CallableStatement getCallableStatement(String str) {
+		try {
+			return Connexion.connx.prepareCall(str);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

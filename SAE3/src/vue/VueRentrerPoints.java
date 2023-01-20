@@ -340,12 +340,20 @@ public class VueRentrerPoints {
 		// CONTROLEUR //
 		ControleurRentrerPoints controleur = new ControleurRentrerPoints(this);
 		
+		// BOUTONS 
 		btnDeconnexion.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
+		// POULES
+		btnPoule1.addActionListener(controleur);
+		btnPoule2.addActionListener(controleur);
+		btnPoule3.addActionListener(controleur);
+		btnPoule4.addActionListener(controleur);
+		btnPouleFinale.addActionListener(controleur);
 		
 		// LISTES / JCOMBOBOX
 		listeTournois.addListSelectionListener(controleur);
 		selectionJeu.addActionListener(controleur);
+		
 	}
 	
 	// TOURNOIS //
@@ -359,7 +367,7 @@ public class VueRentrerPoints {
 	
 	// JEUX //	
 	public  void setJeux(List<String> jeux) {
-		this.selectionJeu.removeAll();
+		this.selectionJeu.removeAllItems();
 		this.selectionJeu.addItem("- Sélectionnez un jeu -");
 		for (String nomJeu : jeux) {
 			this.selectionJeu.addItem(nomJeu);
@@ -372,6 +380,16 @@ public class VueRentrerPoints {
 			return Etat.DECONNECTER;
 		} if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;
+		} if (b.getText().equals("POULE 1")) {
+			return Etat.POULE1;
+		} if (b.getText().equals("POULE 2")) {
+			return Etat.POULE2;
+		} if (b.getText().equals("POULE 3")) {
+			return Etat.POULE3;
+		} if (b.getText().equals("POULE 4")) {
+			return Etat.POULE4;
+		} if (b.getText().equals("POULE FINALE")) {
+			return Etat.POULEF;
 		}
 		return null;
 	}

@@ -2,6 +2,11 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLType;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -117,9 +122,11 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 			j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
 			t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 			j2 = t.getJeu(j);
-			
-			for (Equipe equipe : j2.getEquipePouleI(5)) {
-				this.vue.ajouterEquipe(equipe.getNom());
+
+			if (j2.existeEquipe(5)) {
+				for (Equipe equipe : j2.getEquipePouleI(5)) {
+					this.vue.ajouterEquipe(equipe.getNom());
+				}
 			}
 			break;
 		case VALIDER:
@@ -155,8 +162,33 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 					break;
 				}
 				Connexion.getInstance().executerRequete("UPDATE SAE_POULE SET GAGNANT = " + equipe.getID() + "WHERE IDPOULE = " +p.getID());
-				Connexion.getInstance().executerRequete("BEGIN GENERER_POULE_FINALE("+j2.getID()+","+t.getID()+") END;");
-				j2.setPouleFinale();
+				CallableStatement cst = Connexion.getInstance().getCallableStatement("{? = call GENERER_POULE_FINALE(?,?)}");
+				try {
+					cst.registerOutParameter(1, java.sql.Types.INTEGER);
+					cst.setInt(2, j2.getID());
+					cst.setInt(3, t.getID());
+					
+					cst.execute();
+					int estGenere = cst.getInt(1);
+					
+					if (estGenere == 1) {
+						
+						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT IDPOULE FROM SAE_POULE WHERE IDPOULE = SEQ_POULEID.CURRVAL");
+						Poule pouleFinale = new Poule(rs.getInt(1));
+						
+						Statement st = Connexion.getInstance().getStatement();
+						ResultSet rs2 = st.executeQuery("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE = "+pouleFinale.getID());
+						while (rs2.next()) {
+							pouleFinale.ajouterEquipe(ControleurConnexion.listeEquipesID.get(rs2.getInt(1)));
+						}
+						ControleurConnexion.listePoulesID.put(rs.getInt(1), pouleFinale);
+						j2.ajouterPoule(pouleFinale);
+					}
+					
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			}
 			break;
 		}
