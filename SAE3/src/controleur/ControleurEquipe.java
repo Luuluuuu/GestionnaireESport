@@ -115,57 +115,60 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			break;
 		case VALIDER:
 			//Vérifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("") || this.vue.getEcurie().equals("- Sélectionnez une écurie -")
-			|| this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
+			if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE && this.vue.getEcurie().equals("- Sélectionnez une écurie -")) {
 				this.vue.estVide();
 			} else {
-				// Instancie un tournoi
-				Equipe equipe = new Equipe(0,this.vue.getNom(),0,this.vue.getNationalite(),ControleurConnexion.listeJeux.get(this.vue.getJeu()),
-						ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
-				//Vérifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("Créer une équipe")) {
-					// SI CREATION
-					if (!(ControleurConnexion.listeEquipes.containsKey(equipe.getNom()))) {
-						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer a l'equipe
-						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_equipeId.nextval FROM dual");
-						try {
-							if (rs.next()) {equipe.setID(rs.getInt(1));}
-							rs.close();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
+				if(this.vue.getNom().equals("") || this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
+					this.vue.estVide();
+				} else {
+					// Instancie un tournoi
+					Equipe equipe = new Equipe(0,this.vue.getNom(),0,this.vue.getNationalite(),ControleurConnexion.listeJeux.get(this.vue.getJeu()),
+							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
+					//Vérifie si c'est une creation ou une modification
+					if (this.vue.titreModif.getText().equals("Créer une équipe")) {
+						// SI CREATION
+						if (!(ControleurConnexion.listeEquipes.containsKey(equipe.getNom()))) {
+							// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer a l'equipe
+							ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_equipeId.nextval FROM dual");
+							try {
+								if (rs.next()) {equipe.setID(rs.getInt(1));}
+								rs.close();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+							if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+								Connexion.getInstance().executerRequete("INSERT INTO sae_equipe (idequipe,nomequipe,anneedecreation,nombrepoints,nombrejoueurs,nationalite,idjeu)"
+										+ "VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
+								+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+								+")");
+							}else {
+								Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
+								+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+								+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");
+							}
+							ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
+							ControleurConnexion.listeEquipesID.put(equipe.getID(),equipe);
+							this.vue.ajouterEquipe(equipe.getNom());
 						}
+					}else {
+						// SINON MODIFICATION
+						equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
 						if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-							Connexion.getInstance().executerRequete("INSERT INTO sae_equipe (idequipe,nomequipe,anneedecreation,nombrepoints,nombrejoueurs,nationalite,idjeu)"
-									+ "VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
-							+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-							+")");
-						}else {
-							Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '"+equipe.getNom()+"', "
-							+Year.now().getValue()+", 0, 0, '"+equipe.getNationalite()+"',"+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-							+","+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+")");
+							Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
+									"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+									+"WHERE IDEQUIPE = "+equipe.getID());
+						} else {
+							Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
+									"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
+									+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
 						}
-						ControleurConnexion.listeEquipes.put(equipe.getNom(),equipe);	
-						ControleurConnexion.listeEquipesID.put(equipe.getID(),equipe);
-						this.vue.ajouterEquipe(equipe.getNom());
-					}
-				}else {
-					// SINON MODIFICATION
-					equipe.setID(ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne()).getID());
-					if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-						Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
-								"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-								+"WHERE IDEQUIPE = "+equipe.getID());
-					} else {
-						Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '"+equipe.getNom()+
-								"', NATIONALITE = '"+this.vue.getNationalite()+"', IDJEU = "+ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-								+",IDECURIE =  "+ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID()+"WHERE IDEQUIPE = "+equipe.getID());
-					}
-					ControleurConnexion.listeEquipes.remove(this.vue.getEquipeSelectionne());
-					ControleurConnexion.listeEquipes.put(equipe.getNom(), equipe);
-					ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
-					this.vue.modifierEquipe();
-					}
-				this.vue.creerEquipe();
+						ControleurConnexion.listeEquipes.remove(this.vue.getEquipeSelectionne());
+						ControleurConnexion.listeEquipes.put(equipe.getNom(), equipe);
+						ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
+						this.vue.modifierEquipe();
+						}
+					this.vue.creerEquipe();
+				}
 			}
 			break;
 		case DECONNECTER :

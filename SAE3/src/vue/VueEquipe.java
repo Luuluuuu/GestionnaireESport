@@ -697,7 +697,9 @@ public class VueEquipe extends JFrame{
 		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
 		VueEquipe.supprimerTexte(this.entreeNom);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
-		this.setEcurie("- Sélectionnez une écurie -");
+		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+			this.setEcurie("- Sélectionnez une écurie -");
+		}
 		entreeEcurie.setForeground(new Color(0,0,0));
 		this.setJeu("- Sélectionnez un jeu -");
 		entreeJeu.setForeground(new Color(0,0,0));
