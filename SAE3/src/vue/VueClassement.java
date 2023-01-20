@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import controleur.ControleurClassement.Etat;
 import modele.Utilisateur.Profil;
@@ -218,9 +219,11 @@ public class VueClassement {
 		panelFinPodium.add(panelListe, gbc_panelListe);
 		
 		listePodium = new JList<String>(this.modelePodium);
+		listePodium.setVisibleRowCount(14);
 		listePodium.setFixedCellHeight(40);
 		listePodium.setFixedCellWidth(600);
-		panelListe.add(listePodium);
+		JScrollPane scrollPane = new JScrollPane(listePodium);
+		panelListe.add(scrollPane);
 		
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);

@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurInscriptionTournoi;
@@ -145,11 +146,13 @@ public class VueInscriptionTournoi extends JFrame{
 		panelTournoi.add(panelListe, gbc_panelListe);
 		
 		listeTournois = new JList<String>(modeleTournois);
+		listeTournois.setVisibleRowCount(13);
 		listeTournois.setName("Tournoi");
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
 		listeTournois.setFixedCellWidth(600);
-		panelListe.add(listeTournois);
+		JScrollPane scrollPane = new JScrollPane(listeTournois);
+		panelListe.add(scrollPane);
 		
 		panelModif = new JPanel();
 		panelModif.setBackground(Couleur.BLEU1);
@@ -210,8 +213,13 @@ public class VueInscriptionTournoi extends JFrame{
 		panelEquipe.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 5));
 		
 		listeEquipes = new JList<String>(this.modeleEquipes);
+		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
+		listeEquipes.setVisibleRowCount(12);
 		listeEquipes.setName("Equipe");
-		panelEquipe.add(listeEquipes);
+		listeEquipes.setFixedCellHeight(50);
+		listeEquipes.setFixedCellWidth(600);
+		JScrollPane scrollPane2 = new JScrollPane(listeEquipes);
+		panelEquipe.add(scrollPane2);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);

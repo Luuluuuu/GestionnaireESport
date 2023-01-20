@@ -10,6 +10,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -124,10 +126,12 @@ public class VueConsulterEquipes {
 		
 		modeleTournois = new DefaultListModel<String>();
 		listeTournois = new JList<String>(modeleTournois);
+		listeTournois.setVisibleRowCount(13);
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
 		listeTournois.setFixedCellWidth(600);
-		panelListeTournois.add(listeTournois);
+		JScrollPane scrollPane = new JScrollPane(listeTournois);
+		panelListeTournois.add(scrollPane);
 		
 		JPanel panelGagnant = new JPanel();
 		panelGagnant.setBackground(Couleur.BLEU1);
@@ -332,10 +336,12 @@ public class VueConsulterEquipes {
 		gbc_panelListeEquipes.gridy = 1;
 		panelEquipe.add(panelListeEquipes, gbc_panelListeEquipes);
 		listeEquipes = new JList<String>(modeleEquipes);
+		listeEquipes.setVisibleRowCount(5);
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		panelListeEquipes.add(listeEquipes);
+		JScrollPane scrollPane2 = new JScrollPane(listeEquipes);
+		panelListeEquipes.add(scrollPane2);
 		
 		// CONTROLEUR
 		ControleurConsulterEquipes controleur = new ControleurConsulterEquipes(this);

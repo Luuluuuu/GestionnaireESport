@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
@@ -163,10 +164,12 @@ public class VueCalendrier extends JFrame{
 		
 		modeleTournois = new DefaultListModel<String>();
 		listeTournois = new JList<String>(modeleTournois);
+		listeTournois.setVisibleRowCount(12);
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
 		listeTournois.setFixedCellWidth(600);
-		panelListe.add(listeTournois);
+		JScrollPane scrollPane = new JScrollPane(listeTournois);
+		panelListe.add(scrollPane);
 		
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setBackground(Couleur.BLEU1);

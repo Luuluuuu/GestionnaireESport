@@ -10,6 +10,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -106,10 +108,12 @@ public class VueRentrerPoints {
 		
 		modeleTournois = new DefaultListModel<String>();
 		listeTournois = new JList<String>(modeleTournois);
+		listeTournois.setVisibleRowCount(13);
 		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeTournois.setFixedCellHeight(50);
 		listeTournois.setFixedCellWidth(600);
-		panelListeTournois.add(listeTournois);
+		JScrollPane scrollPane = new JScrollPane(this.listeTournois);
+		panelListeTournois.add(scrollPane);
 		
 		JPanel panelGagnant = new JPanel();
 		panelGagnant.setBackground(Couleur.BLEU1);
@@ -315,10 +319,12 @@ public class VueRentrerPoints {
 		
 		modeleEquipes = new DefaultListModel<String>();
 		listeEquipes = new JList<String>(modeleEquipes);
+		listeEquipes.setVisibleRowCount(4);
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		panelListeEquipes.add(listeEquipes);
+		JScrollPane scrollPane2 = new JScrollPane(this.listeEquipes);
+		panelListeEquipes.add(scrollPane2);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);

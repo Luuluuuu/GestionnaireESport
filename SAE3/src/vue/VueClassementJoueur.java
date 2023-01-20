@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurClassementJoueur;
@@ -231,9 +232,12 @@ public class VueClassementJoueur {
 		panelClassement.add(panelListe);
 		
 		listePodium = new JList<String>(this.modelePodium);
+		listePodium.setVisibleRowCount(16);
+		listePodium.setFont(new Font("Roboto", Font.PLAIN, 14));
 		listePodium.setFixedCellHeight(30);
 		listePodium.setFixedCellWidth(550);
-		panelListe.add(listePodium);
+		JScrollPane scrollPane = new JScrollPane(listePodium);
+		panelListe.add(scrollPane);
 		
 		// CONTROLEUR //
 		ControleurClassementJoueur controleur = new ControleurClassementJoueur(this);
