@@ -1,13 +1,21 @@
 package controleur;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
@@ -19,7 +27,6 @@ import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
-import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 import vue.VueClassement;
 
@@ -27,7 +34,7 @@ import vue.VueClassement;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,CLASSEMENT,TOURNOIS}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT}
 	private VueJoueur vue;
 	private Etat etat;
 
@@ -93,11 +100,6 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
-			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
-		break;
-		case TOURNOIS :
-			VueInscriptionTournoi fenInscriptionTournoi = new VueInscriptionTournoi();
-			fenInscriptionTournoi.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
 		case DECONNECTER :
@@ -176,6 +178,54 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 					this.vue.viderMotDePasse();
 					b.setForeground(Color.WHITE);
 			}
+			break;
+		case PHOTO:
+		        JFileChooser fileChooser = new JFileChooser();
+		        int result = fileChooser.showOpenDialog(null);
+		        File file = fileChooser.getSelectedFile();
+		        if (result == JFileChooser.APPROVE_OPTION) {
+		        	 String fileName = file.getName();
+		             if (fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".jpg")) {
+		            	 
+		            	 
+		                 // Le fichier sélectionné est une image au format PNG, JPEG ou JPG.
+		                   String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+		                   String newFileName = this.vue.getPseudo() + fileExtension;
+		                   File targetDirectory = new File("./src/photos");
+		                   if (!targetDirectory.exists()) { //Crée le repertoire si il existe pas
+		                     targetDirectory.mkdirs();
+		                   }
+		                   File targetFile = new File(targetDirectory, newFileName);
+		                   try { //Enregistrer l'image
+		                	   Files.copy(file.toPath(), targetFile.toPath());
+		                	   JOptionPane.showMessageDialog(null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+						   } 
+		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
+			                   File targetExisteFile = new File(targetDirectory, newFileName);
+			                   targetExisteFile.delete(); //Suppression
+			    			try {
+								Files.copy(file.toPath(), targetFile.toPath());	//Ajout
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							// TODO Auto-generated catch block
+			            	 JOptionPane.showMessageDialog(null, "Le fichier a été modifié.", "Attention", JOptionPane.INFORMATION_MESSAGE);
+						}            	
+		                 //Afficher l'image qui vient d'être ajoutée
+		      	       	 ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
+		    			 Image image = imageIcon.getImage();
+		    			 Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+		    			 imageIcon = new ImageIcon(resizedImage);
+		    			 this.vue.photo.setIcon(imageIcon);
+		    			 
+		    			 
+		             } else {
+		            	 JOptionPane.showMessageDialog(null, "Le fichier sélectionné n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
+		             }
+		          // Le fichier sélectionné a été approuvé.    
+		        }
+		      	
 			break;
 		case SUPPRIMER:
 			if ((this.vue.getJoueurSelectionne()!=null && this.vue.confirmerSuppression()==0)) {

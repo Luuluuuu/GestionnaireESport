@@ -10,7 +10,15 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.awt.event.ActionEvent;
 
+
+import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -39,6 +47,7 @@ public class VueJoueur extends JFrame{
 	public JFrame fenetreJoueur;
 	public JTextField entreePrenom;
 	public JPanel panelModif;
+	public JLabel photo;
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleJoueurs = new DefaultListModel<String>();;
 	private JList<String> listeJoueurs;
@@ -94,6 +103,8 @@ public class VueJoueur extends JFrame{
 			panelMenu.add(btnEcuries);
 			btnEcuries.addActionListener(controleur);
 		}
+		  
+		
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
@@ -106,15 +117,6 @@ public class VueJoueur extends JFrame{
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
-		
-		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-			JButton btnTournois = new JButton("Tournois");
-			btnTournois.setForeground(Color.WHITE);
-			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-			btnTournois.setBackground(Couleur.BLEU2);
-			panelMenu.add(btnTournois);
-			btnTournois.addActionListener(controleur);
-		}
 		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
@@ -270,9 +272,14 @@ public class VueJoueur extends JFrame{
 		panelPhoto.setBackground(Couleur.BLEU1);
 		panelTitreM.add(panelPhoto);
 		
-		JLabel photo = new JLabel("");
+		photo = new JLabel("");
 		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		photo.setIcon(new ImageIcon(img));
+		
+		JButton photoBouton = new JButton("Choisir une photo");
+		
+		photoBouton.addActionListener(controleur);
+		panelPhoto.add(photoBouton);
+		photo.setIcon(new ImageIcon(img)); //Image affichée a cotée
 		panelPhoto.add(photo);
 		
 		JPanel panelEquipe = new JPanel();
@@ -753,21 +760,20 @@ public class VueJoueur extends JFrame{
 			return Etat.ECURIE; 
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
-		} else if (b.getText() == "Calendrier") {
+		}		else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
-		} else if (b.getText() == "Tournois") {
-			return Etat.TOURNOIS;
 		}  else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		}else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
+		}else if (b.getText()=="Choisir une photo") {
+			return Etat.PHOTO;
 		} else if (b.getText()=="Classement") {
 			return Etat.CLASSEMENT;
-		}else if (b.getText() == "Tournois") {
-			return Etat.TOURNOIS;
 		}
+		
 		return null;
 	}
 
@@ -810,4 +816,4 @@ public class VueJoueur extends JFrame{
 	public void viderMotDePasse() {
 		this.entreeMdp.setText("");
 	}
-	}
+}
