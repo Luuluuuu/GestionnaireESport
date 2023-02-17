@@ -681,8 +681,6 @@ public class VueEquipe extends JFrame{
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
 			return Etat.CLASSEMENT;
-		} else if (b.getText()=="Tournois") {
-			return Etat.TOURNOIS;
 		} else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}else if (b.getText() == "Tournois") {

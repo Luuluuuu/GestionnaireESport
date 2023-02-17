@@ -27,6 +27,7 @@ import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
+import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 import vue.VueClassement;
 
@@ -34,7 +35,7 @@ import vue.VueClassement;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT,TOURNOIS}
 	private VueJoueur vue;
 	private Etat etat;
 
@@ -95,6 +96,11 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		case ECURIE :
 			VueERA fenERA = new VueERA();
 			fenERA.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
+		case TOURNOIS :
+			VueInscriptionTournoi fenTournois = new VueInscriptionTournoi();
+			fenTournois.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
 		case CALENDRIER :

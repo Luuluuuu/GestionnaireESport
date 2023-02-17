@@ -95,6 +95,12 @@ public class VueClassement {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
+		JButton btnTournois = new JButton("Tournois");
+		btnTournois.setForeground(Color.WHITE);
+		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnTournois.setBackground(Couleur.BLEU2);
+		panelMenu.add(btnTournois);
+		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -230,6 +236,8 @@ public class VueClassement {
 		// BOUTONS MENU
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
+
 		// COMBOBOX DE JEUX
 		this.triJeux.addActionListener(controleur);
 	}
