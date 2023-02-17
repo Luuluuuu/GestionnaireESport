@@ -51,7 +51,7 @@ public class VueProfilJoueur {
 		fenetreProfilJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se d\u00E9connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -193,7 +193,7 @@ public class VueProfilJoueur {
 		gbc_panelTitreEquipe.gridy = 0;
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
-		titreEquipe = new JLabel("Mon \u00E9quipe (insererNom)");
+		titreEquipe = new JLabel("Mon équipe (insererNom)");
 		titreEquipe.setForeground(Color.WHITE);
 		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreEquipe.add(titreEquipe);
@@ -242,7 +242,7 @@ public class VueProfilJoueur {
 		gbc_panelTitreStats.gridy = 0;
 		panelStats.add(panelTitreStats, gbc_panelTitreStats);
 		
-		JLabel titreStats = new JLabel("Statistiques \u00E9quipe");
+		JLabel titreStats = new JLabel("Statistiques équipe");
 		titreStats.setForeground(Color.WHITE);
 		titreStats.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreStats.add(titreStats);
@@ -280,7 +280,7 @@ public class VueProfilJoueur {
 			e.printStackTrace();
 		}
 		this.pseudo.setText(pseudo);
-		this.titreEquipe.setText("Mon \u00E9quipe (" + nomEquipe + ")"); 
+		this.titreEquipe.setText("Mon équipe (" + nomEquipe + ")"); 
 	}
 	
 	public static void fermerFenetre(JFrame f) {
@@ -288,7 +288,7 @@ public class VueProfilJoueur {
 	}
 
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se dÃ©connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
 			return Etat.CLASSEMENT;

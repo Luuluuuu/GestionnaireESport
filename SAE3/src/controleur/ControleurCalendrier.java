@@ -117,7 +117,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 				t.setResponsable(ControleurConnexion.listeResponsables.get(this.vue.getResponsable()));
 
 				//VÃ©rifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("CrÃ©er un tournoi")) {
+				if (this.vue.titreModif.getText().equals("Créer un tournoi")) {
 					if (!(ControleurConnexion.listeTournois.containsKey(t.getNom()))) {
 						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au tournoi
 						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_tournoiId.nextval FROM dual");
@@ -177,7 +177,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		case SUPPRIMER:
 			this.etat = Etat.CREER;
 			VueCalendrier.afficherPanel(this.vue.panelModif);
-			VueCalendrier.afficherTexte(this.vue.titreModif, "CrÃ©er un tournoi");
+			VueCalendrier.afficherTexte(this.vue.titreModif, "Créer un tournoi");
 			VueCalendrier.supprimerTexte(this.vue.entreeNom);
 			VueCalendrier.supprimerTexte(this.vue.entreeDate);
 			VueCalendrier.supprimerTexte(this.vue.entreeHeure);

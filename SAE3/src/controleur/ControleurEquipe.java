@@ -56,14 +56,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEcuries() {
-		this.vue.ajouterEcurie("- S\u00E9lectionnez une \u00E9curie -");
+		this.vue.ajouterEcurie("- Sélectionnez une écurie -");
 		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
 			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
 	public void initialiserListeJeux() {
-		this.vue.ajouterJeu("- S\u00E9lectionnez un jeu -");
+		this.vue.ajouterJeu("- Sélectionnez un jeu -");
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
@@ -115,17 +115,17 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			break;
 		case VALIDER:
 			//VÃ©rifie que tous les champs sont remplis
-			if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE && this.vue.getEcurie().equals("- SÃ©lectionnez une Ã©curie -")) {
+			if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE && this.vue.getEcurie().equals("- Sélectionnez une écurie -")) {
 				this.vue.estVide();
 			} else {
-				if(this.vue.getNom().equals("") || this.vue.getJeu().equals("- SÃ©lectionnez un jeu -")) {
+				if(this.vue.getNom().equals("") || this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
 					this.vue.estVide();
 				} else {
 					// Instancie un tournoi
 					Equipe equipe = new Equipe(0,this.vue.getNom(),0,this.vue.getNationalite(),ControleurConnexion.listeJeux.get(this.vue.getJeu()),
 							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
 					//VÃ©rifie si c'est une creation ou une modification
-					if (this.vue.titreModif.getText().equals("CrÃ©er une Ã©quipe")) {
+					if (this.vue.titreModif.getText().equals("Créer une équipe")) {
 						// SI CREATION
 						if (!(ControleurConnexion.listeEquipes.containsKey(equipe.getNom()))) {
 							// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer a l'equipe
@@ -203,7 +203,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
-					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une Ã©quipe");
+					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une équipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());

@@ -108,7 +108,7 @@ public class VueCalendrier extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d√©connecter");
+		JButton btnDeconnexion = new JButton("Se dÈconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -180,13 +180,13 @@ public class VueCalendrier extends JFrame{
 		panelTournoi.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("Cr√©er un nouveau tournoi");
+		JButton btnCreer = new JButton("CrÈer un nouveau tournoi");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le tournoi s√©lectionn√©");
+		JButton btnSupprimer = new JButton("Supprimer le tournoi sÈlectionnÈ");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -217,7 +217,7 @@ public class VueCalendrier extends JFrame{
 		gbc_panelTitreM.gridy = 0;
 		panelModif.add(panelTitreM, gbc_panelTitreM);
 		
-		titreModif = new JLabel("Cr√©er un tournoi");
+		titreModif = new JLabel("CrÈer un tournoi");
 		titreModif.setForeground(Color.WHITE);
 		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreM.add(titreModif);
@@ -408,7 +408,7 @@ public class VueCalendrier extends JFrame{
 		entreeEchelle.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeEchelle.setPreferredSize(new Dimension(205, 20));
 		panel_3.add(entreeEchelle);
-		entreeEchelle.addItem("- S√©lectionnez une √©chelle -");
+		entreeEchelle.addItem("- SÈlectionnez une Èchelle -");
 		entreeEchelle.addItem("locale");
 		entreeEchelle.addItem("nationale");
 		entreeEchelle.addItem("internationale");
@@ -458,7 +458,7 @@ public class VueCalendrier extends JFrame{
 		entreeResponsable.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeResponsable.setPreferredSize(new Dimension(205, 20));
 		panel_9.add(entreeResponsable);
-		entreeResponsable.addItem("- S√©lectionnez un responsable -");
+		entreeResponsable.addItem("- SÈlectionnez un responsable -");
 		
 		JPanel panelArbitre = new JPanel();
 		panelArbitre.setBackground(Couleur.BLEU1);
@@ -505,7 +505,7 @@ public class VueCalendrier extends JFrame{
 		entreeArbitre.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeArbitre.setPreferredSize(new Dimension(205, 20));
 		panel_11.add(entreeArbitre);
-		entreeArbitre.addItem("- S√©lectionnez un arbitre -");
+		entreeArbitre.addItem("- SÈlectionnez un arbitre -");
 		
 		JPanel panelJeu = new JPanel();
 		panelJeu.setBackground(Couleur.BLEU1);
@@ -617,27 +617,27 @@ public class VueCalendrier extends JFrame{
 	public void creerTournoi() {
 		this.deselectionner();
 		VueCalendrier.afficherPanel(panelModif);
-		VueCalendrier.afficherTexte(this.titreModif, "Cr√©er un tournoi");
+		VueCalendrier.afficherTexte(this.titreModif, "CrÈer un tournoi");
 		VueCalendrier.supprimerTexte(this.entreeNom);
 		VueCalendrier.supprimerTexte(this.entreeDate);
 		VueCalendrier.supprimerTexte(this.entreeHeure);
-		this.setEchelle("- S√©lectionnez une √©chelle -");
+		this.setEchelle("- SÈlectionnez une Èchelle -");
 		entreeEchelle.setForeground(new Color(0,0,0));
-		this.setArbitre("- S√©lectionnez un arbitre -");
+		this.setArbitre("- SÈlectionnez un arbitre -");
 		entreeArbitre.setForeground(new Color(0,0,0));
-		this.setResponsable("- S√©lectionnez un responsable -");
+		this.setResponsable("- SÈlectionnez un responsable -");
 		entreeResponsable.setForeground(new Color(0,0,0));
 		this.setJeux(new ArrayList<String>());
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Cr√©er un nouveau tournoi") {
+		if (b.getText() == "CrÈer un nouveau tournoi") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se d√©connecter") {
+		} else if (b.getText() == "Se dÈconnecter") {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le tournoi s√©lectionn√©") {
+		} else if (b.getText() == "Supprimer le tournoi sÈlectionnÈ") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;
@@ -758,6 +758,6 @@ public class VueCalendrier extends JFrame{
 	}
 	
 	public void tournoiExiste() {
-		JOptionPane.showMessageDialog(null, "Le tournoi existe d√©j√† !", "Erreur", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Le tournoi existe dÈj‡† !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

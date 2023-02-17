@@ -110,7 +110,7 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 				}
 				
 			} else {
-				JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Veuillez compl�ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		default:
@@ -126,7 +126,7 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 			switch (this.etat) {
 			case TOURNOI:
 				this.vue.viderJeux();
-				this.vue.ajouterJeu("- Sélectionnez un jeu -");
+				this.vue.ajouterJeu("- S�lectionnez un jeu -");
 				// On récupère le tournoi sélectionné
 				Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				// On récupère les jeux du tournoi
