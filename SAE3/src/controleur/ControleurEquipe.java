@@ -8,6 +8,7 @@ import java.time.Year;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -181,13 +182,39 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			this.vue.creerEquipe();
 			break;
 		case SUPPRIMER:
-			if ((this.vue.getEquipeSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
+			// Vérifie si l'équipe est bien sélectionnée
+			if (this.vue.getEquipeSelectionne() != null) {
+				// Récupération de l'équipe sélectionnée
 				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-				this.vue.supprimerEquipe();
-				ControleurConnexion.listeEquipes.remove(equipe.getNom());
-				Connexion.getInstance().executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE ="+equipe.getID());
-				Connexion.getInstance().executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = "+equipe.getID());
-				this.vue.creerEquipe();
+
+				// Récupération de la connexion
+				Connexion c = Connexion.getInstance();
+				
+				try {
+					ResultSet rs = c.retournerRequete("SELECT * FROM SAE_INSCRIRE WHERE IDEQUIPE =" + equipe.getID());
+					
+					// Si l'équipe est déjà inscrite, la suppression est impossible
+					if (rs.next()) {
+						JOptionPane.showMessageDialog(null, "L'équipe sélectionnée ne peut pas être supprimée !",
+							      "Erreur à la suppression", JOptionPane.ERROR_MESSAGE);
+						
+					// Demande la confirmation de l'utilisateur
+					} else if (this.vue.confirmerSuppression() == 0) { 
+						// Suppression de l'équipe dans la vue et les hashmap
+						this.vue.supprimerEquipe();
+						ControleurConnexion.listeEquipes.remove(equipe.getNom());
+						
+						// Suppression des joueurs appartenant à l'équipe
+						c.executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE =" + equipe.getID());	
+						// Suppression de l'équipe
+						c.executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = " + equipe.getID());	
+						this.vue.creerEquipe();
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		default:
 		}
