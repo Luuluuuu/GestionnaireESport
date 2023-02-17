@@ -27,6 +27,7 @@ import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
 import vue.VueEquipe;
+import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 import vue.VueClassement;
 
@@ -34,7 +35,7 @@ import vue.VueClassement;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT,TOURNOIS}
 	private VueJoueur vue;
 	private Etat etat;
 
@@ -64,7 +65,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	}
 	
 	public void intialiserListeEquipes() {
-		this.vue.ajouterEquipe("- S√©lectionnez une √©quipe -");
+		this.vue.ajouterEquipe("- SÈlectionnez une Èquipe -");
 		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
 			for (String nomEquipe : ControleurConnexion.listeEquipesParEcurie) {
 				this.vue.ajouterEquipe(nomEquipe);
@@ -97,6 +98,11 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			fenERA.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
+		case TOURNOIS :
+			VueInscriptionTournoi fenTournois = new VueInscriptionTournoi();
+			fenTournois.getFrame().setVisible(true);
+			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
+		break;
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
@@ -121,7 +127,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			break;
 		case VALIDER:
 			//V√©rifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- S√©lectionnez une √©quipe -")
+			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- SÈlectionnez une Èquipe -")
 					|| this.vue.getPrenom().equals("") || this.vue.getPseudo().equals("")
 					|| this.vue.getDateNaissance().equals("") || this.vue.getNationalite().equals("")) {
 				this.vue.estVide();
@@ -198,7 +204,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		                   File targetFile = new File(targetDirectory, newFileName);
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
-		                	   JOptionPane.showMessageDialog(null, "Le fichier a √©t√© enregistr√©.", "Succ√®s", JOptionPane.INFORMATION_MESSAGE);
+		                	   JOptionPane.showMessageDialog(null, "Le fichier a ÈtÈ enregistrÈ.", "SuccËs", JOptionPane.INFORMATION_MESSAGE);
 						   } 
 		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
 			                   File targetExisteFile = new File(targetDirectory, newFileName);
@@ -210,7 +216,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 								e1.printStackTrace();
 							}
 							// TODO Auto-generated catch block
-			            	 JOptionPane.showMessageDialog(null, "Le fichier a √©t√© modifi√©.", "Attention", JOptionPane.INFORMATION_MESSAGE);
+			            	 JOptionPane.showMessageDialog(null, "Le fichier a ÈtÈ modifiÈ.", "Attention", JOptionPane.INFORMATION_MESSAGE);
 						}            	
 		                 //Afficher l'image qui vient d'√™tre ajout√©e
 		      	       	 ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
@@ -221,7 +227,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		    			 
 		    			 
 		             } else {
-		            	 JOptionPane.showMessageDialog(null, "Le fichier s√©lectionn√© n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
+		            	 JOptionPane.showMessageDialog(null, "Le fichier sÈlectionnÈ n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
 		             }
 		          // Le fichier s√©lectionn√© a √©t√© approuv√©.    
 		        }

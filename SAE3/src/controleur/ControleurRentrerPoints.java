@@ -130,7 +130,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 			}
 			break;
 		case VALIDER:
-			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'Ã©quipe gagnante ?","Confirmation",JOptionPane.YES_NO_OPTION);
+			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'équipe gagnante ?","Confirmation",JOptionPane.YES_NO_OPTION);
 			if (confirme == 0) {
 				j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
 				t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());

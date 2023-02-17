@@ -51,7 +51,7 @@ public class ControleurClassement implements ActionListener {
 	}
 	
 	public void initialiserListeJeux() {
-		this.vue.ajouterJeu("- SÃ©lectionnez un jeu -");
+		this.vue.ajouterJeu("- Sélectionnez un jeu -");
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
@@ -98,7 +98,7 @@ public class ControleurClassement implements ActionListener {
 			VueClassement.fermerFenetre(this.vue.fenetreClassement);
 		break;
 		case JEU:
-			if (this.vue.getJeu().equals("- SÃ©lectionnez un jeu -")) {
+			if (this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
 				this.initialiserListeClassement("IDJEU");
 			} else {
 				this.initialiserListeClassement(Integer.toString(ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()));

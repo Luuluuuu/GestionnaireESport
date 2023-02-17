@@ -95,6 +95,12 @@ public class VueClassement {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
+		JButton btnTournois = new JButton("Tournois");
+		btnTournois.setForeground(Color.WHITE);
+		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
+		btnTournois.setBackground(Couleur.BLEU2);
+		panelMenu.add(btnTournois);
+		
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -107,7 +113,7 @@ public class VueClassement {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se dÃ©connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -230,6 +236,8 @@ public class VueClassement {
 		// BOUTONS MENU
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
+
 		// COMBOBOX DE JEUX
 		this.triJeux.addActionListener(controleur);
 	}
@@ -239,7 +247,7 @@ public class VueClassement {
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se dÃ©connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;
