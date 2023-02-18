@@ -27,8 +27,8 @@ import controleur.ControleurConnexion;
 public class VueConnexion extends JFrame implements KeyListener{
 	
 	public JFrame fenetreConnexion;
-	private JTextField entreeNomUtilisateur;
-	private JPasswordField entreeMotDePasse;
+	private static JTextField entreeNomUtilisateur;
+	private static JPasswordField entreeMotDePasse;
 	
 	public JFrame getFrame() {
 		return this.fenetreConnexion;
@@ -182,11 +182,11 @@ public class VueConnexion extends JFrame implements KeyListener{
 		f.setVisible(false);
 	}
 
-	public String getLogin() {
+	public static String getLogin() {
 		return entreeNomUtilisateur.getText();
 	}
 	
-	public String getMotDePasse() {
+	public static String getMotDePasse() {
 		return String.valueOf(entreeMotDePasse.getPassword());
 	}
 	
