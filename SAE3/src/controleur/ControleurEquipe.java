@@ -233,7 +233,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	}
 
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
+	public void valueChanged(ListSelectionEvent e){
 		switch(this.etat) {
 		case SUPPRIMER:
 		default:
@@ -261,11 +261,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					fenJoueur.setNomJoueur(joueur.getNom());
 					fenJoueur.setPrenomJoueur(joueur.getPrenom());
 					fenJoueur.setPseudoJoueur(joueur.getPseudo());
-					try {
-						fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}
+					fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
 					fenJoueur.setNationaliteJoueur(joueur.getNationalite());
 					VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 			    }

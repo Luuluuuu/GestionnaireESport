@@ -720,9 +720,14 @@ public class VueJoueur extends JFrame{
 		this.entreePseudo.setText(j);
 	}
 	
-	public void setDateNaissanceJoueur(String j) throws ParseException {
-		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(j);
-		this.entreeDateNaissance.setDate(date);
+	public void setDateNaissanceJoueur(String j) {
+		Date date;
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(j);
+			this.entreeDateNaissance.setDate(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setNationaliteJoueur(String j) {

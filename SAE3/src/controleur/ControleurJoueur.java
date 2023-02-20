@@ -276,11 +276,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.setNomJoueur(joueur.getNom());
 				this.vue.setPrenomJoueur(joueur.getPrenom());
 				this.vue.setPseudoJoueur(joueur.getPseudo());
-				try {
-					this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
+				this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
 				this.vue.setNationaliteJoueur(joueur.getNationalite());
 			}
 		}
