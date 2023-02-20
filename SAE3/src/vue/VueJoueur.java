@@ -18,6 +18,8 @@ import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -38,7 +40,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
-import com.toedter.calendar.JDateChooser;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import controleur.ControleurJoueur.Etat;
 import modele.Utilisateur.Profil;
@@ -60,7 +63,8 @@ public class VueJoueur extends JFrame{
 	private JTextField recherche;
 	private JTextField entreeNom;
 	private JTextField entreePseudo;
-	private JDateChooser entreeDateNaissance = new JDateChooser();
+	private DatePickerSettings paramDate = new DatePickerSettings();
+	private DatePicker entreeDateNaissance = new DatePicker(paramDate);
 	private JTextField entreeNationalite = new JTextField();
 	private JButton btnValider = new JButton("Valider");
 	private JPasswordField entreeMdp;
@@ -526,11 +530,14 @@ public class VueJoueur extends JFrame{
 		gbc_panel_3.gridx = 1;
 		gbc_panel_3.gridy = 0;
 		panelDateN.add(panel_3, gbc_panel_3);
+		entreeDateNaissance.getComponentDateTextField().setFont(new Font("Roboto", Font.PLAIN, 11));
+		entreeDateNaissance.getComponentToggleCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		
 		entreeDateNaissance.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_3.add(entreeDateNaissance);
-		entreeDateNaissance.setDateFormatString("dd/MM/yyyy");
 		entreeDateNaissance.setPreferredSize(new Dimension(205,20));
+		paramDate.setAllowEmptyDates(false);
+		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);
@@ -572,7 +579,6 @@ public class VueJoueur extends JFrame{
 		gbc_panel_10.gridx = 1;
 		gbc_panel_10.gridy = 0;
 		panelNationalite.add(panel_10, gbc_panel_10);
-		
 		
 		entreeNationalite.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_10.add(entreeNationalite);
@@ -698,9 +704,8 @@ public class VueJoueur extends JFrame{
 	}
 	
 	public String getDateNaissance() {
-	    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	    return dateFormat.format(entreeDateNaissance.getDate());
-		
+		String date = entreeDateNaissance.getDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+		return date;
 	}
 	
 	public String getNationalite() {
@@ -721,13 +726,9 @@ public class VueJoueur extends JFrame{
 	}
 	
 	public void setDateNaissanceJoueur(String j) {
-		Date date;
-		try {
-			date = new SimpleDateFormat("dd/MM/yyyy").parse(j);
-			this.entreeDateNaissance.setDate(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        LocalDate date = LocalDate.parse(j, formatter);
+        this.entreeDateNaissance.setDate(date);
 	}
 	
 	public void setNationaliteJoueur(String j) {

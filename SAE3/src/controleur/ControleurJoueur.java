@@ -165,7 +165,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 							e1.printStackTrace();
 						}
 						Connexion.getInstance().executerRequete("INSERT INTO sae_joueur VALUES (seq_joueurid.currval, '"+joueur.getNom()
-						+"', '"+joueur.getPrenom()+"', '"+joueur.getPseudo()+"', TO_DATE('"+joueur.getDateNaissance()+"','DD-MM-YYYY'), '"
+						+"', '"+joueur.getPrenom()+"', '"+joueur.getPseudo()+"', TO_DATE('"+joueur.getDateNaissance()+"','DD/MM/YYYY'), '"
 						+joueur.getNationalite()+"', "+joueur.getEquipe().getID()+", '')");
 						
 						ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(),joueur);
@@ -177,7 +177,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 					joueur.setID(ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 					Connexion.getInstance().executerRequete("UPDATE SAE_JOUEUR SET NOMJOUEUR = '"+joueur.getNom()+
 							"', PRENOMJOUEUR = '"+joueur.getPrenom()+"', PSEUDOJOUEUR = '"+joueur.getPseudo()+
-							"', DATENAISSANCE = TO_DATE('"+joueur.getDateNaissance()+"','DD-MM-YYYY'), NATIONALITE = '"+
+							"', DATENAISSANCE = TO_DATE('"+joueur.getDateNaissance()+"','DD/MM/YYYY'), NATIONALITE = '"+
 							joueur.getNationalite()+"', IDEQUIPE = "+ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()).getID()+
 							" WHERE IDJOUEUR = "+joueur.getID());
 					// CREER IDENTIFIANTS JOUEUR
