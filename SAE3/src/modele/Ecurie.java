@@ -31,7 +31,7 @@ public class Ecurie implements Cloneable {
 		return this.ID;
 	}
 	
-    //retourne la date de creation de l'écurie
+    //retourne le nom de l'écurie
     public String getNom() {
         return this.nom;
     }

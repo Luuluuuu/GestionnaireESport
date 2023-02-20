@@ -22,7 +22,7 @@ public class Arbitre {
      * 		ses anneeExp de type int
      * 		un mdp de type String (généré par le gestionnaire d'E-Sporter)
     */
-    public Arbitre(int ID, String nom, String prenom) throws SQLException {
+    public Arbitre(int ID, String nom, String prenom) {
     	this.ID = ID;
     	this.nom = nom;
     	this.prenom = prenom;
