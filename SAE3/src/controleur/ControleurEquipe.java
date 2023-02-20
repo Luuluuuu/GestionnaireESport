@@ -142,7 +142,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 							}
 							
 							if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-								ResultSet rs5 = Connexion.getInstance().retournerRequete("select idecurie from sae_user where login='"+ VueConnexion.getLogin() +"'");
+								ResultSet rs5 = Connexion.getInstance().retournerRequete("select idecurie from sae_user where login='"+VueConnexion.getLogin()+"'");
 								try {
 									if (rs5.next()) {
 										valeurIdEcurie = rs5.getInt(1);
