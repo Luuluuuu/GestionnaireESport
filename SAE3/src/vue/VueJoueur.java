@@ -113,8 +113,6 @@ public class VueJoueur extends JFrame{
 			panelMenu.add(btnEcuries);
 			btnEcuries.addActionListener(controleur);
 		}
-		  
-		
 		
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
@@ -537,7 +535,7 @@ public class VueJoueur extends JFrame{
 		panel_3.add(entreeDateNaissance);
 		entreeDateNaissance.setPreferredSize(new Dimension(205,20));
 		paramDate.setAllowEmptyDates(false);
-		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);
@@ -704,7 +702,7 @@ public class VueJoueur extends JFrame{
 	}
 	
 	public String getDateNaissance() {
-		String date = entreeDateNaissance.getDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+		String date = entreeDateNaissance.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		return date;
 	}
 	
@@ -726,8 +724,8 @@ public class VueJoueur extends JFrame{
 	}
 	
 	public void setDateNaissanceJoueur(String j) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-        LocalDate date = LocalDate.parse(j, formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate date = LocalDate.parse(j, formatter);
         this.entreeDateNaissance.setDate(date);
 	}
 	
