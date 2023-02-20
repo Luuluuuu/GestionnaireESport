@@ -242,7 +242,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
-					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une �quipe");
+					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une équipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());

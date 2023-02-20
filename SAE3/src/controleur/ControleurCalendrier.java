@@ -10,9 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -110,57 +119,66 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			break;
 		case VALIDER:
 			if (this.vue.estRemplie()) {
+				// Conversion d'une Date en String
+				String strDate = this.vue.entreeDate.getDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+				
+				String strHeure = this.vue.entreeHeure.getTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+				System.out.println(strHeure);
+				
 				// Instancie un tournoi
-				Tournoi t = new Tournoi(2,this.vue.entreeNom.getText(),this.vue.entreeDate.getText(),
-						this.vue.entreeHeure.getText(), this.vue.getEchelle());
-				t.setArbitre(ControleurConnexion.listeArbitres.get(this.vue.getArbitre()));
+				Tournoi t = new Tournoi(2,this.vue.entreeNom.getText(),strDate,
+						strHeure, this.vue.getEchelle());
+				t.setArbitre(ControleurConnexion.listeArbitres.get(this.vue.getArbitre())); // On récupère l'arbitre
 				t.setResponsable(ControleurConnexion.listeResponsables.get(this.vue.getResponsable()));
-
-				//Vérifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("Cr�er un tournoi")) {
-					if (!(ControleurConnexion.listeTournois.containsKey(t.getNom()))) {
-						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au tournoi
-						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_tournoiId.nextval FROM dual");
-						try {
-							if (rs.next()) {t.setID(rs.getInt(1));}
-						} catch (SQLException e1) {
-							e1.printStackTrace();
+				
+				if (estDateHeureValide()) {
+					//Vérifie si c'est une creation ou une modification
+					if (this.vue.titreModif.getText().equals("Créer un tournoi")) {
+						if (!(ControleurConnexion.listeTournois.containsKey(t.getNom()))) {
+							// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au tournoi
+							ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_tournoiId.nextval FROM dual");
+							
+							try {
+								if (rs.next()) {
+									t.setID(rs.getInt(1));
+								}
+								rs.close();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+							
+							Connexion.getInstance().executerRequete("INSERT INTO SAE_TOURNOI VALUES ("+t.getID()+", '"+t.getNom()+"', TO_DATE('"+t.getDate()+
+									"','DD/MM/YYYY'), '"+ t.getHeureDebut()+"', "+t.getArbitre().getID()+", "+t.getResponsable().getID()+", '"+t.getEchelle()+"')");;
+							
+							for (String nomJeu : this.vue.getJeux()) {
+								Jeu j = ControleurConnexion.listeJeux.get(nomJeu);
+								t.ajouterJeu(j);
+								Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
+							}
+							ControleurConnexion.listeTournois.put(t.getNom(), t);
+							this.vue.ajouterTournoi(t.getNom());
+						}else {
+								this.vue.tournoiExiste();
 						}
-						try {
-							rs.close();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-						Connexion.getInstance().executerRequete("INSERT INTO SAE_TOURNOI VALUES ("+t.getID()+", '"+t.getNom()+"', TO_DATE('"+t.getDate()+
-								"','DD-MM-YYYY'), '"+ t.getHeureDebut()+"', "+t.getArbitre().getID()+", "+t.getResponsable().getID()+", '"+t.getEchelle()+"')");;
+					} else {
+						t.setID(ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne()).getID());
+						Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
 						for (String nomJeu : this.vue.getJeux()) {
 							Jeu j = ControleurConnexion.listeJeux.get(nomJeu);
 							t.ajouterJeu(j);
 							Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
 						}
+						
+						Connexion.getInstance().executerRequete("UPDATE SAE_TOURNOI SET NOMTOURNOI = '"+t.getNom()+"',"
+								+ "DATETOURNOI = TO_DATE('"+t.getDate()+"','DD/MM/YYYY'), HEUREDEBUT='"+t.getHeureDebut()+"', ECHELLETOURNOI ='"+t.getEchelle()+"',"
+										+ "IDARBITRE = "+t.getArbitre().getID()+", IDRESPONSABLE = "+t.getResponsable().getID()+
+										"WHERE IDTOURNOI = "+t.getID());
+						ControleurConnexion.listeTournois.remove(this.vue.getTournoiSelectionne());
 						ControleurConnexion.listeTournois.put(t.getNom(), t);
-						this.vue.ajouterTournoi(t.getNom());
-					}else {
-							this.vue.tournoiExiste();
-					}
-				} else {
-					t.setID(ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
-					for (String nomJeu : this.vue.getJeux()) {
-						Jeu j = ControleurConnexion.listeJeux.get(nomJeu);
-						t.ajouterJeu(j);
-						Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
-					}
-					
-					Connexion.getInstance().executerRequete("UPDATE SAE_TOURNOI SET NOMTOURNOI = '"+t.getNom()+"',"
-							+ "DATETOURNOI = TO_DATE('"+t.getDate()+"','DD-MM-YYYY'), HEUREDEBUT='"+t.getHeureDebut()+"', ECHELLETOURNOI ='"+t.getEchelle()+"',"
-									+ "IDARBITRE = "+t.getArbitre().getID()+", IDRESPONSABLE = "+t.getResponsable().getID()+
-									"WHERE IDTOURNOI = "+t.getID());
-					ControleurConnexion.listeTournois.remove(this.vue.getTournoiSelectionne());
-					ControleurConnexion.listeTournois.put(t.getNom(), t);
-					this.vue.modifierTournoi();
-					}
-				this.vue.creerTournoi();
+						this.vue.modifierTournoi();
+						}
+					this.vue.creerTournoi();
+				}
 			}
 			break;
 			case ANNULER :
@@ -177,10 +195,10 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		case SUPPRIMER:
 			this.etat = Etat.CREER;
 			VueCalendrier.afficherPanel(this.vue.panelModif);
-			VueCalendrier.afficherTexte(this.vue.titreModif, "Cr�er un tournoi");
+			VueCalendrier.afficherTexte(this.vue.titreModif, "Créer un tournoi");
 			VueCalendrier.supprimerTexte(this.vue.entreeNom);
-			VueCalendrier.supprimerTexte(this.vue.entreeDate);
-			VueCalendrier.supprimerTexte(this.vue.entreeHeure);
+			this.vue.entreeDate = null;
+			this.vue.entreeHeure = null;
 			break;
 		default:
 			@SuppressWarnings
@@ -192,13 +210,52 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 				
 				Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				this.vue.entreeNom.setText(t.getNom());
-				this.vue.entreeDate.setText(t.getDate().toString());
-				this.vue.entreeHeure.setText(t.getHeureDebut());
+				
+				// Formatte un String à une Date et le place dans la saisie de date
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate date = LocalDate.parse(t.getDate(), formatter);
+				this.vue.entreeDate.setDate(date);
+
+				// Formatte un String à un Time et le place dans la saisie de l'heure
+				formatter = DateTimeFormatter.ofPattern("HH:mm");
+				LocalTime heure = LocalTime.parse(t.getHeureDebut(), formatter);
+				this.vue.entreeHeure.setTime(heure);
+				
 				this.vue.setEchelle(t.getEchelle());
 				this.vue.setArbitre(t.getArbitre().getPrenomNom());
 				this.vue.setResponsable(t.getResponsable().getPrenomNom());
 				this.vue.setJeux(t.getNomJeux());
 			}
 		}
+	}
+	
+	private boolean estDateHeureValide() {
+		// Vérification de la date
+		LocalDate dateTournoi = this.vue.entreeDate.getDate();  // Date saisie
+		if (dateTournoi.isBefore(LocalDate.now())) { // Date postérieure à la date du jour
+			JOptionPane.showMessageDialog(null, "Veuillez choisir une date postérieure à la date du jour.",
+				      "Erreur à la saisie de la date", JOptionPane.ERROR_MESSAGE);
+			return false;
+			
+		}
+		
+		int anneeCourante = LocalDate.now().getYear();
+		if (dateTournoi.getYear() != anneeCourante) { // Si l'année différente à l'année courante
+			JOptionPane.showMessageDialog(null, "Veuillez entrer un tournoi correspondant à la saison courante (" + anneeCourante + ").",
+				      "Erreur à la saisie de la date", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		// Vérification de l'heure
+		LocalTime heureTournoi = this.vue.entreeHeure.getTime(); // Heure Saisie
+		if (dateTournoi.equals(LocalDate.now()) &&  // Si l'heure du tournoi est avant l'heure du jour (sachant que la date est égale
+				heureTournoi.isBefore(LocalTime.now())) {
+			JOptionPane.showMessageDialog(null, "Veuillez choisir une heure postérieure à celle du jour.",
+				      "Erreur à la saisie de la date", JOptionPane.ERROR_MESSAGE);
+			return false;
+			
+		}
+		
+		return true;
 	}
 }

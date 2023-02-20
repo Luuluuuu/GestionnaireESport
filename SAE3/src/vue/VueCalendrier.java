@@ -9,6 +9,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -24,12 +27,18 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
+
 import controleur.ControleurCalendrier;
 import controleur.ControleurCalendrier.Etat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JCheckBox;
 
@@ -38,8 +47,8 @@ public class VueCalendrier extends JFrame{
 	
 	public JFrame fenetreCalendrier;
 	public JTextField entreeNom;
-	public JTextField entreeDate;
-	public JTextField entreeHeure;
+	public DatePicker entreeDate;
+	public TimePicker entreeHeure;
 	public JPanel panelModif;
 	public JLabel titreModif;
 	private DefaultListModel<String> modeleTournois;
@@ -108,7 +117,7 @@ public class VueCalendrier extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se dÈconnecter");
+		JButton btnDeconnexion = new JButton("Se d√©connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -180,13 +189,13 @@ public class VueCalendrier extends JFrame{
 		panelTournoi.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("CrÈer un nouveau tournoi");
+		JButton btnCreer = new JButton("Cr√©er un nouveau tournoi");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le tournoi sÈlectionnÈ");
+		JButton btnSupprimer = new JButton("Supprimer le tournoi s√©lectionn√©");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -217,7 +226,7 @@ public class VueCalendrier extends JFrame{
 		gbc_panelTitreM.gridy = 0;
 		panelModif.add(panelTitreM, gbc_panelTitreM);
 		
-		titreModif = new JLabel("CrÈer un tournoi");
+		titreModif = new JLabel("Cr√©er un tournoi");
 		titreModif.setForeground(Color.WHITE);
 		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreM.add(titreModif);
@@ -309,11 +318,15 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_5.gridy = 0;
 		panelDate.add(panel_5, gbc_panel_5);
 		
-		entreeDate = new JTextField();
+		DatePickerSettings paramDate = new DatePickerSettings();
+		paramDate.setAllowEmptyDates(false);
+		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
+		
+		entreeDate = new DatePicker(paramDate);
 		entreeDate.setToolTipText("");
 		entreeDate.setFont(new Font("Roboto", Font.PLAIN, 11));
+		entreeDate.setPreferredSize(new Dimension(205,20));
 		panel_5.add(entreeDate);
-		entreeDate.setColumns(20);
 		
 		JPanel panelHeure = new JPanel();
 		panelHeure.setBackground(Couleur.BLEU1);
@@ -357,11 +370,13 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_7.gridy = 0;
 		panelHeure.add(panel_7, gbc_panel_7);
 		
-		entreeHeure = new JTextField();
+		TimePickerSettings paramHeure = new TimePickerSettings();
+		paramHeure.setAllowEmptyTimes(false);
+		entreeHeure = new TimePicker(paramHeure);
 		entreeHeure.setToolTipText("");
 		entreeHeure.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_7.add(entreeHeure);
-		entreeHeure.setColumns(20);
+		entreeHeure.setPreferredSize(new Dimension(205,20));
 		
 		JPanel panelEchelle = new JPanel();
 		panelEchelle.setBackground(Couleur.BLEU1);
@@ -408,7 +423,7 @@ public class VueCalendrier extends JFrame{
 		entreeEchelle.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeEchelle.setPreferredSize(new Dimension(205, 20));
 		panel_3.add(entreeEchelle);
-		entreeEchelle.addItem("- SÈlectionnez une Èchelle -");
+		entreeEchelle.addItem("- S√©lectionnez une √©chelle -");
 		entreeEchelle.addItem("locale");
 		entreeEchelle.addItem("nationale");
 		entreeEchelle.addItem("internationale");
@@ -458,7 +473,7 @@ public class VueCalendrier extends JFrame{
 		entreeResponsable.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeResponsable.setPreferredSize(new Dimension(205, 20));
 		panel_9.add(entreeResponsable);
-		entreeResponsable.addItem("- SÈlectionnez un responsable -");
+		entreeResponsable.addItem("- S√©lectionnez un responsable -");
 		
 		JPanel panelArbitre = new JPanel();
 		panelArbitre.setBackground(Couleur.BLEU1);
@@ -505,7 +520,7 @@ public class VueCalendrier extends JFrame{
 		entreeArbitre.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeArbitre.setPreferredSize(new Dimension(205, 20));
 		panel_11.add(entreeArbitre);
-		entreeArbitre.addItem("- SÈlectionnez un arbitre -");
+		entreeArbitre.addItem("- S√©lectionnez un arbitre -");
 		
 		JPanel panelJeu = new JPanel();
 		panelJeu.setBackground(Couleur.BLEU1);
@@ -617,27 +632,27 @@ public class VueCalendrier extends JFrame{
 	public void creerTournoi() {
 		this.deselectionner();
 		VueCalendrier.afficherPanel(panelModif);
-		VueCalendrier.afficherTexte(this.titreModif, "CrÈer un tournoi");
+		VueCalendrier.afficherTexte(this.titreModif, "Cr√©er un tournoi");
 		VueCalendrier.supprimerTexte(this.entreeNom);
-		VueCalendrier.supprimerTexte(this.entreeDate);
-		VueCalendrier.supprimerTexte(this.entreeHeure);
-		this.setEchelle("- SÈlectionnez une Èchelle -");
+		this.entreeDate.setDate(LocalDate.now());
+		this.entreeHeure.setTime(LocalTime.now());
+		this.setEchelle("- S√©lectionnez une √©chelle -");
 		entreeEchelle.setForeground(new Color(0,0,0));
-		this.setArbitre("- SÈlectionnez un arbitre -");
+		this.setArbitre("- S√©lectionnez un arbitre -");
 		entreeArbitre.setForeground(new Color(0,0,0));
-		this.setResponsable("- SÈlectionnez un responsable -");
+		this.setResponsable("- S√©lectionnez un responsable -");
 		entreeResponsable.setForeground(new Color(0,0,0));
 		this.setJeux(new ArrayList<String>());
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "CrÈer un nouveau tournoi") {
+		if (b.getText() == "Cr√©er un nouveau tournoi") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se dÈconnecter") {
+		} else if (b.getText() == "Se d√©connecter") {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le tournoi sÈlectionnÈ") {
+		} else if (b.getText() == "Supprimer le tournoi s√©lectionn√©") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;
@@ -748,7 +763,7 @@ public class VueCalendrier extends JFrame{
 	}
 	
 	public boolean estRemplie() {
-		return this.texteEstRempli(entreeNom) && this.texteEstRempli(entreeDate) && this.texteEstRempli(entreeHeure)
+		return this.texteEstRempli(entreeNom) && this.entreeDate != null && this.entreeHeure != null
 				&& this.comboEstSelectionne(entreeEchelle) && this.comboEstSelectionne(entreeResponsable)
 				&& this.comboEstSelectionne(entreeArbitre) && this.jeuEstSelectionne();
 	}
@@ -758,6 +773,6 @@ public class VueCalendrier extends JFrame{
 	}
 	
 	public void tournoiExiste() {
-		JOptionPane.showMessageDialog(null, "Le tournoi existe dÈj‡† !", "Erreur", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Le tournoi existe d√©j√† !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

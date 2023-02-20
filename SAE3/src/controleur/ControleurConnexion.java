@@ -140,7 +140,6 @@ public class ControleurConnexion implements ActionListener {
 		try {
 			// INITIALISER TOURNOI //
 			while (rs.next()) {
-				// TODO
 				if (ControleurConnexion.listeTournois.containsKey(rs.getString(2))) {
 					Jeu j = ControleurConnexion.listeJeuxID.get(rs.getInt("IDJEU")).clone();
 					Tournoi t = ControleurConnexion.listeTournois.get(rs.getString(2));
