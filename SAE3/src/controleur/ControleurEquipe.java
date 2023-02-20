@@ -142,7 +142,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 							}
 							
 							if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-								ResultSet rs5 = Connexion.getInstance().retournerRequete("select idecurie from sae_user where login='"+VueConnexion.getLogin()+"'");
+								ResultSet rs5 = Connexion.getInstance().retournerRequete("select idecurie from sae_user where login='"+ VueConnexion.getLogin() +"'");
 								try {
 									if (rs5.next()) {
 										valeurIdEcurie = rs5.getInt(1);
@@ -242,7 +242,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
-					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une équipe");
+					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une �quipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());
