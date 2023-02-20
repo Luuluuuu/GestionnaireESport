@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.Year;
 
 import javax.swing.JButton;
@@ -222,7 +223,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					fenJoueur.setNomJoueur(joueur.getNom());
 					fenJoueur.setPrenomJoueur(joueur.getPrenom());
 					fenJoueur.setPseudoJoueur(joueur.getPseudo());
-					fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
+					try {
+						fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
 					fenJoueur.setNationaliteJoueur(joueur.getNationalite());
 					VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
 			    }

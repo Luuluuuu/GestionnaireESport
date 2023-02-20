@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -126,18 +130,28 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			this.vue.creerJoueur();
 			break;
 		case VALIDER:
+			Calendar dateAjd = Calendar.getInstance();
+			dateAjd.set(Calendar.YEAR, dateAjd.get(Calendar.YEAR)-16);
+			Date dateRentree = null;
+			try {
+				dateRentree = new SimpleDateFormat("dd/MM/yyyy").parse(this.vue.getDateNaissance());
+			} catch (ParseException e2) {
+				e2.printStackTrace();
+			}
 			//VÃ©rifie que tous les champs sont remplis
 			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- Sélectionnez une équipe -")
 					|| this.vue.getPrenom().equals("") || this.vue.getPseudo().equals("")
-					|| this.vue.getDateNaissance().equals("") || this.vue.getNationalite().equals("")) {
+					|| this.vue.getDateNaissance() == null || this.vue.getNationalite().equals("")) {
 				this.vue.estVide();
 				b.setForeground(Color.RED);
+			} else if (dateRentree.compareTo(dateAjd.getTime())>0) {
+				this.vue.mauvaiseDate();
 			} else {
 				// Instancie un tournoi
 				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),this.vue.getPseudo(), this.vue.getDateNaissance(),
 						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
 				//VÃ©rifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("CrÃ©er un joueur")) {
+				if (this.vue.titreModif.getText().equals("Créer un joueur")) {
 					// SI CREATION
 					if (!(ControleurConnexion.listeEquipes.containsKey(joueur.getPrenomPseudoNom()))) {
 						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au joueur
@@ -262,7 +276,11 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.setNomJoueur(joueur.getNom());
 				this.vue.setPrenomJoueur(joueur.getPrenom());
 				this.vue.setPseudoJoueur(joueur.getPseudo());
-				this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
+				try {
+					this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 				this.vue.setNationaliteJoueur(joueur.getNationalite());
 			}
 		}

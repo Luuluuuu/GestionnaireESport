@@ -15,6 +15,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 
@@ -33,6 +37,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
+
+import com.toedter.calendar.JDateChooser;
 
 import controleur.ControleurJoueur.Etat;
 import modele.Utilisateur.Profil;
@@ -54,7 +60,7 @@ public class VueJoueur extends JFrame{
 	private JTextField recherche;
 	private JTextField entreeNom;
 	private JTextField entreePseudo;
-	private JTextField entreeDateNaissance = new JTextField();
+	private JDateChooser entreeDateNaissance = new JDateChooser();
 	private JTextField entreeNationalite = new JTextField();
 	private JButton btnValider = new JButton("Valider");
 	private JPasswordField entreeMdp;
@@ -521,10 +527,10 @@ public class VueJoueur extends JFrame{
 		gbc_panel_3.gridy = 0;
 		panelDateN.add(panel_3, gbc_panel_3);
 		
-		
 		entreeDateNaissance.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panel_3.add(entreeDateNaissance);
-		entreeDateNaissance.setColumns(20);
+		entreeDateNaissance.setDateFormatString("dd/MM/yyyy");
+		entreeDateNaissance.setPreferredSize(new Dimension(205,20));
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);
@@ -692,7 +698,9 @@ public class VueJoueur extends JFrame{
 	}
 	
 	public String getDateNaissance() {
-		return this.entreeDateNaissance.getText();
+	    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    return dateFormat.format(entreeDateNaissance.getDate());
+		
 	}
 	
 	public String getNationalite() {
@@ -712,8 +720,9 @@ public class VueJoueur extends JFrame{
 		this.entreePseudo.setText(j);
 	}
 	
-	public void setDateNaissanceJoueur(String j) {
-		this.entreeDateNaissance.setText(j);
+	public void setDateNaissanceJoueur(String j) throws ParseException {
+		Date date = new SimpleDateFormat("dd/MM/yyyy").parse(j);
+		this.entreeDateNaissance.setDate(date);
 	}
 	
 	public void setNationaliteJoueur(String j) {
@@ -799,13 +808,17 @@ public class VueJoueur extends JFrame{
 		VueJoueur.supprimerTexte(this.entreeNom);
 		VueJoueur.supprimerTexte(this.entreePrenom);
 		VueJoueur.supprimerTexte(this.entreePseudo);
-		VueJoueur.supprimerTexte(this.entreeDateNaissance);
+		entreeDateNaissance.setDate(null);
 		VueJoueur.supprimerTexte(this.entreeNationalite);
 		this.entreeEquipe.setSelectedItem("- Sélectionnez une équipe -");
 	}
 
 	public void estVide() {
         JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void mauvaiseDate() {
+		JOptionPane.showMessageDialog(null, "La date n'est pas valide ! Le joueur doit avoir plus de 16 ans.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 	public String getNomEquipe() {

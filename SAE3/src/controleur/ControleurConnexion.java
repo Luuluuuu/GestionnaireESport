@@ -123,17 +123,17 @@ public class ControleurConnexion implements ActionListener {
 		Connexion c = Connexion.getInstance();
 		ResultSet rs;
 		if (ControleurConnexion.profilUtilisateur == Profil.ARBITRE) {
-			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'),"
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD/MM/YYYY'),"
 					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi,"
 					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi "
 					+ "WHERE sae_tournoi.idarbitre = " + Utilisateur.IDCourant);
 		} else if (ControleurConnexion.profilUtilisateur == Profil.RESPONSABLE){
-			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'),"
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD/MM/YYYY'),"
 					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi,"
 					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi "
 					+ "WHERE sae_tournoi.idresponsable = " + Utilisateur.IDCourant);
 		}else {
-			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD-MM-YYYY'), "
+			rs = c.retournerRequete("SELECT sae_tournoi.idtournoi, sae_tournoi.nomtournoi, to_char(sae_tournoi.datetournoi,'DD/MM/YYYY'), "
 					+ "sae_tournoi.heuredebut, sae_tournoi.idarbitre, sae_tournoi.idresponsable, sae_tournoi.echelletournoi, "
 					+ "sae_definir.idJeu FROM sae_definir JOIN sae_tournoi ON sae_definir.idTournoi = sae_tournoi.idTournoi");
 		}
@@ -304,7 +304,7 @@ public class ControleurConnexion implements ActionListener {
 		} 
 		try {
 			Connexion c = Connexion.getInstance();
-			ResultSet rs = c.retournerRequete("SELECT IDJOUEUR, NOMJOUEUR,PRENOMJOUEUR,PSEUDOJOUEUR,to_char(DATENAISSANCE,'DD-MM-YYYY'),"
+			ResultSet rs = c.retournerRequete("SELECT IDJOUEUR, NOMJOUEUR,PRENOMJOUEUR,PSEUDOJOUEUR,to_char(DATENAISSANCE,'DD/MM/YYYY'),"
 					+ "NATIONALITE,IDEQUIPE, PHOTOJOUEUR FROM SAE_JOUEUR");
 			while (rs.next()) {
 				Equipe equipe = ControleurConnexion.listeEquipesID.get(rs.getInt("IDEQUIPE"));

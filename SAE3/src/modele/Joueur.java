@@ -1,6 +1,7 @@
 package modele;
 
 import java.awt.AWTEvent;
+import java.util.Date;
 
 import modele.Utilisateur.Profil;
 
@@ -23,12 +24,12 @@ public class Joueur {
      * 	dateNaissance	String	date de naissance du joueur
      * 	nationalite		String	nationalite du joueur
     */
-    public Joueur(int ID, String nom, String prenom, String pseudo, String dateNaissance, String nationalite, Equipe equipe, String photo) {
+    public Joueur(int ID, String nom, String prenom, String pseudo, String string, String nationalite, Equipe equipe, String photo) {
     	this.ID = ID;
         this.nom = nom;
         this.prenom = prenom;
         this.pseudo = pseudo;
-        this.dateNaissance = dateNaissance;
+        this.dateNaissance = string;
         this.nationalite = nationalite;
         this.equipe = equipe;
         this.photo = photo;
