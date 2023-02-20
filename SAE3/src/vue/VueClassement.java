@@ -83,6 +83,15 @@ public class VueClassement {
 			btnEcuries.addActionListener(controleur);
 		}
 		
+		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+			JButton btnTournois = new JButton("Tournois");
+			btnTournois.setForeground(Color.WHITE);
+			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
+			btnTournois.setBackground(Couleur.BLEU2);
+			panelMenu.add(btnTournois);
+			btnTournois.addActionListener(controleur);
+		}
+
 		JButton btnEquipes = new JButton("Equipes");
 		btnEquipes.setForeground(Color.WHITE);
 		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -94,13 +103,7 @@ public class VueClassement {
 		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
-		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
-		
+	
 		JButton btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -113,7 +116,7 @@ public class VueClassement {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dï¿½connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -236,7 +239,6 @@ public class VueClassement {
 		// BOUTONS MENU
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
-		btnTournois.addActionListener(controleur);
 
 		// COMBOBOX DE JEUX
 		this.triJeux.addActionListener(controleur);
@@ -247,7 +249,7 @@ public class VueClassement {
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;

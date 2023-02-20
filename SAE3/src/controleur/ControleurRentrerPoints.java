@@ -64,13 +64,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 			this.vue.viderEquipes();
 			Jeu j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
 			Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
-			Jeu j2 = t.getJeu(j);
-			
-			for (Equipe equipe : ControleurConnexion.listeEquipes.values()) {
-				if (equipe.getJeu().getNom().equals(this.vue.getJeuSelectionne())) {
-					this.vue.ajouterEquipe(equipe.getNom());
-				}
-			}
+			Jeu j2 = t.getJeu(j);	
 			break;
 		case POULE1:
 			this.etatPoule = Etat.POULE1;
@@ -130,7 +124,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 			}
 			break;
 		case VALIDER:
-			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'équipe gagnante ?","Confirmation",JOptionPane.YES_NO_OPTION);
+			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'ï¿½quipe gagnante ?","Confirmation",JOptionPane.YES_NO_OPTION);
 			if (confirme == 0) {
 				j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
 				t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
