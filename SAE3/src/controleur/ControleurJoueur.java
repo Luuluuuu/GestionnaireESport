@@ -69,7 +69,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	}
 	
 	public void intialiserListeEquipes() {
-		this.vue.ajouterEquipe("- Sélectionnez une équipe -");
+		this.vue.ajouterEquipe("- Sï¿½lectionnez une ï¿½quipe -");
 		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
 			for (String nomEquipe : ControleurConnexion.listeEquipesParEcurie) {
 				this.vue.ajouterEquipe(nomEquipe);
@@ -139,7 +139,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				e2.printStackTrace();
 			}
 			//VÃ©rifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- Sélectionnez une équipe -")
+			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- Sï¿½lectionnez une ï¿½quipe -")
 					|| this.vue.getPrenom().equals("") || this.vue.getPseudo().equals("")
 					|| this.vue.getDateNaissance() == null || this.vue.getNationalite().equals("")) {
 				this.vue.estVide();
@@ -151,7 +151,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),this.vue.getPseudo(), this.vue.getDateNaissance(),
 						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
 				//VÃ©rifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("Créer un joueur")) {
+				if (this.vue.titreModif.getText().equals("Crï¿½er un joueur")) {
 					// SI CREATION
 					if (!(ControleurConnexion.listeEquipes.containsKey(joueur.getPrenomPseudoNom()))) {
 						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au joueur
@@ -218,7 +218,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		                   File targetFile = new File(targetDirectory, newFileName);
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
-		                	   JOptionPane.showMessageDialog(null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+		                	   JOptionPane.showMessageDialog(null, "Le fichier a ï¿½tï¿½ enregistrï¿½.", "Succï¿½s", JOptionPane.INFORMATION_MESSAGE);
 						   } 
 		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
 			                   File targetExisteFile = new File(targetDirectory, newFileName);
@@ -230,7 +230,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 								e1.printStackTrace();
 							}
 							// TODO Auto-generated catch block
-			            	 JOptionPane.showMessageDialog(null, "Le fichier a été modifié.", "Attention", JOptionPane.INFORMATION_MESSAGE);
+			            	 JOptionPane.showMessageDialog(null, "Le fichier a ï¿½tï¿½ modifiï¿½.", "Attention", JOptionPane.INFORMATION_MESSAGE);
 						}            	
 		                 //Afficher l'image qui vient d'Ãªtre ajoutÃ©e
 		      	       	 ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
@@ -241,7 +241,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		    			 
 		    			 
 		             } else {
-		            	 JOptionPane.showMessageDialog(null, "Le fichier sélectionné n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
+		            	 JOptionPane.showMessageDialog(null, "Le fichier sï¿½lectionnï¿½ n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
 		             }
 		          // Le fichier sÃ©lectionnÃ© a Ã©tÃ© approuvÃ©.    
 		        }
