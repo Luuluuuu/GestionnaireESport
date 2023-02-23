@@ -33,7 +33,7 @@ public class VueTournoisJoueur {
 	public JFrame fenetreTournoisJoueur;
 	private JLabel photo;
 	private JLabel pseudo;
-
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreTournoisJoueur;
@@ -144,7 +144,7 @@ public class VueTournoisJoueur {
 		btnTournois.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnTournois);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -319,17 +319,22 @@ public class VueTournoisJoueur {
 		f.setVisible(false);
 	}
 	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
+			this.desactiverBouton();
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Mon profil") {
 			return Etat.PROFIL;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;
 		}
-		return null;
+		return null; 
 	}
 
 }

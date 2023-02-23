@@ -32,7 +32,8 @@ public class VueProfilJoueur {
 	private JLabel titreEquipe;
 	private JLabel pseudo;
 	private JLabel photo;
-
+	private JButton btnClassement;
+	
 	private DefaultListModel<String> modeleJoueursEquipe = new DefaultListModel<String>();
 	
 	public JFrame getFrame() {
@@ -51,7 +52,7 @@ public class VueProfilJoueur {
 		fenetreProfilJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dï¿½connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -144,7 +145,7 @@ public class VueProfilJoueur {
 		btnTournois.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnTournois);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -193,7 +194,7 @@ public class VueProfilJoueur {
 		gbc_panelTitreEquipe.gridy = 0;
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
-		titreEquipe = new JLabel("Mon équipe (insererNom)");
+		titreEquipe = new JLabel("Mon ï¿½quipe (insererNom)");
 		titreEquipe.setForeground(Color.WHITE);
 		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreEquipe.add(titreEquipe);
@@ -242,7 +243,7 @@ public class VueProfilJoueur {
 		gbc_panelTitreStats.gridy = 0;
 		panelStats.add(panelTitreStats, gbc_panelTitreStats);
 		
-		JLabel titreStats = new JLabel("Statistiques équipe");
+		JLabel titreStats = new JLabel("Statistiques ï¿½quipe");
 		titreStats.setForeground(Color.WHITE);
 		titreStats.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitreStats.add(titreStats);
@@ -280,22 +281,27 @@ public class VueProfilJoueur {
 			e.printStackTrace();
 		}
 		this.pseudo.setText(pseudo);
-		this.titreEquipe.setText("Mon équipe (" + nomEquipe + ")"); 
+		this.titreEquipe.setText("Mon ï¿½quipe (" + nomEquipe + ")"); 
 	}
 	
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
-
+	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
+			this.desactiverBouton();
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;
 		} else if (b.getText() == "Tournois") {
-			return Etat.TOURNOIS;
+		 	return Etat.TOURNOIS;
 		}
 		return null;
 	}

@@ -52,6 +52,7 @@ public class VueEquipe extends JFrame{
 	private JButton btnRechercher = new JButton("Rechercher");
 	private JButton btnValider = new JButton("Valider");
 	private JTextField entreeNationalite;
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreEquipe;
@@ -115,7 +116,7 @@ public class VueEquipe extends JFrame{
 			btnTournois.addActionListener(controleur);
 		}
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -682,6 +683,10 @@ public class VueEquipe extends JFrame{
         entreeEcurie.setForeground(new Color(0,0,0));
     }
 	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Créer une nouvelle équipe") {
 			return Etat.CREER;
@@ -700,7 +705,8 @@ public class VueEquipe extends JFrame{
 		}else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			return Etat.CLASSEMENT;
+			this.desactiverBouton();
+		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}else if (b.getText() == "Tournois") {

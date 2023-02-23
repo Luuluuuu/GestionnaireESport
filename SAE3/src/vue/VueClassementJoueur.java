@@ -37,7 +37,7 @@ public class VueClassementJoueur {
 	private JLabel nomTroisieme = new JLabel("3e");
 	private DefaultListModel<String> modelePodium = new DefaultListModel<String>();
 	private JList<String> listePodium;
-
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreClassementJoueur;
@@ -148,7 +148,7 @@ public class VueClassementJoueur {
 		btnTournois.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnTournois);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -261,9 +261,13 @@ public class VueClassementJoueur {
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
+	 
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;
