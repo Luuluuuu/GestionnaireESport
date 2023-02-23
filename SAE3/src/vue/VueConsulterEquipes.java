@@ -61,12 +61,6 @@ public class VueConsulterEquipes {
 		fl_panelPDF.setAlignment(FlowLayout.LEFT);
 		panelHeader.add(panelPDF);
 		
-		JButton btnPDF = new JButton("Télécharger le PDF");
-		btnPDF.setBackground(Couleur.BLEU2);
-		btnPDF.setForeground(Color.WHITE);
-		btnPDF.setFont(new Font("Roboto", Font.BOLD, 13));
-		panelPDF.add(btnPDF);
-		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
 		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
