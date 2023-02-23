@@ -54,7 +54,7 @@ public class VueRentrerPoints {
 		fenetreRentrerPoints.getContentPane().add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dÃ©connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -90,9 +90,9 @@ public class VueRentrerPoints {
 		gbc_panelTitreTournoi.gridy = 0;
 		panelTournoi.add(panelTitreTournoi, gbc_panelTitreTournoi);
 		
-		JLabel titreTournoi = new JLabel("Sélectionnez le tournoi");
+		JLabel titreTournoi = new JLabel("1. SÃ©lectionnez le tournoi");
 		titreTournoi.setForeground(Color.WHITE);
-		titreTournoi.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreTournoi.setFont(new Font("Roboto", Font.BOLD, 36));
 		panelTitreTournoi.add(titreTournoi);
 		
 		JPanel panelListeTournois = new JPanel();
@@ -151,9 +151,9 @@ public class VueRentrerPoints {
 		fl_panel_1.setVgap(0);
 		panelTitrePoule.add(panel_1);
 		
-		JLabel titrePoule = new JLabel("Sélectionnez la poule");
+		JLabel titrePoule = new JLabel("2. Poules");
 		titrePoule.setForeground(Color.WHITE);
-		titrePoule.setFont(new Font("Roboto", Font.BOLD, 20));
+		titrePoule.setFont(new Font("Roboto", Font.BOLD, 30));
 		panel_1.add(titrePoule);
 		
 		JPanel panel_2 = new JPanel();
@@ -167,7 +167,7 @@ public class VueRentrerPoints {
 		this.selectionJeu = new JComboBox<String>();
 		this.selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		this.selectionJeu.setPreferredSize(new Dimension(205, 20));
-		this.selectionJeu.addItem("- Sélectionnez un jeu -");
+		this.selectionJeu.addItem("- Sï¿½lectionnez un jeu -");
 		panel_2.add(this.selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();
@@ -300,9 +300,9 @@ public class VueRentrerPoints {
 		gbc_panelTitreEquipe.gridy = 0;
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
-		JLabel titreEquipe = new JLabel("Sélectionnez l'équipe gagnante");
+		JLabel titreEquipe = new JLabel("3. Equipe gagnante");
 		titreEquipe.setForeground(Color.WHITE);
-		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 30));
 		panelTitreEquipe.add(titreEquipe);
 		
 		JPanel panelListeEquipes = new JPanel();
@@ -374,7 +374,7 @@ public class VueRentrerPoints {
 	// JEUX //	
 	public  void setJeux(List<String> jeux) {
 		this.selectionJeu.removeAllItems();
-		this.selectionJeu.addItem("- Sélectionnez un jeu -");
+		this.selectionJeu.addItem("- SÃ©lectionnez un jeu -");
 		for (String nomJeu : jeux) {
 			this.selectionJeu.addItem(nomJeu);
 		}
@@ -382,7 +382,7 @@ public class VueRentrerPoints {
 	
 	// ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dÃ©connecter") {
 			return Etat.DECONNECTER;
 		} if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;

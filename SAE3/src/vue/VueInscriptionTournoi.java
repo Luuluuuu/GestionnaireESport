@@ -92,7 +92,7 @@ public class VueInscriptionTournoi extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dÃ©connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -128,9 +128,9 @@ public class VueInscriptionTournoi extends JFrame{
 		panelTournoi.add(panelTitreT, gbc_panelTitreT);
 		
 		// LISTE DES TOURNOIS //
-		JLabel Tournois = new JLabel("Sélectionnez le tournoi");
+		JLabel Tournois = new JLabel("SÃ©lectionnez le tournoi");
 		Tournois.setForeground(Color.WHITE);
-		Tournois.setFont(new Font("Roboto", Font.BOLD, 20));
+		Tournois.setFont(new Font("Roboto", Font.BOLD, 36));
 		Tournois.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTitreT.add(Tournois);
 		
@@ -177,15 +177,12 @@ public class VueInscriptionTournoi extends JFrame{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Couleur.BLEU1);
-		FlowLayout fl_panel_1 = (FlowLayout) panel_1.getLayout();
-		fl_panel_1.setHgap(50);
-		fl_panel_1.setAlignment(FlowLayout.LEFT);
-		fl_panel_1.setVgap(0);
 		panelTitreM.add(panel_1);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel titrePoule = new JLabel("Sélectionnez l'équipe à inscrire");
+		JLabel titrePoule = new JLabel("Equipe Ã  inscrire");
 		titrePoule.setForeground(Color.WHITE);
-		titrePoule.setFont(new Font("Roboto", Font.BOLD, 20));
+		titrePoule.setFont(new Font("Roboto", Font.BOLD, 30));
 		panel_1.add(titrePoule);
 		
 		JPanel panel_2 = new JPanel();
@@ -199,7 +196,7 @@ public class VueInscriptionTournoi extends JFrame{
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- Sélectionnez un jeu -");
+		selectionJeu.addItem("- Sï¿½lectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelEquipe = new JPanel();
@@ -259,7 +256,7 @@ public class VueInscriptionTournoi extends JFrame{
 
 	// RECEVOIR L'ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dÃ©connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
@@ -319,7 +316,7 @@ public class VueInscriptionTournoi extends JFrame{
 	// DESELECTIONNE TOUS LES COMPOSANTS DE DONNEES DE LA PAGE //
 	public void deselectionner() {
 		this.listeEquipes.clearSelection();
-		this.selectionJeu.setSelectedItem("- Sélectionnez un jeu -");
+		this.selectionJeu.setSelectedItem("- SÃ©lectionnez un jeu -");
 		this.listeTournois.clearSelection();
 	}
 	
@@ -327,7 +324,7 @@ public class VueInscriptionTournoi extends JFrame{
 	public boolean estRemplie() {
 		return (!this.listeTournois.isSelectionEmpty()) && 
 				(!this.listeEquipes.isSelectionEmpty()) && 
-				(!this.selectionJeu.getSelectedItem().equals("- Sélectionnez un jeu -"));
+				(!this.selectionJeu.getSelectedItem().equals("- SÃ©lectionnez un jeu -"));
 	}
 	
 }

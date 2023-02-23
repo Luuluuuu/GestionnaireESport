@@ -27,6 +27,7 @@ import controleur.ControleurERA.Etat;
 
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+import java.awt.Component;
 
 public class VueERA {
 	public JFrame fenetreERA;
@@ -108,7 +109,7 @@ public class VueERA {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dÃ©connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -146,9 +147,9 @@ public class VueERA {
 		EPanelTitre.setBackground(Couleur.BLEU1);
 		EPanelHeaderContenu.add(EPanelTitre);
 		
-		JLabel ETitre = new JLabel("Ecuries inscrites");
+		JLabel ETitre = new JLabel("Ecuries");
 		ETitre.setForeground(Color.WHITE);
-		ETitre.setFont(new Font("Roboto", Font.BOLD, 20));
+		ETitre.setFont(new Font("Roboto", Font.BOLD, 30));
 		EPanelTitre.add(ETitre);
 		
 		JPanel EPanelRecherche = new JPanel();
@@ -202,7 +203,7 @@ public class VueERA {
 		EPanelModification.add(EPanelEntree);
 		EPanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JLabel lblNomEcurie = new JLabel("Nom écurie");
+		JLabel lblNomEcurie = new JLabel("Nom Ã©curie");
 		lblNomEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
 		EPanelEntree.add(lblNomEcurie);
@@ -246,13 +247,13 @@ public class VueERA {
 		panelEcuries.add(EPanelBoutons, gbc_EPanelBoutons);
 		EPanelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnCreerEcurie = new JButton("Créer une nouvelle écurie");
+		JButton btnCreerEcurie = new JButton("CrÃ©er une nouvelle Ã©curie");
 		btnCreerEcurie.setForeground(Color.WHITE);
 		btnCreerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerEcurie.setBackground(Couleur.BLEU2);
 		EPanelBoutons.add(btnCreerEcurie);
 		
-		JButton btnSupprimerEcurie = new JButton("Supprimer l'écurie sélectionnée");
+		JButton btnSupprimerEcurie = new JButton("Supprimer l'Ã©curie sÃ©lectionnÃ©e");
 		btnSupprimerEcurie.setForeground(Color.WHITE);
 		btnSupprimerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerEcurie.setBackground(Couleur.GRIS);
@@ -287,9 +288,9 @@ public class VueERA {
 		FlowLayout flowLayout_1 = (FlowLayout) RPanelTitre.getLayout();
 		RPanelHeaderContenu.add(RPanelTitre);
 		
-		JLabel RTitre = new JLabel("Responsables inscrits");
+		JLabel RTitre = new JLabel("Responsables");
 		RTitre.setForeground(Color.WHITE);
-		RTitre.setFont(new Font("Roboto", Font.BOLD, 20));
+		RTitre.setFont(new Font("Roboto", Font.BOLD, 30));
 		RPanelTitre.add(RTitre);
 		
 		JPanel RPanelRecherche = new JPanel();
@@ -355,7 +356,7 @@ public class VueERA {
 		RPanelEntree.add(nomResponsable);
 		nomResponsable.setColumns(10);
 		
-		JLabel lblPrenomResponsable = new JLabel("Prénom responsable");
+		JLabel lblPrenomResponsable = new JLabel("PrÃ©nom responsable");
 		lblPrenomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrenomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		RPanelEntree.add(lblPrenomResponsable);
@@ -400,13 +401,13 @@ public class VueERA {
 		gbc_RPanelBoutons.gridy = 3;
 		panelResponsables.add(RPanelBoutons, gbc_RPanelBoutons);
 		
-		JButton btnCreerResponsable = new JButton("Créer un nouveau responsable");
+		JButton btnCreerResponsable = new JButton("CrÃ©er un nouveau responsable");
 		btnCreerResponsable.setForeground(Color.WHITE);
 		btnCreerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerResponsable.setBackground(Couleur.BLEU2);
 		RPanelBoutons.add(btnCreerResponsable);
 		
-		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable sélectionné");
+		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable sÃ©lectionnÃ©");
 		btnSupprimerResponsable.setForeground(Color.WHITE);
 		btnSupprimerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerResponsable.setBackground(Couleur.GRIS);
@@ -438,9 +439,9 @@ public class VueERA {
 		APanelTitre.setBackground(Couleur.BLEU1);
 		APanelHeaderContenu.add(APanelTitre);
 		
-		JLabel ATitre = new JLabel("Arbitres inscrits");
+		JLabel ATitre = new JLabel("Arbitres");
 		ATitre.setForeground(Color.WHITE);
-		ATitre.setFont(new Font("Roboto", Font.BOLD, 20));
+		ATitre.setFont(new Font("Roboto", Font.BOLD, 30));
 		APanelTitre.add(ATitre);
 		
 		JPanel APanelRecherche = new JPanel();
@@ -504,7 +505,7 @@ public class VueERA {
 		APanelEntree.add(nomArbitre);
 		nomArbitre.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Prénom arbitre");
+		JLabel lblNewLabel = new JLabel("Prï¿½nom arbitre");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblNewLabel);
@@ -547,13 +548,13 @@ public class VueERA {
 		gbc_APanelBoutons.gridy = 3;
 		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
 		
-		JButton btnCreerArbitre = new JButton("Créer un nouvel arbitre");
+		JButton btnCreerArbitre = new JButton("CrÃ©er un nouvel arbitre");
 		btnCreerArbitre.setForeground(Color.WHITE);
 		btnCreerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerArbitre.setBackground(Couleur.BLEU2);
 		APanelBoutons.add(btnCreerArbitre);
 		
-		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre sélectionné");
+		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre sÃ©lectionnÃ©");
 		btnSupprimerArbitre.setForeground(Color.WHITE);
 		btnSupprimerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerArbitre.setBackground(Couleur.GRIS);
@@ -854,7 +855,7 @@ public class VueERA {
 			return Etat.MODIFIER;
 		} else if (b.getText().contains("Supprimer")) {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText() == "Se dÃ©connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
@@ -947,7 +948,7 @@ public class VueERA {
 
 	// MESSAGES
 	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Veuillez complÃ©ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 	
 	public int confirmer(String operation) {
@@ -955,6 +956,6 @@ public class VueERA {
 	}
 	
 	public void existe() {
-        JOptionPane.showMessageDialog(null, "Cet entité existe déjà  !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Cet entitÃ© existe dÃ©jÃ  !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -147,7 +147,7 @@ public class VueJoueur extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -190,7 +190,7 @@ public class VueJoueur extends JFrame{
 		JLabel Joueurs = new JLabel("Joueurs");
 		Joueurs.setForeground(Color.WHITE);
 		panelTitre.add(Joueurs);
-		Joueurs.setFont(new Font("Roboto", Font.BOLD, 20));
+		Joueurs.setFont(new Font("Roboto", Font.BOLD, 36));
 		Joueurs.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JPanel panelRecherche = new JPanel();
@@ -238,14 +238,14 @@ public class VueJoueur extends JFrame{
 		panelJoueur.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("Cr�er un nouveau joueur");
+		JButton btnCreer = new JButton("Créer un nouveau joueur");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le joueur s�lectionn�");
-		btnSupprimer.setText("Supprimer le joueur s�lectionn�");
+		JButton btnSupprimer = new JButton("Supprimer le joueur sélectionné");
+		btnSupprimer.setText("Supprimer le joueur sélectionné");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -280,10 +280,10 @@ public class VueJoueur extends JFrame{
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelTitreM.add(panelT);
 		
-		titreModif = new JLabel("Cr�er un joueur");
+		titreModif = new JLabel("Créer un joueur");
 		titreModif.setForeground(Color.WHITE);
 		panelT.add(titreModif);
-		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreModif.setFont(new Font("Roboto", Font.BOLD, 30));
 		
 		JPanel panelPhoto = new JPanel();
 		panelPhoto.setBackground(Couleur.BLEU1);
@@ -419,7 +419,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_4.gridy = 0;
 		panelPrenom.add(panel_4, gbc_panel_4);
 		
-		JLabel prenom = new JLabel("Pr�nom");
+		JLabel prenom = new JLabel("Prénom");
 		prenom.setHorizontalAlignment(SwingConstants.CENTER);
 		prenom.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_4.add(prenom);
@@ -564,7 +564,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_9.gridy = 0;
 		panelNationalite.add(panel_9, gbc_panel_9);
 		
-		JLabel nationalite = new JLabel("Nationalit�");
+		JLabel nationalite = new JLabel("Nationalité");
 		nationalite.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_9.add(nationalite);
 		
@@ -776,7 +776,7 @@ public class VueJoueur extends JFrame{
 	public void annulerEntreeJoueur() {
         this.deselectionner();
         VueJoueur.afficherPanel(panelModif);
-        VueJoueur.afficherTexte(this.titreModif, "Cr�er un joueur");
+        VueJoueur.afficherTexte(this.titreModif, "Créer un joueur");
         VueJoueur.supprimerTexte(this.entreeNom);
         VueJoueur.supprimerTexte(this.entreePrenom);
         VueJoueur.supprimerTexte(this.entreeNationalite);
@@ -787,13 +787,13 @@ public class VueJoueur extends JFrame{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Cr�er un nouveau joueur") {
+		if (b.getText() == "Créer un nouveau joueur") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se d�connecter") {
+		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le joueur s�lectionn�") {
+		} else if (b.getText() == "Supprimer le joueur sélectionné") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE; 
@@ -825,17 +825,17 @@ public class VueJoueur extends JFrame{
 	public void creerJoueur() {
 		this.deselectionner();
 		VueJoueur.afficherPanel(panelModif);
-		VueJoueur.afficherTexte(this.titreModif, "Cr�er un joueur");
+		VueJoueur.afficherTexte(this.titreModif, "Créer un joueur");
 		VueJoueur.supprimerTexte(this.entreeNom);
 		VueJoueur.supprimerTexte(this.entreePrenom);
 		VueJoueur.supprimerTexte(this.entreePseudo);
 		entreeDateNaissance.setDate(null);
 		VueJoueur.supprimerTexte(this.entreeNationalite);
-		this.entreeEquipe.setSelectedItem("- S�lectionnez une �quipe -");
+		this.entreeEquipe.setSelectedItem("- Sélectionnez une �quipe -");
 	}
 
 	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compl�ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void mauvaiseDate() {

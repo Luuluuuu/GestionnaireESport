@@ -116,7 +116,7 @@ public class VueClassement {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -151,7 +151,7 @@ public class VueClassement {
 		
 		JLabel titrePodium = new JLabel("PODIUM");
 		titrePodium.setForeground(Color.WHITE);
-		titrePodium.setFont(new Font("Roboto", Font.BOLD, 20));
+		titrePodium.setFont(new Font("Roboto", Font.BOLD, 36));
 		panelTitrePodium.add(titrePodium);
 		
 		JPanel panelImgPodium = new JPanel();
@@ -249,7 +249,7 @@ public class VueClassement {
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;

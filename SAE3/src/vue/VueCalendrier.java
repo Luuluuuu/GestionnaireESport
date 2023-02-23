@@ -155,7 +155,7 @@ public class VueCalendrier extends JFrame{
 		// LISTE DES TOURNOIS //
 		JLabel Tournois = new JLabel("Tournois");
 		Tournois.setForeground(Color.WHITE);
-		Tournois.setFont(new Font("Roboto", Font.BOLD, 20));
+		Tournois.setFont(new Font("Roboto", Font.BOLD, 36));
 		Tournois.setHorizontalAlignment(SwingConstants.LEFT);
 		panelTitreT.add(Tournois);
 		
@@ -228,7 +228,7 @@ public class VueCalendrier extends JFrame{
 		
 		titreModif = new JLabel("Créer un tournoi");
 		titreModif.setForeground(Color.WHITE);
-		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreModif.setFont(new Font("Roboto", Font.BOLD, 30));
 		panelTitreM.add(titreModif);
 		
 		JPanel panelNom = new JPanel();
