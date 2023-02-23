@@ -231,6 +231,8 @@ public class VueClassement {
 		listePodium.setVisibleRowCount(14);
 		listePodium.setFixedCellHeight(40);
 		listePodium.setFixedCellWidth(600);
+		listePodium.setEnabled(false);
+		listePodium.setForeground(Color.red);
 		JScrollPane scrollPane = new JScrollPane(listePodium);
 		panelListe.add(scrollPane);
 		
