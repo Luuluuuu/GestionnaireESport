@@ -117,6 +117,9 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			}
 			this.vue.creerEquipe();
 			break;
+		case ANNULER :
+            this.vue.annulerEntreeEquipe();
+            break;
 		case VALIDER:
 			//Vérifie que tous les champs sont remplis
 			if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE && this.vue.getEcurie().equals("- S�lectionnez une �curie -")) {

@@ -769,6 +769,23 @@ public class VueJoueur extends JFrame{
 		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la suppression ?","Confirmation",JOptionPane.YES_NO_OPTION);
 	}
 	
+	public void premierIndexEquipe() {
+        this.entreeEquipe.setSelectedIndex(0);
+    }
+	
+	public void annulerEntreeJoueur() {
+        this.deselectionner();
+        VueJoueur.afficherPanel(panelModif);
+        VueJoueur.afficherTexte(this.titreModif, "Cr�er un joueur");
+        VueJoueur.supprimerTexte(this.entreeNom);
+        VueJoueur.supprimerTexte(this.entreePrenom);
+        VueJoueur.supprimerTexte(this.entreeNationalite);
+        VueJoueur.supprimerTexte(this.entreePseudo);
+        VueJoueur.supprimerTexte(this.entreeMdp);
+        this.premierIndexEquipe();
+        entreeEquipe.setForeground(new Color(0,0,0));
+    }
+	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Cr�er un nouveau joueur") {
 			return Etat.CREER;

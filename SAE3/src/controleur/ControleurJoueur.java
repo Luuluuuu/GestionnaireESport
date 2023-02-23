@@ -112,6 +112,9 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			fenCalendrier.getFrame().setVisible(true);
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
+		case ANNULER :
+            this.vue.annulerEntreeJoueur();
+            break;
 		case DECONNECTER :
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();
