@@ -49,6 +49,7 @@ public class VueERA {
 	private JPasswordField mdpArbitre;
 	private JTextField prenomResponsable;
 	private JTextField prenomArbitre;
+	private JButton btnClassement;
 
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -96,7 +97,7 @@ public class VueERA {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -108,7 +109,7 @@ public class VueERA {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dï¿½connecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -202,7 +203,7 @@ public class VueERA {
 		EPanelModification.add(EPanelEntree);
 		EPanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JLabel lblNomEcurie = new JLabel("Nom écurie");
+		JLabel lblNomEcurie = new JLabel("Nom ï¿½curie");
 		lblNomEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNomEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
 		EPanelEntree.add(lblNomEcurie);
@@ -246,13 +247,13 @@ public class VueERA {
 		panelEcuries.add(EPanelBoutons, gbc_EPanelBoutons);
 		EPanelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnCreerEcurie = new JButton("Créer une nouvelle écurie");
+		JButton btnCreerEcurie = new JButton("Crï¿½er une nouvelle ï¿½curie");
 		btnCreerEcurie.setForeground(Color.WHITE);
 		btnCreerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerEcurie.setBackground(Couleur.BLEU2);
 		EPanelBoutons.add(btnCreerEcurie);
 		
-		JButton btnSupprimerEcurie = new JButton("Supprimer l'écurie sélectionnée");
+		JButton btnSupprimerEcurie = new JButton("Supprimer l'ï¿½curie sï¿½lectionnï¿½e");
 		btnSupprimerEcurie.setForeground(Color.WHITE);
 		btnSupprimerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerEcurie.setBackground(Couleur.GRIS);
@@ -355,7 +356,7 @@ public class VueERA {
 		RPanelEntree.add(nomResponsable);
 		nomResponsable.setColumns(10);
 		
-		JLabel lblPrenomResponsable = new JLabel("Prénom responsable");
+		JLabel lblPrenomResponsable = new JLabel("Prï¿½nom responsable");
 		lblPrenomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrenomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		RPanelEntree.add(lblPrenomResponsable);
@@ -400,13 +401,13 @@ public class VueERA {
 		gbc_RPanelBoutons.gridy = 3;
 		panelResponsables.add(RPanelBoutons, gbc_RPanelBoutons);
 		
-		JButton btnCreerResponsable = new JButton("Créer un nouveau responsable");
+		JButton btnCreerResponsable = new JButton("Crï¿½er un nouveau responsable");
 		btnCreerResponsable.setForeground(Color.WHITE);
 		btnCreerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerResponsable.setBackground(Couleur.BLEU2);
 		RPanelBoutons.add(btnCreerResponsable);
 		
-		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable sélectionné");
+		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable sï¿½lectionnï¿½");
 		btnSupprimerResponsable.setForeground(Color.WHITE);
 		btnSupprimerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerResponsable.setBackground(Couleur.GRIS);
@@ -504,7 +505,7 @@ public class VueERA {
 		APanelEntree.add(nomArbitre);
 		nomArbitre.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Prénom arbitre");
+		JLabel lblNewLabel = new JLabel("Prï¿½nom arbitre");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblNewLabel);
@@ -547,13 +548,13 @@ public class VueERA {
 		gbc_APanelBoutons.gridy = 3;
 		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
 		
-		JButton btnCreerArbitre = new JButton("Créer un nouvel arbitre");
+		JButton btnCreerArbitre = new JButton("Crï¿½er un nouvel arbitre");
 		btnCreerArbitre.setForeground(Color.WHITE);
 		btnCreerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnCreerArbitre.setBackground(Couleur.BLEU2);
 		APanelBoutons.add(btnCreerArbitre);
 		
-		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre sélectionné");
+		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre sï¿½lectionnï¿½");
 		btnSupprimerArbitre.setForeground(Color.WHITE);
 		btnSupprimerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerArbitre.setBackground(Couleur.GRIS);
@@ -844,6 +845,10 @@ public class VueERA {
 	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
 	public boolean estSelectionneArbitre() {return !(this.listeArbitres.isSelectionEmpty());}
 	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	
 	// ETATS //
 	public Etat getEtat(JButton b) {
 		this.setEntite(b);
@@ -854,7 +859,7 @@ public class VueERA {
 			return Etat.MODIFIER;
 		} else if (b.getText().contains("Supprimer")) {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Calendrier") {
 			return Etat.CALENDRIER;
@@ -863,6 +868,7 @@ public class VueERA {
 		} else if (b.getText() == "Equipes") {
 				return Etat.EQUIPES ;
 		} else if (b.getText() == "Classement") {
+		 	this.desactiverBouton();
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Rechercher") {
 			return Etat.RECHERCHER;
@@ -947,7 +953,7 @@ public class VueERA {
 
 	// MESSAGES
 	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Veuillez complï¿½ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 	
 	public int confirmer(String operation) {
@@ -955,6 +961,6 @@ public class VueERA {
 	}
 	
 	public void existe() {
-        JOptionPane.showMessageDialog(null, "Cet entité existe déjà  !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Cet entitï¿½ existe dï¿½jï¿½ !", "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

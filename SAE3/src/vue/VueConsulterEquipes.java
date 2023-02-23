@@ -61,7 +61,7 @@ public class VueConsulterEquipes {
 		fl_panelPDF.setAlignment(FlowLayout.LEFT);
 		panelHeader.add(panelPDF);
 		
-		JButton btnPDF = new JButton("Télécharger le PDF");
+		JButton btnPDF = new JButton("Tï¿½lï¿½charger le PDF");
 		btnPDF.setBackground(Couleur.BLEU2);
 		btnPDF.setForeground(Color.WHITE);
 		btnPDF.setFont(new Font("Roboto", Font.BOLD, 13));
@@ -73,7 +73,7 @@ public class VueConsulterEquipes {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+		JButton btnDeconnexion = new JButton("Se dï¿½connecter");
 		panelDeconnexion.add(btnDeconnexion);
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
@@ -187,7 +187,7 @@ public class VueConsulterEquipes {
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- Sélectionnez un jeu -");
+		selectionJeu.addItem("- Sï¿½lectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();
@@ -360,14 +360,14 @@ public class VueConsulterEquipes {
 		this.listeTournois.addListSelectionListener(controleur);
 		this.selectionJeu.addActionListener(controleur);
 	}
-	
+	 
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
 	
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
+		if (b.getText() == "Se dï¿½connecter") {
 			return Etat.DECONNECTER;
 		} if (b.getText().equals("POULE 1")) {
 			return Etat.POULE1;

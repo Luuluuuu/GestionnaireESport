@@ -58,6 +58,7 @@ public class VueCalendrier extends JFrame{
 	private JComboBox<String> entreeArbitre;
 	private static Map<String, JCheckBox> listeCheck = new HashMap<String, JCheckBox>();
 	private static JPanel panel_13;
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreCalendrier;
@@ -105,7 +106,7 @@ public class VueCalendrier extends JFrame{
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -645,6 +646,10 @@ public class VueCalendrier extends JFrame{
 		this.setJeux(new ArrayList<String>());
 	}
 	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	 
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Créer un nouveau tournoi") {
 			return Etat.CREER;
@@ -659,6 +664,7 @@ public class VueCalendrier extends JFrame{
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		} else if (b.getText() == "Classement") {
+			this.desactiverBouton();
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;

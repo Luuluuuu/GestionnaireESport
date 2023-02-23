@@ -70,6 +70,7 @@ public class VueJoueur extends JFrame{
 	private JPasswordField entreeMdp;
 	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
 	private JComboBox<String> entreeEquipe;
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreJoueur;
@@ -135,7 +136,7 @@ public class VueJoueur extends JFrame{
 			btnTournois.addActionListener(controleur);
 		}
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -786,6 +787,10 @@ public class VueJoueur extends JFrame{
         entreeEquipe.setForeground(new Color(0,0,0));
     }
 	
+	public void desactiverBouton() {
+        btnClassement.setEnabled(false);
+    }
+	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Cr�er un nouveau joueur") {
 			return Etat.CREER;
@@ -808,10 +813,11 @@ public class VueJoueur extends JFrame{
 		}else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}else if (b.getText()=="Equipes") {
-			return Etat.EQUIPES;
+		 	return Etat.EQUIPES;
 		}else if (b.getText()=="Choisir une photo") {
 			return Etat.PHOTO;
 		} else if (b.getText()=="Classement") {
+			this.desactiverBouton();
 			return Etat.CLASSEMENT;
 		}
 		

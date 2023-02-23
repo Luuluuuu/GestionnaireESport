@@ -66,7 +66,7 @@ public class VueClassement {
 		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
+		 
 		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
