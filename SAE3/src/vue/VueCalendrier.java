@@ -561,8 +561,16 @@ public class VueCalendrier extends JFrame{
 		gbc_panel_13.fill = GridBagConstraints.BOTH;
 		gbc_panel_13.gridx = 1;
 		gbc_panel_13.gridy = 0;
-		panelJeu.add(panel_13, gbc_panel_13);
 		panel_13.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		// JScrollPane pour les jeux
+		JScrollPane scrollPaneJeu = new JScrollPane(
+				panel_13,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneJeu.setBorder(null);
+		scrollPaneJeu.setViewportView(panel_13);
+		panelJeu.add(scrollPaneJeu, gbc_panel_13);
 		
 		JPanel panelValider = new JPanel();
 		panelValider.setBackground(Couleur.BLEU1);
