@@ -29,7 +29,6 @@ import controleur.ControleurERA.Etat;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-
 public class VueERA {
 	public JFrame fenetreERA;
 	private JTextField rechercheEcurie;

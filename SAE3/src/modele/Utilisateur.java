@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Utilisateur {
-
     public static int IDCourant;
 
     public Utilisateur() {
