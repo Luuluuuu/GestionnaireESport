@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Utilisateur {
-	public enum Profil{ARBITRE,RESPONSABLE,GESTIONNAIRE,JOUEUR,ECURIE}
+	
     private static HashMap<String,Integer> liste = new HashMap<String,Integer>();
     public static int IDCourant;
 

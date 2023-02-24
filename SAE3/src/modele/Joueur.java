@@ -1,10 +1,5 @@
 package modele;
 
-import java.awt.AWTEvent;
-import java.util.Date;
-
-import modele.Utilisateur.Profil;
-
 public class Joueur {
 	//Déclaration d'attributs
     private int ID;

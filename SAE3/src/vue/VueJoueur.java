@@ -10,21 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.EventQueue;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.awt.event.ActionEvent;
 
-
-import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -44,8 +32,6 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import controleur.ControleurJoueur.Etat;
-import modele.Utilisateur.Profil;
-import controleur.ControleurConnexion;
 import controleur.ControleurJoueur;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
@@ -99,7 +85,7 @@ public class VueJoueur extends JFrame{
 		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurJoueur.estProfil("Gestionnaire")) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
 			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -127,7 +113,7 @@ public class VueJoueur extends JFrame{
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+		if (ControleurJoueur.estProfil("Ecurie")) {
 			JButton btnTournois = new JButton("Tournois");
 			btnTournois.setForeground(Color.WHITE);
 			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));

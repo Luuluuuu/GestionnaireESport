@@ -1,9 +1,6 @@
 package modele;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import modele.Utilisateur.Profil;
 
 public class Arbitre {
 	//Declaration des variables

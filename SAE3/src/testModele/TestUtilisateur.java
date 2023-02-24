@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import modele.Connexion;
 import modele.Utilisateur;
-import modele.Utilisateur.Profil;
+import modele.Profil;
 
 public class TestUtilisateur {
 	private Utilisateur utilisateur ;

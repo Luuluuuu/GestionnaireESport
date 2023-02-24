@@ -1,7 +1,5 @@
 package modele;
 
-import modele.Utilisateur.Profil;
-
 public class Responsable {
 	private int ID;
     private String nom;

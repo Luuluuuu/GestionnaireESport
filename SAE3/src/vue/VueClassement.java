@@ -15,9 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controleur.ControleurClassement.Etat;
-import modele.Utilisateur.Profil;
 import controleur.ControleurClassement;
-import controleur.ControleurConnexion;
 
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -67,7 +65,7 @@ public class VueClassement {
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (controleur.estProfil("Gestionnaire")) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
 			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -83,7 +81,7 @@ public class VueClassement {
 			btnEcuries.addActionListener(controleur);
 		}
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+		if (controleur.estProfil("Ecurie")) {
 			JButton btnTournois = new JButton("Tournois");
 			btnTournois.setForeground(Color.WHITE);
 			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));

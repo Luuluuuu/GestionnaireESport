@@ -205,6 +205,7 @@ public class VueConsulterEquipes {
 		panelListePoules.add(panel, gbc_panel);
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
+		// POULES //
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Couleur.BLEU1);
 		panel.add(panel_5);
@@ -403,5 +404,4 @@ public class VueConsulterEquipes {
 	public void ajouterEquipe(String nomEquipe) {
 		this.modeleEquipes.addElement(nomEquipe);
 	}
-
 }
