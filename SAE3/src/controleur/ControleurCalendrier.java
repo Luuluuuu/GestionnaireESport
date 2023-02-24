@@ -103,6 +103,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			VueCalendrier.fermerFenetre(this.vue.fenetreCalendrier);
 		break;
 		case SUPPRIMER :
+			
 			if ((this.vue.getTournoiSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
 				Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				this.vue.supprimerTournoi();
@@ -182,6 +183,8 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 			break;
 		default:
 		}
+		//désactive le bouton lorsque aucun élément n'est séléctionné
+		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 
 	@Override
@@ -222,6 +225,10 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 				this.vue.setJeux(t.getNomJeux());
 			}
 		}
+		//réactive le bouton lorsque un élément de la liste est cliqué
+		if (!e.getValueIsAdjusting()) {
+			this.vue.activerBouton(this.vue.getBtnSupprimer());
+        } 
 	}
 	
 	private boolean estDateHeureValide() {

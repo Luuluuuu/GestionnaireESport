@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurEquipe.Etat;
@@ -53,6 +54,7 @@ public class VueEquipe extends JFrame{
 	private JButton btnValider = new JButton("Valider");
 	private JTextField entreeNationalite;
 	private JButton btnClassement;
+	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
 		return this.fenetreEquipe;
@@ -187,7 +189,7 @@ public class VueEquipe extends JFrame{
 		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercher.setText("Rechercher");
 		panelRecherche.add(btnRechercher);
-		
+		this.desactiverBouton(btnRechercher);
 
 		JPanel panelListe = new JPanel();
 		panelListe.setBackground(Couleur.BLEU1);
@@ -226,12 +228,13 @@ public class VueEquipe extends JFrame{
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer l'�quipe s�lectionn�e");
+		btnSupprimer = new JButton("Supprimer l'�quipe s�lectionn�e");
 		btnSupprimer.setText("Supprimer l'�quipe s�lectionn�e");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
 		panelBoutons.add(btnSupprimer);
+		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
@@ -531,6 +534,8 @@ public class VueEquipe extends JFrame{
 		// LISTE
 		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
 		listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
+		
+		
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
@@ -574,6 +579,10 @@ public class VueEquipe extends JFrame{
 	}
 	
 	// GETTERS //
+	public JButton getBtnSupprimer() {
+		return btnSupprimer;
+	}
+	
 	public String getEquipeSelectionne() {
 		return this.listeEquipes.getSelectedValue();
 	}
@@ -683,8 +692,12 @@ public class VueEquipe extends JFrame{
         entreeEcurie.setForeground(new Color(0,0,0));
     }
 	
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 	
 	public Etat getEtat(JButton b) {
@@ -705,7 +718,7 @@ public class VueEquipe extends JFrame{
 		}else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton();
+			this.desactiverBouton(btnClassement);
 		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;

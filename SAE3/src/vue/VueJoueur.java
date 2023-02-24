@@ -71,6 +71,7 @@ public class VueJoueur extends JFrame{
 	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
 	private JComboBox<String> entreeEquipe;
 	private JButton btnClassement;
+	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
 		return this.fenetreJoueur;
@@ -245,12 +246,13 @@ public class VueJoueur extends JFrame{
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le joueur s�lectionn�");
+		btnSupprimer = new JButton("Supprimer le joueur s�lectionn�");
 		btnSupprimer.setText("Supprimer le joueur s�lectionn�");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
 		panelBoutons.add(btnSupprimer);
+		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
@@ -682,6 +684,10 @@ public class VueJoueur extends JFrame{
     }
 	
 	// GETTERS //
+	public JButton getBtnSupprimer() {
+		return this.btnSupprimer;
+	}
+	
 	public String getJoueurSelectionne() {
 		return this.listeJoueurs.getSelectedValue();
 	}
@@ -787,8 +793,12 @@ public class VueJoueur extends JFrame{
         entreeEquipe.setForeground(new Color(0,0,0));
     }
 	
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 	
 	public Etat getEtat(JButton b) {
@@ -817,7 +827,7 @@ public class VueJoueur extends JFrame{
 		}else if (b.getText()=="Choisir une photo") {
 			return Etat.PHOTO;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton();
+			this.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		}
 		

@@ -248,6 +248,14 @@ public class VueClassement {
 		f.setVisible(false);
 	}
 	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
+	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se d�connecter") {
 			return Etat.DECONNECTER;

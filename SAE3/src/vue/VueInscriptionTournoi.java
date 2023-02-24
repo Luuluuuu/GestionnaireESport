@@ -258,8 +258,12 @@ public class VueInscriptionTournoi extends JFrame{
 		btnValider.addActionListener(controleur);
 	}
 	
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 
 	// RECEVOIR L'ETAT //
@@ -269,7 +273,7 @@ public class VueInscriptionTournoi extends JFrame{
 		} else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton();
+			this.desactiverBouton(btnClassement);
 		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;

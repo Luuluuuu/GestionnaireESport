@@ -380,6 +380,14 @@ public class VueRentrerPoints {
 		}
 	}
 	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
+	
 	// ETAT //
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se d�connecter") {
