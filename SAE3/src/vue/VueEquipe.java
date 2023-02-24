@@ -130,7 +130,7 @@ public class VueEquipe extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnDeconnexion.setBackground(Couleur.ROUGE);
@@ -173,7 +173,7 @@ public class VueEquipe extends JFrame{
 		JLabel Equipes = new JLabel("Equipes");
 		Equipes.setForeground(Color.WHITE);
 		panelTitre.add(Equipes);
-		Equipes.setFont(new Font("Roboto", Font.BOLD, 20));
+		Equipes.setFont(new Font("Roboto", Font.BOLD, 36));
 		Equipes.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JPanel panelRecherche = new JPanel();
@@ -222,14 +222,14 @@ public class VueEquipe extends JFrame{
 		panelEquipe.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("Cr�er une nouvelle �quipe");
+		JButton btnCreer = new JButton("Créer une nouvelle équipe");
 		btnCreer.setForeground(Color.WHITE);
 		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		btnSupprimer = new JButton("Supprimer l'�quipe s�lectionn�e");
-		btnSupprimer.setText("Supprimer l'�quipe s�lectionn�e");
+		btnSupprimer = new JButton("Supprimer l'équipe sélectionnée");
+		btnSupprimer.setText("Supprimer l'équipe sélectionnée");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
@@ -261,9 +261,9 @@ public class VueEquipe extends JFrame{
 		gbc_panelTitreM.gridy = 0;
 		panelModif.add(panelTitreM, gbc_panelTitreM);
 		
-		titreModif = new JLabel("Cr�er une �quipe");
+		titreModif = new JLabel("Créer une équipe");
 		titreModif.setForeground(Color.WHITE);
-		titreModif.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreModif.setFont(new Font("Roboto", Font.BOLD, 30));
 		panelTitreM.add(titreModif);
 		
 		JPanel panelNomEcurie = new JPanel();
@@ -292,7 +292,7 @@ public class VueEquipe extends JFrame{
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
 		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
-			JLabel nomEcurie = new JLabel("S�lectionner l'�curie");
+			JLabel nomEcurie = new JLabel("Sélectionner l'écurie");
 			nomEcurie.setFont(new Font("Roboto", Font.BOLD, 14));
 			panel.add(nomEcurie);
 			nomEcurie.setHorizontalAlignment(SwingConstants.CENTER);
@@ -341,7 +341,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel_4.gridy = 0;
 		panelNom.add(panel_4, gbc_panel_4);
 		
-		JLabel nom = new JLabel("Nom de l'�quipe");
+		JLabel nom = new JLabel("Nom de l'équipe");
 		nom.setHorizontalAlignment(SwingConstants.CENTER);
 		nom.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_4.add(nom);
@@ -389,7 +389,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel_6.gridy = 0;
 		panelJeu.add(panel_6, gbc_panel_6);
 		
-		JLabel jeuS = new JLabel("Jeu sp�cialis�");
+		JLabel jeuS = new JLabel("Jeu spécialisé");
 		jeuS.setHorizontalAlignment(SwingConstants.CENTER);
 		jeuS.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_6.add(jeuS);
@@ -407,7 +407,7 @@ public class VueEquipe extends JFrame{
 		
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panel_7.add(entreeJeu);
-		this.entreeJeu.addItem("- S�lectionnez un jeu -");
+		this.entreeJeu.addItem("- Sélectionnez un jeu -");
 		
 		JPanel panelNationalite = new JPanel();
 		panelNationalite.setBackground(Couleur.BLEU1);
@@ -436,7 +436,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel_2.gridy = 0;
 		panelNationalite.add(panel_2, gbc_panel_2);
 		
-		JLabel nationalite = new JLabel("Nationalit�");
+		JLabel nationalite = new JLabel("Nationalité");
 		nationalite.setFont(new Font("Roboto", Font.BOLD, 14));
 		panel_2.add(nationalite);
 		
@@ -683,7 +683,7 @@ public class VueEquipe extends JFrame{
 	public void annulerEntreeEquipe() {
         this.deselectionner();
         VueEquipe.afficherPanel(panelModif);
-        VueEquipe.afficherTexte(this.titreModif, "Cr�er une équipe");
+        VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
         VueEquipe.supprimerTexte(this.entreeNom);
         VueEquipe.supprimerTexte(this.entreeNationalite);
         this.premierIndexJeu();
@@ -701,15 +701,15 @@ public class VueEquipe extends JFrame{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Cr�er une nouvelle �quipe") {
+		if (b.getText() == "Créer une nouvelle équipe") {
 			return Etat.CREER;
 		} else if (b.getText() == "Annuler") {
 			return Etat.ANNULER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			return Etat.ECURIE;
-		}else if (b.getText() == "Se d�connecter") {
+		}else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer l'�quipe s�lectionn�e") {
+		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
@@ -731,11 +731,11 @@ public class VueEquipe extends JFrame{
 	public void creerEquipe() {
 		this.deselectionner();
 		VueEquipe.afficherPanel(panelModif);
-		VueEquipe.afficherTexte(this.titreModif, "Cr�er une �quipe");
+		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
 		VueEquipe.supprimerTexte(this.entreeNom);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
 		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
-			this.setEcurie("- S�lectionnez une �curie -");
+			this.setEcurie("- Sélectionnez une écurie -");
 		}
 		entreeEcurie.setForeground(new Color(0,0,0));
 		this.setJeu("- Sélectionnez un jeu -");
@@ -745,7 +745,7 @@ public class VueEquipe extends JFrame{
 	
 	// MESSAGE //
 	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compl�ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
     }
 
 }
