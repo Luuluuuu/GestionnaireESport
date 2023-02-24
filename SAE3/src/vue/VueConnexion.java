@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -22,6 +24,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import controleur.ControleurConnexion;
+import javax.swing.JCheckBox;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 
 @SuppressWarnings("serial")
 public class VueConnexion extends JFrame implements KeyListener{
@@ -121,9 +126,6 @@ public class VueConnexion extends JFrame implements KeyListener{
 		
 		JPanel panelEntreeMdp = new JPanel();
 		panelEntreeMdp.setBackground(Couleur.BLEU1);
-		FlowLayout fl_panelEntreeMdp = (FlowLayout) panelEntreeMdp.getLayout();
-		fl_panelEntreeMdp.setVgap(0);
-		fl_panelEntreeMdp.setHgap(0);
 		GridBagConstraints gbc_panelEntreeMdp = new GridBagConstraints();
 		gbc_panelEntreeMdp.anchor = GridBagConstraints.NORTH;
 		gbc_panelEntreeMdp.fill = GridBagConstraints.HORIZONTAL;
@@ -131,11 +133,41 @@ public class VueConnexion extends JFrame implements KeyListener{
 		gbc_panelEntreeMdp.gridx = 0;
 		gbc_panelEntreeMdp.gridy = 3;
 		panelConnexion.add(panelEntreeMdp, gbc_panelEntreeMdp);
+		panelEntreeMdp.setLayout(new GridLayout(2, 2, 0, 0));
+		
+		JPanel panelMdp = new JPanel();
+		panelMdp.setBackground(Couleur.BLEU1);
+		panelEntreeMdp.add(panelMdp);
 		
 		entreeMotDePasse = new JPasswordField();
+		entreeMotDePasse.setEchoChar('*');
+		panelMdp.add(entreeMotDePasse);
 		entreeMotDePasse.setFont(new Font("Roboto", Font.PLAIN, 15));
 		entreeMotDePasse.setColumns(25);
-		panelEntreeMdp.add(entreeMotDePasse);
+		entreeMotDePasse.addKeyListener(this);
+		
+		JPanel panelShowMdp = new JPanel();
+		panelShowMdp.setBackground(Couleur.BLEU1);
+		FlowLayout fl_panelShowMdp = (FlowLayout) panelShowMdp.getLayout();
+		fl_panelShowMdp.setVgap(0);
+		fl_panelShowMdp.setHgap(130);
+		fl_panelShowMdp.setAlignment(FlowLayout.LEFT);
+		panelEntreeMdp.add(panelShowMdp);
+		
+		JCheckBox chckMdp = new JCheckBox("Afficher le mot de passe");
+		chckMdp.setBackground(Couleur.BLEU1);
+		chckMdp.setForeground(Color.WHITE);
+		chckMdp.setFont(new Font("Roboto", Font.BOLD, 12));
+		chckMdp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (chckMdp.isSelected()) {
+					entreeMotDePasse.setEchoChar((char)0);
+				} else {
+					entreeMotDePasse.setEchoChar('*');
+				}
+			}
+		});
+		panelShowMdp.add(chckMdp);
 		
 		JPanel panelBtnConnexion = new JPanel();
 		panelBtnConnexion.setBackground(Couleur.BLEU1);
@@ -155,7 +187,6 @@ public class VueConnexion extends JFrame implements KeyListener{
 		btnConnexion.addActionListener(controleur);
 		btnConnexion.addKeyListener(this);
 		entreeNomUtilisateur.addKeyListener(this);
-		entreeMotDePasse.addKeyListener(this);
 	}
 	
 	@Override

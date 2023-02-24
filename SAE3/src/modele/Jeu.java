@@ -127,7 +127,7 @@ public class Jeu implements Cloneable{
 	}
 	
 	public boolean existeEquipe(int i){
-		return this.poules[i-1] == null;
+		return this.poules[i-1] != null;
 	}
 	
 	public Equipe[] getEquipePouleI(int i) {

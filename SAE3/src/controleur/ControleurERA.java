@@ -170,7 +170,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 			break;
 		default:
 		}
-		
+		//désactive le bouton lorsque aucun élément n'est séléctionné
+		//if(this.vue.getNomListe(this.vue.getListeEcurie().getName()).equals("Ecurie")) {
+			//this.vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
+		//}
+		this.vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -203,6 +207,11 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 				}
 			}
 		}
+		//réactive le bouton lorsque un élément de la liste est cliqué
+		//if (!e.getValueIsAdjusting() && this.vue.getNomListeEcurie().equals("Ecurie")) {
+		//	this.vue.activerBouton(this.vue.getBtnSupprimerEcurie());
+        //} 
+		this.vue.activerBouton(this.vue.getBtnSupprimerEcurie());
 	}
 
 	public void modifierEcurie() {

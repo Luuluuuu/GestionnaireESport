@@ -263,6 +263,8 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		default:
 			
 		}
+		//désactive le bouton lorsque aucun élément n'est séléctionné
+		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 	
 	@Override
@@ -298,7 +300,9 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			if (!(list.isSelectionEmpty())) {
 			}
 		}
-		
+		if (!e.getValueIsAdjusting()) {
+			this.vue.activerBouton(this.vue.getBtnSupprimer());
+        } 
 	}
 
 }

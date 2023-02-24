@@ -61,19 +61,13 @@ public class VueConsulterEquipes {
 		fl_panelPDF.setAlignment(FlowLayout.LEFT);
 		panelHeader.add(panelPDF);
 		
-		JButton btnPDF = new JButton("T�l�charger le PDF");
-		btnPDF.setBackground(Couleur.BLEU2);
-		btnPDF.setForeground(Color.WHITE);
-		btnPDF.setFont(new Font("Roboto", Font.BOLD, 13));
-		panelPDF.add(btnPDF);
-		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
 		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
+		JButton btnDeconnexion = new JButton("Se déconnecter");
 		panelDeconnexion.add(btnDeconnexion);
 		btnDeconnexion.setForeground(Color.WHITE);
 		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
@@ -111,7 +105,7 @@ public class VueConsulterEquipes {
 		
 		JLabel titreTournoi = new JLabel("Tournois");
 		titreTournoi.setForeground(Color.WHITE);
-		titreTournoi.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreTournoi.setFont(new Font("Roboto", Font.BOLD, 36));
 		panelTitreTournoi.add(titreTournoi);
 		
 		JPanel panelListeTournois = new JPanel();
@@ -173,7 +167,7 @@ public class VueConsulterEquipes {
 		
 		JLabel titrePoule = new JLabel("Poules");
 		titrePoule.setForeground(Color.WHITE);
-		titrePoule.setFont(new Font("Roboto", Font.BOLD, 20));
+		titrePoule.setFont(new Font("Roboto", Font.BOLD, 30));
 		panel_1.add(titrePoule);
 		
 		JPanel panel_2 = new JPanel();
@@ -187,7 +181,7 @@ public class VueConsulterEquipes {
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- S�lectionnez un jeu -");
+		selectionJeu.addItem("- Sélectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();
@@ -293,8 +287,6 @@ public class VueConsulterEquipes {
 		btnPouleFinale.setPreferredSize(new Dimension(440,50));
 		panel_8.add(btnPouleFinale);
 		
-		modelePoules = new DefaultListModel<String>();
-		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);
 		panelEquipe.setBorder(new LineBorder(Color.WHITE));
@@ -322,7 +314,7 @@ public class VueConsulterEquipes {
 		
 		JLabel titreEquipe = new JLabel("Equipes");
 		titreEquipe.setForeground(Color.WHITE);
-		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 20));
+		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 30));
 		panelTitreEquipe.add(titreEquipe);
 		
 		modeleEquipes = new DefaultListModel<String>();
@@ -365,9 +357,16 @@ public class VueConsulterEquipes {
 		f.setVisible(false);
 	}
 	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} if (b.getText().equals("POULE 1")) {
 			return Etat.POULE1;
