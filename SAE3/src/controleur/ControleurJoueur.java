@@ -213,12 +213,14 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		            	 
 		                 // Le fichier sélectionné est une image au format PNG, JPEG ou JPG.
 		                   String fileExtension = fileName.substring(fileName.lastIndexOf("."));
-		                   String newFileName = this.vue.getPseudo() + fileExtension;
-		                   File targetDirectory = new File("./src/photos");
+		                   String newFileName = this.vue.getPseudo() + fileExtension; //  ATTENTION SI LE PSEUDO PAS ENCORE REMPLIS CREE UNE IMAGE SANS NOM 
+		                   File targetDirectory = new File(System.getProperty("user.dir")+"\\src\\photos\\");
 		                   if (!targetDirectory.exists()) { //Crée le repertoire si il existe pas
 		                     targetDirectory.mkdirs();
 		                   }
 		                   File targetFile = new File(targetDirectory, newFileName);
+
+
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
 		                	   JOptionPane.showMessageDialog(null, "Le fichier a �t� enregistr�.", "Succ�s", JOptionPane.INFORMATION_MESSAGE);
@@ -265,6 +267,27 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting()) {
+
+			
+			VueJoueur.afficherTexte(this.vue.titreModif, "Modifier un joueur");
+			Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
+			this.vue.setEquipe(joueur.getEquipe().getNom());
+			this.vue.setNomJoueur(joueur.getNom());
+			this.vue.setPrenomJoueur(joueur.getPrenom());
+			this.vue.setPseudoJoueur(joueur.getPseudo());
+			this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
+			this.vue.setNationaliteJoueur(joueur.getNationalite());
+			
+ 	       	 ImageIcon imageIcon = new ImageIcon(System.getProperty("user.dir")+"\\src\\photos\\"+joueur.getPhoto());
+ 	       	
+			 Image image = imageIcon.getImage();
+			 Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			 imageIcon = new ImageIcon(resizedImage);
+ 	       	 this.vue.photo.setIcon(imageIcon);
+ 	       	 
+ 	       	 
+        }
 		switch(this.etat) {
 		case SUPPRIMER:
 			this.etat = Etat.CREER;
@@ -273,14 +296,6 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			@SuppressWarnings("unchecked")
 			JList<String> list = (JList<String>) e.getSource();
 			if (!(list.isSelectionEmpty())) {
-				VueJoueur.afficherTexte(this.vue.titreModif, "Modifier un joueur");
-				Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
-				this.vue.setEquipe(joueur.getEquipe().getNom());
-				this.vue.setNomJoueur(joueur.getNom());
-				this.vue.setPrenomJoueur(joueur.getPrenom());
-				this.vue.setPseudoJoueur(joueur.getPseudo());
-				this.vue.setDateNaissanceJoueur(joueur.getDateNaissance());
-				this.vue.setNationaliteJoueur(joueur.getNationalite());
 			}
 		}
 		

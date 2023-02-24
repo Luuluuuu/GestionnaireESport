@@ -87,7 +87,7 @@ public class VueJoueur extends JFrame{
 		// CONTROLEUR
 		ControleurJoueur controleur = new ControleurJoueur(this);
 		
-		Image img = new ImageIcon(this.getClass().getResource("photo.jpg")).getImage();
+        Image img = new ImageIcon(this.getClass().getResource("photo.jpg")).getImage();
 		
 		// HEADER //
 		JPanel panelHeader = new JPanel();
@@ -711,6 +711,10 @@ public class VueJoueur extends JFrame{
 		return this.entreeNationalite.getText();
 	}
 	
+	public String getPhoto() {
+		return this.photo.getText();
+	}
+	
 	// SETTER //
 	public void setNomJoueur(String j) {
 		this.entreeNom.setText(j);
@@ -734,6 +738,17 @@ public class VueJoueur extends JFrame{
 		this.entreeNationalite.setText(j);
 	}
 	
+
+
+
+    public void setPhotoJoueur(String chemin) {
+       	 ImageIcon imageIcon = new ImageIcon(chemin);
+       	 Image image = imageIcon.getImage();
+       	 Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+       	 imageIcon = new ImageIcon(resizedImage);
+       	 photo.setIcon(imageIcon);
+       	 
+        }
 	public void setDefaultListModel() {
 		this.listeJoueurs.setModel(modeleJoueurs);
 	}
