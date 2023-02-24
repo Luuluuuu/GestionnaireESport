@@ -19,7 +19,6 @@ import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Window;
 
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
@@ -33,8 +32,6 @@ public class VueConsulterEquipes {
 	public JFrame fenetreConsulterEquipes;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
-	private DefaultListModel<String> modelePoules;
-	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
@@ -181,7 +178,7 @@ public class VueConsulterEquipes {
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- S�lectionnez un jeu -");
+		selectionJeu.addItem("- Sélectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelListePoules = new JPanel();
@@ -286,8 +283,6 @@ public class VueConsulterEquipes {
 		btnPouleFinale.setBackground(Couleur.BLEU2);
 		btnPouleFinale.setPreferredSize(new Dimension(440,50));
 		panel_8.add(btnPouleFinale);
-		
-		modelePoules = new DefaultListModel<String>();
 		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);

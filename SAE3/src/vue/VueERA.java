@@ -505,7 +505,7 @@ public class VueERA {
 		APanelEntree.add(nomArbitre);
 		nomArbitre.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Pr�nom arbitre");
+		JLabel lblNewLabel = new JLabel("Prénom arbitre");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 13));
 		APanelEntree.add(lblNewLabel);
@@ -630,6 +630,8 @@ public class VueERA {
 			break;
 		default:
 		}
+		// Recharge la liste en cas de liste en état de recherche
+		this.filtrerRecherche();
 	}
 	public void ajouterEcurie(String e) {
 		modeleEcuries.addElement(e);
@@ -655,6 +657,9 @@ public class VueERA {
 			break;
 		default:
 		}
+		
+		// Recharge la liste en cas de liste en état de recherche
+		this.filtrerRecherche();
 	}
 	public void supprimerEcurie() {
 		modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
@@ -680,6 +685,8 @@ public class VueERA {
 			break;
 		default:
 		}
+		// Recharge la liste en cas de liste en état de recherche
+		this.filtrerRecherche();
 	}
 	public void modifierEcurie() {
 		modeleEcuries.set(this.listeEcuries.getSelectedIndex(),this.getNomEcurie());
@@ -918,32 +925,47 @@ public class VueERA {
 			break;
 		}
 	}
+	
 	public void filtrerRechercheEcurie() {
-		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
-	    for (int i = 0; i < this.modeleEcuries.size(); i++) {
-	    	if (this.modeleEcuries.get(i).contains(this.rechercheEcurie.getText())){
-	    		modeleFiltre.addElement(this.modeleEcuries.get(i));
-	    	}
-	    }
-	    this.listeEcuries.setModel(modeleFiltre);
+		if (this.rechercheEcurie.getText().equals("")) {
+			this.listeEcuries.setModel(this.modeleEcuries);
+		} else {
+			DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
+		    for (int i = 0; i < this.modeleEcuries.size(); i++) {
+		    	if (this.modeleEcuries.get(i).contains(this.rechercheEcurie.getText())){
+		    		modeleFiltre.addElement(this.modeleEcuries.get(i));
+		    	}
+		    }
+		    this.listeEcuries.setModel(modeleFiltre);
+		}
 	}
+	
 	public void filtrerRechercheResponsable() {
-		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
-	    for (int i = 0; i < this.modeleResponsables.size(); i++) {
-	    	if (this.modeleResponsables.get(i).contains(this.rechercheResponsable.getText())){
-	    		modeleFiltre.addElement(this.modeleResponsables.get(i));
-	    	}
-	    }
-	    this.listeResponsables.setModel(modeleFiltre);
+		if (this.rechercheResponsable.getText().equals("")) {
+			this.listeResponsables.setModel(this.modeleResponsables);
+		} else {
+			DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
+		    for (int i = 0; i < this.modeleResponsables.size(); i++) {
+		    	if (this.modeleResponsables.get(i).contains(this.rechercheResponsable.getText())){
+		    		modeleFiltre.addElement(this.modeleResponsables.get(i));
+		    	}
+		    }
+		    this.listeResponsables.setModel(modeleFiltre);
+		}
 	}
+	
 	public void filtrerRechercheArbitre() {
-		DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
-	    for (int i = 0; i < this.modeleArbitres.size(); i++) {
-	    	if (this.modeleArbitres.get(i).contains(this.rechercheArbitre.getText())){
-	    		modeleFiltre.addElement(this.modeleArbitres.get(i));
-	    	}
-	    }
-	    this.listeArbitres.setModel(modeleFiltre);
+		if (this.rechercheArbitre.getText().equals("")) {
+			this.listeArbitres.setModel(this.modeleArbitres);
+		} else {
+			DefaultListModel<String> modeleFiltre = new DefaultListModel<String>();
+		    for (int i = 0; i < this.modeleArbitres.size(); i++) {
+		    	if (this.modeleArbitres.get(i).contains(this.rechercheArbitre.getText())){
+		    		modeleFiltre.addElement(this.modeleArbitres.get(i));
+		    	}
+		    }
+		    this.listeArbitres.setModel(modeleFiltre);
+		}
 	}
 
 	// MESSAGES
