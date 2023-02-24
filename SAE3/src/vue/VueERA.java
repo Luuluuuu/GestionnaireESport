@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.List;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -49,7 +50,11 @@ public class VueERA {
 	private JPasswordField mdpArbitre;
 	private JTextField prenomResponsable;
 	private JTextField prenomArbitre;
-
+	private JButton btnClassement;
+	private JButton btnSupprimerEcurie;
+	private JButton btnSupprimerResponsable;
+	private JButton btnSupprimerArbitre;
+	
 	public JFrame getFrame() {
 		return this.fenetreERA;
 	}
@@ -96,7 +101,7 @@ public class VueERA {
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -252,11 +257,12 @@ public class VueERA {
 		btnCreerEcurie.setBackground(Couleur.BLEU2);
 		EPanelBoutons.add(btnCreerEcurie);
 		
-		JButton btnSupprimerEcurie = new JButton("Supprimer l'écurie sélectionnée");
+		btnSupprimerEcurie = new JButton("Supprimer l'écurie sélectionnée");
 		btnSupprimerEcurie.setForeground(Color.WHITE);
 		btnSupprimerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerEcurie.setBackground(Couleur.GRIS);
 		EPanelBoutons.add(btnSupprimerEcurie);
+		this.desactiverBouton(btnSupprimerEcurie);
 
 		// ----------------------------- RESPONSABLE ----------------------------- //
 		JPanel panelResponsables = new JPanel();
@@ -406,11 +412,12 @@ public class VueERA {
 		btnCreerResponsable.setBackground(Couleur.BLEU2);
 		RPanelBoutons.add(btnCreerResponsable);
 		
-		JButton btnSupprimerResponsable = new JButton("Supprimer le responsable sélectionné");
+		btnSupprimerResponsable = new JButton("Supprimer le responsable sélectionné");
 		btnSupprimerResponsable.setForeground(Color.WHITE);
 		btnSupprimerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerResponsable.setBackground(Couleur.GRIS);
 		RPanelBoutons.add(btnSupprimerResponsable);
+		this.desactiverBouton(btnSupprimerResponsable);
 
 		// ----------------------------- ARBITRE ----------------------------- //
 		JPanel panelArbitres = new JPanel();
@@ -553,11 +560,12 @@ public class VueERA {
 		btnCreerArbitre.setBackground(Couleur.BLEU2);
 		APanelBoutons.add(btnCreerArbitre);
 		
-		JButton btnSupprimerArbitre = new JButton("Supprimer l'arbitre sélectionné");
+		btnSupprimerArbitre = new JButton("Supprimer l'arbitre sélectionné");
 		btnSupprimerArbitre.setForeground(Color.WHITE);
 		btnSupprimerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
 		btnSupprimerArbitre.setBackground(Couleur.GRIS);
 		APanelBoutons.add(btnSupprimerArbitre);
+		this.desactiverBouton(btnSupprimerArbitre);
 		
 		ControleurERA controleur = new ControleurERA(this);
 		btnCalendrier.addActionListener(controleur);
@@ -656,7 +664,6 @@ public class VueERA {
 			break;
 		default:
 		}
-		
 		// Recharge la liste en cas de liste en état de recherche
 		this.filtrerRecherche();
 	}
@@ -701,6 +708,26 @@ public class VueERA {
 	}
 	
 	// GETTERS //
+	public String getNomListe(JList j) {
+		return j.getName();
+	}
+	
+	public JList<String> getListeEcurie() {
+		return this.listeEcuries;
+	}
+	
+	public JButton getBtnSupprimerEcurie() {
+		return btnSupprimerEcurie;
+	}
+	
+	public JButton getbtnSupprimerResponsable() {
+		return btnSupprimerResponsable;
+	}
+	
+	public JButton getBtnSupprimerArbitre() {
+		return btnSupprimerArbitre;
+	}
+	
 	public String getNom() {
 		String nom;
 		switch (ControleurERA.entite) {
@@ -851,6 +878,13 @@ public class VueERA {
 	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
 	public boolean estSelectionneArbitre() {return !(this.listeArbitres.isSelectionEmpty());}
 	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
 	// ETATS //
 	public Etat getEtat(JButton b) {
 		this.setEntite(b);
@@ -870,6 +904,7 @@ public class VueERA {
 		} else if (b.getText() == "Equipes") {
 				return Etat.EQUIPES ;
 		} else if (b.getText() == "Classement") {
+		 	this.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Rechercher") {
 			return Etat.RECHERCHER;
@@ -924,7 +959,7 @@ public class VueERA {
 			break;
 		}
 	}
-	
+
 	public void filtrerRechercheEcurie() {
 		if (this.rechercheEcurie.getText().equals("")) {
 			this.listeEcuries.setModel(this.modeleEcuries);
@@ -938,7 +973,7 @@ public class VueERA {
 		    this.listeEcuries.setModel(modeleFiltre);
 		}
 	}
-	
+
 	public void filtrerRechercheResponsable() {
 		if (this.rechercheResponsable.getText().equals("")) {
 			this.listeResponsables.setModel(this.modeleResponsables);

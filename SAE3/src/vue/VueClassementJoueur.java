@@ -262,8 +262,12 @@ public class VueClassementJoueur {
 		f.setVisible(false);
 	}
 	 
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 	
 	public Etat getEtat(JButton b) {

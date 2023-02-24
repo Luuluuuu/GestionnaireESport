@@ -319,15 +319,19 @@ public class VueTournoisJoueur {
 		f.setVisible(false);
 	}
 	
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se d�connecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
-			this.desactiverBouton();
+			this.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Mon profil") {
 			return Etat.PROFIL;

@@ -135,4 +135,6 @@ public class Tournoi {
     	Jeu j = this.getJeu(jeu);
     	j.inscrire(equipe);
     }
+    
+    
 }

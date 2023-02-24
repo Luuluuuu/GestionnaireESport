@@ -237,6 +237,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			}
 		default:
 		}
+		//désactive le bouton lorsque aucun élément n'est séléctionné
+		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 
 	@Override
@@ -274,6 +276,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			    }
 			}
 		}
+		//réactive le bouton lorsque un élément de la liste est cliqué
+		if (!e.getValueIsAdjusting()) {
+			this.vue.activerBouton(this.vue.getBtnSupprimer());
+        } 
 	}
+	
 
 }

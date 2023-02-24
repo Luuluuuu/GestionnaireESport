@@ -36,6 +36,7 @@ public class VueInscriptionTournoi extends JFrame{
 	private DefaultListModel<String> modeleEquipes = new DefaultListModel<String>();
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
+	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
@@ -80,7 +81,7 @@ public class VueInscriptionTournoi extends JFrame{
 		btnTournois.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnTournois);
 		
-		JButton btnClassement = new JButton("Classement");
+		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
 		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
 		btnClassement.setBackground(Couleur.BLEU2);
@@ -196,7 +197,7 @@ public class VueInscriptionTournoi extends JFrame{
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
-		selectionJeu.addItem("- S�lectionnez un jeu -");
+		selectionJeu.addItem("- Sélectionnez un jeu -");
 		panel_2.add(selectionJeu);
 		
 		JPanel panelEquipe = new JPanel();
@@ -253,6 +254,14 @@ public class VueInscriptionTournoi extends JFrame{
 		btnDeconnexion.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 	}
+	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
 
 	// RECEVOIR L'ETAT //
 	public Etat getEtat(JButton b) {
@@ -261,7 +270,8 @@ public class VueInscriptionTournoi extends JFrame{
 		} else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			return Etat.CLASSEMENT;
+			this.desactiverBouton(btnClassement);
+		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
 		} else if (b.getText()=="Valider") {

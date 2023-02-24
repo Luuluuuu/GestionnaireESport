@@ -19,6 +19,7 @@ import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Window;
 
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
@@ -32,6 +33,8 @@ public class VueConsulterEquipes {
 	public JFrame fenetreConsulterEquipes;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
+	private DefaultListModel<String> modelePoules;
+	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
@@ -350,11 +353,18 @@ public class VueConsulterEquipes {
 		this.listeTournois.addListSelectionListener(controleur);
 		this.selectionJeu.addActionListener(controleur);
 	}
-	
+	 
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
 	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
 	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {
@@ -404,4 +414,5 @@ public class VueConsulterEquipes {
 	public void ajouterEquipe(String nomEquipe) {
 		this.modeleEquipes.addElement(nomEquipe);
 	}
+
 }

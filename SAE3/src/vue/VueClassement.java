@@ -149,7 +149,7 @@ public class VueClassement {
 		
 		JLabel titrePodium = new JLabel("PODIUM");
 		titrePodium.setForeground(Color.WHITE);
-		titrePodium.setFont(new Font("Roboto", Font.BOLD, 36));
+		titrePodium.setFont(new Font("Roboto", Font.BOLD, 20));
 		panelTitrePodium.add(titrePodium);
 		
 		JPanel panelImgPodium = new JPanel();
@@ -247,6 +247,14 @@ public class VueClassement {
 	public static void fermerFenetre(JFrame f) {
 		f.setVisible(false);
 	}
+	
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
+    }
 	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {

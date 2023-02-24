@@ -59,6 +59,7 @@ public class VueCalendrier extends JFrame{
 	private static Map<String, JCheckBox> listeCheck = new HashMap<String, JCheckBox>();
 	private static JPanel panel_13;
 	private JButton btnClassement;
+	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
 		return this.fenetreCalendrier;
@@ -196,11 +197,12 @@ public class VueCalendrier extends JFrame{
 		btnCreer.setBackground(Couleur.BLEU2);
 		panelBoutons.add(btnCreer);
 		
-		JButton btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
+		btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
 		btnSupprimer.setForeground(Color.WHITE);
 		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnSupprimer.setBackground(Couleur.GRIS);
 		panelBoutons.add(btnSupprimer);
+		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
@@ -612,6 +614,8 @@ public class VueCalendrier extends JFrame{
 		btnEcuries.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
+		
+		
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -654,8 +658,12 @@ public class VueCalendrier extends JFrame{
 		this.setJeux(new ArrayList<String>());
 	}
 	
-	public void desactiverBouton() {
-        btnClassement.setEnabled(false);
+	public void activerBouton(JButton j) {
+        j.setEnabled(true);
+    }
+	
+	public void desactiverBouton(JButton j) {
+        j.setEnabled(false);
     }
 	 
 	public Etat getEtat(JButton b) {
@@ -672,14 +680,13 @@ public class VueCalendrier extends JFrame{
 		} else if (b.getText() == "Valider") {
 			return Etat.VALIDER;
 		} else if (b.getText() == "Classement") {
-			this.desactiverBouton();
+			this.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;
 		} else if (b.getText() == "Joueurs") {
 			return Etat.JOUEURS;
-		}
-		
+		}	
 		return null;
 	}
 	
@@ -710,6 +717,10 @@ public class VueCalendrier extends JFrame{
 	}
 	
 	// GETTERS //
+	public JButton getBtnSupprimer() {
+		return btnSupprimer;
+	}
+	
 	public String getTournoiSelectionne() {
 		return this.listeTournois.getSelectedValue();
 	}
@@ -759,6 +770,10 @@ public class VueCalendrier extends JFrame{
 	}
 	
 	// VERIFICATION //
+	public boolean listeTournoiEstSelectionnee() {
+		 return listeTournois.getSelectedValue() != null;
+	}
+	
 	public boolean texteEstRempli(JTextField t) {
 		return !(t.getText()=="");
 	}
