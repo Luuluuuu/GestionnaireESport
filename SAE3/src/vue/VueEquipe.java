@@ -11,7 +11,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,12 +26,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurEquipe.Etat;
-import modele.Utilisateur.Profil;
-import controleur.ControleurConnexion;
 import controleur.ControleurEquipe;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @SuppressWarnings("serial")
 public class VueEquipe extends JFrame{
@@ -81,7 +75,7 @@ public class VueEquipe extends JFrame{
 		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			JButton btnCalendrier = new JButton("Calendrier");
 			btnCalendrier.setForeground(Color.WHITE);
 			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -109,7 +103,7 @@ public class VueEquipe extends JFrame{
 		btnJoueurs.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnJoueurs);
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
+		if (ControleurEquipe.estProfil("Ecurie")) {
 			JButton btnTournois = new JButton("Tournois");
 			btnTournois.setForeground(Color.WHITE);
 			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
@@ -291,7 +285,7 @@ public class VueEquipe extends JFrame{
 		panelNomEcurie.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			JLabel nomEcurie = new JLabel("Sélectionner l'écurie");
 			nomEcurie.setFont(new Font("Roboto", Font.BOLD, 14));
 			panel.add(nomEcurie);
@@ -617,7 +611,7 @@ public class VueEquipe extends JFrame{
 	}
 	
 	public void setEcurie(String e) {
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			this.entreeEcurie.setSelectedItem(e);
 		}	
 	}
@@ -734,7 +728,8 @@ public class VueEquipe extends JFrame{
 		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
 		VueEquipe.supprimerTexte(this.entreeNom);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
-		if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+
+		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			this.setEcurie("- Sélectionnez une écurie -");
 		}
 		entreeEcurie.setForeground(new Color(0,0,0));

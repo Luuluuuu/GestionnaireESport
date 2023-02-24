@@ -16,14 +16,12 @@ import javax.swing.SwingConstants;
 
 import controleur.ControleurProfilJoueur;
 import controleur.ControleurProfilJoueur.Etat;
-import modele.Joueur;
 
 import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Window;
 import java.io.IOException;
 
 public class VueProfilJoueur {
@@ -260,7 +258,7 @@ public class VueProfilJoueur {
 		gbc_panelListeStats.gridy = 1;
 		panelStats.add(panelListeStats, gbc_panelListeStats);
 		
-		JList listeStats = new JList();
+		JList<String> listeStats = new JList<String>();
 		listeStats.setFont(new Font("Roboto", Font.PLAIN, 15));
 		panelListeStats.add(listeStats);
 		

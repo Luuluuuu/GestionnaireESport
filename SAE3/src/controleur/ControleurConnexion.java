@@ -20,7 +20,7 @@ import modele.Poule;
 import modele.Responsable;
 import modele.Tournoi;
 import modele.Utilisateur;
-import modele.Utilisateur.Profil;
+import modele.Profil;
 import vue.VueConnexion;
 import vue.VueConsulterEquipes;
 import vue.VueEquipe;
@@ -49,7 +49,7 @@ public class ControleurConnexion implements ActionListener {
 	static 	List<String>				listeEquipesParEcurie;
 	static 	List<String>				listeJoueursParEcurie;
 	
-	public 	static Utilisateur.Profil 	profilUtilisateur;
+	public 	static Profil 	profilUtilisateur;
 	
 	public ControleurConnexion(VueConnexion vue) {
 		this.vue = vue;
@@ -60,7 +60,7 @@ public class ControleurConnexion implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (this.vue.estRemplie()) {
 			try {
-				profilUtilisateur = Utilisateur.mdpCorrect(this.vue.getLogin(), this.vue.getMotDePasse());
+				profilUtilisateur = Utilisateur.mdpCorrect(VueConnexion.getLogin(), VueConnexion.getMotDePasse());
 				if (profilUtilisateur == null) {
 					this.vue.connexionEchoue();					
 				} else {

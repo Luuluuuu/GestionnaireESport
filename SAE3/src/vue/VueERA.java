@@ -28,7 +28,7 @@ import controleur.ControleurERA.Etat;
 
 import java.awt.Color;
 import javax.swing.border.LineBorder;
-import java.awt.Component;
+
 
 public class VueERA {
 	public JFrame fenetreERA;

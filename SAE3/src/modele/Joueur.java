@@ -1,13 +1,5 @@
 package modele;
 
-import java.awt.AWTEvent;
-import java.awt.Image;
-import java.util.Date;
-
-import javax.swing.ImageIcon;
-
-import modele.Utilisateur.Profil;
-
 public class Joueur {
 	//Déclaration d'attributs
     private int ID;
@@ -154,7 +146,6 @@ public class Joueur {
 	}
 
 	public void creerLogin(String mdp) {
-    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.JOUEUR, this.ID);
 	}
 
 	public String getPhoto() {

@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.Year;
 
 import javax.swing.JButton;
@@ -17,7 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
 import modele.Equipe;
 import modele.Joueur;
-import modele.Utilisateur.Profil;
+import modele.Profil;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -60,14 +59,14 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	}
 	
 	public void initialiserListeEcuries() {
-		this.vue.ajouterEcurie("- S�lectionnez une �curie -");
+		this.vue.ajouterEcurie("- Sélectionnez une écurie -");
 		for (String nomEcurie : ControleurConnexion.listeEcuries.keySet()) {
 			this.vue.ajouterEcurie(nomEcurie);
 		}
 	}
 	
 	public void initialiserListeJeux() {
-		this.vue.ajouterJeu("- S�lectionnez un jeu -");
+		this.vue.ajouterJeu("- Sélectionnez un jeu -");
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
@@ -78,6 +77,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		for (Joueur joueur : equipe.getJoueurs()) {
 			this.vue.ajouterJoueur(joueur.getPrenomPseudoNom());
 		}
+	}
+	
+	// Retourne vrai si le profil est identique à celui saisi
+	public static boolean estProfil(String nom) {
+		return ControleurConnexion.profilUtilisateur.toString().equals(nom);
 	}
 
 	@Override

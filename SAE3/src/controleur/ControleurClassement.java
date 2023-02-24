@@ -3,11 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.stream.Stream;
 
 import javax.swing.JButton;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import vue.VueCalendrier;
@@ -51,11 +48,17 @@ public class ControleurClassement implements ActionListener {
 	}
 	
 	public void initialiserListeJeux() {
-		this.vue.ajouterJeu("- Sélectionnez un jeu -");
+		this.vue.ajouterJeu("- SÃ©lectionnez un jeu -");
 		for (String nomJeu : ControleurConnexion.listeJeux.keySet()) {
 			this.vue.ajouterJeu(nomJeu);
 		}
 	}
+	
+	// Retourne vrai si le profil est identique Ã  celui saisi
+	public boolean estProfil(String nom) {
+		return ControleurConnexion.profilUtilisateur.toString().equals(nom);
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -98,7 +101,7 @@ public class ControleurClassement implements ActionListener {
 			VueClassement.fermerFenetre(this.vue.fenetreClassement);
 		break;
 		case JEU:
-			if (this.vue.getJeu().equals("- Sélectionnez un jeu -")) {
+			if (this.vue.getJeu().equals("- Sï¿½lectionnez un jeu -")) {
 				this.initialiserListeClassement("IDJEU");
 			} else {
 				this.initialiserListeClassement(Integer.toString(ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()));
@@ -108,4 +111,5 @@ public class ControleurClassement implements ActionListener {
 		}
 		
 	}
+
 }

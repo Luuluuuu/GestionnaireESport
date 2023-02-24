@@ -17,16 +17,13 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
-import modele.Equipe;
 import modele.Joueur;
-import modele.Utilisateur;
-import modele.Utilisateur.Profil;
+import modele.Profil;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -69,7 +66,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	}
 	
 	public void intialiserListeEquipes() {
-		this.vue.ajouterEquipe("- S�lectionnez une �quipe -");
+		this.vue.ajouterEquipe("- Sélectionnez une équipe -");
 		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
 			for (String nomEquipe : ControleurConnexion.listeEquipesParEcurie) {
 				this.vue.ajouterEquipe(nomEquipe);
@@ -80,6 +77,11 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.ajouterEquipe(nomEquipe);
 			}
 		}
+	}
+	
+	// Retourne vrai si le profil est identique à celui saisi
+	public static boolean estProfil(String nom) {
+		return ControleurConnexion.profilUtilisateur.toString().equals(nom);
 	}
 	
 	@Override

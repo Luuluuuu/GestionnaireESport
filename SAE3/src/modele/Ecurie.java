@@ -2,8 +2,6 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-import modele.Utilisateur.Profil;
-
 public class Ecurie implements Cloneable {
 	//Declaration de variables
     private String nom;
