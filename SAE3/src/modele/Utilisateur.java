@@ -2,11 +2,9 @@ package modele;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 public class Utilisateur {
 	public enum Profil{ARBITRE,RESPONSABLE,GESTIONNAIRE,JOUEUR,ECURIE}
-    private static HashMap<String,Integer> liste = new HashMap<String,Integer>();
     public static int IDCourant;
 
     public Utilisateur() {
@@ -14,7 +12,6 @@ public class Utilisateur {
     
     public static void ajouterUtilisateur(String nom, String mdp,Profil profil, int ID) {
     	String identifiant = (nom.replaceAll("\\s+", "_")).toLowerCase();
-    	Utilisateur.liste.put(identifiant,mdp.hashCode());
     	switch (profil) {
     	case RESPONSABLE:
         	Connexion.getInstance().executerRequete("INSERT INTO SAE_USER (IDUSER,LOGIN,MOTDEPASSE,IDRESPONSABLE) VALUES (SEQ_USERID.NEXTVAL,'"
