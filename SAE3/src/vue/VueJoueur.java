@@ -231,8 +231,8 @@ public class VueJoueur implements Vue{
 		gbl_panelEquipe.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelEquipe.setLayout(gbl_panelEquipe);
 		
-		JPanel panel_8 = creerJPanel(panelEquipe, Couleur.BLEU1);
-		FlowLayout flowLayout_11 = (FlowLayout) panel_8.getLayout();
+		JPanel panelLabelEquipe = creerJPanel(panelEquipe, Couleur.BLEU1);
+		FlowLayout flowLayout_11 = (FlowLayout) panelLabelEquipe.getLayout();
 		flowLayout_11.setHgap(55);
 		flowLayout_11.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_8 = new GridBagConstraints();
@@ -240,24 +240,24 @@ public class VueJoueur implements Vue{
 		gbc_panel_8.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_8.gridx = 0;
 		gbc_panel_8.gridy = 0;
-		panelEquipe.add(panel_8, gbc_panel_8);
+		panelEquipe.add(panelLabelEquipe, gbc_panel_8);
 		
 		// EQUIPE
-		creerJLabel(panel_8, "Equipe", 14);
+		creerJLabel(panelLabelEquipe, "Equipe", 14);
 		
-		JPanel panel_11 = creerJPanel(panelEquipe, Couleur.BLEU1);
-		FlowLayout flowLayout_12 = (FlowLayout) panel_11.getLayout();
+		JPanel panelTexteEquipe = creerJPanel(panelEquipe, Couleur.BLEU1);
+		FlowLayout flowLayout_12 = (FlowLayout) panelTexteEquipe.getLayout();
 		flowLayout_12.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_11 = new GridBagConstraints();
 		gbc_panel_11.fill = GridBagConstraints.BOTH;
 		gbc_panel_11.gridx = 1;
 		gbc_panel_11.gridy = 0;
-		panelEquipe.add(panel_11, gbc_panel_11);
+		panelEquipe.add(panelTexteEquipe, gbc_panel_11);
 		
 		entreeEquipe = new JComboBox<String>(modeleEquipes);
 		entreeEquipe.setPreferredSize(new Dimension(205, 20));
 		entreeEquipe.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_11.add(entreeEquipe);
+		panelTexteEquipe.add(entreeEquipe);
 		
 		JPanel panelNom = creerJPanel(panelModif, Couleur.BLEU1);
 		GridBagConstraints gbc_panelNom = new GridBagConstraints();
@@ -273,27 +273,27 @@ public class VueJoueur implements Vue{
 		gbl_panelNom.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelNom.setLayout(gbl_panelNom);
 		
-		JPanel panel = creerJPanel(panelNom, Couleur.BLEU1);
+		JPanel panelLabelNom = creerJPanel(panelNom, Couleur.BLEU1);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 0;
-		panelNom.add(panel, gbc_panel);
-		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
+		panelNom.add(panelLabelNom, gbc_panel);
+		panelLabelNom.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
-		creerJLabel(panel, "Nom", 14);
+		creerJLabel(panelLabelNom, "Nom", 14);
 		
-		JPanel panel_1 = creerJPanel(panelNom, Couleur.BLEU1);
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
+		JPanel panelTexteNom = creerJPanel(panelNom, Couleur.BLEU1);
+		FlowLayout flowLayout = (FlowLayout) panelTexteNom.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 0;
-		panelNom.add(panel_1, gbc_panel_1);
+		panelNom.add(panelTexteNom, gbc_panel_1);
 		
-		entreeNom = creerJTextField(panel_1, 11, 20);
+		entreeNom = creerJTextField(panelTexteNom, 11, 20);
 		
 		JPanel panelPrenom = creerJPanel(panelModif, Couleur.BLEU1);
 		GridBagConstraints gbc_panelPrenom = new GridBagConstraints();
@@ -309,8 +309,8 @@ public class VueJoueur implements Vue{
 		gbl_panelPrenom.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelPrenom.setLayout(gbl_panelPrenom);
 		
-		JPanel panel_4 = creerJPanel(panelPrenom, Couleur.BLEU1);
-		FlowLayout flowLayout_5 = (FlowLayout) panel_4.getLayout();
+		JPanel panelLabelPrenom = creerJPanel(panelPrenom, Couleur.BLEU1);
+		FlowLayout flowLayout_5 = (FlowLayout) panelLabelPrenom.getLayout();
 		flowLayout_5.setHgap(55);
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
@@ -318,20 +318,20 @@ public class VueJoueur implements Vue{
 		gbc_panel_4.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_4.gridx = 0;
 		gbc_panel_4.gridy = 0;
-		panelPrenom.add(panel_4, gbc_panel_4);
+		panelPrenom.add(panelLabelPrenom, gbc_panel_4);
 		
-		creerJLabel(panel_4, "Prénom", 14);
+		creerJLabel(panelLabelPrenom, "Prénom", 14);
 		
-		JPanel panel_5 = creerJPanel(panelPrenom, Couleur.BLEU1);
-		FlowLayout flowLayout_6 = (FlowLayout) panel_5.getLayout();
+		JPanel panelTextePrenom = creerJPanel(panelPrenom, Couleur.BLEU1);
+		FlowLayout flowLayout_6 = (FlowLayout) panelTextePrenom.getLayout();
 		flowLayout_6.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
 		gbc_panel_5.fill = GridBagConstraints.BOTH;
 		gbc_panel_5.gridx = 1;
 		gbc_panel_5.gridy = 0;
-		panelPrenom.add(panel_5, gbc_panel_5);
+		panelPrenom.add(panelTextePrenom, gbc_panel_5);
 		
-		entreePrenom = creerJTextField(panel_5, 11, 20);
+		entreePrenom = creerJTextField(panelTextePrenom, 11, 20);
 		
 		JPanel panelPseudo = creerJPanel(panelModif, Couleur.BLEU1);
 		GridBagConstraints gbc_panelPseudo = new GridBagConstraints();
@@ -347,8 +347,8 @@ public class VueJoueur implements Vue{
 		gbl_panelPseudo.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelPseudo.setLayout(gbl_panelPseudo);
 		
-		JPanel panel_6 = creerJPanel(panelPseudo, Couleur.BLEU1);
-		FlowLayout flowLayout_7 = (FlowLayout) panel_6.getLayout();
+		JPanel panelLabelPseudo = creerJPanel(panelPseudo, Couleur.BLEU1);
+		FlowLayout flowLayout_7 = (FlowLayout) panelLabelPseudo.getLayout();
 		flowLayout_7.setHgap(55);
 		flowLayout_7.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_6 = new GridBagConstraints();
@@ -356,20 +356,20 @@ public class VueJoueur implements Vue{
 		gbc_panel_6.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_6.gridx = 0;
 		gbc_panel_6.gridy = 0;
-		panelPseudo.add(panel_6, gbc_panel_6);
+		panelPseudo.add(panelLabelPseudo, gbc_panel_6);
 		
-		creerJLabel(panel_6, "Pseudo", 14);
+		creerJLabel(panelLabelPseudo, "Pseudo", 14);
 		
-		JPanel panel_7 = creerJPanel(panelPseudo, Couleur.BLEU1);
-		FlowLayout flowLayout_8 = (FlowLayout) panel_7.getLayout();
+		JPanel panelTextePseudo = creerJPanel(panelPseudo, Couleur.BLEU1);
+		FlowLayout flowLayout_8 = (FlowLayout) panelTextePseudo.getLayout();
 		flowLayout_8.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_7 = new GridBagConstraints();
 		gbc_panel_7.fill = GridBagConstraints.BOTH;
 		gbc_panel_7.gridx = 1;
 		gbc_panel_7.gridy = 0;
-		panelPseudo.add(panel_7, gbc_panel_7);
+		panelPseudo.add(panelTextePseudo, gbc_panel_7);
 		
-		entreePseudo = creerJTextField(panel_7, 11, 20);
+		entreePseudo = creerJTextField(panelTextePseudo, 11, 20);
 		
 		JPanel panelDateN = creerJPanel(panelModif, Couleur.BLEU1);
 		GridBagConstraints gbc_panelDateN = new GridBagConstraints();
@@ -385,8 +385,8 @@ public class VueJoueur implements Vue{
 		gbl_panelDateN.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelDateN.setLayout(gbl_panelDateN);
 		
-		JPanel panel_2 = creerJPanel(panelDateN, Couleur.BLEU1);
-		FlowLayout flowLayout_4 = (FlowLayout) panel_2.getLayout();
+		JPanel panelLabelDateN = creerJPanel(panelDateN, Couleur.BLEU1);
+		FlowLayout flowLayout_4 = (FlowLayout) panelLabelDateN.getLayout();
 		flowLayout_4.setHgap(55);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
@@ -394,23 +394,23 @@ public class VueJoueur implements Vue{
 		gbc_panel_2.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_2.gridx = 0;
 		gbc_panel_2.gridy = 0;
-		panelDateN.add(panel_2, gbc_panel_2);
+		panelDateN.add(panelLabelDateN, gbc_panel_2);
 		
-		creerJLabel(panel_2, "Date de naissance", 14);
+		creerJLabel(panelLabelDateN, "Date de naissance", 14);
 		
-		JPanel panel_3 = creerJPanel(panelDateN, Couleur.BLEU1);
-		FlowLayout flowLayout_9 = (FlowLayout) panel_3.getLayout();
+		JPanel panelEntreeDateN = creerJPanel(panelDateN, Couleur.BLEU1);
+		FlowLayout flowLayout_9 = (FlowLayout) panelEntreeDateN.getLayout();
 		flowLayout_9.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 1;
 		gbc_panel_3.gridy = 0;
-		panelDateN.add(panel_3, gbc_panel_3);
+		panelDateN.add(panelEntreeDateN, gbc_panel_3);
 		entreeDateNaissance.getComponentDateTextField().setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeDateNaissance.getComponentToggleCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
 		
 		entreeDateNaissance.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_3.add(entreeDateNaissance);
+		panelEntreeDateN.add(entreeDateNaissance);
 		entreeDateNaissance.setPreferredSize(new Dimension(205,20));
 		paramDate.setAllowEmptyDates(false);
 		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -429,8 +429,8 @@ public class VueJoueur implements Vue{
 		gbl_panelNationalite.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelNationalite.setLayout(gbl_panelNationalite);
 		
-		JPanel panel_9 = creerJPanel(panelNationalite, Couleur.BLEU1);
-		FlowLayout flowLayout_2 = (FlowLayout) panel_9.getLayout();
+		JPanel panelLabelNationalite = creerJPanel(panelNationalite, Couleur.BLEU1);
+		FlowLayout flowLayout_2 = (FlowLayout) panelLabelNationalite.getLayout();
 		flowLayout_2.setHgap(55);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_9 = new GridBagConstraints();
@@ -438,20 +438,20 @@ public class VueJoueur implements Vue{
 		gbc_panel_9.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_9.gridx = 0;
 		gbc_panel_9.gridy = 0;
-		panelNationalite.add(panel_9, gbc_panel_9);
+		panelNationalite.add(panelLabelNationalite, gbc_panel_9);
 		
-		creerJLabel(panel_9, "Nationalité", 14);
+		creerJLabel(panelLabelNationalite, "Nationalité", 14);
 		
-		JPanel panel_10 = creerJPanel(panelNationalite, Couleur.BLEU1);
-		FlowLayout flowLayout_10 = (FlowLayout) panel_10.getLayout();
+		JPanel panelTexteNationalite = creerJPanel(panelNationalite, Couleur.BLEU1);
+		FlowLayout flowLayout_10 = (FlowLayout) panelTexteNationalite.getLayout();
 		flowLayout_10.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_10 = new GridBagConstraints();
 		gbc_panel_10.fill = GridBagConstraints.BOTH;
 		gbc_panel_10.gridx = 1;
 		gbc_panel_10.gridy = 0;
-		panelNationalite.add(panel_10, gbc_panel_10);
+		panelNationalite.add(panelTexteNationalite, gbc_panel_10);
 		
-		entreeNationalite = creerJTextField(panel_10, 11, 20);
+		entreeNationalite = creerJTextField(panelTexteNationalite, 11, 20);
 		
 		JPanel panelMdp = creerJPanel(panelModif, Couleur.BLEU1);
 		GridBagConstraints gbc_panelMdp = new GridBagConstraints();
@@ -467,8 +467,8 @@ public class VueJoueur implements Vue{
 		gbl_panelMdp.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelMdp.setLayout(gbl_panelMdp);
 		
-		JPanel panel_12 = creerJPanel(panelMdp, Couleur.BLEU1);
-		FlowLayout fl_panel_12 = (FlowLayout) panel_12.getLayout();
+		JPanel panelLabelMdp = creerJPanel(panelMdp, Couleur.BLEU1);
+		FlowLayout fl_panel_12 = (FlowLayout) panelLabelMdp.getLayout();
 		fl_panel_12.setHgap(55);
 		fl_panel_12.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_12 = new GridBagConstraints();
@@ -476,23 +476,23 @@ public class VueJoueur implements Vue{
 		gbc_panel_12.insets = new Insets(0, 0, 0, 5);
 		gbc_panel_12.gridx = 0;
 		gbc_panel_12.gridy = 0;
-		panelMdp.add(panel_12, gbc_panel_12);
+		panelMdp.add(panelLabelMdp, gbc_panel_12);
 		
-		creerJLabel(panel_12, "Mot de passe", 14);
+		creerJLabel(panelLabelMdp, "Mot de passe", 14);
 		
-		JPanel panel_13 = creerJPanel(panelMdp, Couleur.BLEU1);
-		FlowLayout flowLayout_13 = (FlowLayout) panel_13.getLayout();
+		JPanel panelTexteMdp = creerJPanel(panelMdp, Couleur.BLEU1);
+		FlowLayout flowLayout_13 = (FlowLayout) panelTexteMdp.getLayout();
 		flowLayout_13.setAlignment(FlowLayout.LEFT);
 		GridBagConstraints gbc_panel_13 = new GridBagConstraints();
 		gbc_panel_13.fill = GridBagConstraints.BOTH;
 		gbc_panel_13.gridx = 1;
 		gbc_panel_13.gridy = 0;
-		panelMdp.add(panel_13, gbc_panel_13);
+		panelMdp.add(panelTexteMdp, gbc_panel_13);
 		
 		entreeMdp = new JPasswordField();
 		entreeMdp.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeMdp.setColumns(20);
-		panel_13.add(entreeMdp);
+		panelTexteMdp.add(entreeMdp);
 		
 		JPanel panelValider = creerJPanel(panelModif, Couleur.BLEU1);
 		FlowLayout fl_panelValider = (FlowLayout) panelValider.getLayout();
