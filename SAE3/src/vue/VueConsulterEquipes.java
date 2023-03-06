@@ -67,11 +67,13 @@ public class VueConsulterEquipes {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
+//		JButton btnDeconnexion = new JButton("Se déconnecter");
+//		panelDeconnexion.add(btnDeconnexion);
+//		btnDeconnexion.setForeground(Color.WHITE);
+//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+//		btnDeconnexion.setBackground(Couleur.ROUGE);
+		JButton btnDeconnexion = Header.createDeconnexionButton();
 		panelDeconnexion.add(btnDeconnexion);
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);

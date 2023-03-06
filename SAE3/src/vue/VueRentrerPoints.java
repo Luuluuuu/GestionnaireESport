@@ -54,10 +54,13 @@ public class VueRentrerPoints {
 		fenetreRentrerPoints.getContentPane().add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		JButton btnDeconnexion = new JButton("Se déconnecter");
+//		btnDeconnexion.setForeground(Color.WHITE);
+//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+//		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		panelHeader.add(btnDeconnexion);
+
+		JButton btnDeconnexion = Header.createDeconnexionButton();
 		panelHeader.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();

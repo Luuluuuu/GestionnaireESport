@@ -83,29 +83,35 @@ public class VueCalendrier extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnCalendrier = new JButton("Calendrier");
-		btnCalendrier.setForeground(Color.WHITE);
-		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnCalendrier.setBackground(Couleur.BLEU2);
+//		JButton btnCalendrier = new JButton("Calendrier");
+//		btnCalendrier.setForeground(Color.WHITE);
+//		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
+//		btnCalendrier.setBackground(Couleur.BLEU2);
+//		panelMenu.add(btnCalendrier);
+		JButton btnCalendrier = Header.createCalendrierButton();
 		panelMenu.add(btnCalendrier);
-		
-		JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
-		btnEcuries.setForeground(Color.WHITE);
-		btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEcuries.setBackground(Couleur.BLEU2);
+//		JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
+//		btnEcuries.setForeground(Color.WHITE);
+//		btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
+//		btnEcuries.setBackground(Couleur.BLEU2);
+//		panelMenu.add(btnEcuries);
+		JButton btnEcuries = Header.createEcuriesButton();
 		panelMenu.add(btnEcuries);
-		
-		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setForeground(Color.WHITE);
-		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(Couleur.BLEU2);
+//		JButton btnEquipes = new JButton("Equipes");
+//		btnEquipes.setForeground(Color.WHITE);
+//		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
+//		btnEquipes.setBackground(Couleur.BLEU2);
+//		panelMenu.add(btnEquipes);
+		JButton btnEquipes = Header.createEquipesButton();
 		panelMenu.add(btnEquipes);
-		
-		JButton btnJoueurs = new JButton("Joueurs");
-		btnJoueurs.setForeground(Color.WHITE);
-		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnJoueurs.setBackground(Couleur.BLEU2);
+//		JButton btnJoueurs = new JButton("Joueurs");
+//		btnJoueurs.setForeground(Color.WHITE);
+//		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
+//		btnJoueurs.setBackground(Couleur.BLEU2);
+//		panelMenu.add(btnJoueurs);
+		JButton btnJoueurs = Header.createJoueurButton();
 		panelMenu.add(btnJoueurs);
+		
 		
 		btnClassement = new JButton("Classement");
 		btnClassement.setForeground(Color.WHITE);
@@ -113,16 +119,20 @@ public class VueCalendrier extends JFrame{
 		btnClassement.setBackground(Couleur.BLEU2);
 		panelMenu.add(btnClassement);
 		
+		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
 		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		JButton btnDeconnexion = new JButton("Se déconnecter");
+//		btnDeconnexion.setForeground(Color.WHITE);
+//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+//		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		panelDeconnexion.add(btnDeconnexion);
+		
+		JButton btnDeconnexion = Header.createDeconnexionButton();
 		panelDeconnexion.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();
