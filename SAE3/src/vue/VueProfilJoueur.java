@@ -50,10 +50,12 @@ public class VueProfilJoueur {
 		fenetreProfilJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se d�connecter");
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		JButton btnDeconnexion = new JButton("Se d�connecter");
+//		btnDeconnexion.setForeground(Color.WHITE);
+//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+//		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion = Header.createDeconnexionButton();
 		panelDeconnexion.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();
