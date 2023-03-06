@@ -222,11 +222,11 @@ public class VueConnexion extends JFrame implements KeyListener{
 	}
 	
 	public boolean estRemplie() {
-		return !(this.entreeNomUtilisateur.getText().isEmpty());
+		return !(VueConnexion.entreeNomUtilisateur.getText().isEmpty());
 	}
 	
 	public void setCouleurLogin() {
-		this.entreeNomUtilisateur.setSelectedTextColor(new Color(255,0,0));;
+		VueConnexion.entreeNomUtilisateur.setSelectedTextColor(new Color(255,0,0));;
 	}
 	
 	public void connexionEchoue()

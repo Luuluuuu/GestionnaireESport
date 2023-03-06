@@ -54,8 +54,15 @@ public class VueClassementJoueur implements Vue{
 		panelDeconnexion.setBackground(Color.WHITE);
 		fenetreClassementJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+
+//		JButton btnDeconnexion = new JButton("Se d\u00E9connecter");
+//		btnDeconnexion.setForeground(Color.WHITE);
+//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
+//		btnDeconnexion.setBackground(Couleur.ROUGE);
+//		panelDeconnexion.add(btnDeconnexion);
 		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
+		JButton btnDeconnexion = Header.createDeconnexionButton();
+		panelDeconnexion.add(btnDeconnexion);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
