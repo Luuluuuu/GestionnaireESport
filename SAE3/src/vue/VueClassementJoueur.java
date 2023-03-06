@@ -27,7 +27,7 @@ import java.awt.Image;
 
 import javax.swing.JList;
 
-public class VueClassementJoueur {
+public class VueClassementJoueur implements Vue{
 
 	public JFrame fenetreClassementJoueur;
 	private JLabel pseudo;
@@ -37,7 +37,7 @@ public class VueClassementJoueur {
 	private JLabel nomTroisieme = new JLabel("3e");
 	private DefaultListModel<String> modelePodium = new DefaultListModel<String>();
 	private JList<String> listePodium;
-	private JButton btnClassement;
+	private JPanel panelMenu;
 	
 	public JFrame getFrame() {
 		return this.fenetreClassementJoueur;
@@ -55,11 +55,7 @@ public class VueClassementJoueur {
 		fenetreClassementJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = new JButton("Se d\u00E9connecter");
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
-		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -120,7 +116,7 @@ public class VueClassementJoueur {
 		gbc_pseudo.gridy = 1;
 		panelJoueur.add(pseudo, gbc_pseudo);
 		
-		JPanel panelMenu = new JPanel();
+		panelMenu = new JPanel();
 		panelMenu.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout = (FlowLayout) panelMenu.getLayout();
 		flowLayout.setVgap(0);
@@ -130,29 +126,12 @@ public class VueClassementJoueur {
 		gbc_panelMenu.gridy = 1;
 		panelHeader.add(panelMenu, gbc_panelMenu);
 		
-		JButton btnProfil = new JButton("Mon profil");
-		btnProfil.setForeground(Color.WHITE);
-		btnProfil.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnProfil.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnProfil);
-		
-		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setForeground(Color.WHITE);
-		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnEquipes);
-		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
-		
-		btnClassement = new JButton("Classement");
-		btnClassement.setForeground(Color.WHITE);
-		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnClassement);
+		// Création des boutons du profil d'un joueur
+		JButton btnProfil = creerBoutonProfil("Mon profil");
+		JButton btnEquipes = creerBoutonProfil("Equipes");
+		JButton btnTournois = creerBoutonProfil("Tournois");
+		JButton btnClassement = creerBoutonProfil("Classement");
+		btnClassement.setEnabled(false);
 		
 		JPanel panelClassement = new JPanel();
 		panelClassement.setBackground(Couleur.BLEU1);
@@ -271,7 +250,7 @@ public class VueClassementJoueur {
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Equipes") {
 			return Etat.EQUIPES;
@@ -316,4 +295,9 @@ public class VueClassementJoueur {
 		this.nomTroisieme.setText("3e");
 	}
 
+	public JButton creerBoutonProfil(String texteBouton) {
+		JButton bouton = creerBouton(panelMenu, texteBouton, Couleur.BLEU2);
+		bouton.setFont(new Font("Roboto", Font.BOLD, 15));
+		return bouton;
+	}
 }
