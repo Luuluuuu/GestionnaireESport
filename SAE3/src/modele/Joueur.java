@@ -61,6 +61,7 @@ public class Joueur {
         return this.nationalite;
     }
     
+    
     //Setters
     /*Modifie le nom du joueur
      * Entree :
@@ -101,11 +102,14 @@ public class Joueur {
     public void setNationalite(String nationalite) {
         this.nationalite = nationalite;
     }
-
+    
 	public void setID(int ID) {
 		this.ID = ID;
 	}
 
+	public void setPhoto(String photo) {
+		 this.photo = photo;
+	}
     /*Retourne VRAI si le joueur est egal a obj
      * FAUX sinon*/
 	@Override
@@ -124,7 +128,8 @@ public class Joueur {
 				this.getNationalite().equals(j.getNationalite()) &&
 				this.getNom().equals(j.getNom()) &&
 				this.getPrenom().equals(j.getPrenom()) &&
-				this.getPseudo().equals(j.getPseudo());
+				this.getPseudo().equals(j.getPseudo()) &&
+				this.getPhoto().equals(j.getPhoto());
 	}
 	
 	@Override
@@ -141,7 +146,6 @@ public class Joueur {
 	}
 
 	public void creerLogin(String mdp) {
-    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.JOUEUR, this.ID);
 	}
 
 	public String getPhoto() {

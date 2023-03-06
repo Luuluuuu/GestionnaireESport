@@ -1,7 +1,7 @@
+
 package vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.BorderLayout;import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -702,6 +702,10 @@ public class VueJoueur extends JFrame{
 	public String getNationalite() {
 		return this.entreeNationalite.getText();
 	}
+
+	public String getPhoto() {
+		return this.photo.getText();
+	}
 	
 	// SETTER //
 	public void setNomJoueur(String j) {
@@ -721,11 +725,20 @@ public class VueJoueur extends JFrame{
 		LocalDate date = LocalDate.parse(j, formatter);
         this.entreeDateNaissance.setDate(date);
 	}
-	
+
 	public void setNationaliteJoueur(String j) {
 		this.entreeNationalite.setText(j);
 	}
 	
+    public void setPhotoJoueur(String chemin) {
+       	 ImageIcon imageIcon = new ImageIcon(chemin);
+       	 Image image = imageIcon.getImage();
+       	 Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+       	 imageIcon = new ImageIcon(resizedImage);
+       	 photo.setIcon(imageIcon);
+       	 
+        }
+		
 	public void setDefaultListModel() {
 		this.listeJoueurs.setModel(modeleJoueurs);
 	}

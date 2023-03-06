@@ -284,7 +284,7 @@ public class VueEquipe extends JFrame{
 		gbc_panel.gridy = 0;
 		panelNomEcurie.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
-		
+
 		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			JLabel nomEcurie = new JLabel("Sélectionner l'écurie");
 			nomEcurie.setFont(new Font("Roboto", Font.BOLD, 14));
@@ -728,6 +728,7 @@ public class VueEquipe extends JFrame{
 		VueEquipe.afficherTexte(this.titreModif, "Créer une équipe");
 		VueEquipe.supprimerTexte(this.entreeNom);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
+		
 		if (ControleurEquipe.estProfil("Gestionnaire")) {
 			this.setEcurie("- Sélectionnez une écurie -");
 		}
