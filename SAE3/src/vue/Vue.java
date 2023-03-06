@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public interface Vue {
 	
@@ -22,5 +23,15 @@ public interface Vue {
 		bouton.setBackground(couleur);
 		
 		return bouton;
+	}
+	
+	public default JTextField creerJTextField(JPanel panel, int taillePolice, int columns) {
+		JTextField texte = new JTextField();
+		
+		panel.add(texte);
+		texte.setFont(new Font("Roboto",Font.PLAIN, taillePolice));
+		texte.setColumns(columns);
+		
+		return texte;
 	}
 }

@@ -36,8 +36,7 @@ import controleur.ControleurJoueur;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 
-@SuppressWarnings("serial")
-public class VueJoueur extends JFrame{
+public class VueJoueur implements Vue{
 	
 	public JFrame fenetreJoueur;
 	public JTextField entreePrenom;
@@ -51,7 +50,7 @@ public class VueJoueur extends JFrame{
 	private JTextField entreePseudo;
 	private DatePickerSettings paramDate = new DatePickerSettings();
 	private DatePicker entreeDateNaissance = new DatePicker(paramDate);
-	private JTextField entreeNationalite = new JTextField();
+	private JTextField entreeNationalite;
 	private JButton btnValider = new JButton("Valider");
 	private JPasswordField entreeMdp;
 	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
@@ -185,10 +184,7 @@ public class VueJoueur extends JFrame{
 		panelRecherche.setBackground(Couleur.BLEU1);
 		panelTitreT.add(panelRecherche);
 		
-		recherche = new JTextField();
-		recherche.setFont(new Font("Roboto", Font.PLAIN, 13));
-		panelRecherche.add(recherche);
-		recherche.setColumns(15);
+		recherche = creerJTextField(panelRecherche, 13, 15);
 		
 		JButton btnRechercher = new JButton("Rechercher");
 		btnRechercher.setForeground(Color.WHITE);
@@ -375,11 +371,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_1.gridy = 0;
 		panelNom.add(panel_1, gbc_panel_1);
 		
-		entreeNom = new JTextField();
-		entreeNom.setToolTipText("");
-		entreeNom.setFont(new Font("Roboto", Font.PLAIN, 11));
-		entreeNom.setColumns(20);
-		panel_1.add(entreeNom);
+		entreeNom = creerJTextField(panel_1, 11, 20);
 		
 		JPanel panelPrenom = new JPanel();
 		panelPrenom.setBackground(Couleur.BLEU1);
@@ -423,11 +415,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_5.gridy = 0;
 		panelPrenom.add(panel_5, gbc_panel_5);
 		
-		entreePrenom = new JTextField();
-		entreePrenom.setToolTipText("");
-		entreePrenom.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_5.add(entreePrenom);
-		entreePrenom.setColumns(20);
+		entreePrenom = creerJTextField(panel_5, 11, 20);
 		
 		JPanel panelPseudo = new JPanel();
 		panelPseudo.setBackground(Couleur.BLEU1);
@@ -471,11 +459,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_7.gridy = 0;
 		panelPseudo.add(panel_7, gbc_panel_7);
 		
-		entreePseudo = new JTextField();
-		entreePseudo.setToolTipText("");
-		entreePseudo.setFont(new Font("Roboto", Font.PLAIN, 11));
-		entreePseudo.setColumns(20);
-		panel_7.add(entreePseudo);
+		entreePseudo = creerJTextField(panel_7, 11, 20);
 		
 		JPanel panelDateN = new JPanel();
 		panelDateN.setBackground(Couleur.BLEU1);
@@ -567,9 +551,7 @@ public class VueJoueur extends JFrame{
 		gbc_panel_10.gridy = 0;
 		panelNationalite.add(panel_10, gbc_panel_10);
 		
-		entreeNationalite.setFont(new Font("Roboto", Font.PLAIN, 11));
-		panel_10.add(entreeNationalite);
-		entreeNationalite.setColumns(20);
+		entreeNationalite = creerJTextField(panel_10, 11, 20);
 		
 		JPanel panelMdp = new JPanel();
 		panelMdp.setBackground(Couleur.BLEU1);
