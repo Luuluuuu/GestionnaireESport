@@ -19,7 +19,6 @@ import javax.swing.JList;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Window;
 
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
@@ -28,13 +27,11 @@ import controleur.ControleurConsulterEquipes;
 import controleur.ControleurConsulterEquipes.Etat;
 
 
-public class VueConsulterEquipes {
+public class VueConsulterEquipes implements Vue{
 
 	public JFrame fenetreConsulterEquipes;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
-	private DefaultListModel<String> modelePoules;
-	private JList<String> listePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
@@ -67,11 +64,7 @@ public class VueConsulterEquipes {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
-		panelDeconnexion.add(btnDeconnexion);
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -209,17 +202,13 @@ public class VueConsulterEquipes {
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		// POULES //
+		// TODO
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Couleur.BLEU1);
 		panel.add(panel_5);
 		panel_5.setLayout(new FlowLayout(FlowLayout.RIGHT, 20, 35));
 		
-		JButton btnPoule1 = new JButton("POULE 1");
-		btnPoule1.setForeground(Color.WHITE);
-		btnPoule1.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnPoule1.setBackground(Couleur.BLEU2);
-		btnPoule1.setPreferredSize(new Dimension(200,50));
-		panel_5.add(btnPoule1);
+		JButton btnPoule1 = creerBoutonPoule(panel_5, "POULE 1");
 		
 		JPanel panel_6 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_6.getLayout();
@@ -229,12 +218,7 @@ public class VueConsulterEquipes {
 		panel_6.setBackground(Couleur.BLEU1);
 		panel.add(panel_6);
 		
-		JButton btnPoule2 = new JButton("POULE 2");
-		btnPoule2.setForeground(Color.WHITE);
-		btnPoule2.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnPoule2.setBackground(Couleur.BLEU2);
-		btnPoule2.setPreferredSize(new Dimension(200,50));
-		panel_6.add(btnPoule2);
+		JButton btnPoule2 = creerBoutonPoule(panel_6, "POULE 2");
 		
 		JPanel panel_7 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_7.getLayout();
@@ -244,12 +228,7 @@ public class VueConsulterEquipes {
 		panel_7.setBackground(Couleur.BLEU1);
 		panel.add(panel_7);
 		
-		JButton btnPoule3 = new JButton("POULE 3");
-		btnPoule3.setForeground(Color.WHITE);
-		btnPoule3.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnPoule3.setBackground(Couleur.BLEU2);
-		btnPoule3.setPreferredSize(new Dimension(200,50));
-		panel_7.add(btnPoule3);
+		JButton btnPoule3 = creerBoutonPoule(panel_7, "POULE 3");
 		
 		JPanel panel_4 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_4.getLayout();
@@ -259,12 +238,7 @@ public class VueConsulterEquipes {
 		panel_4.setBackground(Couleur.BLEU1);
 		panel.add(panel_4);
 		
-		JButton btnPoule4 = new JButton("POULE 4");
-		btnPoule4.setForeground(Color.WHITE);
-		btnPoule4.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnPoule4.setBackground(Couleur.BLEU2);
-		btnPoule4.setPreferredSize(new Dimension(200,50));
-		panel_4.add(btnPoule4);
+		JButton btnPoule4 = creerBoutonPoule(panel_4, "POULE 4");
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Couleur.BLEU1);
@@ -281,12 +255,8 @@ public class VueConsulterEquipes {
 		panel_8.setBackground(Couleur.BLEU1);
 		panel_3.add(panel_8, BorderLayout.NORTH);
 		
-		JButton btnPouleFinale = new JButton("POULE FINALE");
-		btnPouleFinale.setForeground(Color.WHITE);
-		btnPouleFinale.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnPouleFinale.setBackground(Couleur.BLEU2);
+		JButton btnPouleFinale = creerBoutonPoule(panel_8, "POULE FINALE");
 		btnPouleFinale.setPreferredSize(new Dimension(440,50));
-		panel_8.add(btnPouleFinale);
 		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);
@@ -415,4 +385,12 @@ public class VueConsulterEquipes {
 		this.modeleEquipes.addElement(nomEquipe);
 	}
 
+	public JButton creerBoutonPoule(JPanel panel, String texteBouton) {
+		JButton bouton = creerBouton(panel, texteBouton, Couleur.BLEU2);
+		
+		bouton.setFont(new Font("Roboto", Font.BOLD, 15));
+		bouton.setPreferredSize(new Dimension(200,50));
+		
+		return bouton;
+	}
 }
