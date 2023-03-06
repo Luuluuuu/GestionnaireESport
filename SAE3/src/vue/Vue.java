@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -33,5 +34,16 @@ public interface Vue {
 		texte.setColumns(columns);
 		
 		return texte;
+	}
+	
+	public default JLabel creerJLabel(JPanel panel, String texteLabel, int taillePolice) {
+		JLabel label = new JLabel(texteLabel);
+		
+		panel.add(label);
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Roboto", Font.BOLD, taillePolice));
+		
+		return label;
+		
 	}
 }

@@ -174,10 +174,7 @@ public class VueJoueur implements Vue{
 		panelTitreT.add(panelTitre);
 		
 		// LISTE DES TOURNOIS //
-		JLabel Joueurs = new JLabel("Joueurs");
-		Joueurs.setForeground(Color.WHITE);
-		panelTitre.add(Joueurs);
-		Joueurs.setFont(new Font("Roboto", Font.BOLD, 36));
+		JLabel Joueurs = creerJLabel(panelTitre, "Joueurs", 36);
 		Joueurs.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JPanel panelRecherche = new JPanel();
@@ -265,24 +262,19 @@ public class VueJoueur implements Vue{
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		panelTitreM.add(panelT);
 		
-		titreModif = new JLabel("Créer un joueur");
-		titreModif.setForeground(Color.WHITE);
-		panelT.add(titreModif);
-		titreModif.setFont(new Font("Roboto", Font.BOLD, 30));
+		titreModif = creerJLabel(panelT, "Créer un joueur", 30);
 		
 		JPanel panelPhoto = new JPanel();
 		panelPhoto.setBackground(Couleur.BLEU1);
+		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panelTitreM.add(panelPhoto);
 		
-		photo = new JLabel("");
-		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
 		JButton photoBouton = new JButton("Choisir une photo");
-		
 		photoBouton.addActionListener(controleur);
 		panelPhoto.add(photoBouton);
+		
+		photo = creerJLabel(panelPhoto, "", 11);
 		photo.setIcon(new ImageIcon(img)); //Image affichée a cotée
-		panelPhoto.add(photo);
 		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);
@@ -312,9 +304,7 @@ public class VueJoueur implements Vue{
 		panelEquipe.add(panel_8, gbc_panel_8);
 		
 		// EQUIPE
-		JLabel equipe = new JLabel("Equipe");
-		equipe.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_8.add(equipe);
+		creerJLabel(panel_8, "Equipe", 14);
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBackground(Couleur.BLEU1);
@@ -356,10 +346,7 @@ public class VueJoueur implements Vue{
 		panelNom.add(panel, gbc_panel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
-		JLabel nom = new JLabel("Nom");
-		nom.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel.add(nom);
-		nom.setHorizontalAlignment(SwingConstants.CENTER);
+		creerJLabel(panel, "Nom", 14);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Couleur.BLEU1);
@@ -400,10 +387,7 @@ public class VueJoueur implements Vue{
 		gbc_panel_4.gridy = 0;
 		panelPrenom.add(panel_4, gbc_panel_4);
 		
-		JLabel prenom = new JLabel("Prénom");
-		prenom.setHorizontalAlignment(SwingConstants.CENTER);
-		prenom.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_4.add(prenom);
+		creerJLabel(panel_4, "Prénom", 14);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBackground(Couleur.BLEU1);
@@ -444,10 +428,7 @@ public class VueJoueur implements Vue{
 		gbc_panel_6.gridy = 0;
 		panelPseudo.add(panel_6, gbc_panel_6);
 		
-		JLabel pseudo = new JLabel("Pseudo");
-		pseudo.setHorizontalAlignment(SwingConstants.CENTER);
-		pseudo.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_6.add(pseudo);
+		creerJLabel(panel_6, "Pseudo", 14);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBackground(Couleur.BLEU1);
@@ -488,9 +469,7 @@ public class VueJoueur implements Vue{
 		gbc_panel_2.gridy = 0;
 		panelDateN.add(panel_2, gbc_panel_2);
 		
-		JLabel dateNaissance = new JLabel("Date de naissance");
-		dateNaissance.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_2.add(dateNaissance);
+		creerJLabel(panel_2, "Date de naissance", 14);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Couleur.BLEU1);
@@ -537,9 +516,7 @@ public class VueJoueur implements Vue{
 		gbc_panel_9.gridy = 0;
 		panelNationalite.add(panel_9, gbc_panel_9);
 		
-		JLabel nationalite = new JLabel("Nationalité");
-		nationalite.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_9.add(nationalite);
+		creerJLabel(panel_9, "Nationalité", 14);
 		
 		JPanel panel_10 = new JPanel();
 		panel_10.setBackground(Couleur.BLEU1);
@@ -580,9 +557,7 @@ public class VueJoueur implements Vue{
 		gbc_panel_12.gridy = 0;
 		panelMdp.add(panel_12, gbc_panel_12);
 		
-		JLabel mdp = new JLabel("Mot de passe");
-		mdp.setFont(new Font("Roboto", Font.BOLD, 14));
-		panel_12.add(mdp);
+		creerJLabel(panel_12, "Mot de passe", 14);
 		
 		JPanel panel_13 = new JPanel();
 		panel_13.setBackground(Couleur.BLEU1);
