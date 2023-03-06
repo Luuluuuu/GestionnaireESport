@@ -29,7 +29,7 @@ import controleur.ControleurEquipe.Etat;
 import controleur.ControleurEquipe;
 
 @SuppressWarnings("serial")
-public class VueEquipe extends JFrame{
+public class VueEquipe implements Vue{
 	
 	public JFrame fenetreEquipe;
 	private JTextField entreeNom = new JTextField();
@@ -76,44 +76,20 @@ public class VueEquipe extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		if (ControleurEquipe.estProfil("Gestionnaire")) {
-//			JButton btnCalendrier = new JButton("Calendrier");
-//			btnCalendrier.setForeground(Color.WHITE);
-//			btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-//			btnCalendrier.setBackground(Couleur.BLEU2);
-			JButton btnCalendrier = Header.createCalendrierButton();
-			panelMenu.add(btnCalendrier);
+
+			JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
 			btnCalendrier.addActionListener(controleur);
-			
-//			JButton btnEcuries = new JButton("Ecuries / Responsables / Arbitres");
-//			btnEcuries.setForeground(Color.WHITE);
-//			btnEcuries.setFont(new Font("Roboto", Font.BOLD, 15));
-//			btnEcuries.setBackground(Couleur.BLEU2);
-			JButton btnEcuries = Header.createEcuriesButton();
-			panelMenu.add(btnEcuries);
+
+			JButton btnEcuries = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
 			btnEcuries.addActionListener(controleur);
 		}
 		
-//		JButton btnEquipes = new JButton("Equipes");
-//		btnEquipes.setForeground(Color.WHITE);
-//		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnEquipes.setBackground(Couleur.BLEU2)
-		JButton btnEquipes = Header.createEquipesButton();
-		panelMenu.add(btnEquipes);
-		
-//		JButton btnJoueurs = new JButton("Joueurs");
-//		btnJoueurs.setForeground(Color.WHITE);
-//		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnJoueurs.setBackground(Couleur.BLEU2);
-		JButton btnJoueurs = Header.createJoueurButton();
-		panelMenu.add(btnJoueurs);
+		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+
+		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 		
 		if (ControleurEquipe.estProfil("Ecurie")) {
-//			JButton btnTournois = new JButton("Tournois");
-//			btnTournois.setForeground(Color.WHITE);
-//			btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-//			btnTournois.setBackground(Couleur.BLEU2);
-			JButton btnTournois = Header.createTournoisButton();
-			panelMenu.add(btnTournois);
+			JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
 			btnTournois.addActionListener(controleur);
 		}
 		
@@ -129,15 +105,7 @@ public class VueEquipe extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-//		JButton btnDeconnexion = new JButton("Se déconnecter");
-//		btnDeconnexion.setForeground(Color.WHITE);
-//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-//		btnDeconnexion.setBackground(Couleur.ROUGE);
-//		panelDeconnexion.add(btnDeconnexion);
-
-
-		JButton btnDeconnexion = Header.createDeconnexionButton();
-		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);

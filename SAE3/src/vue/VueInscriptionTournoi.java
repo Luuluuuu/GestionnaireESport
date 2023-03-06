@@ -26,7 +26,7 @@ import controleur.ControleurInscriptionTournoi.Etat;
 import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
-public class VueInscriptionTournoi extends JFrame{
+public class VueInscriptionTournoi implements Vue{
 	
 	public JFrame fenetreInscriptionTournoi;
 	public JPanel panelModif;
@@ -63,34 +63,13 @@ public class VueInscriptionTournoi extends JFrame{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-//		JButton btnEquipes = new JButton("Equipes");
-//		btnEquipes.setForeground(Color.WHITE);
-//		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnEquipes.setBackground(Couleur.BLEU2);
-		JButton btnEquipes = Header.createEquipesButton();
+		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
 
-		panelMenu.add(btnEquipes);
+		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 		
-//		JButton btnJoueurs = new JButton("Joueurs");
-//		btnJoueurs.setForeground(Color.WHITE);
-//		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnJoueurs.setBackground(Couleur.BLEU2);
-		JButton btnJoueurs = Header.createJoueurButton();
-		panelMenu.add(btnJoueurs);
+		JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
 		
-//		JButton btnTournois = new JButton("Tournois");
-//		btnTournois.setForeground(Color.WHITE);
-//		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnTournois.setBackground(Couleur.BLEU2);
-		JButton btnTournois = Header.createTournoisButton();
-		panelMenu.add(btnTournois);
-		
-//		btnClassement = new JButton("Classement");
-//		btnClassement.setForeground(Color.WHITE);
-//		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-//		btnClassement.setBackground(Couleur.BLEU2);
-		JButton btnClassement = Header.createClassementButton();
-		panelMenu.add(btnClassement);
+		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		
 		JPanel panelDeconnexion = new JPanel();
@@ -99,13 +78,7 @@ public class VueInscriptionTournoi extends JFrame{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-//		JButton btnDeconnexion = new JButton("Se déconnecter");
-//		btnDeconnexion.setForeground(Color.WHITE);
-//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-//		btnDeconnexion.setBackground(Couleur.ROUGE);
-//		panelDeconnexion.add(btnDeconnexion);
-		JButton btnDeconnexion = Header.createDeconnexionButton();
-		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion =  creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -258,6 +231,7 @@ public class VueInscriptionTournoi extends JFrame{
 		// BOUTONS //
 		btnEquipes.addActionListener(controleur);
 		btnJoueurs.addActionListener(controleur);
+		btnTournois.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
 		btnDeconnexion.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
