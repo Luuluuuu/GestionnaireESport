@@ -305,7 +305,9 @@ public class VueConsulterEquipes implements Vue{
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		JScrollPane scrollPane2 = new JScrollPane(listeEquipes);
+		JScrollPane scrollPane2 = new JScrollPane(listeEquipes,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panelListeEquipes.add(scrollPane2);
 		
 		// CONTROLEUR

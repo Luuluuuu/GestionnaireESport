@@ -5,8 +5,9 @@ import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLType;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -17,13 +18,10 @@ import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
 import modele.Equipe;
 import modele.Jeu;
-import modele.Joueur;
 import modele.Poule;
 import modele.Tournoi;
-import modele.Utilisateur;
 import vue.VueConnexion;
 import vue.VueEquipe;
-import vue.VueJoueur;
 import vue.VueRentrerPoints;
 
 public class ControleurRentrerPoints implements ActionListener, ListSelectionListener{
@@ -38,9 +36,12 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 		this.initialiserListeTournois();
 	}
 	
+	// Initialise la liste des tournois attributés à l'arbitre
 	public void initialiserListeTournois() {
-		for (String nomTournoi : ControleurConnexion.listeTournois.keySet()) {
-			this.vue.ajouterTournoi(nomTournoi);
+		for (Tournoi tournoi : ControleurConnexion.listeTournois.values()) {
+			if (tournoi.contientPoules()) { // Vérifie si le tournoi doit être traité
+				this.vue.ajouterTournoi(tournoi.getNom());
+			}
 		}
 	}
 
@@ -66,6 +67,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 			Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 			Jeu j2 = t.getJeu(j);	
 			break;
+			
 		case POULE1:
 			this.etatPoule = Etat.POULE1;
 			this.vue.viderEquipes();
@@ -77,6 +79,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 				this.vue.ajouterEquipe(equipe.getNom());
 			}
 			break;
+			
 		case POULE2:
 			this.etatPoule = Etat.POULE2;
 			this.vue.viderEquipes();
@@ -88,6 +91,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 				this.vue.ajouterEquipe(equipe.getNom());
 			}
 			break;
+			
 		case POULE3:
 			this.etatPoule = Etat.POULE3;
 			this.vue.viderEquipes();
@@ -99,6 +103,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 				this.vue.ajouterEquipe(equipe.getNom());
 			}
 			break;
+			
 		case POULE4:
 			this.etatPoule = Etat.POULE4;
 			this.vue.viderEquipes();
@@ -110,6 +115,7 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 				this.vue.ajouterEquipe(equipe.getNom());
 			}
 			break;
+			
 		case POULEF:
 			this.etatPoule = Etat.POULEF;
 			this.vue.viderEquipes();
@@ -123,35 +129,43 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 				}
 			}
 			break;
+			
 		case VALIDER:
-			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'�quipe gagnante ?","Confirmation",JOptionPane.YES_NO_OPTION);
+			int confirme = JOptionPane.showConfirmDialog(null, "Confirmez-vous l'équipe gagnante ?",
+					"Confirmation",JOptionPane.YES_NO_OPTION);
 			if (confirme == 0) {
 				j = ControleurConnexion.listeJeux.get(this.vue.getJeuSelectionne());
 				t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				j2 = t.getJeu(j);
 				Poule p = null;
 				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+				
 				switch (this.etatPoule) {
 				case POULE1:
 					p = j2.getPoule(1);;
 					j2.setGagnant(1,equipe);
 					break;
+					
 				case POULE2:
 					p = j2.getPoule(2);
 					j2.setGagnant(2,equipe);
 					break;
+					
 				case POULE3:
 					p = j2.getPoule(3);
 					j2.setGagnant(3,equipe);
 					break;
+					
 				case POULE4:
 					p = j2.getPoule(4);
 					j2.setGagnant(4,equipe);
 					break;
+					
 				case POULEF:
 					p = j2.getPoule(5);
 					j2.setGagnant(5,equipe);
 					break;
+					
 				default:
 					break;
 				}
@@ -180,7 +194,6 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 					}
 					
 				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 			}
@@ -194,7 +207,16 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 		JList<String> list = (JList<String>) e.getSource();
 	    if (!list.getValueIsAdjusting()) {	// gere les doubles clics
 			Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
-			this.vue.setJeux(t.getNomJeux());
+			
+			// Récupère les jeux dont les poules sont remplies
+			List<String> nomJeux = new ArrayList<String>();
+			for (Jeu jeu : t.getJeux()) {
+				if (jeu.contientPoules()) {
+					nomJeux.add(jeu.getNom());
+				}
+			}
+			
+			this.vue.setJeux(nomJeux);
 	    }
 	}
 }

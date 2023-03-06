@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.DefaultListModel;
@@ -32,7 +31,6 @@ public class VueRentrerPoints implements Vue{
 	public JFrame fenetreRentrerPoints;
 	private DefaultListModel<String> modeleTournois;
 	private JList<String> listeTournois;
-	private DefaultListModel<String> modelePoules;
 	private DefaultListModel<String> modeleEquipes;
 	private JList<String> listeEquipes;
 	
@@ -269,8 +267,6 @@ public class VueRentrerPoints implements Vue{
 		btnPouleFinale.setPreferredSize(new Dimension(440,50));
 		panel_8.add(btnPouleFinale);
 		
-		modelePoules = new DefaultListModel<String>();
-		
 		JPanel panelEquipe = new JPanel();
 		panelEquipe.setBackground(Couleur.BLEU1);
 		panelEquipe.setBorder(new LineBorder(Color.WHITE));
@@ -296,7 +292,7 @@ public class VueRentrerPoints implements Vue{
 		gbc_panelTitreEquipe.gridy = 0;
 		panelEquipe.add(panelTitreEquipe, gbc_panelTitreEquipe);
 		
-		JLabel titreEquipe = new JLabel("SEquipe gagnante");
+		JLabel titreEquipe = new JLabel("Sélection de l'équipe gagnante");
 		titreEquipe.setForeground(Color.WHITE);
 		titreEquipe.setFont(new Font("Roboto", Font.BOLD, 30));
 		panelTitreEquipe.add(titreEquipe);
@@ -319,7 +315,9 @@ public class VueRentrerPoints implements Vue{
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
-		JScrollPane scrollPane2 = new JScrollPane(this.listeEquipes);
+		JScrollPane scrollPane2 = new JScrollPane(this.listeEquipes, 
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panelListeEquipes.add(scrollPane2);
 		
 		JPanel panelValider = new JPanel();

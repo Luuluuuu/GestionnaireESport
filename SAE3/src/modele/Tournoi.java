@@ -136,6 +136,16 @@ public class Tournoi {
     	Jeu j = this.getJeu(jeu);
     	j.inscrire(equipe);
     }
+
+    // Vérifie si le tournoi contient au moins un jeu avec les poules remplies
+	public boolean contientPoules() {
+		for (Jeu j : this.jeux) {
+			if (j.contientPoules()) {
+				return true;
+			}
+		}
+		return false;
+	}
     
     
 }

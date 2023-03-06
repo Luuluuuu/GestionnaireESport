@@ -38,11 +38,9 @@ import controleur.ControleurCalendrier.Etat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import javax.swing.JCheckBox;
 
-@SuppressWarnings("serial")
 public class VueCalendrier implements Vue{
 	
 	public JFrame fenetreCalendrier;
@@ -83,16 +81,12 @@ public class VueCalendrier implements Vue{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
+		@SuppressWarnings("unused")
 		JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
-		
 		JButton btnEcuries =  creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-		
 		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-
 		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		
 		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
