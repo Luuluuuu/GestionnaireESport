@@ -108,8 +108,8 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 				Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				this.vue.supprimerTournoi();
 				ControleurConnexion.listeTournois.remove(t.getNom());
-				Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
-				Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = "+t.getID());
+				Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI =" + t.getID());
+				Connexion.getInstance().executerRequete("DELETE SAE_TOURNOI WHERE IDTOURNOI = " + t.getID());
 				this.vue.creerTournoi();
 			}
 			break;
@@ -133,7 +133,6 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 						if (!(ControleurConnexion.listeTournois.containsKey(t.getNom()))) {
 							// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au tournoi
 							ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_tournoiId.nextval FROM dual");
-							
 							try {
 								if (rs.next()) {
 									t.setID(rs.getInt(1));
@@ -143,32 +142,51 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 								e1.printStackTrace();
 							}
 							
-							Connexion.getInstance().executerRequete("INSERT INTO SAE_TOURNOI VALUES ("+t.getID()+", '"+t.getNom()+"', TO_DATE('"+t.getDate()+
-									"','DD/MM/YYYY'), '"+ t.getHeureDebut()+"', "+t.getArbitre().getID()+", "+t.getResponsable().getID()+", '"+t.getEchelle()+"')");;
+							// Insertion des données du tournoi
+							Connexion.getInstance().executerRequete("INSERT INTO SAE_TOURNOI VALUES ("
+									+ t.getID()	+ ", '" 
+									+ t.getNom() 
+									+ "', TO_DATE('"+t.getDate()+ "','DD/MM/YYYY'), '" 
+									+ t.getHeureDebut() + "', " 
+									+ t.getArbitre().getID() + ", " 
+									+ t.getResponsable().getID() + ", '" 
+									+ t.getEchelle()+"')");
 							
+							// Insertion des jeux attributés à un tournoi
 							for (String nomJeu : this.vue.getJeux()) {
 								Jeu j = ControleurConnexion.listeJeux.get(nomJeu);
 								t.ajouterJeu(j);
-								Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
+								Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES (" + t.getID() + "," + j.getID() + ")");
 							}
+							
+							// Insertion du tournoi dans la liste locale des tournois et dans la vue
 							ControleurConnexion.listeTournois.put(t.getNom(), t);
 							this.vue.ajouterTournoi(t.getNom());
 						}else {
 								this.vue.tournoiExiste();
 						}
 					} else {
+						// Récupération de l'ID du tournoi sélectionné
 						t.setID(ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne()).getID());
-						Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI ="+t.getID());
+						
+						// Suppression des liens entre le tournoi et ses jeux
+						Connexion.getInstance().executerRequete("DELETE SAE_DEFINIR WHERE IDTOURNOI =" + t.getID());
+						
+						// Insertion des nouveaux jeux attribués au tournoi
 						for (String nomJeu : this.vue.getJeux()) {
 							Jeu j = ControleurConnexion.listeJeux.get(nomJeu);
 							t.ajouterJeu(j);
-							Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES ("+t.getID()+","+j.getID()+")");
+							Connexion.getInstance().executerRequete("INSERT INTO SAE_DEFINIR VALUES (" + t.getID() + "," + j.getID() + ")");
 						}
 						
-						Connexion.getInstance().executerRequete("UPDATE SAE_TOURNOI SET NOMTOURNOI = '"+t.getNom()+"',"
-								+ "DATETOURNOI = TO_DATE('"+t.getDate()+"','DD/MM/YYYY'), HEUREDEBUT='"+t.getHeureDebut()+"', ECHELLETOURNOI ='"+t.getEchelle()+"',"
-										+ "IDARBITRE = "+t.getArbitre().getID()+", IDRESPONSABLE = "+t.getResponsable().getID()+
-										"WHERE IDTOURNOI = "+t.getID());
+						// Mise à jour des données du tournoi
+						Connexion.getInstance().executerRequete("UPDATE SAE_TOURNOI SET NOMTOURNOI = '" + t.getNom() + "',"
+								+ "DATETOURNOI = TO_DATE('" + t.getDate() + "','DD/MM/YYYY'), HEUREDEBUT='" + t.getHeureDebut() 
+								+ "', ECHELLETOURNOI ='" + t.getEchelle() + "',"
+								+ "IDARBITRE = " + t.getArbitre().getID() + ", IDRESPONSABLE = " + t.getResponsable().getID()
+								+ "WHERE IDTOURNOI = " + t.getID());
+						
+						// Mise à jour du tournoi dans la liste locale et la vue
 						ControleurConnexion.listeTournois.remove(this.vue.getTournoiSelectionne());
 						ControleurConnexion.listeTournois.put(t.getNom(), t);
 						this.vue.modifierTournoi();
