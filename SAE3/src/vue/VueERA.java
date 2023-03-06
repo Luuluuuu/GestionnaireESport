@@ -54,6 +54,9 @@ public class VueERA {
 	private JButton btnSupprimerEcurie;
 	private JButton btnSupprimerResponsable;
 	private JButton btnSupprimerArbitre;
+	private JButton btnRechercheEcurie;
+	private JButton btnRechercheResponsable;
+	private JButton ABtnRecherche;
 	
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -167,7 +170,7 @@ public class VueERA {
 		EPanelRecherche.add(rechercheEcurie);
 		rechercheEcurie.setColumns(10);
 		
-		JButton btnRechercheEcurie = new JButton("Rechercher");
+		btnRechercheEcurie = new JButton("Rechercher");
 		btnRechercheEcurie.setForeground(Color.WHITE);
 		btnRechercheEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercheEcurie.setBackground(Couleur.BLEU2);
@@ -309,7 +312,7 @@ public class VueERA {
 		RPanelRecherche.add(rechercheResponsable);
 		rechercheResponsable.setColumns(10);
 		
-		JButton btnRechercheResponsable = new JButton("Rechercher");
+		btnRechercheResponsable = new JButton("Rechercher");
 		btnRechercheResponsable.setForeground(Color.WHITE);
 		btnRechercheResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercheResponsable.setBackground(Couleur.BLEU2);
@@ -461,7 +464,7 @@ public class VueERA {
 		APanelRecherche.add(rechercheArbitre);
 		rechercheArbitre.setColumns(10);
 		
-		JButton ABtnRecherche = new JButton("Rechercher");
+		ABtnRecherche = new JButton("Rechercher");
 		ABtnRecherche.setForeground(Color.WHITE);
 		ABtnRecherche.setFont(new Font("Roboto", Font.BOLD, 13));
 		ABtnRecherche.setBackground(Couleur.BLEU2);
@@ -567,6 +570,11 @@ public class VueERA {
 		APanelBoutons.add(btnSupprimerArbitre);
 		this.desactiverBouton(btnSupprimerArbitre);
 		
+		this.desactiverBouton(btnRechercheEcurie);
+		this.desactiverBouton(btnRechercheResponsable);
+		this.desactiverBouton(ABtnRecherche);
+		
+		
 		ControleurERA controleur = new ControleurERA(this);
 		btnCalendrier.addActionListener(controleur);
 		btnEquipes.addActionListener(controleur);
@@ -613,12 +621,18 @@ public class VueERA {
 		ABtnValider.setName(Entite.ARBITRE.getNom());
 		ABtnAnnuler.setName(Entite.ARBITRE.getNom());
 		
+		
+		
 		this.listeEcuries.addListSelectionListener(controleur);
 		this.listeEcuries.setName(Entite.ECURIE.getNom());
 		this.listeResponsables.addListSelectionListener(controleur);
 		this.listeResponsables.setName(Entite.RESPONSABLE.getNom());
 		this.listeArbitres.addListSelectionListener(controleur);
 		this.listeArbitres.setName(Entite.ARBITRE.getNom());
+		
+		rechercheResponsable(rechercheEcurie);
+		//rechercheResponsable(rechercheResponsable);
+		rechercheResponsable(rechercheArbitre);
 	}
 	
 	public static void fermerFenetre(JFrame f) {f.setVisible(false);}
@@ -925,9 +939,63 @@ public class VueERA {
 		} else if (b.getName() == "Arbitre") {
 			ControleurERA.entite = Entite.ARBITRE;
 		}
-		
-		
 	}
+	
+	public void rechercheEcurie(JTextField recherche) {
+		recherche.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                // ne pas utiliser
+            }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                if (recherche.getText().isEmpty()) {
+                    //desactiverBouton(btnRechercheEcurie);
+                }
+            }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                if (!recherche.getText().isEmpty()) {
+                	//activerBouton(btnRechercheEcurie);
+                }
+            }
+        });
+	}
+	
+	public void rechercheResponsable(JTextField recherche) {
+		recherche.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                // ne pas utiliser
+            }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                if (recherche.getText().isEmpty()) {
+                    //desactiverBouton(btnRechercheResponsable);
+                }
+            }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                if (!recherche.getText().isEmpty()) {
+                	//activerBouton(btnRechercheResponsable);
+                }
+            }
+        });
+	}
+	
+	public void rechercheArbitre(JTextField recherche) {
+		recherche.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                // ne pas utiliser
+            }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                if (recherche.getText().isEmpty()) {
+                    //desactiverBouton(ABtnRecherche);
+                }
+            }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                if (!recherche.getText().isEmpty()) {
+                	activerBouton(ABtnRecherche);
+                }
+            }
+        });
+	}
+	
+	
 	public void setEntite(JList<String> l) {
 		switch (l.getName()) {
 		case "Ecurie":

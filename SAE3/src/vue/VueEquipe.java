@@ -1,6 +1,8 @@
 package vue;
 
 import java.awt.BorderLayout;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -24,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.*;
 
 import controleur.ControleurEquipe.Etat;
 import controleur.ControleurEquipe;
@@ -187,13 +192,16 @@ public class VueEquipe extends JFrame{
 		panelRecherche.add(recherche);
 		recherche.setColumns(15);
 		
+		
+		
 		btnRechercher.setBackground(Couleur.BLEU2);
 		btnRechercher.setForeground(Color.WHITE);
 		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
 		btnRechercher.setText("Rechercher");
 		panelRecherche.add(btnRechercher);
-		this.desactiverBouton(btnRechercher);
-
+		
+		 
+		
 		JPanel panelListe = new JPanel();
 		panelListe.setBackground(Couleur.BLEU1);
 		FlowLayout fl_panelListe = (FlowLayout) panelListe.getLayout();
@@ -473,6 +481,8 @@ public class VueEquipe extends JFrame{
 		gbl_panelJoueurs.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelJoueurs.setLayout(gbl_panelJoueurs);
 		
+		desactiverBouton(btnRechercher);
+		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
@@ -543,8 +553,12 @@ public class VueEquipe extends JFrame{
 		btnCreer.addActionListener(controleur);
 		btnSupprimer.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
+		
+
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
+		
+		rechercheEquipe(recherche);
 	}
 	
 	//JOUEURS
@@ -694,6 +708,24 @@ public class VueEquipe extends JFrame{
         this.premierIndexEcurie();
         entreeEcurie.setForeground(new Color(0,0,0));
     }
+	
+	public void rechercheEquipe(JTextField recherche) {
+		recherche.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                // ne pas utiliser
+            }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                if (recherche.getText().isEmpty()) {
+                    desactiverBouton(btnRechercher);
+                }
+            }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                if (!recherche.getText().isEmpty()) {
+                	activerBouton(btnRechercher);
+                }
+            }
+        });
+	}
 	
 	public void activerBouton(JButton j) {
         j.setEnabled(true);

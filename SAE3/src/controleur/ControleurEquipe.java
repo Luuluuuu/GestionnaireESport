@@ -29,7 +29,7 @@ import vue.VueJoueur;
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
 	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,
-		ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT,TOURNOIS}
+		ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT,TOURNOIS, ZONERECHERCHE}
 	private VueEquipe vue;
 	private Etat etat;
 	
@@ -327,5 +327,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		ControleurConnexion.listeEquipes.put(equipe.getNom(), equipe);
 		ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
 		this.vue.modifierEquipe();
+		
+		
 	}
 }
