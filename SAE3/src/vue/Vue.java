@@ -15,12 +15,12 @@ public interface Vue {
 	 * 	texteBouton, String, texte à l'intérieur du JButton
 	 * 	panel, JPanel, panel auquel appartient le bouton
 	 */
-	public default JButton creerBouton(JPanel panel, String texteBouton, Color couleur) {
+	public default JButton creerBouton(JPanel panel, String texteBouton, Color couleur, int taillePolice) {
 		JButton bouton = new JButton(texteBouton);
 		
 		panel.add(bouton);
 		bouton.setForeground(Color.WHITE);
-		bouton.setFont(new Font("Roboto", Font.BOLD, 13));
+		bouton.setFont(new Font("Roboto", Font.BOLD, taillePolice));
 		bouton.setBackground(couleur);
 		
 		return bouton;
@@ -45,5 +45,14 @@ public interface Vue {
 		
 		return label;
 		
+	}
+	
+	public default JPanel creerJPanel(JPanel panelContenant, Color couleur) {
+		JPanel panel = new JPanel();
+		
+		panelContenant.add(panel);
+		panel.setBackground(couleur);
+		
+		return panel;
 	}
 }

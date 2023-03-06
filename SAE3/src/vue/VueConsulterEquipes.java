@@ -64,7 +64,7 @@ public class VueConsulterEquipes implements Vue{
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -386,7 +386,7 @@ public class VueConsulterEquipes implements Vue{
 	}
 
 	public JButton creerBoutonPoule(JPanel panel, String texteBouton) {
-		JButton bouton = creerBouton(panel, texteBouton, Couleur.BLEU2);
+		JButton bouton = creerBouton(panel, texteBouton, Couleur.BLEU2, 13);
 		
 		bouton.setFont(new Font("Roboto", Font.BOLD, 15));
 		bouton.setPreferredSize(new Dimension(200,50));

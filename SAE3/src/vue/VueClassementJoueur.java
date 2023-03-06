@@ -55,7 +55,7 @@ public class VueClassementJoueur implements Vue{
 		fenetreClassementJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -296,7 +296,7 @@ public class VueClassementJoueur implements Vue{
 	}
 
 	public JButton creerBoutonProfil(String texteBouton) {
-		JButton bouton = creerBouton(panelMenu, texteBouton, Couleur.BLEU2);
+		JButton bouton = creerBouton(panelMenu, texteBouton, Couleur.BLEU2, 13);
 		bouton.setFont(new Font("Roboto", Font.BOLD, 15));
 		return bouton;
 	}
