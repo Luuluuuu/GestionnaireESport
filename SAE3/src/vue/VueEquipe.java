@@ -22,13 +22,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
 import javax.swing.event.ListSelectionListener;
 
 import controleur.ControleurEquipe.Etat;
 import controleur.ControleurEquipe;
 
-@SuppressWarnings("serial")
 public class VueEquipe implements Vue{
 	
 	public JFrame fenetreEquipe;
@@ -44,10 +42,7 @@ public class VueEquipe implements Vue{
 	private JTextField recherche = new JTextField();
 	private JComboBox<String> entreeEcurie = new JComboBox<String>();
 	private JComboBox<String> entreeJeu = new JComboBox<String>();
-	private JButton btnRechercher = new JButton("Rechercher");
-	private JButton btnValider = new JButton("Valider");
 	private JTextField entreeNationalite;
-	private JButton btnClassement;
 	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
@@ -75,29 +70,26 @@ public class VueEquipe implements Vue{
 		panelMenu.setBackground(Color.WHITE);
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		
+		// Boutons du menu
 		if (ControleurEquipe.estProfil("Gestionnaire")) {
-
 			JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
 			btnCalendrier.addActionListener(controleur);
 
 			JButton btnEcuries = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
 			btnEcuries.addActionListener(controleur);
+			
 		}
-		
+		@SuppressWarnings("unused")
 		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-
 		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		
 		if (ControleurEquipe.estProfil("Ecurie")) {
 			JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
 			btnTournois.addActionListener(controleur);
+			
 		}
 		
-		btnClassement = new JButton("Classement");
-		btnClassement.setForeground(Color.WHITE);
-		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnClassement);
+		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
@@ -155,12 +147,7 @@ public class VueEquipe implements Vue{
 		panelRecherche.add(recherche);
 		recherche.setColumns(15);
 		
-		btnRechercher.setBackground(Couleur.BLEU2);
-		btnRechercher.setForeground(Color.WHITE);
-		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnRechercher.setText("Rechercher");
-		panelRecherche.add(btnRechercher);
-		this.desactiverBouton(btnRechercher);
+		JButton btnRechercher = creerBouton(panelRecherche, "Rechercher", Couleur.BLEU2, 13);
 
 		JPanel panelListe = new JPanel();
 		panelListe.setBackground(Couleur.BLEU1);
@@ -173,9 +160,8 @@ public class VueEquipe implements Vue{
 		gbc_panelListe.gridx = 0;
 		gbc_panelListe.gridy = 1;
 		panelEquipe.add(panelListe, gbc_panelListe);
+		
 		listeEquipes.setVisibleRowCount(12);
-		
-		
 		listeEquipes.setFont(new Font("Roboto", Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
@@ -183,7 +169,6 @@ public class VueEquipe implements Vue{
 		JScrollPane scrollPane = new JScrollPane(this.listeEquipes);
 		panelListe.add(scrollPane);
 
-		
 		JPanel panelBoutons = new JPanel();
 		panelBoutons.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelBoutons = new GridBagConstraints();
@@ -193,18 +178,9 @@ public class VueEquipe implements Vue{
 		panelEquipe.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = new JButton("Créer une nouvelle équipe");
-		btnCreer.setForeground(Color.WHITE);
-		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnCreer.setBackground(Couleur.BLEU2);
-		panelBoutons.add(btnCreer);
-		
-		btnSupprimer = new JButton("Supprimer l'équipe sélectionnée");
-		btnSupprimer.setText("Supprimer l'équipe sélectionnée");
-		btnSupprimer.setForeground(Color.WHITE);
-		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnSupprimer.setBackground(Couleur.GRIS);
-		panelBoutons.add(btnSupprimer);
+		// Création des boutons de gestion
+		JButton btnCreer = creerBouton(panelBoutons, "Créer une nouvelle équipe", Couleur.BLEU2, 13);
+		btnSupprimer = creerBouton(panelBoutons, "Supprimer l'équipe sélectionnée", Couleur.GRIS, 13);
 		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
@@ -284,7 +260,6 @@ public class VueEquipe implements Vue{
 			panel_1.add(entreeEcurie);
 		}
 		
-		
 		JPanel panelNom = new JPanel();
 		panelNom.setBackground(Couleur.BLEU1);
 		GridBagConstraints gbc_panelNom = new GridBagConstraints();
@@ -326,7 +301,6 @@ public class VueEquipe implements Vue{
 		gbc_panel_5.gridx = 1;
 		gbc_panel_5.gridy = 0;
 		panelNom.add(panel_5, gbc_panel_5);
-		
 		
 		entreeNom.setToolTipText("");
 		entreeNom.setFont(new Font("Roboto", Font.PLAIN, 11));
@@ -484,24 +458,18 @@ public class VueEquipe implements Vue{
 		gbc_panelValider.gridy = 6;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		btnValider.setBackground(Couleur.VERT);
-		btnValider.setForeground(Color.WHITE);
-		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnValider.setText("Valider");
-		panelValider.add(btnValider);
+		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
 		btnValider.setName("btnValider");
 		
-		JButton btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setForeground(Color.WHITE);
-		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnAnnuler.setBackground(Couleur.GRIS);
-		panelValider.add(btnAnnuler);
+		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
 
 		// VALIDER OU ANNULER INFORMATIONS SUR L'EQUIPE
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
+		
 		// DECONNEXION
 		btnDeconnexion.addActionListener(controleur);
+		
 		// LISTE
 		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
 		listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
@@ -689,7 +657,6 @@ public class VueEquipe implements Vue{
 		}else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton(btnClassement);
 		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;

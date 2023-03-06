@@ -83,6 +83,7 @@ public class VueClassement implements Vue{
 		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 	
 		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
+		btnClassement.setEnabled(false);
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);

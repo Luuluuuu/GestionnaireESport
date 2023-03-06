@@ -252,7 +252,6 @@ public class VueInscriptionTournoi implements Vue{
 		} else if (b.getText()=="Joueurs") {
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton(btnClassement);
 		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
 			return Etat.EQUIPES;
