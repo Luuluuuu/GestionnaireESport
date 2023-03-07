@@ -39,6 +39,10 @@ public class VueClassementJoueur implements Vue{
 	private JList<String> listePodium;
 	private JPanel panelMenu;
 	
+	private JButton btnProfil;
+	private JButton btnEquipes;
+	private JButton btnTournois;
+	
 	public JFrame getFrame() {
 		return this.fenetreClassementJoueur;
 	}
@@ -253,10 +257,13 @@ public class VueClassementJoueur implements Vue{
 		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Equipes") {
+			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES;
 		} else if (b.getText() == "Mon profil") {
+			Vue.desactiverBouton(btnProfil);
 			return Etat.PROFIL;
 		} else if (b.getText() == "Tournois") {
+			Vue.desactiverBouton(btnTournois);
 			return Etat.TOURNOIS;
 		}
 		return null;
