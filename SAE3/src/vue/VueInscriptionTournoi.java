@@ -25,18 +25,23 @@ import controleur.ControleurInscriptionTournoi.Etat;
 
 import javax.swing.JComboBox;
 
-@SuppressWarnings("serial")
 public class VueInscriptionTournoi implements Vue{
 	
 	public JFrame fenetreInscriptionTournoi;
 	public JPanel panelModif;
 	public JLabel titreModif;
+	
 	private DefaultListModel<String> modeleTournois = new DefaultListModel<String>();
 	private JList<String> listeTournois;
 	private DefaultListModel<String> modeleEquipes = new DefaultListModel<String>();
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
+	
 	private JButton btnClassement;
+	private JButton btnEquipes;
+	private JButton btnJoueurs;
+	private JButton btnValider;
+	private JButton btnAnnuler;
 	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
@@ -63,14 +68,12 @@ public class VueInscriptionTournoi implements Vue{
 		panelHeader.add(panelMenu);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-
-		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		
+		// Boutons de navigation
+		btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 		JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
-		
-		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		
+		Vue.desactiverBouton(btnTournois);
+		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
@@ -210,18 +213,10 @@ public class VueInscriptionTournoi implements Vue{
 		gbc_panelValider.gridx = 0;
 		gbc_panelValider.gridy = 2;
 		panelModif.add(panelValider, gbc_panelValider);
-		
-		JButton btnValider = new JButton("Valider");
-		btnValider.setForeground(Color.WHITE);
-		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnValider.setBackground(Couleur.VERT);
-		panelValider.add(btnValider);
-		
-		JButton btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setForeground(Color.WHITE);
-		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnAnnuler.setBackground(Couleur.GRIS);
-		panelValider.add(btnAnnuler);
+
+		// Bouton de validation/annulation
+		btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
+		btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
 		
 		// ECOUTE SUR LES COMPOSANTS //
 		this.listeTournois.addListSelectionListener(controleur);
@@ -250,18 +245,22 @@ public class VueInscriptionTournoi implements Vue{
 		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText()=="Joueurs") {
+			Vue.desactiverBouton(btnJoueurs);
 			return Etat.JOUEURS;
 		} else if (b.getText()=="Classement") {
+			Vue.desactiverBouton(btnClassement);
 		 	return Etat.CLASSEMENT;
 		} else if (b.getText()=="Equipes") {
+			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES;
 		} else if (b.getText()=="Valider") {
+			Vue.desactiverBouton(btnValider);
 			return Etat.VALIDER;
 		}
 		return null;
 	}
 	
-	public Etat getEtat(JList l) {
+	public Etat getEtat(JList<String> l) {
 		if (l.getName().equals("Tournoi")) {
 			return Etat.TOURNOI;
 		} if (l.getName().equals("Equipe")) {

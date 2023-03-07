@@ -39,23 +39,33 @@ import javax.swing.JPasswordField;
 public class VueJoueur implements Vue{
 	
 	public JFrame fenetreJoueur;
-	public JTextField entreePrenom;
 	public JPanel panelModif;
+	
 	public JLabel photo;
 	public JLabel titreModif;
-	private DefaultListModel<String> modeleJoueurs = new DefaultListModel<String>();;
-	private JList<String> listeJoueurs;
+	
 	private JTextField recherche;
 	private JTextField entreeNom;
+	public JTextField entreePrenom;
 	private JTextField entreePseudo;
+	private JTextField entreeNationalite;
+	private JPasswordField entreeMdp;
+	
 	private DatePickerSettings paramDate = new DatePickerSettings();
 	private DatePicker entreeDateNaissance = new DatePicker(paramDate);
-	private JTextField entreeNationalite;
-	private JButton btnValider;
-	private JPasswordField entreeMdp;
+		
+	private DefaultListModel<String> modeleJoueurs = new DefaultListModel<String>();;
+	private JList<String> listeJoueurs;
 	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
 	private JComboBox<String> entreeEquipe;
+
+	private JButton btnCalendrier;
+	private JButton btnERA;
+	private JButton btnEquipes;
+	private JButton btnTournois;
 	private JButton btnClassement;
+	private JButton btnPhoto;
+	private JButton btnValider;
 	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
@@ -83,22 +93,22 @@ public class VueJoueur implements Vue{
 		
 		JPanel panelMenu = creerJPanel(panelHeader, Color.WHITE);
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		
+		// Boutons du Header
 		if (ControleurJoueur.estProfil("Gestionnaire")) {
-			JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
+			btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
 			btnCalendrier.addActionListener(controleur);
 			
-			JButton btnEcuries = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-			btnEcuries.addActionListener(controleur);
+			btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
+			btnERA.addActionListener(controleur);
 		}
 		
-		JButton btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		panelMenu.add(btnEquipes);
-		
+		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
 		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		panelMenu.add(btnJoueurs);
+		Vue.desactiverBouton(btnJoueurs); // Désactivé car amène à la page courante
 		
 		if (ControleurJoueur.estProfil("Ecurie")) {
-			JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
+			btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
 			btnTournois.addActionListener(controleur);
 		}
 		
@@ -211,8 +221,8 @@ public class VueJoueur implements Vue{
 		JPanel panelPhoto = creerJPanel(panelTitreM, Couleur.BLEU1);
 		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton photoBouton = creerBouton(panelPhoto, "Choisir une photo", Couleur.BLEU2, 13);
-		photoBouton.addActionListener(controleur);
+		btnPhoto = creerBouton(panelPhoto, "Choisir une photo", Couleur.BLEU2, 13);
+		btnPhoto.addActionListener(controleur);
 		
 		photo = creerJLabel(panelPhoto, "", 11);
 		photo.setIcon(new ImageIcon(img)); //Image affichée a cotée
@@ -676,25 +686,30 @@ public class VueJoueur implements Vue{
 		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer le joueur sélectionné") {
+			Vue.desactiverBouton(btnSupprimer);
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+			Vue.desactiverBouton(btnERA);
 			return Etat.ECURIE; 
 		} else if (b.getText() == "Valider") {
+			Vue.desactiverBouton(btnValider);
 			return Etat.VALIDER;
-		}		else if (b.getText() == "Calendrier") {
+		} else if (b.getText() == "Calendrier") {
+			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
-		}  else if (b.getText()=="Joueurs") {
-			return Etat.JOUEURS;
-		}  else if (b.getText()=="Tournois") {
-				return Etat.TOURNOIS;
+		} else if (b.getText()=="Tournois") {
+			Vue.desactiverBouton(btnTournois);
+			return Etat.TOURNOIS;
 		}else if (b.getText()=="Rechercher") {
 			return Etat.RECHERCHER;
 		}else if (b.getText()=="Equipes") {
+			Vue.desactiverBouton(btnEquipes);
 		 	return Etat.EQUIPES;
 		}else if (b.getText()=="Choisir une photo") {
+			Vue.desactiverBouton(btnPhoto);
 			return Etat.PHOTO;
 		} else if (b.getText()=="Classement") {
-			this.desactiverBouton(btnClassement);
+			Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		}
 		
@@ -714,7 +729,7 @@ public class VueJoueur implements Vue{
 		VueJoueur.supprimerTexte(this.entreePseudo);
 		entreeDateNaissance.setDate(null);
 		VueJoueur.supprimerTexte(this.entreeNationalite);
-		this.entreeEquipe.setSelectedItem("- Sélectionnez une �quipe -");
+		this.entreeEquipe.setSelectedItem("- Sélectionnez une équipe -");
 	}
 
 	public void estVide() {
