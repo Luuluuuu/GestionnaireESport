@@ -64,8 +64,6 @@ public class VueJoueur implements Vue{
 	private JButton btnEquipes;
 	private JButton btnTournois;
 	private JButton btnClassement;
-	private JButton btnPhoto;
-	private JButton btnValider;
 	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
@@ -221,7 +219,7 @@ public class VueJoueur implements Vue{
 		JPanel panelPhoto = creerJPanel(panelTitreM, Couleur.BLEU1);
 		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		btnPhoto = creerBouton(panelPhoto, "Choisir une photo", Couleur.BLEU2, 13);
+		JButton btnPhoto = creerBouton(panelPhoto, "Choisir une photo", Couleur.BLEU2, 13);
 		btnPhoto.addActionListener(controleur);
 		
 		photo = creerJLabel(panelPhoto, "", 11);
@@ -514,7 +512,7 @@ public class VueJoueur implements Vue{
 		gbc_panelValider.gridy = 8;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
+		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
 		btnValider.setName("btnValider");
 		
 		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
@@ -686,13 +684,11 @@ public class VueJoueur implements Vue{
 		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Supprimer le joueur sélectionné") {
-			Vue.desactiverBouton(btnSupprimer);
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
 			Vue.desactiverBouton(btnERA);
 			return Etat.ECURIE; 
 		} else if (b.getText() == "Valider") {
-			Vue.desactiverBouton(btnValider);
 			return Etat.VALIDER;
 		} else if (b.getText() == "Calendrier") {
 			Vue.desactiverBouton(btnCalendrier);
@@ -706,7 +702,6 @@ public class VueJoueur implements Vue{
 			Vue.desactiverBouton(btnEquipes);
 		 	return Etat.EQUIPES;
 		}else if (b.getText()=="Choisir une photo") {
-			Vue.desactiverBouton(btnPhoto);
 			return Etat.PHOTO;
 		} else if (b.getText()=="Classement") {
 			Vue.desactiverBouton(btnClassement);

@@ -40,8 +40,6 @@ public class VueInscriptionTournoi implements Vue{
 	private JButton btnClassement;
 	private JButton btnEquipes;
 	private JButton btnJoueurs;
-	private JButton btnValider;
-	private JButton btnAnnuler;
 	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
@@ -215,8 +213,8 @@ public class VueInscriptionTournoi implements Vue{
 		panelModif.add(panelValider, gbc_panelValider);
 
 		// Bouton de validation/annulation
-		btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
-		btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
+		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
+		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
 		
 		// ECOUTE SUR LES COMPOSANTS //
 		this.listeTournois.addListSelectionListener(controleur);
@@ -254,7 +252,6 @@ public class VueInscriptionTournoi implements Vue{
 			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES;
 		} else if (b.getText()=="Valider") {
-			Vue.desactiverBouton(btnValider);
 			return Etat.VALIDER;
 		}
 		return null;

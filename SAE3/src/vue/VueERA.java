@@ -18,7 +18,6 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.List;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -29,27 +28,31 @@ import controleur.ControleurERA.Etat;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 
-public class VueERA {
+public class VueERA implements Vue{
 	public JFrame fenetreERA;
 	private JTextField rechercheEcurie;
 	private JTextField rechercheResponsable;
 	private JTextField rechercheArbitre;
-	
-	public JList<String> listeEcuries;
+
 	private DefaultListModel<String> modeleEcuries;
-	public JList<String> listeResponsables;
+	public JList<String> listeEcuries;
 	private DefaultListModel<String> modeleResponsables;
-	public JList<String> listeArbitres;
+	public JList<String> listeResponsables;
 	private DefaultListModel<String> modeleArbitres;
+	public JList<String> listeArbitres;
 	
 	private JTextField nomEcurie;
 	private JPasswordField mdpEcurie;
 	private JTextField nomResponsable;
+	private JTextField prenomResponsable;
 	private JPasswordField mdpResponsable;
 	private JTextField nomArbitre;
-	private JPasswordField mdpArbitre;
-	private JTextField prenomResponsable;
 	private JTextField prenomArbitre;
+	private JPasswordField mdpArbitre;
+	
+	private JButton btnCalendrier;
+	private JButton btnEquipes;
+	private JButton btnJoueurs;
 	private JButton btnClassement;
 	private JButton btnSupprimerEcurie;
 	private JButton btnSupprimerResponsable;
@@ -77,35 +80,13 @@ public class VueERA {
 		fl_panelMenu.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelMenu);
 		
-		JButton btnCalendrier = new JButton("Calendrier");
-		btnCalendrier.setForeground(Color.WHITE);
-		btnCalendrier.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnCalendrier.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnCalendrier);
-		
-		JButton btnERA = new JButton("Ecuries / Responsables / Arbitres");
-		btnERA.setForeground(Color.WHITE);
-		btnERA.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnERA.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnERA);
-		
-		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setForeground(Color.WHITE);
-		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnEquipes);
-		
-		JButton btnJoueurs = new JButton("Joueurs");
-		btnJoueurs.setForeground(Color.WHITE);
-		btnJoueurs.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnJoueurs.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnJoueurs);
-		
-		btnClassement = new JButton("Classement");
-		btnClassement.setForeground(Color.WHITE);
-		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnClassement);
+		// Boutons de navigation
+		btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
+		JButton btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
+		Vue.desactiverBouton(btnERA);
+		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
+		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
@@ -113,11 +94,7 @@ public class VueERA {
 		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
 		panelHeader.add(panelDeconnexion);
 		
-		JButton btnDeconnexion = new JButton("Se déconnecter");
-		btnDeconnexion.setForeground(Color.WHITE);
-		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnDeconnexion.setBackground(Couleur.ROUGE);
-		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -167,11 +144,7 @@ public class VueERA {
 		EPanelRecherche.add(rechercheEcurie);
 		rechercheEcurie.setColumns(10);
 		
-		JButton btnRechercheEcurie = new JButton("Rechercher");
-		btnRechercheEcurie.setForeground(Color.WHITE);
-		btnRechercheEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnRechercheEcurie.setBackground(Couleur.BLEU2);
-		EPanelRecherche.add(btnRechercheEcurie);
+		JButton btnRechercheEcurie = creerBouton(EPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
 		
 		JPanel panelListeEcuries = new JPanel();
 		panelListeEcuries.setBackground(Couleur.BLEU1);
@@ -230,17 +203,8 @@ public class VueERA {
 		EPanelModification.add(EPanelValider);
 		EPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton EBtnValider = new JButton("Valider");
-		EBtnValider.setForeground(Color.WHITE);
-		EBtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		EBtnValider.setBackground(Couleur.VERT);
-		EPanelValider.add(EBtnValider);
-		
-		JButton btnAnnulerEcurie = new JButton("Annuler");
-		btnAnnulerEcurie.setForeground(Color.WHITE);
-		btnAnnulerEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnAnnulerEcurie.setBackground(Couleur.GRIS);
-		EPanelValider.add(btnAnnulerEcurie);
+		JButton EBtnValider = creerBouton(EPanelValider, "Valider", Couleur.VERT, 13);
+		JButton btnAnnulerEcurie = creerBouton(EPanelValider, "Annuler", Couleur.GRIS, 13);
 		
 		JPanel EPanelBoutons = new JPanel();
 		EPanelBoutons.setBackground(Couleur.BLEU1);
@@ -251,18 +215,9 @@ public class VueERA {
 		panelEcuries.add(EPanelBoutons, gbc_EPanelBoutons);
 		EPanelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnCreerEcurie = new JButton("Créer une nouvelle écurie");
-		btnCreerEcurie.setForeground(Color.WHITE);
-		btnCreerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnCreerEcurie.setBackground(Couleur.BLEU2);
-		EPanelBoutons.add(btnCreerEcurie);
-		
-		btnSupprimerEcurie = new JButton("Supprimer l'écurie sélectionnée");
-		btnSupprimerEcurie.setForeground(Color.WHITE);
-		btnSupprimerEcurie.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnSupprimerEcurie.setBackground(Couleur.GRIS);
-		EPanelBoutons.add(btnSupprimerEcurie);
-		this.desactiverBouton(btnSupprimerEcurie);
+		JButton btnCreerEcurie = creerBouton(EPanelBoutons, "Créer une nouvelle écurie", Couleur.BLEU2, 12);
+		btnSupprimerEcurie = creerBouton(EPanelBoutons, "Supprimer l'écurie sélectionnée", Couleur.GRIS, 12);
+		Vue.desactiverBouton(btnSupprimerEcurie);
 
 		// ----------------------------- RESPONSABLE ----------------------------- //
 		JPanel panelResponsables = new JPanel();
@@ -309,11 +264,7 @@ public class VueERA {
 		RPanelRecherche.add(rechercheResponsable);
 		rechercheResponsable.setColumns(10);
 		
-		JButton btnRechercheResponsable = new JButton("Rechercher");
-		btnRechercheResponsable.setForeground(Color.WHITE);
-		btnRechercheResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnRechercheResponsable.setBackground(Couleur.BLEU2);
-		RPanelRecherche.add(btnRechercheResponsable);
+		JButton btnRechercheResponsable = creerBouton(RPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
 		
 		JPanel panelListeResponsables = new JPanel();
 		panelListeResponsables.setBackground(Couleur.BLEU1);
@@ -384,17 +335,8 @@ public class VueERA {
 		RPanelModification.add(RPanelValider);
 		RPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton RBtnValider = new JButton("Valider");
-		RBtnValider.setForeground(Color.WHITE);
-		RBtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		RBtnValider.setBackground(Couleur.VERT);
-		RPanelValider.add(RBtnValider);
-		
-		JButton RBtnAnnuler = new JButton("Annuler");
-		RBtnAnnuler.setForeground(Color.WHITE);
-		RBtnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		RBtnAnnuler.setBackground(Couleur.GRIS);
-		RPanelValider.add(RBtnAnnuler);
+		JButton RBtnValider = creerBouton(RPanelValider, "Valider", Couleur.VERT, 13);
+		JButton RBtnAnnuler = creerBouton(RPanelValider, "Annuler", Couleur.GRIS, 13);
 		
 		JPanel RPanelBoutons = new JPanel();
 		@SuppressWarnings("unused")
@@ -406,18 +348,10 @@ public class VueERA {
 		gbc_RPanelBoutons.gridy = 3;
 		panelResponsables.add(RPanelBoutons, gbc_RPanelBoutons);
 		
-		JButton btnCreerResponsable = new JButton("Créer un nouveau responsable");
-		btnCreerResponsable.setForeground(Color.WHITE);
-		btnCreerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnCreerResponsable.setBackground(Couleur.BLEU2);
-		RPanelBoutons.add(btnCreerResponsable);
+		JButton btnCreerResponsable = creerBouton(RPanelBoutons, "Créer un nouveau responsable", Couleur.BLEU2, 12);
 		
-		btnSupprimerResponsable = new JButton("Supprimer le responsable sélectionné");
-		btnSupprimerResponsable.setForeground(Color.WHITE);
-		btnSupprimerResponsable.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnSupprimerResponsable.setBackground(Couleur.GRIS);
-		RPanelBoutons.add(btnSupprimerResponsable);
-		this.desactiverBouton(btnSupprimerResponsable);
+		btnSupprimerResponsable = creerBouton(RPanelBoutons, "Supprimer le responsable sélectionné", Couleur.GRIS, 12);
+		Vue.desactiverBouton(btnSupprimerResponsable);
 
 		// ----------------------------- ARBITRE ----------------------------- //
 		JPanel panelArbitres = new JPanel();
@@ -461,11 +395,7 @@ public class VueERA {
 		APanelRecherche.add(rechercheArbitre);
 		rechercheArbitre.setColumns(10);
 		
-		JButton ABtnRecherche = new JButton("Rechercher");
-		ABtnRecherche.setForeground(Color.WHITE);
-		ABtnRecherche.setFont(new Font("Roboto", Font.BOLD, 13));
-		ABtnRecherche.setBackground(Couleur.BLEU2);
-		APanelRecherche.add(ABtnRecherche);
+		JButton ABtnRecherche = creerBouton(APanelRecherche, "Rechercher", Couleur.BLEU2, 13);
 		
 		JPanel panelListeArbitres = new JPanel();
 		panelListeArbitres.setBackground(Couleur.BLEU1);
@@ -534,17 +464,8 @@ public class VueERA {
 		APanelModification.add(APanelValider);
 		APanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton ABtnValider = new JButton("Valider");
-		ABtnValider.setForeground(Color.WHITE);
-		ABtnValider.setFont(new Font("Roboto", Font.BOLD, 13));
-		ABtnValider.setBackground(Couleur.VERT);
-		APanelValider.add(ABtnValider);
-		
-		JButton ABtnAnnuler = new JButton("Annuler");
-		ABtnAnnuler.setForeground(Color.WHITE);
-		ABtnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		ABtnAnnuler.setBackground(Couleur.GRIS);
-		APanelValider.add(ABtnAnnuler);
+		JButton ABtnValider = creerBouton(APanelValider, "Valider", Couleur.VERT, 13);
+		JButton ABtnAnnuler = creerBouton(APanelValider, "Annuler", Couleur.GRIS, 13);
 		
 		JPanel APanelBoutons = new JPanel();
 		APanelBoutons.setBackground(Couleur.BLEU1);
@@ -554,18 +475,9 @@ public class VueERA {
 		gbc_APanelBoutons.gridy = 3;
 		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
 		
-		JButton btnCreerArbitre = new JButton("Créer un nouvel arbitre");
-		btnCreerArbitre.setForeground(Color.WHITE);
-		btnCreerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnCreerArbitre.setBackground(Couleur.BLEU2);
-		APanelBoutons.add(btnCreerArbitre);
-		
-		btnSupprimerArbitre = new JButton("Supprimer l'arbitre sélectionné");
-		btnSupprimerArbitre.setForeground(Color.WHITE);
-		btnSupprimerArbitre.setFont(new Font("Roboto", Font.BOLD, 12));
-		btnSupprimerArbitre.setBackground(Couleur.GRIS);
-		APanelBoutons.add(btnSupprimerArbitre);
-		this.desactiverBouton(btnSupprimerArbitre);
+		JButton btnCreerArbitre = creerBouton(APanelBoutons, "Créer un nouvel arbitre", Couleur.BLEU2, 12);
+		btnSupprimerArbitre = creerBouton(APanelBoutons, "Supprimer l'arbitre sélectionné", Couleur.GRIS, 12);
+		Vue.desactiverBouton(btnSupprimerArbitre);
 		
 		ControleurERA controleur = new ControleurERA(this);
 		btnCalendrier.addActionListener(controleur);
@@ -708,7 +620,7 @@ public class VueERA {
 	}
 	
 	// GETTERS //
-	public String getNomListe(JList j) {
+	public String getNomListe(JList<String> j) {
 		return j.getName();
 	}
 	
@@ -878,33 +790,27 @@ public class VueERA {
 	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
 	public boolean estSelectionneArbitre() {return !(this.listeArbitres.isSelectionEmpty());}
 	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
 	// ETATS //
 	public Etat getEtat(JButton b) {
 		this.setEntite(b);
 		if (b.getText().contains("Créer")) {
 			this.deselectionner();
 			return Etat.CREER;
-		} else if (b.getText().contains("Modifier")) {
-			return Etat.MODIFIER;
 		} else if (b.getText().contains("Supprimer")) {
 			return Etat.SUPPRIMER;
 		} else if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Calendrier") {
+			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
 		} else if (b.getText() == "Joueurs") {
+			Vue.desactiverBouton(btnJoueurs);
 			return Etat.JOUEURS;
 		} else if (b.getText() == "Equipes") {
-				return Etat.EQUIPES ;
+			Vue.desactiverBouton(btnEquipes);
+			return Etat.EQUIPES ;
 		} else if (b.getText() == "Classement") {
-		 	this.desactiverBouton(btnClassement);
+		 	Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Rechercher") {
 			return Etat.RECHERCHER;
