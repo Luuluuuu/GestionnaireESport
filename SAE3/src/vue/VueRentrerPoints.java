@@ -27,7 +27,7 @@ import javax.swing.border.LineBorder;
 import controleur.ControleurRentrerPoints;
 import controleur.ControleurRentrerPoints.Etat;
 
-public class VueRentrerPoints {
+public class VueRentrerPoints implements Vue{
 
 	public JFrame fenetreRentrerPoints;
 	private DefaultListModel<String> modeleTournois;
@@ -54,14 +54,7 @@ public class VueRentrerPoints {
 		fenetreRentrerPoints.getContentPane().add(panelHeader, BorderLayout.NORTH);
 		panelHeader.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-//		JButton btnDeconnexion = new JButton("Se déconnecter");
-//		btnDeconnexion.setForeground(Color.WHITE);
-//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-//		btnDeconnexion.setBackground(Couleur.ROUGE);
-//		panelHeader.add(btnDeconnexion);
-
-		JButton btnDeconnexion = Header.createDeconnexionButton();
-		panelHeader.add(btnDeconnexion);
+		JButton btnDeconnexion =  creerBouton(panelHeader, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);

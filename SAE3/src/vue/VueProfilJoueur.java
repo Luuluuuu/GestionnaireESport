@@ -24,7 +24,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.IOException;
 
-public class VueProfilJoueur {
+public class VueProfilJoueur implements Vue{
 
 	public JFrame fenetreProfilJoueur;
 	private JLabel titreEquipe;
@@ -49,14 +49,8 @@ public class VueProfilJoueur {
 		panelDeconnexion.setBackground(Color.WHITE);
 		fenetreProfilJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
-//		JButton btnDeconnexion = new JButton("Se d�connecter");
-//		btnDeconnexion.setForeground(Color.WHITE);
-//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-//		btnDeconnexion.setBackground(Couleur.ROUGE);
-//		panelDeconnexion.add(btnDeconnexion);
-		JButton btnDeconnexion = Header.createDeconnexionButton();
-		panelDeconnexion.add(btnDeconnexion);
+	
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);

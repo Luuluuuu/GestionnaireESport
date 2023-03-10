@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JList;
 
-public class VueEquipesJoueur {
+public class VueEquipesJoueur implements Vue{
 
 	public JFrame fenetreEquipesJoueur;
 	private JTextField texteRecherche;
@@ -54,13 +54,7 @@ public class VueEquipesJoueur {
 		fenetreEquipesJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
 		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-//		JButton btnDeconnexion = new JButton("Se d\u00E9connecter");
-//		btnDeconnexion.setForeground(Color.WHITE);
-//		btnDeconnexion.setFont(new Font("Roboto", Font.BOLD, 13));
-//		btnDeconnexion.setBackground(Couleur.ROUGE);
-//		panelDeconnexion.add(btnDeconnexion);
-		JButton btnDeconnexion = Header.createDeconnexionButton();
-		panelDeconnexion.add(btnDeconnexion);
+		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
