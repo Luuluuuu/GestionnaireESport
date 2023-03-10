@@ -2,6 +2,9 @@ package vue;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -70,6 +73,29 @@ public interface Vue {
 		panel.setBackground(couleur);
 		
 		return panel;
+	}
+	
+	public default GridBagLayout creerGridBagLayout(int[] columnWidth, int[] rowHeight, double[] columnWeight, double[] rowWeight) {
+		GridBagLayout layout = new GridBagLayout();
+		
+		layout.columnWidths = columnWidth;
+		layout.rowHeights = rowHeight;
+		layout.columnWeights = columnWeight;
+		layout.rowWeights = rowWeight;
+		
+		return layout;
+	}
+	
+	public default GridBagConstraints creerGridBagConstraints(int placement, int orientation, Insets inset, int x, int y) {
+		GridBagConstraints layout = new GridBagConstraints();
+		
+		layout.anchor = placement;
+		layout.fill = orientation;
+		layout.insets = inset;
+		layout.gridx = x;
+		layout.gridy = y;
+		
+		return layout;
 	}
 	
 	// Active un bouton donné
