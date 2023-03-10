@@ -166,12 +166,8 @@ public class VueEquipe implements Vue{
 		recherche.setColumns(15);
 		
 		btnRechercher = creerBouton(panelRecherche, "Rechercher", Couleur.BLEU2, 13);
-
-		btnRechercher.setBackground(Couleur.BLEU2);
-		btnRechercher.setForeground(Color.WHITE);
-		btnRechercher.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnRechercher.setText("Rechercher");
-		panelRecherche.add(btnRechercher);
+		desactiverBouton(btnRechercher);
+		rechercheEquipe(recherche);
 
 		JPanel panelListe = new JPanel();
 		panelListe.setBackground(Couleur.BLEU1);
@@ -439,8 +435,6 @@ public class VueEquipe implements Vue{
 		gbl_panelJoueurs.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panelJoueurs.setLayout(gbl_panelJoueurs);
 		
-		desactiverBouton(btnRechercher);
-		
 		JPanel panel_12 = new JPanel();
 		panel_12.setBackground(Couleur.BLEU1);
 		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
@@ -508,8 +502,6 @@ public class VueEquipe implements Vue{
 
 		btnJoueurs.addActionListener(controleur);
 		btnClassement.addActionListener(controleur);
-		
-		rechercheEquipe(recherche);
 	}
 	
 	//JOUEURS

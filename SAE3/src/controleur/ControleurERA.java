@@ -15,6 +15,7 @@ import modele.Arbitre;
 import modele.Connexion;
 import modele.Ecurie;
 import modele.Responsable;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -23,7 +24,7 @@ import vue.VueEquipe;
 import vue.VueJoueur;
 
 
-public class ControleurERA implements ActionListener, ListSelectionListener {
+public class ControleurERA implements ActionListener, ListSelectionListener, Vue {
 	public enum Entite {ECURIE("Ecurie"),RESPONSABLE("Responsable"),ARBITRE("Arbitre") ;
 		private String nom;
 		Entite(String nom) {
@@ -32,7 +33,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		public String getNom() {return this.nom;}
 	};
 	public enum Etat {
-		CREER, MODIFIER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
+		CREER, SUPPRIMER, DECONNECTER, CALENDRIER, JOUEURS, CLASSEMENT, 
 		RECHERCHER, VALIDER, ANNULER, EQUIPES 
 	}
  
@@ -174,7 +175,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		//if(this.vue.getNomListe(this.vue.getListeEcurie().getName()).equals("Ecurie")) {
 			//this.vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
 		//}
-		this.vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
+		Vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -211,7 +212,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener {
 		//if (!e.getValueIsAdjusting() && this.vue.getNomListeEcurie().equals("Ecurie")) {
 		//	this.vue.activerBouton(this.vue.getBtnSupprimerEcurie());
         //} 
-		this.vue.activerBouton(this.vue.getBtnSupprimerEcurie());
+		Vue.activerBouton(this.vue.getBtnSupprimerEcurie());
 	}
 
 	public void modifierEcurie() {

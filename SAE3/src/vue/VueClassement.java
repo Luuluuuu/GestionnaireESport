@@ -39,6 +39,12 @@ public class VueClassement implements Vue{
 	private JList<String> listePodium;
 	private JComboBox<String> triJeux = new JComboBox<String>();
 	
+	private JButton btnCalendrier;
+	private JButton btnERA;
+	private JButton btnEquipes;
+	private JButton btnJoueurs;
+	private JButton btnTournois;
+	
 	public JFrame getFrame() {
 		return this.fenetreClassement;
 	}
@@ -66,24 +72,22 @@ public class VueClassement implements Vue{
 		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
 		if (controleur.estProfil("Gestionnaire")) {
-			JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
+			btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
 			btnCalendrier.addActionListener(controleur);
 			
-			JButton btnEcuries = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-			btnEcuries.addActionListener(controleur);
+			btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
+			btnERA.addActionListener(controleur);
 		}
 		
 		if (controleur.estProfil("Ecurie")) {
-			JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
+			btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
 			btnTournois.addActionListener(controleur);
 		}
 
-		JButton btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		
-		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-	
+		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 		JButton btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		btnClassement.setEnabled(false);
+		Vue.desactiverBouton(btnClassement);
 		
 		JPanel panelDeconnexion = new JPanel();
 		panelDeconnexion.setBackground(Color.WHITE);
@@ -221,26 +225,23 @@ public class VueClassement implements Vue{
 		f.setVisible(false);
 	}
 	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
-	
 	public Etat getEtat(JButton b) {
 		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+			Vue.desactiverBouton(btnERA);
 			return Etat.ECURIE;
 		} else if (b.getText() == "Calendrier") {
+			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
 		} else if (b.getText() == "Equipes") {
+			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES;
 		} else if (b.getText() == "Joueurs") {
+			Vue.desactiverBouton(btnJoueurs);
 			return Etat.JOUEURS;
 		} else if (b.getText() == "Tournois") {
+			Vue.desactiverBouton(btnTournois);
 			return Etat.TOURNOIS;
 		}
 		

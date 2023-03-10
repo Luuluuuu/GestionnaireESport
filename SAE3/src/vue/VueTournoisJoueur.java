@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -14,7 +13,6 @@ import java.awt.Image;
 
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
@@ -33,6 +31,10 @@ public class VueTournoisJoueur implements Vue{
 	public JFrame fenetreTournoisJoueur;
 	private JLabel photo;
 	private JLabel pseudo;
+	
+	// Header
+	private JButton btnProfil;
+	private JButton btnEquipes;
 	private JButton btnClassement;
 	
 	public JFrame getFrame() {
@@ -122,29 +124,12 @@ public class VueTournoisJoueur implements Vue{
 		gbc_panelMenu.gridy = 1;
 		panelHeader.add(panelMenu, gbc_panelMenu);
 		
-		JButton btnProfil = new JButton("Mon profil");
-		btnProfil.setForeground(Color.WHITE);
-		btnProfil.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnProfil.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnProfil);
-		
-		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setForeground(Color.WHITE);
-		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnEquipes);
-		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
-		
-		btnClassement = new JButton("Classement");
-		btnClassement.setForeground(Color.WHITE);
-		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnClassement);
+		btnProfil = creerBouton(panelMenu, "Mon profil", Couleur.BLEU2, 15);
+		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+		JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
+		btnTournois.setEnabled(false);
+		Vue.desactiverBouton(btnTournois);
+		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		JPanel panelProfil = new JPanel();
 		panelProfil.setBackground(Couleur.BLEU1);
@@ -201,7 +186,7 @@ public class VueTournoisJoueur implements Vue{
 		gbc_panel_5.gridy = 1;
 		panel_3.add(panel_5, gbc_panel_5);
 		
-		JList list = new JList();
+		JList<String> list = new JList<String>();
 		panel_5.add(list);
 		
 		JPanel panel_2 = new JPanel();
@@ -245,7 +230,7 @@ public class VueTournoisJoueur implements Vue{
 		gbc_panel_7.gridy = 1;
 		panel_2.add(panel_7, gbc_panel_7);
 		
-		JList list_1 = new JList();
+		JList<String> list_1 = new JList<String>();
 		panel_7.add(list_1);
 		
 		JPanel panel_1 = new JPanel();
@@ -289,7 +274,7 @@ public class VueTournoisJoueur implements Vue{
 		gbc_panel_8.gridy = 1;
 		panel_1.add(panel_8, gbc_panel_8);
 		
-		JList list_2 = new JList();
+		JList<String> list_2 = new JList<String>();
 		panel_8.add(list_2);
 		
 		// CONTROLEUR //
@@ -315,23 +300,17 @@ public class VueTournoisJoueur implements Vue{
 		f.setVisible(false);
 	}
 	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
-	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se d�connecter") {
+		if (b.getText() == "Se déconnecter") {
 			return Etat.DECONNECTER;
 		} else if (b.getText() == "Classement") {
-			this.desactiverBouton(btnClassement);
+			Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Mon profil") {
+			Vue.desactiverBouton(btnProfil);
 			return Etat.PROFIL;
 		} else if (b.getText() == "Equipes") {
+			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES;
 		}
 		return null; 

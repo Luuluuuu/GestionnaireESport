@@ -3,7 +3,6 @@ package vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import controleur.ControleurProfilJoueur;
 import controleur.ControleurEquipesJoueur;
 import controleur.ControleurEquipesJoueur.Etat;
 
@@ -33,10 +31,15 @@ import javax.swing.JList;
 public class VueEquipesJoueur implements Vue{
 
 	public JFrame fenetreEquipesJoueur;
+	
 	private JTextField texteRecherche;
+	
 	private JLabel pseudo;
 	private JLabel photo;
+	
 	private JButton btnClassement;
+	private JButton btnProfil;
+	private JButton btnTournois;
 	
 	public JFrame getFrame() {
 		return this.fenetreEquipesJoueur;
@@ -125,29 +128,11 @@ public class VueEquipesJoueur implements Vue{
 		gbc_panelMenu.gridy = 1;
 		panelHeader.add(panelMenu, gbc_panelMenu);
 		
-		JButton btnProfil = new JButton("Mon profil");
-		btnProfil.setForeground(Color.WHITE);
-		btnProfil.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnProfil.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnProfil);
-		
-		JButton btnEquipes = new JButton("Equipes");
-		btnEquipes.setForeground(Color.WHITE);
-		btnEquipes.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnEquipes.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnEquipes);
-		
-		JButton btnTournois = new JButton("Tournois");
-		btnTournois.setForeground(Color.WHITE);
-		btnTournois.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnTournois.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnTournois);
-		
-		btnClassement = new JButton("Classement");
-		btnClassement.setForeground(Color.WHITE);
-		btnClassement.setFont(new Font("Roboto", Font.BOLD, 15));
-		btnClassement.setBackground(Couleur.BLEU2);
-		panelMenu.add(btnClassement);
+		btnProfil =	creerBouton(panelMenu, "Mon profil", Couleur.BLEU2, 15);
+		JButton btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
+		Vue.desactiverBouton(btnEquipes);
+		btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
+		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		 
 		JPanel panelEquipes = new JPanel();
 		panelEquipes.setBackground(Couleur.BLEU1);
@@ -192,12 +177,12 @@ public class VueEquipesJoueur implements Vue{
 		btnWinrate.setFont(new Font("Roboto", Font.BOLD, 13));
 		panelBoutons.add(btnWinrate);
 		
-		JComboBox triJeux = new JComboBox();
+		JComboBox<String> triJeux = new JComboBox<String>();
 		triJeux.setFont(new Font("Roboto", Font.PLAIN, 13));
 		triJeux.setPreferredSize(new Dimension(205, 20));
 		panelBoutons.add(triJeux);
 		
-		JComboBox triEcurie = new JComboBox();
+		JComboBox<String> triEcurie = new JComboBox<String>();
 		triEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
 		triEcurie.setPreferredSize(new Dimension(205, 20));
 		panelBoutons.add(triEcurie);
@@ -232,7 +217,7 @@ public class VueEquipesJoueur implements Vue{
 		gbc_panelListe.gridy = 1;
 		panelEquipes.add(panelListe, gbc_panelListe);
 		
-		JList listeEquipes = new JList();
+		JList<String> listeEquipes = new JList<String>();
 		panelListe.add(listeEquipes);
 		
 		// CONTROLEUR //
@@ -273,8 +258,10 @@ public class VueEquipesJoueur implements Vue{
 			this.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		} else if (b.getText() == "Mon profil") {
+			Vue.desactiverBouton(btnProfil);
 			return Etat.PROFIL;
 		} else if (b.getText() == "Tournois") {
+			Vue.desactiverBouton(btnTournois);
 			return Etat.TOURNOIS;
 		}
 		return null;

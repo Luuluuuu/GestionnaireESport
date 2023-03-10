@@ -58,6 +58,16 @@ public class Poule implements Cloneable{
 	public Equipe[] getEquipes() {
 		return this.equipes;
 	}
+	
+	// Vérifie si la poule est remplie d'équipes
+	public boolean estRemplie(){
+		for (Equipe equipe : this.equipes) {
+			if (equipe == null) {
+				return false;
+			}
+		} 
+		return true;
+	}
     
 	@Override
 	public Poule clone() {

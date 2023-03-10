@@ -36,7 +36,7 @@ import vue.VueClassement;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,JOUEURS,EQUIPES,PHOTO,CLASSEMENT,TOURNOIS}
+	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,EQUIPES,PHOTO,CLASSEMENT,TOURNOIS}
 	private VueJoueur vue;
 	private Etat etat;
 

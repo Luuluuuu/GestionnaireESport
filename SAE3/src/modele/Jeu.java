@@ -160,4 +160,15 @@ public class Jeu implements Cloneable{
 		return this.poules[i-1];
 	}
 
+	// Vérifie si au moins 4 poules sont remplies
+	public boolean contientPoules() {
+		int compteur = 0;
+	    for(Poule p : this.poules)
+	        if (p.estRemplie()) {
+	        	compteur++;
+	        	
+	        }
+	    return compteur >= 4;
+	}
+
 }

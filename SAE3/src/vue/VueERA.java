@@ -149,6 +149,8 @@ public class VueERA implements Vue{
 		
 
 		btnRechercheEcurie = creerBouton(EPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		this.desactiverBouton(btnRechercheEcurie);
+		rechercheEcurie(rechercheEcurie);
 		
 		JPanel panelListeEcuries = new JPanel();
 		panelListeEcuries.setBackground(Couleur.BLEU1);
@@ -269,6 +271,8 @@ public class VueERA implements Vue{
 		rechercheResponsable.setColumns(10);
 
 		btnRechercheResponsable = creerBouton(RPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		this.desactiverBouton(btnRechercheResponsable);
+		rechercheResponsable(rechercheResponsable);
 		
 		JPanel panelListeResponsables = new JPanel();
 		panelListeResponsables.setBackground(Couleur.BLEU1);
@@ -400,6 +404,8 @@ public class VueERA implements Vue{
 		rechercheArbitre.setColumns(10);
 		
 		ABtnRecherche = creerBouton(APanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		this.desactiverBouton(ABtnRecherche);
+		rechercheArbitre(rechercheArbitre);
 		
 		JPanel panelListeArbitres = new JPanel();
 		panelListeArbitres.setBackground(Couleur.BLEU1);
@@ -483,11 +489,6 @@ public class VueERA implements Vue{
 		btnSupprimerArbitre = creerBouton(APanelBoutons, "Supprimer l'arbitre sélectionné", Couleur.GRIS, 12);
 		Vue.desactiverBouton(btnSupprimerArbitre);
 		
-		this.desactiverBouton(btnRechercheEcurie);
-		this.desactiverBouton(btnRechercheResponsable);
-		this.desactiverBouton(ABtnRecherche);
-		
-		
 		ControleurERA controleur = new ControleurERA(this);
 		btnCalendrier.addActionListener(controleur);
 		btnEquipes.addActionListener(controleur);
@@ -542,10 +543,6 @@ public class VueERA implements Vue{
 		this.listeResponsables.setName(Entite.RESPONSABLE.getNom());
 		this.listeArbitres.addListSelectionListener(controleur);
 		this.listeArbitres.setName(Entite.ARBITRE.getNom());
-		
-		rechercheResponsable(rechercheEcurie);
-		//rechercheResponsable(rechercheResponsable);
-		rechercheResponsable(rechercheArbitre);
 	}
 	
 	public static void fermerFenetre(JFrame f) {f.setVisible(false);}
@@ -863,12 +860,12 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    //desactiverBouton(btnRechercheEcurie);
+                    desactiverBouton(btnRechercheEcurie);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	//activerBouton(btnRechercheEcurie);
+                	activerBouton(btnRechercheEcurie);
                 }
             }
         });
@@ -881,12 +878,12 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    //desactiverBouton(btnRechercheResponsable);
+                    desactiverBouton(btnRechercheResponsable);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	//activerBouton(btnRechercheResponsable);
+                	activerBouton(btnRechercheResponsable);
                 }
             }
         });
@@ -899,7 +896,7 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    //desactiverBouton(ABtnRecherche);
+                    desactiverBouton(ABtnRecherche);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {

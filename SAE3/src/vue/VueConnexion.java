@@ -25,11 +25,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import controleur.ControleurConnexion;
 import javax.swing.JCheckBox;
-import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 
 @SuppressWarnings("serial")
-public class VueConnexion extends JFrame implements KeyListener{
+public class VueConnexion extends JFrame implements KeyListener, Vue{
 	
 	public JFrame fenetreConnexion;
 	private static JTextField entreeNomUtilisateur;
@@ -178,12 +177,9 @@ public class VueConnexion extends JFrame implements KeyListener{
 		panelConnexion.add(panelBtnConnexion, gbc_panelBtnConnexion);
 		panelBtnConnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 130, 0));
 		
-		JButton btnConnexion = new JButton("Se connecter");
-		btnConnexion.setForeground(Color.WHITE);
-		btnConnexion.setFont(new Font("Roboto", Font.BOLD, 16));
+		JButton btnConnexion = creerBouton(panelBtnConnexion, "Se connecter", Couleur.BLEU2, 16);
 		btnConnexion.setPreferredSize(new Dimension(150, 40));
-		btnConnexion.setBackground(Couleur.BLEU2);
-		panelBtnConnexion.add(btnConnexion);
+		
 		btnConnexion.addActionListener(controleur);
 		btnConnexion.addKeyListener(this);
 		entreeNomUtilisateur.addKeyListener(this);

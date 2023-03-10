@@ -26,6 +26,12 @@ public interface Vue {
 		return bouton;
 	}
 	
+	/* Crée un JTextField
+	 * Entrées :
+	 * 	panel, JPanel, panel contenant le JTextField
+	 * 	taillePolice, int, taille de la police du texte
+	 * 	columns, int, nombre de colonnes du texte
+	 */
 	public default JTextField creerJTextField(JPanel panel, int taillePolice, int columns) {
 		JTextField texte = new JTextField();
 		
@@ -36,6 +42,12 @@ public interface Vue {
 		return texte;
 	}
 	
+	/* Retourne un JLabel ajouté à son panel
+	 * Entrées :
+	 * 	panel, JPanel, panel contenant le JLabel
+	 * 	texteLabel, String, texte du JLabel
+	 * 	taillePolice, int, taille de la police du label
+	 */
 	public default JLabel creerJLabel(JPanel panel, String texteLabel, int taillePolice) {
 		JLabel label = new JLabel(texteLabel);
 		
@@ -44,9 +56,13 @@ public interface Vue {
 		label.setFont(new Font("Roboto", Font.BOLD, taillePolice));
 		
 		return label;
-		
 	}
 	
+	/* Retourne un JPanel ajouté à son panel
+	 * Entrées :
+	 * 	panelContenant, JPanel, panel contenant le nouveau JPanel
+	 * 	couleur, Color, couleur du JPanel créé
+	 */
 	public default JPanel creerJPanel(JPanel panelContenant, Color couleur) {
 		JPanel panel = new JPanel();
 		
@@ -54,5 +70,15 @@ public interface Vue {
 		panel.setBackground(couleur);
 		
 		return panel;
+	}
+	
+	// Active un bouton donné
+	public static void activerBouton(JButton btn) {
+		btn.setEnabled(true);
+	}
+	
+	// Désactive un bouton donné
+	public static void desactiverBouton(JButton btn) {
+		btn.setEnabled(false);
 	}
 }
