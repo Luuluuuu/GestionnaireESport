@@ -33,7 +33,9 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import controleur.ControleurCalendrier;
-import controleur.ControleurCalendrier.Etat;
+import modele.Etat;
+import modele.ButtonBuilder;
+import modele.EtatFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +60,7 @@ public class VueCalendrier implements Vue{
 	private JComboBox<String> entreeArbitre;
 	private static Map<String, JCheckBox> listeCheck = new HashMap<String, JCheckBox>();
 	private static JPanel panel_13;
-	private JButton btnClassement;
+	private static JButton btnClassement;
 	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
@@ -544,10 +546,16 @@ public class VueCalendrier implements Vue{
 		btnValider.setBackground(Couleur.VERT);
 		panelValider.add(btnValider);
 		
-		JButton btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setForeground(Color.WHITE);
-		btnAnnuler.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnAnnuler.setBackground(Couleur.GRIS);
+		JButton btnAnnuler = new ButtonBuilder()
+		        .setText("Annuler")
+		        .setX(0)
+		        .setY(0)
+		        .setWidth(100)
+		        .setHeight(30)
+		        .setForeground(Color.WHITE)
+		        .setFont(new Font("Roboto", Font.BOLD, 13))
+		        .setBackground(Couleur.GRIS)
+		        .build();
 		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR
@@ -613,32 +621,20 @@ public class VueCalendrier implements Vue{
         j.setEnabled(true);
     }
 	
-	public void desactiverBouton(JButton j) {
+	public static void desactiverBouton(JButton j) {
         j.setEnabled(false);
     }
+	
+	public static JButton getBtnClassement() {
+		return btnClassement;
+	}
 	 
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer un nouveau tournoi") {
-			return Etat.CREER;
-		} else if (b.getText() == "Annuler") {
-			return Etat.ANNULER;
-		} else if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le tournoi sélectionné") {
-			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			return Etat.ECURIE;
-		} else if (b.getText() == "Valider") {
-			return Etat.VALIDER;
-		} else if (b.getText() == "Classement") {
-			this.desactiverBouton(btnClassement);
-			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Equipes") {
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Joueurs") {
-			return Etat.JOUEURS;
-		}	
-		return null;
+	    Etat etat = EtatFactory.creerEtat(b.getText());
+	    //if (etat == Etat.CLASSEMENT) {
+	      //  this.desactiverBouton(btnClassement);
+	    //}
+	    return etat;
 	}
 	
 	// GERER TOURNOI

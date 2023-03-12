@@ -24,7 +24,8 @@ import java.io.IOException;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurTournoisJoueur;
-import controleur.ControleurTournoisJoueur.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 public class VueTournoisJoueur implements Vue{
 
@@ -301,19 +302,8 @@ public class VueTournoisJoueur implements Vue{
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Classement") {
-			Vue.desactiverBouton(btnClassement);
-			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Mon profil") {
-			Vue.desactiverBouton(btnProfil);
-			return Etat.PROFIL;
-		} else if (b.getText() == "Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		}
-		return null; 
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 
 }

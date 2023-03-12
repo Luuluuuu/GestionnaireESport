@@ -29,7 +29,9 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.*;
 
-import controleur.ControleurEquipe.Etat;
+
+import modele.Etat;
+import modele.EtatFactory;
 import controleur.ControleurEquipe;
 
 public class VueEquipe implements Vue{
@@ -679,35 +681,8 @@ public class VueEquipe implements Vue{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer une nouvelle équipe") {
-			return Etat.CREER;
-		} else if (b.getText() == "Annuler") {
-			return Etat.ANNULER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			Vue.desactiverBouton(btnERA);
-			return Etat.ECURIE;
-		}else if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer l'équipe sélectionnée") {
-			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Valider") {
-			return Etat.VALIDER;
-		}else if (b.getText() == "Calendrier") {
-			Vue.desactiverBouton(btnCalendrier);
-			return Etat.CALENDRIER;
-		}else if (b.getText()=="Joueurs") {
-			Vue.desactiverBouton(btnJoueurs);
-			return Etat.JOUEURS;
-		} else if (b.getText()=="Classement") {
-			Vue.desactiverBouton(btnClassement);
-		 	return Etat.CLASSEMENT;
-		} else if (b.getText()=="Rechercher") {
-			return Etat.RECHERCHER;
-		}else if (b.getText() == "Tournois") {
-			Vue.desactiverBouton(btnTournois);
-			return Etat.TOURNOIS;
-		}
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 	
 	public void creerEquipe() {

@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import controleur.ControleurEquipesJoueur.Etat;
 import modele.Connexion;
+import modele.Etat;
 import modele.Joueur;
 import modele.Utilisateur;
 import vue.VueClassementJoueur;
@@ -16,7 +16,6 @@ import vue.VueProfilJoueur;
 import vue.VueTournoisJoueur;
 
 public class ControleurTournoisJoueur implements ActionListener{
-public enum Etat{DECONNECTER, PROFIL, EQUIPES, CLASSEMENT}
 	
 	private VueTournoisJoueur vue;
 	private Etat etat;
