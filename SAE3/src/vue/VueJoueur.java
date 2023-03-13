@@ -569,33 +569,33 @@ public class VueJoueur implements Vue{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer un nouveau joueur") {
+		if (b.getText().equals("Créer un nouveau joueur")) {
 			return Etat.CREER;
-		} else if (b.getText() == "Annuler") {
+		} else if (b.getText().equals("Annuler")) {
 			return Etat.ANNULER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText().equals("Se déconnecter")) {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le joueur sélectionné") {
+		} else if (b.getText().equals("Supprimer le joueur sélectionné")) {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
+		} else if (b.getText().equals("Ecuries / Responsables / Arbitres")) {
 			Vue.desactiverBouton(btnERA);
 			return Etat.ECURIE; 
-		} else if (b.getText() == "Valider") {
+		} else if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;
-		} else if (b.getText() == "Calendrier") {
+		} else if (b.getText().equals("Calendrier")) {
 			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
-		} else if (b.getText()=="Tournois") {
+		} else if (b.getText().equals("Tournois")) {
 			Vue.desactiverBouton(btnTournois);
 			return Etat.TOURNOIS;
-		}else if (b.getText()=="Rechercher") {
+		}else if (b.getText().equals("Rechercher")) {
 			return Etat.RECHERCHER;
-		}else if (b.getText()=="Equipes") {
+		}else if (b.getText().equals("Equipes")) {
 			Vue.desactiverBouton(btnEquipes);
 		 	return Etat.EQUIPES;
-		}else if (b.getText()=="Choisir une photo") {
+		}else if (b.getText().equals("Choisir une photo")) {
 			return Etat.PHOTO;
-		} else if (b.getText()=="Classement") {
+		} else if (b.getText().equals("Classement")) {
 			Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
 		}
