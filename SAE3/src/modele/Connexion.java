@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,7 @@ public class Connexion {
 	
 	private Connexion() {
 		String login = "llf4365a";
-		String mdpasse = "$iutinfo";
+		String mdpasse = new String(Base64.getDecoder().decode("JGl1dGluZm8="));
 		String connectString = "jdbc:oracle:thin:@telline.univ-tlse3.fr:1521:ETUPRE";
 	
 		// Chargement du driver Oracle et enregistrement
