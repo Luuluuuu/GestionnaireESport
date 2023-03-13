@@ -69,7 +69,7 @@ public class VueERA implements Vue{
 		fenetreERA = new JFrame();
 		fenetreERA.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreERA.setResizable(false);
-		fenetreERA.setBounds(100, 100, 1400, 900);
+		fenetreERA.setBounds(100, 100, 1500, 880);
 		fenetreERA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelHeader = new JPanel();
