@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import modele.Connexion;
+import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
 import vue.VueCalendrier;
@@ -36,7 +37,6 @@ import vue.VueClassement;
 
 public class ControleurJoueur implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,ECURIE,CALENDRIER,EQUIPES,PHOTO,CLASSEMENT,TOURNOIS}
 	private VueJoueur vue;
 	private Etat etat;
 

@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Etat;
 import modele.Jeu;
 import modele.Poule;
 import modele.Tournoi;
@@ -25,7 +26,6 @@ import vue.VueEquipe;
 import vue.VueRentrerPoints;
 
 public class ControleurRentrerPoints implements ActionListener, ListSelectionListener{
-	public enum Etat {DECONNECTER, JEU, POULE1, POULE2, POULE3, POULE4, POULEF, VALIDER}
 	
 	private VueRentrerPoints vue;
 	private Etat etat;

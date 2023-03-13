@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
 import modele.Utilisateur;
@@ -28,8 +29,6 @@ import vue.VueJoueur;
 
 public class ControleurEquipe implements ActionListener, ListSelectionListener {
 	
-	public enum Etat{RECHERCHER,VALIDER,ANNULER,CREER,SUPPRIMER,DECONNECTER,
-		ECURIE,CALENDRIER,JOUEURS,EQUIPE,CLASSEMENT,TOURNOIS, ZONERECHERCHE}
 	private VueEquipe vue;
 	private Etat etat;
 	

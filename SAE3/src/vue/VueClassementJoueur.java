@@ -20,7 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurClassementJoueur;
-import controleur.ControleurClassementJoueur.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -254,19 +255,8 @@ public class VueClassementJoueur implements Vue{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Mon profil") {
-			Vue.desactiverBouton(btnProfil);
-			return Etat.PROFIL;
-		} else if (b.getText() == "Tournois") {
-			Vue.desactiverBouton(btnTournois);
-			return Etat.TOURNOIS;
-		}
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 	
 	public void ajouterEquipe(String nomEquipe) {

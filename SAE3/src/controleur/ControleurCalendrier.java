@@ -21,14 +21,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
+import modele.Etat;
 import modele.Jeu;
 import modele.Tournoi;
 
 public class ControleurCalendrier implements ActionListener, ListSelectionListener {
-	public enum Etat {
-		CREER, MODIFIER, ANNULER, DECONNECTER, SUPPRIMER, VALIDER, ECURIE, CLASSEMENT, EQUIPES, JOUEURS, CALENDRIER,
-	}
-	
+
 	private VueCalendrier vue;
 	private Etat etat;
 	

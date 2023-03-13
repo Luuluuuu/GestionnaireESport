@@ -33,7 +33,9 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import controleur.ControleurCalendrier;
-import controleur.ControleurCalendrier.Etat;
+import modele.Etat;
+import modele.BoutonBuilder;
+import modele.EtatFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +59,7 @@ public class VueCalendrier implements Vue{
 	private JComboBox<String> entreeArbitre;
 	private static Map<String, JCheckBox> listeCheck = new HashMap<String, JCheckBox>();
 	private static JPanel panel_13;
-	private JButton btnClassement;
+	private static JButton btnClassement;
 	private JButton btnSupprimer;
 	
 	public JFrame getFrame() {
@@ -528,9 +530,24 @@ public class VueCalendrier implements Vue{
 		gbc_panelValider.gridy = 8;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
-		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
 
+		JButton btnValider = new JButton("Valider");
+		btnValider.setForeground(Color.WHITE);
+		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnValider.setBackground(Couleur.VERT);
+		panelValider.add(btnValider);
+		
+		JButton btnAnnuler = new BoutonBuilder()
+		        .setTexte("Annuler")
+		        .setX(0)
+		        .setY(0)
+		        .setLargeur(100)
+		        .setHauteur(30)
+		        .setCouleurTexte(Color.WHITE)
+		        .setPolice(new Font("Roboto", Font.BOLD, 13))
+		        .setCouleurFond(Couleur.GRIS)
+		        .creer();
+		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR
 		ControleurCalendrier controleur = new ControleurCalendrier(this);
@@ -595,32 +612,20 @@ public class VueCalendrier implements Vue{
         j.setEnabled(true);
     }
 	
-	public void desactiverBouton(JButton j) {
+	public static void desactiverBouton(JButton j) {
         j.setEnabled(false);
     }
+	
+	public static JButton getBtnClassement() {
+		return btnClassement;
+	}
 	 
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer un nouveau tournoi") {
-			return Etat.CREER;
-		} else if (b.getText() == "Annuler") {
-			return Etat.ANNULER;
-		} else if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le tournoi sélectionné") {
-			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			return Etat.ECURIE;
-		} else if (b.getText() == "Valider") {
-			return Etat.VALIDER;
-		} else if (b.getText() == "Classement") {
-			this.desactiverBouton(btnClassement);
-			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Equipes") {
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Joueurs") {
-			return Etat.JOUEURS;
-		}	
-		return null;
+	    Etat etat = EtatFactory.creerEtat(b.getText());
+	    //if (etat == Etat.CLASSEMENT) {
+	      //  this.desactiverBouton(btnClassement);
+	    //}
+	    return etat;
 	}
 	
 	// GERER TOURNOI

@@ -11,14 +11,13 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Etat;
 import modele.Jeu;
 import modele.Tournoi;
 import vue.VueConnexion;
 import vue.VueConsulterEquipes;
 
 public class ControleurConsulterEquipes implements ActionListener, ListSelectionListener {
-
-	public enum Etat {DECONNECTER, PDF, JEU, POULE1, POULE2, POULE3, POULE4, POULEF}
 	
 	private VueConsulterEquipes vue;
 	private Etat etat;

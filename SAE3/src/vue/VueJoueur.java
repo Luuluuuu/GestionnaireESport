@@ -31,7 +31,8 @@ import javax.swing.event.ListSelectionListener;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
-import controleur.ControleurJoueur.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 import controleur.ControleurJoueur;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;

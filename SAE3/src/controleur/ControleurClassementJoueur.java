@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 
 import modele.Connexion;
+import modele.Etat;
 import modele.Joueur;
 import modele.Utilisateur;
 import vue.VueClassementJoueur;
@@ -17,7 +18,6 @@ import vue.VueProfilJoueur;
 import vue.VueTournoisJoueur;
 
 public class ControleurClassementJoueur implements ActionListener {
-public enum Etat{DECONNECTER, PROFIL, TOURNOIS, EQUIPES}
 	
 	private VueClassementJoueur vue;
 	private Etat etat;

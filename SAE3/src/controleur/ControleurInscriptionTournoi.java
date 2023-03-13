@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import modele.Connexion;
 import modele.Equipe;
+import modele.Etat;
 import modele.Jeu;
 import modele.Tournoi;
 import modele.Utilisateur;
@@ -23,7 +24,6 @@ import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 
 public class ControleurInscriptionTournoi implements ActionListener, ListSelectionListener {
-	public enum Etat{DECONNECTER, EQUIPES, JOUEURS, CLASSEMENT, TOURNOI, JEU, VALIDER, ETAT, EQUIPE};
 	
 	private VueInscriptionTournoi vue;
 	private Etat etat;
@@ -110,7 +110,7 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 				}
 				
 			} else {
-				JOptionPane.showMessageDialog(null, "Veuillez compl�ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Veuillez compl�ter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
 			}
 			break;
 		default:
@@ -124,9 +124,9 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 		this.etat = this.vue.getEtat(l);
 		if (!l.isSelectionEmpty()) {
 			switch (this.etat) {
-			case TOURNOI:
+			case TOURNOIS:
 				this.vue.viderJeux();
-				this.vue.ajouterJeu("- S�lectionnez un jeu -");
+				this.vue.ajouterJeu("- S�lectionnez un jeu -");
 				// On récupère le tournoi sélectionné
 				Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 				// On récupère les jeux du tournoi
