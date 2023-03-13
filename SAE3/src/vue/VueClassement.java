@@ -55,7 +55,7 @@ public class VueClassement implements Vue{
 		fenetreClassement = new JFrame();
 		fenetreClassement.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreClassement.setResizable(false);
-		fenetreClassement.setBounds(100, 100, 1400, 900);
+		fenetreClassement.setBounds(100, 100, 1500, 880);
 		fenetreClassement.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// CONTROLEUR

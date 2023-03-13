@@ -45,7 +45,7 @@ public class VueRentrerPoints implements Vue{
 		fenetreRentrerPoints = new JFrame();
 		fenetreRentrerPoints.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreRentrerPoints.setResizable(false);
-		fenetreRentrerPoints.setBounds(100, 100, 1400, 900);
+		fenetreRentrerPoints.setBounds(100, 100, 1500, 880);
 		fenetreRentrerPoints.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelHeader = new JPanel();

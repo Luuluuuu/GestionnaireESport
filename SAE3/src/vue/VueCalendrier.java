@@ -71,7 +71,7 @@ public class VueCalendrier implements Vue{
 		fenetreCalendrier = new JFrame();
 		fenetreCalendrier.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreCalendrier.setResizable(false);
-		fenetreCalendrier.setBounds(100, 100, 1400, 900);
+		fenetreCalendrier.setBounds(100, 100, 1500, 880);
 		fenetreCalendrier.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// HEADER //
 		

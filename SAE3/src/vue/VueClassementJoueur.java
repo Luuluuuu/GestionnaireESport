@@ -52,7 +52,7 @@ public class VueClassementJoueur implements Vue{
 		fenetreClassementJoueur = new JFrame();
 		fenetreClassementJoueur.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreClassementJoueur.setResizable(false);
-		fenetreClassementJoueur.setBounds(100, 100, 1400, 900);
+		fenetreClassementJoueur.setBounds(100, 100, 1500, 880);
 		fenetreClassementJoueur.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelDeconnexion = new JPanel();
