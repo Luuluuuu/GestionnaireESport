@@ -214,7 +214,42 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
         //} 
 		Vue.activerBouton(this.vue.getBtnSupprimerEcurie());
 	}
+	
+	// Crée une écurie en locale et sur la BDD
+	public void creerEcurie() {
+		if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
+			if (!(ControleurConnexion.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
+				try {
+					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
+					Ecurie ecurie = null;
+					if (rs.next()) {
+						// Récupère l'écurie créée
+						ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
+												
+						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie "
+								+ "VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
 
+						// Ajoute l'écurie localement
+						ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
+						ecurie.creerLogin(this.vue.getMotDePasseEcurie());
+						this.vue.ajouterEcurie(ecurie.getNom());
+						
+					}
+					rs.close();
+					
+					// Vide les champs de saisie
+					this.vue.setNomEcurie("");
+					this.vue.viderMotDePasse();
+				} catch (SQLException e1) {e1.printStackTrace();}
+				
+			} else {this.vue.existe();}
+			
+		} else {
+			this.vue.estVide();
+		}
+	}
+	
+	// Modifie une écurie en locale et sur la BDD
 	public void modifierEcurie() {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
@@ -232,45 +267,28 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 		}
 	}
 	
-	public void creerEcurie() {
-		if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-			if (!(ControleurConnexion.listeEcuries.containsKey(this.vue.getNomEcurie()))) {
-				try {
-					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_ecurieid.NEXTVAL FROM dual");
-					Ecurie ecurie = null;
-					if (rs.next()) {
-						ecurie = new Ecurie(rs.getInt(1),this.vue.getNomEcurie());
-						ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
-						this.vue.ajouterEcurie(ecurie.getNom());
-						rs.close();
-						Connexion.getInstance().executerRequete("INSERT INTO sae_ecurie VALUES(SEQ_ECURIEID.CURRVAL,'"+ecurie.getNom()+"', "+Year.now().getValue()+")");
-					}
-					ecurie.creerLogin(this.vue.getMotDePasseEcurie());
-					ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
-					this.vue.setNomEcurie("");
-					this.vue.viderMotDePasse();
-				} catch (SQLException e1) {e1.printStackTrace();}
-			} else {this.vue.existe();}
-		} else {
-			this.vue.estVide();
-		}
-	}
-	
+	// Crée un responsable en locale et sur la BDD
 	private void creerResponsable() {
 		if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
 			if (!(ControleurConnexion.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_responsableid.NEXTVAL FROM dual");
-					Responsable r = null;
+					Responsable responsable = null;
 					if (rs.next()) {
-						r = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
-						ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
-						this.vue.ajouterResponsable(r.getPrenomNom());
-						rs.close();
-						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable VALUES(seq_responsableid.CURRVAL,'"+r.getNom()+"', '"+r.getPrenom()+"', 0)");
+						// Récupère le responsable créé
+						responsable = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
+												
+						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable "
+								+ "VALUES(seq_responsableid.CURRVAL,'"+responsable.getNom()+"', '"+responsable.getPrenom()+"', 0)");
+
+						// Ajoute le responsable localement
+						ControleurConnexion.listeResponsables.put(responsable.getPrenomNom(), responsable);
+						this.vue.ajouterResponsable(responsable.getPrenomNom());
+						responsable.creerLogin(this.vue.getMotDePasseResponsable());
 					}
-					r.creerLogin(this.vue.getMotDePasseResponsable());
-					ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
+					rs.close();
+					
+					// Vide les champs de saisie
 					this.vue.setNomResponsable("","");
 					this.vue.viderMotDePasse();
 				} catch (SQLException e1) {e1.printStackTrace();}
@@ -280,6 +298,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 		}
 	}
 
+	// Modifie un responsable en locale et sur la BDD
 	private void modifierResponsable() {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
@@ -301,31 +320,43 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 		}
 	}
 	
+	// Crée un arbitre en locale et sur la BDD
 	private void creerArbitre() {
 		if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
 			if (!(ControleurConnexion.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_arbitreid.NEXTVAL FROM dual");
-					Arbitre a = null;
+					Arbitre arbitre = null;
 					if (rs.next()) {
-						a = new Arbitre(rs.getInt(1),this.vue.getNomArbitre(),this.vue.getPrenomArbitre());
-						a.setPseudo(a.getPrenom());
-						ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
-						this.vue.ajouterArbitre(a.getPrenomNom());
-						rs.close();
-						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre VALUES('"+a.getNom()+"', '"+a.getPrenom()+"', '"+a.getPseudo()+"', 0,seq_arbitreid.CURRVAL)");
+						// Récupère l'arbitre créé
+						arbitre = new Arbitre(rs.getInt(1),this.vue.getNomArbitre(),this.vue.getPrenomArbitre());
+						arbitre.setPseudo(arbitre.getPrenom());
+
+						Connexion.getInstance().executerRequete("INSERT INTO sae_arbitre "
+								+ "VALUES('"+arbitre.getNom() + "', '"+arbitre.getPrenom()
+								+ "', '"+arbitre.getPseudo() + "', 0,seq_arbitreid.CURRVAL)");
+						
+						// Ajoute l'arbitre localement
+						ControleurConnexion.listeArbitres.put(arbitre.getPrenomNom(), arbitre);
+						this.vue.ajouterArbitre(arbitre.getPrenomNom());
+						arbitre.creerLogin(this.vue.getMotDePasseArbitre());
+						
 					}
-					a.creerLogin(this.vue.getMotDePasseArbitre());
-					ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
+					rs.close();
+					
+					// Vide les champs de saisie
 					this.vue.setNomArbitre("","");
 					this.vue.viderMotDePasse();
+					
 				} catch (SQLException e1) {e1.printStackTrace();}
 			} else {this.vue.existe();}
+			
 		} else {
 			this.vue.estVide();
 		}
 	}
 	
+	// Modifie un arbitre en locale et sur la BDD
 	private void modifierArbitre() {
 		if (this.vue.confirmer("modification")==0) {
 			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET NOMARBITRE = '"+this.vue.getNomArbitre()+
