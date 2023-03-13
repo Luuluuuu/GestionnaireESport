@@ -225,11 +225,16 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
-		                	   JOptionPane.showMessageDialog(null, "Le fichier a �t� enregistr�.", "Succ�s", JOptionPane.INFORMATION_MESSAGE);
+		                	   JOptionPane.showMessageDialog(null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 						   } 
 		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
 			                   File targetExisteFile = new File(targetDirectory, newFileName);
-			                   targetExisteFile.delete(); //Suppression
+			                   
+			                   // Suppression
+			                   if (!targetExisteFile.delete()) {
+			                	   JOptionPane.showMessageDialog(null, "L'image n'a pas pu être supprimée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			                	   
+			                   }
 			    			try {
 								Files.copy(file.toPath(), targetFile.toPath());	//Ajout
 							} catch (IOException e1) {
