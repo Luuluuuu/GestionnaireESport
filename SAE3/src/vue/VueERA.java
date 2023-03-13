@@ -69,7 +69,7 @@ public class VueERA implements Vue{
 		fenetreERA = new JFrame();
 		fenetreERA.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreERA.setResizable(false);
-		fenetreERA.setBounds(100, 100, 1400, 900);
+		fenetreERA.setBounds(100, 100, 1500, 880);
 		fenetreERA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelHeader = new JPanel();
@@ -149,7 +149,7 @@ public class VueERA implements Vue{
 		
 
 		btnRechercheEcurie = creerBouton(EPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
-		this.desactiverBouton(btnRechercheEcurie);
+		Vue.desactiverBouton(btnRechercheEcurie);
 		rechercheEcurie(rechercheEcurie);
 		
 		JPanel panelListeEcuries = new JPanel();
@@ -271,7 +271,7 @@ public class VueERA implements Vue{
 		rechercheResponsable.setColumns(10);
 
 		btnRechercheResponsable = creerBouton(RPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
-		this.desactiverBouton(btnRechercheResponsable);
+		Vue.desactiverBouton(btnRechercheResponsable);
 		rechercheResponsable(rechercheResponsable);
 		
 		JPanel panelListeResponsables = new JPanel();
@@ -404,7 +404,7 @@ public class VueERA implements Vue{
 		rechercheArbitre.setColumns(10);
 		
 		ABtnRecherche = creerBouton(APanelRecherche, "Rechercher", Couleur.BLEU2, 13);
-		this.desactiverBouton(ABtnRecherche);
+		Vue.desactiverBouton(ABtnRecherche);
 		rechercheArbitre(rechercheArbitre);
 		
 		JPanel panelListeArbitres = new JPanel();
@@ -802,13 +802,6 @@ public class VueERA implements Vue{
 	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
 	public boolean estSelectionneArbitre() {return !(this.listeArbitres.isSelectionEmpty());}
 	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
 	
 	// ETATS //
 	public Etat getEtat(JButton b) {
@@ -860,12 +853,12 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    desactiverBouton(btnRechercheEcurie);
+                	Vue.desactiverBouton(btnRechercheEcurie);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	activerBouton(btnRechercheEcurie);
+                	Vue.activerBouton(btnRechercheEcurie);
                 }
             }
         });
@@ -878,12 +871,12 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    desactiverBouton(btnRechercheResponsable);
+                    Vue.desactiverBouton(btnRechercheResponsable);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	activerBouton(btnRechercheResponsable);
+                	Vue.activerBouton(btnRechercheResponsable);
                 }
             }
         });
@@ -896,12 +889,12 @@ public class VueERA implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    desactiverBouton(ABtnRecherche);
+                	Vue.desactiverBouton(ABtnRecherche);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	activerBouton(ABtnRecherche);
+                	Vue.activerBouton(ABtnRecherche);
                 }
             }
         });

@@ -44,7 +44,6 @@ import java.util.Locale;
 import java.util.Map;
 import javax.swing.JCheckBox;
 
-@SuppressWarnings("serial")
 public class VueCalendrier implements Vue{
 	
 	public JFrame fenetreCalendrier;
@@ -145,18 +144,9 @@ public class VueCalendrier implements Vue{
 		gbc_panelBoutons.gridy = 2;
 		panelTournoi.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
-		
-		JButton btnCreer = new JButton("Créer un nouveau tournoi");
-		btnCreer.setForeground(Color.WHITE);
-		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnCreer.setBackground(Couleur.BLEU2);
-		panelBoutons.add(btnCreer);
-		
-		btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
-		btnSupprimer.setForeground(Color.WHITE);
-		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
-		btnSupprimer.setBackground(Couleur.GRIS);
-		panelBoutons.add(btnSupprimer);
+		JButton btnCreer = creerBouton(panelBoutons, "Créer un nouveau tournoi", Couleur.BLEU2, 13);
+		btnSupprimer = creerBouton(panelBoutons, "Supprimer le tournoi sélectionné", Couleur.GRIS, 13);
+
 		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
@@ -540,6 +530,7 @@ public class VueCalendrier implements Vue{
 		gbc_panelValider.gridy = 8;
 		panelModif.add(panelValider, gbc_panelValider);
 		
+
 		JButton btnValider = new JButton("Valider");
 		btnValider.setForeground(Color.WHITE);
 		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
@@ -561,7 +552,7 @@ public class VueCalendrier implements Vue{
 		// CONTROLEUR
 		ControleurCalendrier controleur = new ControleurCalendrier(this);
 		// DECONNEXION
-//		btnDeconnexion.addActionListener(controleur);
+		header.getBtnDeconnexion().addActionListener(controleur);
 		// TOURNOIS
 		listeTournois.addListSelectionListener((ListSelectionListener) controleur);
 		// GESTION DES TOURNOIS
