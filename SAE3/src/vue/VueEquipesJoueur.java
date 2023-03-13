@@ -50,7 +50,7 @@ public class VueEquipesJoueur implements Vue{
 		fenetreEquipesJoueur = new JFrame();
 		fenetreEquipesJoueur.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreEquipesJoueur.setResizable(false);
-		fenetreEquipesJoueur.setBounds(100, 100, 1400, 900);
+		fenetreEquipesJoueur.setBounds(100, 100, 1500, 880);
 		fenetreEquipesJoueur.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelDeconnexion = new JPanel();

@@ -45,7 +45,7 @@ public class VueConsulterEquipes implements Vue{
 		fenetreConsulterEquipes = new JFrame();
 		fenetreConsulterEquipes.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreConsulterEquipes.setResizable(false);
-		fenetreConsulterEquipes.setBounds(100, 100, 1400, 900);
+		fenetreConsulterEquipes.setBounds(100, 100, 1500, 880);
 		fenetreConsulterEquipes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelHeader = new JPanel();

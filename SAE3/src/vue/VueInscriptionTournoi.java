@@ -51,7 +51,7 @@ public class VueInscriptionTournoi implements Vue{
 		fenetreInscriptionTournoi = new JFrame();
 		fenetreInscriptionTournoi.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreInscriptionTournoi.setResizable(false);
-		fenetreInscriptionTournoi.setBounds(100, 100, 1400, 900);
+		fenetreInscriptionTournoi.setBounds(100, 100, 1500, 880);
 		fenetreInscriptionTournoi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ControleurInscriptionTournoi controleur = new ControleurInscriptionTournoi(this);
