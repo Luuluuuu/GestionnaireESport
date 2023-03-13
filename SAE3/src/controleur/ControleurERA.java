@@ -130,7 +130,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 			VueERA.fermerFenetre(this.vue.fenetreERA);
 		break;
 		case RECHERCHER:
-			if (this.vue.getRecherche()!="") {
+			if (!this.vue.getRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 				this.vue.setNom("","");
 			} else {
@@ -252,16 +252,35 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 	// Modifie une écurie en locale et sur la BDD
 	public void modifierEcurie() {
 		if (this.vue.confirmer("modification")==0) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET NOMECURIE = '"+this.vue.getNomEcurie()+"' WHERE IDECURIE ="+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+			// Récupère l'ID de l'écurie sélectionné
+			int idEcurie =  ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID();
+			Connexion.getInstance().executerRequete("UPDATE SAE_ECURIE SET "
+					+ "NOMECURIE = '" + this.vue.getNomEcurie()
+					+ "' WHERE IDECURIE =" + idEcurie);
+			
+			String login = this.vue.getNom();
 			if (!(this.vue.getMotDePasseEcurie().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN = '"+this.vue.getMotDePasseEcurie()+"'MOTDEPASSE='"+this.vue.getMotDePasseEcurie().hashCode()+
-						"' WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN = '" + login
+						+ "'MOTDEPASSE='" + this.vue.getMotDePasseEcurie().hashCode()
+						+ "' WHERE IDECURIE = " + idEcurie);
+				
+			} else {
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN='" + login
+						+ "' WHERE IDECURIE = " + idEcurie);
+			
 			}
+			// Supprime l'ancienne écurie de la liste
 			Ecurie ecurie = ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionne());
 			ControleurConnexion.listeEcuries.remove(ecurie.getNom());
+			
+			// Ajoute la nouvelle écurie à la liste
 			ecurie.setNom(this.vue.getNomEcurie());
 			ControleurConnexion.listeEcuries.put(ecurie.getNom(), ecurie);
 			this.vue.modifierEcurie();
+			
+			// Vide les champs de saisie
 			this.vue.setNomEcurie("");
 			this.vue.viderMotDePasse();
 		}
@@ -301,20 +320,40 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 	// Modifie un responsable en locale et sur la BDD
 	private void modifierResponsable() {
 		if (this.vue.confirmer("modification")==0) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET NOMRESPONSABLE = '"+this.vue.getNomResponsable()+"', PRENOMRESPONSABLE = '"+this.vue.getPrenomResponsable()+"' WHERE IDRESPONSABLE ="+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+			// Récupère l'ID du responsable sélectionné
+			int idResponsable = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID();
+			Connexion.getInstance().executerRequete("UPDATE SAE_RESPONSABLE SET "
+					+ "NOMRESPONSABLE = '" + this.vue.getNomResponsable() 
+					+ "', PRENOMRESPONSABLE = '" + this.vue.getPrenomResponsable() 
+					+ "' WHERE IDRESPONSABLE =" + idResponsable);
+
+			// Crée le login
+			String login = this.vue.getNomResponsable() + "." + this.vue.getPrenomResponsable();
+			// Avec mdp
 			if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomResponsable()+"."+this.vue.getPrenomResponsable()+
-						"' MOTDEPASSE='"+this.vue.getMotDePasseResponsable().hashCode()+"' WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN='" + login
+						+ "' MOTDEPASSE='" + this.vue.getMotDePasseResponsable().hashCode() 
+						+ "' WHERE IDRESPONSABLE = " + idResponsable);
+			
+			// Sans mdp
 			} else {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomResponsable()+"."+this.vue.getPrenomResponsable()+
-						"' WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN='" + login
+						+ "' WHERE IDRESPONSABLE = " + idResponsable);
+			
 			}
+			// Supprime le responsable de la liste locale
 			Responsable r = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable());
 			ControleurConnexion.listeResponsables.remove(r.getPrenomNom());
+			
+			// Ajoute le responsable à la liste locale
 			r.setNom(this.vue.getNomResponsable());
 			r.setPrenom(this.vue.getPrenomResponsable());
 			ControleurConnexion.listeResponsables.put(r.getPrenomNom(), r);
 			this.vue.modifierResponsable();
+			
+			// Vide les champs de saisie
 			this.vue.setNomResponsable("","");
 			this.vue.viderMotDePasse();
 		}
@@ -359,25 +398,44 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 	// Modifie un arbitre en locale et sur la BDD
 	private void modifierArbitre() {
 		if (this.vue.confirmer("modification")==0) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET NOMARBITRE = '"+this.vue.getNomArbitre()+
-					"', PRENOMARBITRE = '"+this.vue.getPrenomArbitre()+
-					"' WHERE IDARBITRE ="+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+			// Récupère l'id de l'arbitre sélectionné
+			int idArbitre = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID();
+			
+			Connexion.getInstance().executerRequete("UPDATE SAE_ARBITRE SET "
+					+ "NOMARBITRE = '" + this.vue.getNomArbitre() +
+					"', PRENOMARBITRE = '" + this.vue.getPrenomArbitre() +
+					"' WHERE IDARBITRE =" + idArbitre);
+			
+			// Créer un login
+			String login = this.vue.getNomArbitre() + "." + this.vue.getPrenomArbitre();
+			// Modifie avec le mot de passe
 			if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomArbitre()+"."+this.vue.getPrenomArbitre()
-						+ "' MOTDEPASSE='"+this.vue.getMotDePasseArbitre().hashCode()+
-						"' WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN='" + login
+						+ "' MOTDEPASSE='" + this.vue.getMotDePasseArbitre().hashCode()+
+						"' WHERE IDARBITRE = " + idArbitre);
+			
+			// Modifie sans le mot de passe
 			} else {
-				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+this.vue.getNomArbitre()+"."+this.vue.getPrenomArbitre()+
-				"' WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
+				Connexion.getInstance().executerRequete("UPDATE SAE_USER SET "
+						+ "LOGIN='" + login
+						+ "' WHERE IDARBITRE = " + idArbitre);
+				
 			}
+			// Supprime l'ancien arbitre
 			Arbitre a = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre());
 			ControleurConnexion.listeResponsables.remove(a.getPrenomNom());
+			
+			// Ajoute l'ancien 
 			a.setNom(this.vue.getNomArbitre());
 			a.setPrenom(this.vue.getPrenomArbitre());
 			ControleurConnexion.listeArbitres.put(a.getPrenomNom(), a);
 			this.vue.modifierArbitre();
+			
+			// Vide les champs de saisie
 			this.vue.setNomArbitre("","");
 			this.vue.viderMotDePasse();
+			
 		}
 	}
 }
