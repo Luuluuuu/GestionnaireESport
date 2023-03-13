@@ -34,7 +34,7 @@ import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import controleur.ControleurCalendrier;
 import modele.Etat;
-import modele.ButtonBuilder;
+import modele.BoutonBuilder;
 import modele.EtatFactory;
 
 import java.util.ArrayList;
@@ -546,16 +546,16 @@ public class VueCalendrier implements Vue{
 		btnValider.setBackground(Couleur.VERT);
 		panelValider.add(btnValider);
 		
-		JButton btnAnnuler = new ButtonBuilder()
-		        .setText("Annuler")
+		JButton btnAnnuler = new BoutonBuilder()
+		        .setTexte("Annuler")
 		        .setX(0)
 		        .setY(0)
-		        .setWidth(100)
-		        .setHeight(30)
-		        .setForeground(Color.WHITE)
-		        .setFont(new Font("Roboto", Font.BOLD, 13))
-		        .setBackground(Couleur.GRIS)
-		        .build();
+		        .setLargeur(100)
+		        .setHauteur(30)
+		        .setCouleurTexte(Color.WHITE)
+		        .setPolice(new Font("Roboto", Font.BOLD, 13))
+		        .setCouleurFond(Couleur.GRIS)
+		        .creer();
 		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR
