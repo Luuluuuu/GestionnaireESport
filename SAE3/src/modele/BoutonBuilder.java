@@ -5,7 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
-public class ButtonBuilder {
+public class BoutonBuilder {
 	   private String text;
 	   private int x;
 	   private int y;
@@ -15,47 +15,47 @@ public class ButtonBuilder {
 	   private Font font;
 	   private Color background;
 
-	   public ButtonBuilder setText(String text) {
+	   public BoutonBuilder setTexte(String text) {
 	      this.text = text;
 	      return this;
 	   }
 
-	   public ButtonBuilder setX(int x) {
+	   public BoutonBuilder setX(int x) {
 	      this.x = x;
 	      return this;
 	   }
 
-	   public ButtonBuilder setY(int y) {
+	   public BoutonBuilder setY(int y) {
 	      this.y = y;
 	      return this;
 	   }
 
-	   public ButtonBuilder setWidth(int width) {
+	   public BoutonBuilder setLargeur(int width) {
 	      this.width = width;
 	      return this;
 	   }
 
-	   public ButtonBuilder setHeight(int height) {
+	   public BoutonBuilder setHauteur(int height) {
 	      this.height = height;
 	      return this;
 	   }
 	   
-	   public ButtonBuilder setForeground(Color c) {
-		   this.c = Color.WHITE;
+	   public BoutonBuilder setCouleurTexte(Color c) {
+		   this.c = c;
 		   return this;
 	   }
 	   
-	   public ButtonBuilder setFont(Font font) {
+	   public BoutonBuilder setPolice(Font font) {
 	        this.font = font;
 	        return this;
 	    }
 
-	    public ButtonBuilder setBackground(Color background) {
+	    public BoutonBuilder setCouleurFond(Color background) {
 	        this.background = background;
 	        return this;
 	    }
 
-	   public JButton build() {
+	   public JButton creer() {
 	      JButton button = new JButton(text);
 	      button.setBounds(x, y, width, height);
 	      button.setForeground(c);
