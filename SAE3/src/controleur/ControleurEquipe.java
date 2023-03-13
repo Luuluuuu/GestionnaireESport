@@ -203,7 +203,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					e1.printStackTrace();
 				}
 			}
-			
+			break;
 		default:
 			break;
 			

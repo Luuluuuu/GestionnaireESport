@@ -262,8 +262,9 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.supprimerJoueur();
 			}
 			this.vue.creerJoueur();
+			break;
 		default:
-			
+			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
 		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
