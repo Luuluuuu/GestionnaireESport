@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 
 import modele.Connexion;
+import modele.Etat;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -16,9 +17,6 @@ import vue.VueInscriptionTournoi;
 import vue.VueJoueur;
 
 public class ControleurClassement implements ActionListener {
-	public enum Etat {
-		DECONNECTER, ECURIE, CLASSEMENT, EQUIPES, JOUEURS, CALENDRIER, TOURNOIS, JEU
-	}
 	
 	private VueClassement vue;
 	private Etat etat;

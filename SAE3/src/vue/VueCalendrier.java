@@ -33,14 +33,18 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import controleur.ControleurCalendrier;
-import controleur.ControleurCalendrier.Etat;
+import modele.Etat;
+import modele.ButtonBuilder;
+import modele.EtatFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.swing.JCheckBox;
 
+@SuppressWarnings("serial")
 public class VueCalendrier implements Vue{
 	
 	public JFrame fenetreCalendrier;
@@ -56,12 +60,8 @@ public class VueCalendrier implements Vue{
 	private JComboBox<String> entreeArbitre;
 	private static Map<String, JCheckBox> listeCheck = new HashMap<String, JCheckBox>();
 	private static JPanel panel_13;
-	
-	private JButton btnClassement;
+	private static JButton btnClassement;
 	private JButton btnSupprimer;
-	private JButton btnERA;
-	private JButton btnEquipes;
-	private JButton btnJoueurs;
 	
 	public JFrame getFrame() {
 		return this.fenetreCalendrier;
@@ -75,30 +75,10 @@ public class VueCalendrier implements Vue{
 		fenetreCalendrier.setBounds(100, 100, 1400, 900);
 		fenetreCalendrier.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// HEADER //
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(Couleur.BLEU1);
-		fenetreCalendrier.getContentPane().add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
 		
-		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(Color.WHITE);
-		panelHeader.add(panelMenu);
-		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		JButton btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
-		Vue.desactiverBouton(btnCalendrier);
-		btnERA =  creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-		btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
+		HeaderAdmin header = new HeaderAdmin(this.getFrame());
 		
-		JPanel panelDeconnexion = new JPanel();
-		panelDeconnexion.setBackground(Color.WHITE);
-		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
-		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
-		panelHeader.add(panelDeconnexion);
-		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -166,8 +146,17 @@ public class VueCalendrier implements Vue{
 		panelTournoi.add(panelBoutons, gbc_panelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = creerBouton(panelBoutons, "Créer un nouveau tournoi", Couleur.BLEU2, 13);
-		btnSupprimer = creerBouton(panelBoutons, "Supprimer le tournoi sélectionné", Couleur.GRIS, 13);
+		JButton btnCreer = new JButton("Créer un nouveau tournoi");
+		btnCreer.setForeground(Color.WHITE);
+		btnCreer.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnCreer.setBackground(Couleur.BLEU2);
+		panelBoutons.add(btnCreer);
+		
+		btnSupprimer = new JButton("Supprimer le tournoi sélectionné");
+		btnSupprimer.setForeground(Color.WHITE);
+		btnSupprimer.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnSupprimer.setBackground(Couleur.GRIS);
+		panelBoutons.add(btnSupprimer);
 		this.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
@@ -551,13 +540,28 @@ public class VueCalendrier implements Vue{
 		gbc_panelValider.gridy = 8;
 		panelModif.add(panelValider, gbc_panelValider);
 		
-		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
-		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
+		JButton btnValider = new JButton("Valider");
+		btnValider.setForeground(Color.WHITE);
+		btnValider.setFont(new Font("Roboto", Font.BOLD, 13));
+		btnValider.setBackground(Couleur.VERT);
+		panelValider.add(btnValider);
+		
+		JButton btnAnnuler = new ButtonBuilder()
+		        .setText("Annuler")
+		        .setX(0)
+		        .setY(0)
+		        .setWidth(100)
+		        .setHeight(30)
+		        .setForeground(Color.WHITE)
+		        .setFont(new Font("Roboto", Font.BOLD, 13))
+		        .setBackground(Couleur.GRIS)
+		        .build();
+		panelValider.add(btnAnnuler);
 		
 		// CONTROLEUR
 		ControleurCalendrier controleur = new ControleurCalendrier(this);
 		// DECONNEXION
-		btnDeconnexion.addActionListener(controleur);
+//		btnDeconnexion.addActionListener(controleur);
 		// TOURNOIS
 		listeTournois.addListSelectionListener((ListSelectionListener) controleur);
 		// GESTION DES TOURNOIS
@@ -567,12 +571,10 @@ public class VueCalendrier implements Vue{
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 		// BOUTONS MENU
-		btnEquipes.addActionListener(controleur);
-		btnERA.addActionListener(controleur);
-		btnJoueurs.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
-		
-		
+		header.getBtnEquipes().addActionListener(controleur);
+		header.getBtnEcuries().addActionListener(controleur);
+		header.getBtnJoueurs().addActionListener(controleur);
+		header.getBtnClassement().addActionListener(controleur);
 	}
 	
 	public static void afficherPanel(JPanel p) {
@@ -619,35 +621,20 @@ public class VueCalendrier implements Vue{
         j.setEnabled(true);
     }
 	
-	public void desactiverBouton(JButton j) {
+	public static void desactiverBouton(JButton j) {
         j.setEnabled(false);
     }
+	
+	public static JButton getBtnClassement() {
+		return btnClassement;
+	}
 	 
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Créer un nouveau tournoi") {
-			return Etat.CREER;
-		} else if (b.getText() == "Annuler") {
-			return Etat.ANNULER;
-		} else if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Supprimer le tournoi sélectionné") {
-			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			Vue.desactiverBouton(btnERA);
-			return Etat.ECURIE;
-		} else if (b.getText() == "Valider") {
-			return Etat.VALIDER;
-		} else if (b.getText() == "Classement") {
-			this.desactiverBouton(btnClassement);
-			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Joueurs") {
-			Vue.desactiverBouton(btnJoueurs);
-			return Etat.JOUEURS;
-		}	
-		return null;
+	    Etat etat = EtatFactory.creerEtat(b.getText());
+	    //if (etat == Etat.CLASSEMENT) {
+	      //  this.desactiverBouton(btnClassement);
+	    //}
+	    return etat;
 	}
 	
 	// GERER TOURNOI

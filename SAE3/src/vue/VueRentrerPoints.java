@@ -24,7 +24,8 @@ import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurRentrerPoints;
-import controleur.ControleurRentrerPoints.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 public class VueRentrerPoints implements Vue{
 
@@ -384,22 +385,8 @@ public class VueRentrerPoints implements Vue{
 	
 	// ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} if (b.getText().equals("Valider")) {
-			return Etat.VALIDER;
-		} if (b.getText().equals("POULE 1")) {
-			return Etat.POULE1;
-		} if (b.getText().equals("POULE 2")) {
-			return Etat.POULE2;
-		} if (b.getText().equals("POULE 3")) {
-			return Etat.POULE3;
-		} if (b.getText().equals("POULE 4")) {
-			return Etat.POULE4;
-		} if (b.getText().equals("POULE FINALE")) {
-			return Etat.POULEF;
-		}
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 
 	public void viderEquipes() {

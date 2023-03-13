@@ -14,7 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import controleur.ControleurClassement.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 import controleur.ControleurClassement;
 
 import java.awt.GridLayout;
@@ -226,26 +227,8 @@ public class VueClassement implements Vue{
 	}
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Ecuries / Responsables / Arbitres") {
-			Vue.desactiverBouton(btnERA);
-			return Etat.ECURIE;
-		} else if (b.getText() == "Calendrier") {
-			Vue.desactiverBouton(btnCalendrier);
-			return Etat.CALENDRIER;
-		} else if (b.getText() == "Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Joueurs") {
-			Vue.desactiverBouton(btnJoueurs);
-			return Etat.JOUEURS;
-		} else if (b.getText() == "Tournois") {
-			Vue.desactiverBouton(btnTournois);
-			return Etat.TOURNOIS;
-		}
-		
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 	
 	public void ajouterEquipe(String nomEquipe) {

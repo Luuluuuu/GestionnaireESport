@@ -21,7 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurInscriptionTournoi;
-import controleur.ControleurInscriptionTournoi.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 import javax.swing.JComboBox;
 
@@ -240,26 +241,13 @@ public class VueInscriptionTournoi implements Vue{
 
 	// RECEVOIR L'ETAT //
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText()=="Joueurs") {
-			Vue.desactiverBouton(btnJoueurs);
-			return Etat.JOUEURS;
-		} else if (b.getText()=="Classement") {
-			Vue.desactiverBouton(btnClassement);
-		 	return Etat.CLASSEMENT;
-		} else if (b.getText()=="Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		} else if (b.getText()=="Valider") {
-			return Etat.VALIDER;
-		}
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 	
 	public Etat getEtat(JList<String> l) {
 		if (l.getName().equals("Tournoi")) {
-			return Etat.TOURNOI;
+			return Etat.TOURNOIS;
 		} if (l.getName().equals("Equipe")) {
 			return Etat.EQUIPE;
 		}

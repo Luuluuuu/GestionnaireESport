@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import modele.Connexion;
+import modele.Etat;
 import modele.Joueur;
 import modele.Utilisateur;
 import vue.VueCalendrier;
@@ -21,7 +22,6 @@ import vue.VueProfilJoueur;
 import vue.VueTournoisJoueur;
 
 public class ControleurProfilJoueur implements ActionListener{
-	public enum Etat{DECONNECTER, EQUIPES, TOURNOIS, CLASSEMENT}
 	
 	private VueProfilJoueur vue;
 	private Etat etat;

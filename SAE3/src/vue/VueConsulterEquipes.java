@@ -24,7 +24,8 @@ import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 
 import controleur.ControleurConsulterEquipes;
-import controleur.ControleurConsulterEquipes.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 
 public class VueConsulterEquipes implements Vue{
@@ -339,21 +340,8 @@ public class VueConsulterEquipes implements Vue{
     }
 	
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} if (b.getText().equals("POULE 1")) {
-			return Etat.POULE1;
-		} if (b.getText().equals("POULE 2")) {
-			return Etat.POULE2;
-		} if (b.getText().equals("POULE 3")) {
-			return Etat.POULE3;
-		} if (b.getText().equals("POULE 4")) {
-			return Etat.POULE4;
-		} if (b.getText().equals("POULE FINALE")) {
-			return Etat.POULEF;
-		}
-		
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 	
 	// Ajouter le nom de tournoi à la liste

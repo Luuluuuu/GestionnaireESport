@@ -15,7 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import controleur.ControleurProfilJoueur;
-import controleur.ControleurProfilJoueur.Etat;
+import modele.EtatFactory;
+import modele.Etat;
 
 import javax.swing.JList;
 import java.awt.GridBagLayout;
@@ -270,19 +271,8 @@ public class VueProfilJoueur implements Vue{
 	}
 
 	public Etat getEtat(JButton b) {
-		if (b.getText() == "Se déconnecter") {
-			return Etat.DECONNECTER;
-		} else if (b.getText() == "Classement") {
-			Vue.desactiverBouton(btnClassement);
-			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Equipes") {
-			Vue.desactiverBouton(btnEquipes);
-			return Etat.EQUIPES;
-		} else if (b.getText() == "Tournois") {
-			Vue.desactiverBouton(btnTournois);
-		 	return Etat.TOURNOIS;
-		}
-		return null;
+		Etat etat = EtatFactory.creerEtat(b.getText());
+		return etat;
 	}
 
 	public void ajouterJoueur(String nomJoueur) {
