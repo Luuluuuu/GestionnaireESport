@@ -127,7 +127,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			this.vue.creerJoueur();
 		break;
 		case RECHERCHER:
-			if (this.vue.getTextRecherche()!="") {
+			if (!this.vue.getTextRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 			} else {
 				this.vue.setDefaultListModel();

@@ -130,7 +130,7 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 			VueERA.fermerFenetre(this.vue.fenetreERA);
 		break;
 		case RECHERCHER:
-			if (this.vue.getRecherche()!="") {
+			if (!this.vue.getRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 				this.vue.setNom("","");
 			} else {

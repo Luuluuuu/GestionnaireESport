@@ -120,7 +120,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			break;
 			
 		case RECHERCHER:
-			if (this.vue.getRecherche()!="") {
+			if (!this.vue.getRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 			} else {
 				this.vue.setDefaultListModel();

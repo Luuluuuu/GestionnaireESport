@@ -770,25 +770,25 @@ public class VueERA implements Vue{
 			return Etat.CREER;
 		} else if (b.getText().contains("Supprimer")) {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText().equals("Se déconnecter")) {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Calendrier") {
+		} else if (b.getText().equals("Calendrier")) {
 			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
-		} else if (b.getText() == "Joueurs") {
+		} else if (b.getText().equals("Joueurs")) {
 			Vue.desactiverBouton(btnJoueurs);
 			return Etat.JOUEURS;
-		} else if (b.getText() == "Equipes") {
+		} else if (b.getText().equals("Equipes")) {
 			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES ;
-		} else if (b.getText() == "Classement") {
+		} else if (b.getText().equals("Classement")) {
 		 	Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Rechercher") {
+		} else if (b.getText().equals("Rechercher")) {
 			return Etat.RECHERCHER;
-		} else if (b.getText() == "Valider") {
+		} else if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;
-		} else if (b.getText() == "Annuler") {
+		} else if (b.getText().equals("Annuler")) {
 			this.deselectionner();
 			return Etat.ANNULER;
 		} 
