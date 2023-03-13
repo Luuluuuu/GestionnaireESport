@@ -295,15 +295,15 @@ public class VueEquipe implements Vue{
 		GridBagLayout gbl_panelJoueurs = creerGridBagLayout(new int[] {250, 442, 0}, new int[]{335, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
 		panelJoueurs.setLayout(gbl_panelJoueurs);
 		
-		JPanel panel_12 = creerJPanel(panelJoueurs, Couleur.BLEU1);
-		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
-		flowLayout_2.setHgap(55);
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		flowLayout_2.setVgap(20);
-		GridBagConstraints gbc_panel_12 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelJoueurs.add(panel_12, gbc_panel_12);
+//		JPanel panel_12 = creerJPanel(panelJoueurs, Couleur.BLEU1);
+//		FlowLayout flowLayout_2 = (FlowLayout) panel_12.getLayout();
+//		flowLayout_2.setHgap(55);
+//		flowLayout_2.setAlignment(FlowLayout.LEFT);
+//		flowLayout_2.setVgap(20);
+//		GridBagConstraints gbc_panel_12 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
+//		panelJoueurs.add(panel_12, gbc_panel_12);
 		
-		creerJLabel(panel_12, "Liste des joueurs", 14);
+		//creerJLabel(panel_12, "Liste des joueurs", 14);
 		
 		panel_13 = creerJPanel(panelJoueurs, Couleur.BLEU1);
 		GridBagConstraints gbc_panel_13 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
@@ -314,6 +314,7 @@ public class VueEquipe implements Vue{
 		listeJoueurs = new JList<String>(modeleJoueurs);
 		listeJoueurs.setName("Joueurs");
 		listeJoueurs.setBackground(Couleur.BLEU1);
+		listeJoueurs.setForeground(Color.WHITE);
 		panel_13.add(listeJoueurs);
 		
 		JPanel panelValider = creerJPanel(panelModif, Couleur.BLEU1);
@@ -349,13 +350,17 @@ public class VueEquipe implements Vue{
 		btnClassement.addActionListener(controleur);
 	}
 	
+	public boolean listeVide(JList<String> list) {
+		return list.isSelectionEmpty();
+	}
+	
 	//JOUEURS
 	public void ajouterJoueur(String nom) {
 		this.modeleJoueurs.addElement(nom);
 	}
 	
 	public void viderModeleJoueurs() {
-		this.modeleJoueurs.clear();;
+		this.modeleJoueurs.clear();
 	}
 	
 	//EQUIPE
