@@ -715,7 +715,7 @@ public class VueCalendrier implements Vue{
 	}
 	
 	public boolean texteEstRempli(JTextField t) {
-		return !(t.getText()=="");
+		return !(t.getText().equals(""));
 	}
 	
 	public boolean comboEstSelectionne(JComboBox<String> c) {

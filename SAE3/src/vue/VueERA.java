@@ -796,11 +796,11 @@ public class VueERA implements Vue{
 	}
 
 	private void setEntite(JButton b) {
-		if (b.getName() == "Ecurie") {
+		if (b.getName().equals("Ecurie")) {
 			ControleurERA.entite = Entite.ECURIE;
-		} else if (b.getName() == "Responsable") {
+		} else if (b.getName().equals("Responsable")) {
 			ControleurERA.entite = Entite.RESPONSABLE;
-		} else if (b.getName() == "Arbitre") {
+		} else if (b.getName().equals("Arbitre")) {
 			ControleurERA.entite = Entite.ARBITRE;
 		}
 	}
