@@ -607,7 +607,7 @@ public class VueJoueur implements Vue{
 		this.listeJoueurs.clearSelection();
 	}	
 	
-	public void creerJoueur() {
+	public void afficherCreationJoueur() {
 		this.deselectionner();
 		VueJoueur.afficherPanel(panelModif);
 		VueJoueur.afficherTexte(this.titreModif, "Créer un joueur");
