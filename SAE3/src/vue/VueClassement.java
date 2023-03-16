@@ -40,12 +40,6 @@ public class VueClassement implements Vue{
 	private JList<String> listePodium;
 	private JComboBox<String> triJeux = new JComboBox<String>();
 	
-	private JButton btnCalendrier;
-	private JButton btnERA;
-	private JButton btnEquipes;
-	private JButton btnJoueurs;
-	private JButton btnTournois;
-	
 	public JFrame getFrame() {
 		return this.fenetreClassement;
 	}
@@ -80,6 +74,8 @@ public class VueClassement implements Vue{
 			header.getBtnEquipes().addActionListener(controleur);
 			header.getBtnJoueurs().addActionListener(controleur);
 			header.getBtnTournois().addActionListener(controleur);
+			Vue.desactiverBouton(header.getBtnClassement());
+
 		}
 
 		

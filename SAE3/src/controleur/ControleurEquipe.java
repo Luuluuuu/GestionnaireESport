@@ -137,13 +137,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					|| (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE
 						&& this.vue.getEcurie().equals("- Sélectionnez une écurie -"))) {
 				this.vue.estVide();
-				
 			} else {
 					// Instancie l'équipe créée
 					Equipe equipe = new Equipe(0, this.vue.getNom(), 0, this.vue.getNationalite(), 
 							ControleurConnexion.listeJeux.get(this.vue.getJeu()),
 							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
-					
 					//Vérifie si c'est une création ou une modification
 					if (this.vue.titreModif.getText().equals("Créer une équipe")) {
 						// SI CREATION
@@ -151,9 +149,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					} else {
 						// SINON MODIFICATION
 						this.modifierEquipe(equipe);
-					
 					}
-					
 					this.vue.creerEquipe();
 			}
 			break;
@@ -163,7 +159,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			VueConnexion fen = new VueConnexion();
 			fen.getFrame().setVisible(true);
 			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
-		break;
+			break;
 		
 		case CREER:
 			this.vue.creerEquipe();
@@ -174,39 +170,34 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			if (this.vue.getEquipeSelectionne() != null) {
 				// Récupération de l'équipe sélectionnée
 				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-
 				// Récupération de la connexion
 				Connexion c = Connexion.getInstance();
-				
 				try {
-					ResultSet rs = c.retournerRequete("SELECT * FROM SAE_INSCRIRE WHERE IDEQUIPE =" + equipe.getID());
-					
+					ResultSet rs = c.retournerRequete("SELECT * FROM SAE_INSCRIRE " + 
+							"WHERE IDEQUIPE =" + equipe.getID());
 					// Si l'équipe est déjà inscrite, la suppression est impossible
 					if (rs.next()) {
 						JOptionPane.showMessageDialog(null, "L'équipe sélectionnée ne peut pas être supprimée !",
 							      "Erreur à la suppression", JOptionPane.ERROR_MESSAGE);
-						
 					// Demande la confirmation de l'utilisateur
 					} else if (this.vue.confirmerSuppression() == 0) { 
 						// Suppression de l'équipe dans la vue et les hashmap
 						this.vue.supprimerEquipe();
 						ControleurConnexion.listeEquipes.remove(equipe.getNom());
-						
 						// Suppression des joueurs appartenant à l'équipe
 						c.executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE =" + equipe.getID());	
 						// Suppression de l'équipe
 						c.executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = " + equipe.getID());	
 						this.vue.creerEquipe();
 					}
-					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}
 			break;
+			
 		default:
 			break;
-			
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
 		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
@@ -226,12 +217,10 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());
-					
 					// Récupère l'écurie lorsque le profil est Gestionnaire
 					if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
 						this.vue.setEcurie(equipe.getEcurie().getNom());
 					}
-					
 					this.vue.setNationalite(equipe.getNationalite());
 					this.initialiserListeJoueurs(equipe);
 				}
@@ -266,7 +255,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			try {
 				if (rs.next()) {
 					equipe.setID(rs.getInt(1));
-					
 				}
 				rs.close();
 			} catch (SQLException e1) {
@@ -277,10 +265,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			int idEcurie;
 			if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
 				idEcurie = Utilisateur.IDCourant;
-				
 			} else {
 				idEcurie = ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID();
-				
 			}
 			
 			Connexion.getInstance().executerRequete("INSERT INTO sae_equipe VALUES (seq_equipeId.currval, '" 
@@ -307,17 +293,17 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		
 		// On ne modifie pas l'écurie de l'équipe lorsque le profil est Ecurie
 		if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-			Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '" + equipe.getNom() 
-					+ "', NATIONALITE = '" + this.vue.getNationalite() 
-					+ "', IDJEU = " + ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-					+ "WHERE IDEQUIPE = " + equipe.getID());
+			Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '" + equipe.getNom() + 
+					"', NATIONALITE = '" + this.vue.getNationalite() + 
+					"', IDJEU = " + ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID() + 
+					"WHERE IDEQUIPE = " + equipe.getID());
 			
 		} else {
-			Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '" + equipe.getNom() 
-					+ "', NATIONALITE = '" + this.vue.getNationalite() 
-					+ "', IDJEU = " + ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID()
-					+ ", IDECURIE = " + ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID() 
-					+ "WHERE IDEQUIPE = " + equipe.getID());
+			Connexion.getInstance().executerRequete("UPDATE SAE_EQUIPE SET NOMEQUIPE = '" + equipe.getNom() + 
+					"', NATIONALITE = '" + this.vue.getNationalite() + 
+					"', IDJEU = " + ControleurConnexion.listeJeux.get(this.vue.getJeu()).getID() + 
+					", IDECURIE = " + ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID() + 
+					"WHERE IDEQUIPE = " + equipe.getID());
 		
 		}
 		

@@ -33,10 +33,6 @@ public class VueTournoisJoueur implements Vue{
 	private JLabel photo;
 	private JLabel pseudo;
 	
-	// Header
-	private JButton btnProfil;
-	private JButton btnEquipes;
-	private JButton btnClassement;
 	
 	public JFrame getFrame() {
 		return this.fenetreTournoisJoueur;
@@ -49,12 +45,8 @@ public class VueTournoisJoueur implements Vue{
 		fenetreTournoisJoueur.setBounds(100, 100, 1400, 900);
 		fenetreTournoisJoueur.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panelDeconnexion = new JPanel();
-		panelDeconnexion.setBackground(Color.WHITE);
-		fenetreTournoisJoueur.getContentPane().add(panelDeconnexion, BorderLayout.NORTH);
-		panelDeconnexion.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-	
-		JButton btnDeconnexion =  creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
+		HeaderEcurie header = new HeaderEcurie(this.getFrame());
+
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -125,12 +117,6 @@ public class VueTournoisJoueur implements Vue{
 		gbc_panelMenu.gridy = 1;
 		panelHeader.add(panelMenu, gbc_panelMenu);
 		
-		btnProfil = creerBouton(panelMenu, "Mon profil", Couleur.BLEU2, 15);
-		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
-		btnTournois.setEnabled(false);
-		Vue.desactiverBouton(btnTournois);
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
 		JPanel panelProfil = new JPanel();
 		panelProfil.setBackground(Couleur.BLEU1);
@@ -280,11 +266,12 @@ public class VueTournoisJoueur implements Vue{
 		
 		// CONTROLEUR //
 		ControleurTournoisJoueur controleur = new ControleurTournoisJoueur(this);
-		
-		btnProfil.addActionListener(controleur);
-		btnEquipes.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
-		btnDeconnexion.addActionListener(controleur);
+		header.getBtnDeconnexion().addActionListener(controleur);
+		header.getBtnEquipes().addActionListener(controleur);
+		header.getBtnJoueurs().addActionListener(controleur);
+		header.getBtnClassement().addActionListener(controleur);
+		header.getBtnTournois().addActionListener(controleur);
+		Vue.desactiverBouton(header.getBtnTournois());
 	}
 	
 	public void setInfosJoueur(String cheminImage, String pseudo, String nomEquipe) {

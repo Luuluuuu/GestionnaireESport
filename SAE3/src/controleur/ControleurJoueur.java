@@ -25,6 +25,7 @@ import modele.Connexion;
 import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -124,7 +125,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
 		case CREER:
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 		break;
 		case RECHERCHER:
 			if (!this.vue.getTextRecherche().equals("")) {
@@ -132,7 +133,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			} else {
 				this.vue.setDefaultListModel();
 			}
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 			break;
 		case VALIDER:
 			Calendar dateAjd = Calendar.getInstance();
@@ -144,17 +145,21 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				e2.printStackTrace();
 			}
 			//Vérifie que tous les champs sont remplis
-			if(this.vue.getNom().equals("") || this.vue.getNomEquipe().equals("- S�lectionnez une �quipe -")
-					|| this.vue.getPrenom().equals("") || this.vue.getPseudo().equals("")
-					|| this.vue.getDateNaissance() == null || this.vue.getNationalite().equals("")) {
+			if(this.vue.getNom().equals("") 
+					|| this.vue.getNomEquipe().equals("- S�lectionnez une �quipe -")
+					|| this.vue.getPrenom().equals("") 
+					|| this.vue.getPseudo().equals("")
+					|| this.vue.getDateNaissance() == null 
+					|| this.vue.getNationalite().equals("")) {
 				this.vue.estVide();
 				b.setForeground(Color.RED);
 			} else if (dateRentree.compareTo(dateAjd.getTime())>0) {
 				this.vue.mauvaiseDate();
 			} else {
 				// Instancie un tournoi
-				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),this.vue.getPseudo(), this.vue.getDateNaissance(),
-						this.vue.getNationalite(),ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
+				Joueur joueur = new Joueur(0,this.vue.getNom(),this.vue.getPrenom(),
+						this.vue.getPseudo(), this.vue.getDateNaissance(),this.vue.getNationalite(),
+						ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
 				//Vérifie si c'est une creation ou une modification
 				if (this.vue.titreModif.getText().equals("Cr�er un joueur")) {
 					// SI CREATION
@@ -169,9 +174,13 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
-						Connexion.getInstance().executerRequete("INSERT INTO sae_joueur VALUES (seq_joueurid.currval, '"+joueur.getNom()
-						+"', '"+joueur.getPrenom()+"', '"+joueur.getPseudo()+"', TO_DATE('"+joueur.getDateNaissance()+"','DD/MM/YYYY'), '"
-						+joueur.getNationalite()+"', "+joueur.getEquipe().getID()+", '')");
+						Connexion.getInstance().executerRequete(
+							"INSERT INTO sae_joueur VALUES (seq_joueurid.currval, '" + joueur.getNom()+
+							"', '" + joueur.getPrenom() + 
+							"', '" + joueur.getPseudo() +
+							"', TO_DATE('" + joueur.getDateNaissance() + 
+							"','DD/MM/YYYY'), '" + joueur.getNationalite()+
+							"', "+joueur.getEquipe().getID()+", '')");
 						
 						ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(),joueur);
 						joueur.creerLogin(this.vue.getMotDePasse());
@@ -180,26 +189,28 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				} else {
 					// SINON MODIFICATION
 					joueur.setID(ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
-					Connexion.getInstance().executerRequete("UPDATE SAE_JOUEUR SET NOMJOUEUR = '"+joueur.getNom()+
-							"', PRENOMJOUEUR = '"+joueur.getPrenom()+"', PSEUDOJOUEUR = '"+joueur.getPseudo()+
-							"', DATENAISSANCE = TO_DATE('"+joueur.getDateNaissance()+"','DD/MM/YYYY'), NATIONALITE = '"+
-							joueur.getNationalite()+"', IDEQUIPE = "+ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()).getID()+
+					Connexion.getInstance().executerRequete("UPDATE SAE_JOUEUR SET NOMJOUEUR = '" + joueur.getNom() +
+							"', PRENOMJOUEUR = '"+joueur.getPrenom() +
+							"', PSEUDOJOUEUR = '"+joueur.getPseudo() +
+							"', DATENAISSANCE = TO_DATE('"+joueur.getDateNaissance() +
+							"','DD/MM/YYYY'), NATIONALITE = '" + joueur.getNationalite() +
+							"', IDEQUIPE = " + ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()).getID()+
 							" WHERE IDJOUEUR = "+joueur.getID());
 					// CREER IDENTIFIANTS JOUEUR
 					String identifiant = ((this.vue.getNom()+"."+this.vue.getPrenom()).replaceAll("\\s+", "_")).toLowerCase();
 					if (!(this.vue.getMotDePasse().isEmpty())) {
-						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+identifiant
-								+ "', MOTDEPASSE='"+this.vue.getMotDePasse().hashCode()+
-								"' WHERE IDJOUEUR = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='" + identifiant + 
+							"', MOTDEPASSE='"+this.vue.getMotDePasse().hashCode() +
+							"' WHERE IDJOUEUR = " + ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 					} else {
-						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='"+identifiant+
-						"' WHERE IDJOUEUR = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+						Connexion.getInstance().executerRequete("UPDATE SAE_USER SET LOGIN='" + identifiant +
+						"' WHERE IDJOUEUR = " + ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 					}
 					ControleurConnexion.listeJoueurs.remove(this.vue.getJoueurSelectionne());
 					ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(), joueur);
 					this.vue.modifierJoueur();
 				}
-					this.vue.creerJoueur();
+					this.vue.afficherCreationJoueur();
 					this.vue.viderMotDePasse();
 					b.setForeground(Color.WHITE);
 			}
@@ -212,10 +223,10 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		        	 String fileName = file.getName();
 		             if (fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".jpg")) {
 		            	 
-		            	 
 		                 // Le fichier sélectionné est une image au format PNG, JPEG ou JPG.
 		                   String fileExtension = fileName.substring(fileName.lastIndexOf("."));
-		                   String newFileName = this.vue.getPseudo() + fileExtension; //  ATTENTION SI LE PSEUDO PAS ENCORE REMPLIS CREE UNE IMAGE SANS NOM 
+		                   String newFileName = this.vue.getPseudo() + fileExtension; 
+		                   //  ATTENTION SI LE PSEUDO PAS ENCORE REMPLIS CREE UNE IMAGE SANS NOM 
 		                   File targetDirectory = new File(System.getProperty("user.dir")+"\\src\\photos\\");
 		                   if (!targetDirectory.exists()) { //Crée le repertoire si il existe pas
 		                     targetDirectory.mkdirs();
@@ -225,14 +236,16 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
-		                	   JOptionPane.showMessageDialog(null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+		                	   JOptionPane.showMessageDialog(
+		                			   null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 						   } 
 		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
 			                   File targetExisteFile = new File(targetDirectory, newFileName);
 			                   
 			                   // Suppression
 			                   if (!targetExisteFile.delete()) {
-			                	   JOptionPane.showMessageDialog(null, "L'image n'a pas pu être supprimée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			                	   JOptionPane.showMessageDialog(
+			                			   null, "L'image n'a pas pu être supprimée.", "Erreur", JOptionPane.ERROR_MESSAGE);
 			                	   
 			                   }
 			    			try {
@@ -242,7 +255,8 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 								e1.printStackTrace();
 							}
 							// TODO Auto-generated catch block
-			            	 JOptionPane.showMessageDialog(null, "Le fichier a �t� modifi�.", "Attention", JOptionPane.INFORMATION_MESSAGE);
+			            	 JOptionPane.showMessageDialog(
+			            			 null, "Le fichier a été modifié.", "Attention", JOptionPane.INFORMATION_MESSAGE);
 						}            	
 		                 //Afficher l'image qui vient d'être ajoutée
 		      	       	 ImageIcon imageIcon = new ImageIcon(targetFile.getAbsolutePath());
@@ -250,29 +264,28 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 		    			 Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 		    			 imageIcon = new ImageIcon(resizedImage);
 		    			 this.vue.photo.setIcon(imageIcon);
-		    			 
-		    			 
 		             } else {
-		            	 JOptionPane.showMessageDialog(null, "Le fichier s�lectionn� n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
+		            	 JOptionPane.showMessageDialog(
+		            	     null, "Le fichier sélectionné n'est pas une image au format PNG, JPEG ou JPG", "Erreur", JOptionPane.ERROR_MESSAGE);
 		             }
 		          // Le fichier sélectionné a été approuvé.    
 		        }
-		      	
 			break;
 		case SUPPRIMER:
 			if ((this.vue.getJoueurSelectionne()!=null && this.vue.confirmerSuppression()==0)) {
-				Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE idjoueur = "+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
-				Connexion.getInstance().executerRequete("delete sae_joueur where idjoueur="
-							+ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+				Connexion.getInstance().executerRequete("DELETE SAE_USER " + 
+						"WHERE idjoueur = " + ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
+				Connexion.getInstance().executerRequete("DELETE SAE_JOUEUR WHERE IDJOUEUR=" +
+							ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 				this.vue.supprimerJoueur();
 			}
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 			break;
 		default:
 			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
-		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
+		Vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 	
 	@Override
@@ -309,7 +322,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			}
 		}
 		if (!e.getValueIsAdjusting()) {
-			this.vue.activerBouton(this.vue.getBtnSupprimer());
+			Vue.activerBouton(this.vue.getBtnSupprimer());
         } 
 	}
 

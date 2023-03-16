@@ -96,19 +96,41 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 		case SUPPRIMER :
 			if (!(this.vue.getNom().isEmpty()) && this.vue.confirmer("suppression")==0) {
 				switch (entite) {
-				case ECURIE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDECURIE = "+ControleurConnexion.listeEcuries.get(this.vue.getNomSelectionneEcurie()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_ECURIE WHERE NOMECURIE = '"+this.vue.getNomSelectionneEcurie()+"'");
+					case ECURIE:
+					Connexion.getInstance().executerRequete("DELETE SAE_USER " + 
+						"WHERE IDECURIE = " + 
+						ControleurConnexion.listeEcuries.get(
+							this.vue.getNomSelectionneEcurie()
+						).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_ECURIE " + 
+							"WHERE NOMECURIE = '" +
+							this.vue.getNomSelectionneEcurie() + "'");
 					ControleurConnexion.listeEcuries.remove(this.vue.getNomSelectionneEcurie());
 					break;
 				case RESPONSABLE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDRESPONSABLE = "+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE WHERE IDRESPONSABLE = '"+ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable()).getID()+"'");
+					Connexion.getInstance().executerRequete("DELETE SAE_USER " + 
+						"WHERE IDRESPONSABLE = " +
+						ControleurConnexion.listeResponsables.get(
+							this.vue.getNomSelectionneResponsable()
+						).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_RESPONSABLE " + 
+						"WHERE IDRESPONSABLE = '" +
+						ControleurConnexion.listeResponsables.get(
+							this.vue.getNomSelectionneResponsable()
+						).getID() + "'");
 					ControleurConnexion.listeResponsables.remove(this.vue.getNomSelectionneResponsable());
 					break;
 				case ARBITRE:
-					Connexion.getInstance().executerRequete("DELETE SAE_USER WHERE IDARBITRE = "+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID());
-					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE WHERE IDARBITRE = '"+ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre()).getID()+"'");
+					Connexion.getInstance().executerRequete("DELETE SAE_USER " + 
+						"WHERE IDARBITRE = " +
+						ControleurConnexion.listeArbitres.get(
+							this.vue.getNomSelectionneArbitre()
+						).getID());
+					Connexion.getInstance().executerRequete("DELETE SAE_ARBITRE " + 
+						"WHERE IDARBITRE = '" +
+						ControleurConnexion.listeArbitres.get(
+							this.vue.getNomSelectionneArbitre()
+						).getID()+"'");
 					ControleurConnexion.listeArbitres.remove(this.vue.getNomSelectionneArbitre());
 					break;
 					
@@ -171,10 +193,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 			break;
 		default:
 		}
-		//désactive le bouton lorsque aucun élément n'est séléctionné
-		//if(this.vue.getNomListe(this.vue.getListeEcurie().getName()).equals("Ecurie")) {
-			//this.vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
-		//}
 		Vue.desactiverBouton(this.vue.getBtnSupprimerEcurie());
 	}
 
@@ -196,11 +214,15 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 					this.vue.setNomSelectionneEcurie();
 					break;
 				case RESPONSABLE:
-					Responsable r = ControleurConnexion.listeResponsables.get(this.vue.getNomSelectionneResponsable());
+					Responsable r = ControleurConnexion.listeResponsables.get(
+						this.vue.getNomSelectionneResponsable()
+					);
 					this.vue.setNomResponsable(r.getNom(),r.getPrenom());
 					break;
 				case ARBITRE:
-					Arbitre a = ControleurConnexion.listeArbitres.get(this.vue.getNomSelectionneArbitre());
+					Arbitre a = ControleurConnexion.listeArbitres.get(
+						this.vue.getNomSelectionneArbitre()
+					);
 					this.vue.setNomArbitre(a.getNom(),a.getPrenom());
 					break;
 				default:
@@ -208,10 +230,6 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 				}
 			}
 		}
-		//réactive le bouton lorsque un élément de la liste est cliqué
-		//if (!e.getValueIsAdjusting() && this.vue.getNomListeEcurie().equals("Ecurie")) {
-		//	this.vue.activerBouton(this.vue.getBtnSupprimerEcurie());
-        //} 
 		Vue.activerBouton(this.vue.getBtnSupprimerEcurie());
 	}
 	
@@ -289,16 +307,20 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 	// Crée un responsable en locale et sur la BDD
 	private void creerResponsable() {
 		if (!(this.vue.getMotDePasseResponsable().isEmpty())) {
-			if (!(ControleurConnexion.listeResponsables.containsKey(this.vue.getPrenomResponsable()+" "+this.vue.getNomResponsable()))) {
+			if (!(ControleurConnexion.listeResponsables.containsKey(
+					this.vue.getPrenomResponsable() +
+					" " + this.vue.getNomResponsable()))) {
 				try {
-					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_responsableid.NEXTVAL FROM dual");
+					ResultSet rs = Connexion.getInstance().retournerRequete(
+							"SELECT seq_responsableid.NEXTVAL FROM dual");
 					Responsable responsable = null;
 					if (rs.next()) {
 						// Récupère le responsable créé
 						responsable = new Responsable(rs.getInt(1),this.vue.getNomResponsable(),this.vue.getPrenomResponsable());
 												
 						Connexion.getInstance().executerRequete("INSERT INTO sae_responsable "
-								+ "VALUES(seq_responsableid.CURRVAL,'"+responsable.getNom()+"', '"+responsable.getPrenom()+"', 0)");
+								+ "VALUES(seq_responsableid.CURRVAL,'"+responsable.getNom() + 
+								"', '"+responsable.getPrenom() + "', 0)");
 
 						// Ajoute le responsable localement
 						ControleurConnexion.listeResponsables.put(responsable.getPrenomNom(), responsable);
@@ -362,7 +384,8 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 	// Crée un arbitre en locale et sur la BDD
 	private void creerArbitre() {
 		if (!(this.vue.getMotDePasseArbitre().isEmpty())) {
-			if (!(ControleurConnexion.listeArbitres.containsKey(this.vue.getPrenomArbitre()+" "+this.vue.getNomArbitre()))) {
+			if (!(ControleurConnexion.listeArbitres.containsKey(this.vue.getPrenomArbitre() +
+					" " + this.vue.getNomArbitre()))) {
 				try {
 					ResultSet rs = Connexion.getInstance().retournerRequete("SELECT seq_arbitreid.NEXTVAL FROM dual");
 					Arbitre arbitre = null;

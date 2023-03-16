@@ -50,17 +50,13 @@ public class VueERA implements Vue{
 	private JTextField prenomArbitre;
 	private JPasswordField mdpArbitre;
 	
-	private JButton btnCalendrier;
-	private JButton btnEquipes;
-	private JButton btnJoueurs;
-	private JButton btnClassement;
 	private JButton btnSupprimerEcurie;
 	private JButton btnSupprimerResponsable;
 	private JButton btnSupprimerArbitre;
 	private JButton btnRechercheEcurie;
 	private JButton ABtnRecherche;
 	private JButton btnRechercheResponsable;
-
+	private HeaderAdmin header;
 	public JFrame getFrame() {
 		return this.fenetreERA;
 	}
@@ -72,10 +68,8 @@ public class VueERA implements Vue{
 		fenetreERA.setBounds(100, 100, 1500, 880);
 		fenetreERA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		HeaderAdmin header = new HeaderAdmin(this.getFrame());
-
+		header = new HeaderAdmin(this.getFrame());
 		
-
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreERA.getContentPane().add(panelContenu, BorderLayout.CENTER);
@@ -472,6 +466,8 @@ public class VueERA implements Vue{
 		header.getBtnJoueurs().addActionListener(controleur);
 		header.getBtnCalendrier().addActionListener(controleur);
 		header.getBtnEcuries().addActionListener(controleur);
+		header.getBtnClassement().addActionListener(controleur);
+
 		Vue.desactiverBouton(header.getBtnEcuries());	
 		
 		// ECURIE //
@@ -560,11 +556,13 @@ public class VueERA implements Vue{
 		this.listeEcuries.clearSelection();
 	}
 	public void modifierResponsable() {
-		modeleResponsables.set(this.listeResponsables.getSelectedIndex(), this.getPrenomResponsable() + " " + this.getNomResponsable());
+		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),
+				this.getPrenomResponsable() + " " + this.getNomResponsable());
 		this.listeResponsables.clearSelection();
 	}
 	public void modifierArbitre() {
-		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getPrenomArbitre() + " " + this.getNomArbitre());
+		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),
+				this.getPrenomArbitre() + " " + this.getNomArbitre());
 		this.listeArbitres.clearSelection();
 	}
 	
@@ -742,8 +740,9 @@ public class VueERA implements Vue{
 	
 	// ETATS //
 	public Etat getEtat(JButton b) {
-		this.setEntite(b);
+		
 		if (b.getText().contains("Créer")) {
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.CREER;
 		} else if (b.getText().contains("Supprimer")) {
@@ -751,22 +750,25 @@ public class VueERA implements Vue{
 		} else if (b.getText().equals("Se déconnecter")) {
 			return Etat.DECONNECTER;
 		} else if (b.getText().equals("Calendrier")) {
-			Vue.desactiverBouton(btnCalendrier);
+			Vue.desactiverBouton(header.getBtnCalendrier());
 			return Etat.CALENDRIER;
 		} else if (b.getText().equals("Joueurs")) {
-			Vue.desactiverBouton(btnJoueurs);
+			Vue.desactiverBouton(header.getBtnJoueurs());
 			return Etat.JOUEURS;
 		} else if (b.getText().equals("Equipes")) {
-			Vue.desactiverBouton(btnEquipes);
+			Vue.desactiverBouton(header.getBtnEquipes());
 			return Etat.EQUIPES ;
 		} else if (b.getText().equals("Classement")) {
-		 	Vue.desactiverBouton(btnClassement);
+		 	Vue.desactiverBouton(header.getBtnClassement());
 			return Etat.CLASSEMENT;
 		} else if (b.getText().equals("Rechercher")) {
+			this.setEntite(b);
 			return Etat.RECHERCHER;
 		} else if (b.getText().equals("Valider")) {
+			this.setEntite(b);
 			return Etat.VALIDER;
 		} else if (b.getText().equals("Annuler")) {
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.ANNULER;
 		} 
