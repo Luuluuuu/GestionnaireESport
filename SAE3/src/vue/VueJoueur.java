@@ -13,7 +13,6 @@ import java.awt.Insets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -132,7 +131,7 @@ public class VueJoueur implements Vue{
 		recherche = creerJTextField(panelRecherche, 13, 15);
 		
 		btnRechercher = creerBouton(panelRecherche, "Rechercher", Couleur.BLEU2, 13);
-		desactiverBouton(btnRechercher);
+		Vue.desactiverBouton(btnRechercher);
 		rechercheEquipe(recherche);
 		
 		JPanel panelListe = creerJPanel(panelJoueur, Couleur.BLEU1);
@@ -158,7 +157,7 @@ public class VueJoueur implements Vue{
 		JButton btnCreer = creerBouton(panelBoutons, "Créer un nouveau joueur", Couleur.BLEU2, 13);
 		
 		btnSupprimer = creerBouton(panelBoutons, "Supprimer le joueur sélectionné", Couleur.GRIS, 13);
-		this.desactiverBouton(btnSupprimer);
+		Vue.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
@@ -480,12 +479,12 @@ public class VueJoueur implements Vue{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    desactiverBouton(btnRechercher);
+                	Vue.desactiverBouton(btnRechercher);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	activerBouton(btnRechercher);
+                	Vue.activerBouton(btnRechercher);
                 }
             }
         });
@@ -539,15 +538,7 @@ public class VueJoueur implements Vue{
         this.premierIndexEquipe();
         entreeEquipe.setForeground(new Color(0,0,0));
     }
-	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
-	
+
 	public Etat getEtat(JButton b) {
 		if (b.getText().equals("Créer un nouveau joueur")) {
 			return Etat.CREER;
