@@ -30,7 +30,7 @@ public class EtatFactory {
                 return Etat.VALIDER;
             case "Classement":
             	//désactivation puis réactivation du bouton classement après que la page soit ouverte lié au problème d'ouverture de fenêtre multiple
-            	VueCalendrier.desactiverBouton(VueCalendrier.getBtnClassement());
+            	//VueCalendrier.desactiverBouton(VueCalendrier.getBtnClassement());
                 return Etat.CLASSEMENT;
             case "Equipes":
                 return Etat.EQUIPES;

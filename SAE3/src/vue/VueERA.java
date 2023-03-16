@@ -50,17 +50,13 @@ public class VueERA implements Vue{
 	private JTextField prenomArbitre;
 	private JPasswordField mdpArbitre;
 	
-	private JButton btnCalendrier;
-	private JButton btnEquipes;
-	private JButton btnJoueurs;
-	private JButton btnClassement;
 	private JButton btnSupprimerEcurie;
 	private JButton btnSupprimerResponsable;
 	private JButton btnSupprimerArbitre;
 	private JButton btnRechercheEcurie;
 	private JButton ABtnRecherche;
 	private JButton btnRechercheResponsable;
-
+	private HeaderAdmin header;
 	public JFrame getFrame() {
 		return this.fenetreERA;
 	}
@@ -72,32 +68,7 @@ public class VueERA implements Vue{
 		fenetreERA.setBounds(100, 100, 1500, 880);
 		fenetreERA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(Couleur.BLEU1);
-		fenetreERA.getContentPane().add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
-		
-		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(Color.WHITE);
-		FlowLayout fl_panelMenu = (FlowLayout) panelMenu.getLayout();
-		fl_panelMenu.setAlignment(FlowLayout.RIGHT);
-		panelHeader.add(panelMenu);
-		
-		// Boutons de navigation
-		btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
-		JButton btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-		Vue.desactiverBouton(btnERA);
-		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		
-		JPanel panelDeconnexion = new JPanel();
-		panelDeconnexion.setBackground(Color.WHITE);
-		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
-		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
-		panelHeader.add(panelDeconnexion);
-		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
+		header = new HeaderAdmin(this.getFrame());
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -490,11 +461,14 @@ public class VueERA implements Vue{
 		Vue.desactiverBouton(btnSupprimerArbitre);
 		
 		ControleurERA controleur = new ControleurERA(this);
-		btnCalendrier.addActionListener(controleur);
-		btnEquipes.addActionListener(controleur);
-		btnJoueurs.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
-		btnDeconnexion.addActionListener(controleur);		
+		header.getBtnDeconnexion().addActionListener(controleur);
+		header.getBtnEquipes().addActionListener(controleur);
+		header.getBtnJoueurs().addActionListener(controleur);
+		header.getBtnCalendrier().addActionListener(controleur);
+		header.getBtnEcuries().addActionListener(controleur);
+		header.getBtnClassement().addActionListener(controleur);
+
+		Vue.desactiverBouton(header.getBtnEcuries());	
 		
 		// ECURIE //
 		btnRechercheEcurie.addActionListener(controleur);
@@ -764,8 +738,9 @@ public class VueERA implements Vue{
 	
 	// ETATS //
 	public Etat getEtat(JButton b) {
-		this.setEntite(b);
+		
 		if (b.getText().contains("Créer")) {
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.CREER;
 		} else if (b.getText().contains("Supprimer")) {
@@ -773,22 +748,25 @@ public class VueERA implements Vue{
 		} else if (b.getText().equals("Se déconnecter")) {
 			return Etat.DECONNECTER;
 		} else if (b.getText().equals("Calendrier")) {
-			Vue.desactiverBouton(btnCalendrier);
+			Vue.desactiverBouton(header.getBtnCalendrier());
 			return Etat.CALENDRIER;
 		} else if (b.getText().equals("Joueurs")) {
-			Vue.desactiverBouton(btnJoueurs);
+			Vue.desactiverBouton(header.getBtnJoueurs());
 			return Etat.JOUEURS;
 		} else if (b.getText().equals("Equipes")) {
-			Vue.desactiverBouton(btnEquipes);
+			Vue.desactiverBouton(header.getBtnEquipes());
 			return Etat.EQUIPES ;
 		} else if (b.getText().equals("Classement")) {
-		 	Vue.desactiverBouton(btnClassement);
+		 	Vue.desactiverBouton(header.getBtnClassement());
 			return Etat.CLASSEMENT;
 		} else if (b.getText().equals("Rechercher")) {
+			this.setEntite(b);
 			return Etat.RECHERCHER;
 		} else if (b.getText().equals("Valider")) {
+			this.setEntite(b);
 			return Etat.VALIDER;
 		} else if (b.getText().equals("Annuler")) {
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.ANNULER;
 		} 
