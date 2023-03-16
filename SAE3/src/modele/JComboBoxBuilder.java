@@ -1,7 +1,5 @@
 package modele;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -10,25 +8,15 @@ import javax.swing.JPanel;
 
 public class JComboBoxBuilder<T> {
     private final JComboBox<T> comboBox;
-    private JPanel panel;
 
     public JComboBoxBuilder(JPanel panel) {
-        comboBox = new JComboBox<>();
+        comboBox = new JComboBox<T>();
         panel.add(comboBox);
     }
-
-    public JComboBoxBuilder<T> setPolice(Font font) {
-        comboBox.setFont(font);
-        return this;
-    }
-
-    public JComboBoxBuilder<T> setTaille(int width, int height) {
-        comboBox.setPreferredSize(new Dimension(width, height));
-        return this;
-    }
-
-    public JComboBoxBuilder<T> addElement(T item) {
-        comboBox.addItem(item);
+    
+    public JComboBoxBuilder<T> setCustomComboBox(Font font, Dimension dimension) {
+    	comboBox.setFont(font);
+    	comboBox.setPreferredSize(dimension);
         return this;
     }
     

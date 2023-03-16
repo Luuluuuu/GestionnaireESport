@@ -6,7 +6,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 
 public class JListBuilder<T> {
     private final JList<T> liste;
@@ -16,24 +15,11 @@ public class JListBuilder<T> {
         panel.add(liste);
     }
 
- 
-	public JListBuilder<T> setNombreLigne(int count) {
-        liste.setVisibleRowCount(12);
-        return this;
-    }
-
-    public JListBuilder<T> setPolice(Font font) {
+    public JListBuilder<T> setCustomButton(int nbLigne, Font font, int hauteurCellule, int largeurCellule) {
+        liste.setVisibleRowCount(nbLigne);
         liste.setFont(font);
-        return this;
-    }
-
-    public JListBuilder<T> setHauteurCellule(int height) {
-        liste.setFixedCellHeight(height);
-        return this;
-    }
-
-    public JListBuilder<T> setLargeurCellule(int width) {
-        liste.setFixedCellWidth(width);
+        liste.setFixedCellHeight(hauteurCellule);
+        liste.setFixedCellWidth(largeurCellule);
         return this;
     }
 
@@ -45,4 +31,3 @@ public class JListBuilder<T> {
         return new JScrollPane(liste);
     }
 }
-

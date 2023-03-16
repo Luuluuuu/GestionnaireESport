@@ -131,12 +131,7 @@ public class VueCalendrier implements Vue{
 		panelTournoi.add(panelListe, gbc_panelListe);
 		
 		modeleTournois = new DefaultListModel<String>();
-		listeTournois = new JListBuilder<String>(modeleTournois, panelListe)
-			    .setNombreLigne(12)
-			    .setPolice(new Font("Roboto", Font.PLAIN, 15))
-			    .setHauteurCellule(50)
-			    .setLargeurCellule(600)
-			    .build();
+		listeTournois = new JListBuilder<String>(modeleTournois, panelListe).setCustomButton(12, new Font("Roboto", Font.PLAIN, 15), 50, 600).build();
 		JScrollPane scrollPane = new JScrollPane(listeTournois);
 		panelListe.add(scrollPane);
 		
@@ -371,14 +366,11 @@ public class VueCalendrier implements Vue{
 		gbc_panel_3.gridy = 0;
 		panelEchelle.add(panel_3, gbc_panel_3);
 		
-		entreeEchelle = new JComboBoxBuilder<String>(panel_3)
-			    .setPolice(new Font("Roboto", Font.PLAIN, 11))
-			    .setTaille(205, 20)
-			    .addElement("- Sélectionnez une échelle -")
-			    .addElement("locale")
-			    .addElement("nationale")
-			    .addElement("internationale")
-			    .build();
+		entreeEchelle = new JComboBoxBuilder<String>(panel_3).setCustomComboBox(new Font("Roboto", Font.PLAIN, 11), new Dimension(205, 20)).build();
+		entreeEchelle.addItem("- Sélectionnez une échelle -");
+		entreeEchelle.addItem("locale");
+		entreeEchelle.addItem("nationale");
+		entreeEchelle.addItem("internationale");
 		
 		JPanel panelResponsable = new JPanel();
 		panelResponsable.setBackground(Couleur.BLEU1);
@@ -541,15 +533,7 @@ public class VueCalendrier implements Vue{
 		btnValider.setBackground(Couleur.VERT);
 		panelValider.add(btnValider);
 		
-		JButton btnAnnuler = new JButtonBuilder(panelValider)
-		        .setText("Annuler")
-		        .setX(0)
-		        .setY(0)
-		        .setTaille(100,30)
-		        .setPremierPlan(Color.WHITE)
-		        .setPolice(new Font("Roboto", Font.BOLD, 13))
-		        .setFondEcran(Couleur.GRIS)
-		        .build();
+		JButton btnAnnuler = new JButtonBuilder(panelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
 		// CONTROLEUR
 		ControleurCalendrier controleur = new ControleurCalendrier(this);
