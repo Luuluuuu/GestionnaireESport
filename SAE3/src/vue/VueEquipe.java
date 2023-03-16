@@ -80,41 +80,33 @@ public class VueEquipe implements Vue{
 		ControleurEquipe controleur = new ControleurEquipe(this);
 		
 		// HEADER //
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(Couleur.BLEU1);
-		fenetreEquipe.getContentPane().add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
-		
-		JPanel panelMenu = creerJPanel(panelHeader, Color.WHITE);
-		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
+
+
 		// Boutons du menu
 		if (ControleurEquipe.estProfil("Gestionnaire")) {
-			btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
-			btnCalendrier.addActionListener(controleur);
+			HeaderAdmin header = new HeaderAdmin(this.getFrame());
+			header.getBtnDeconnexion().addActionListener(controleur);
+			header.getBtnEquipes().addActionListener(controleur);
+			header.getBtnJoueurs().addActionListener(controleur);
+			header.getBtnClassement().addActionListener(controleur);
 
-			btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-			btnERA.addActionListener(controleur);
-			
+			header.getBtnCalendrier().addActionListener(controleur);
+			header.getBtnEcuries().addActionListener(controleur);
+			Vue.desactiverBouton(header.getBtnEquipes());
 		}
 
-		JButton btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		Vue.desactiverBouton(btnEquipes);
-		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
 		if (ControleurEquipe.estProfil("Ecurie")) {
-			btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
-			btnTournois.addActionListener(controleur);
+			HeaderEcurie header = new HeaderEcurie(this.getFrame());
+			header.getBtnDeconnexion().addActionListener(controleur);
+			header.getBtnEquipes().addActionListener(controleur);
+			header.getBtnJoueurs().addActionListener(controleur);
+			header.getBtnClassement().addActionListener(controleur);
 			
+			header.getBtnTournois().addActionListener(controleur);
 		}
 		
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
 		
-		JPanel panelDeconnexion = creerJPanel(panelHeader, Color.WHITE);
-		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
-		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
-		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
-		
+
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreEquipe.getContentPane().add(panelContenu, BorderLayout.CENTER);
@@ -333,7 +325,6 @@ public class VueEquipe implements Vue{
 		btnValider.addActionListener(controleur);
 		
 		// DECONNEXION
-		btnDeconnexion.addActionListener(controleur);
 		
 		// LISTE
 		this.listeEquipes.addListSelectionListener((ListSelectionListener) controleur);
@@ -342,12 +333,6 @@ public class VueEquipe implements Vue{
 		
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
-		btnSupprimer.addActionListener(controleur);
-		btnRechercher.addActionListener(controleur);
-		
-
-		btnJoueurs.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
 	}
 	
 	public boolean listeVide(JList<String> list) {

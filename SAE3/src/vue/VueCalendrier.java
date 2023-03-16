@@ -77,7 +77,7 @@ public class VueCalendrier implements Vue{
 		
 
 		HeaderAdmin header = new HeaderAdmin(this.getFrame());
-		
+		Vue.desactiverBouton(header.getBtnCalendrier());
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
