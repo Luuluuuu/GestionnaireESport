@@ -2,6 +2,7 @@ package controleur;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -162,13 +163,17 @@ public class ControleurConnexion implements ActionListener {
 	private void intialiserListePoules() {
 		ControleurConnexion.listePoulesID = new HashMap<Integer, Poule>();
 		try {
+			// Sélectionne toutes les poules
 			ResultSet rs = Connexion.getInstance().retournerRequete("SELECT * FROM SAE_POULE");
 			while (rs.next()) {
 				Poule poule = new Poule(rs.getInt(1));
 				ControleurConnexion.listePoulesID.put(rs.getInt(1), poule);
-
-				Statement st = Connexion.getInstance().getStatement();
-				ResultSet rs2 = st.executeQuery("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE = "+poule.getID());
+				
+				// Sélectionne les équipes associés à la poule
+				PreparedStatement st = Connexion.getInstance().getPreparedStatement("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE = ?");
+				st.setInt(1, poule.getID());
+				ResultSet rs2 = st.executeQuery();
+				
 				while (rs2.next()) {
 					poule.ajouterEquipe(ControleurConnexion.listeEquipesID.get(rs2.getInt(1)));
 				}

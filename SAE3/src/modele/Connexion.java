@@ -2,9 +2,11 @@ package modele;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -18,7 +20,7 @@ public class Connexion {
 	
 	private Connexion() {
 		String login = "llf4365a";
-		String mdpasse = "$iutinfo";
+		String mdpasse = new String(Base64.getDecoder().decode("JGl1dGluZm8="));
 		String connectString = "jdbc:oracle:thin:@telline.univ-tlse3.fr:1521:ETUPRE";
 	
 		// Chargement du driver Oracle et enregistrement
@@ -85,6 +87,16 @@ public class Connexion {
 	public CallableStatement getCallableStatement(String str) {
 		try {
 			return Connexion.connx.prepareCall(str);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public PreparedStatement getPreparedStatement(String req) {
+		try {
+			return Connexion.connx.prepareStatement(req);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

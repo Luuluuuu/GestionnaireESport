@@ -27,6 +27,7 @@ public class Utilisateur {
     	case ARBITRE:
     		Connexion.getInstance().executerRequete("INSERT INTO SAE_USER (IDUSER,LOGIN,MOTDEPASSE,IDARBITRE) VALUES (SEQ_USERID.NEXTVAL,'"
         			+ identifiant + "','" + mdp.hashCode() +"',"+ ID+")");
+    		break;
 		default:
 			break;
     	}

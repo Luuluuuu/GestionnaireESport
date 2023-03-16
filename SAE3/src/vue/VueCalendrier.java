@@ -34,8 +34,11 @@ import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import controleur.ControleurCalendrier;
 import modele.Etat;
-import modele.BoutonBuilder;
+import modele.JButtonBuilder;
 import modele.EtatFactory;
+import modele.JButtonBuilder;
+import modele.JComboBoxBuilder;
+import modele.JListBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +74,7 @@ public class VueCalendrier implements Vue{
 		fenetreCalendrier = new JFrame();
 		fenetreCalendrier.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreCalendrier.setResizable(false);
-		fenetreCalendrier.setBounds(100, 100, 1400, 900);
+		fenetreCalendrier.setBounds(100, 100, 1500, 880);
 		fenetreCalendrier.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// HEADER //
 		
@@ -128,11 +131,12 @@ public class VueCalendrier implements Vue{
 		panelTournoi.add(panelListe, gbc_panelListe);
 		
 		modeleTournois = new DefaultListModel<String>();
-		listeTournois = new JList<String>(modeleTournois);
-		listeTournois.setVisibleRowCount(12);
-		listeTournois.setFont(new Font("Roboto", Font.PLAIN, 15));
-		listeTournois.setFixedCellHeight(50);
-		listeTournois.setFixedCellWidth(600);
+		listeTournois = new JListBuilder<String>(modeleTournois, panelListe)
+			    .setNombreLigne(12)
+			    .setPolice(new Font("Roboto", Font.PLAIN, 15))
+			    .setHauteurCellule(50)
+			    .setLargeurCellule(600)
+			    .build();
 		JScrollPane scrollPane = new JScrollPane(listeTournois);
 		panelListe.add(scrollPane);
 		
@@ -367,14 +371,14 @@ public class VueCalendrier implements Vue{
 		gbc_panel_3.gridy = 0;
 		panelEchelle.add(panel_3, gbc_panel_3);
 		
-		entreeEchelle = new JComboBox<String>();
-		entreeEchelle.setFont(new Font("Roboto", Font.PLAIN, 11));
-		entreeEchelle.setPreferredSize(new Dimension(205, 20));
-		panel_3.add(entreeEchelle);
-		entreeEchelle.addItem("- Sélectionnez une échelle -");
-		entreeEchelle.addItem("locale");
-		entreeEchelle.addItem("nationale");
-		entreeEchelle.addItem("internationale");
+		entreeEchelle = new JComboBoxBuilder<String>(panel_3)
+			    .setPolice(new Font("Roboto", Font.PLAIN, 11))
+			    .setTaille(205, 20)
+			    .addElement("- Sélectionnez une échelle -")
+			    .addElement("locale")
+			    .addElement("nationale")
+			    .addElement("internationale")
+			    .build();
 		
 		JPanel panelResponsable = new JPanel();
 		panelResponsable.setBackground(Couleur.BLEU1);
@@ -537,17 +541,15 @@ public class VueCalendrier implements Vue{
 		btnValider.setBackground(Couleur.VERT);
 		panelValider.add(btnValider);
 		
-		JButton btnAnnuler = new BoutonBuilder()
-		        .setTexte("Annuler")
+		JButton btnAnnuler = new JButtonBuilder(panelValider)
+		        .setText("Annuler")
 		        .setX(0)
 		        .setY(0)
-		        .setLargeur(100)
-		        .setHauteur(30)
-		        .setCouleurTexte(Color.WHITE)
+		        .setTaille(100,30)
+		        .setPremierPlan(Color.WHITE)
 		        .setPolice(new Font("Roboto", Font.BOLD, 13))
-		        .setCouleurFond(Couleur.GRIS)
-		        .creer();
-		panelValider.add(btnAnnuler);
+		        .setFondEcran(Couleur.GRIS)
+		        .build();
 		
 		// CONTROLEUR
 		ControleurCalendrier controleur = new ControleurCalendrier(this);
@@ -713,7 +715,7 @@ public class VueCalendrier implements Vue{
 	}
 	
 	public boolean texteEstRempli(JTextField t) {
-		return !(t.getText()=="");
+		return !(t.getText().equals(""));
 	}
 	
 	public boolean comboEstSelectionne(JComboBox<String> c) {

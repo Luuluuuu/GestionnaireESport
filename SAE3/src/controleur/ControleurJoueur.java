@@ -127,7 +127,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			this.vue.creerJoueur();
 		break;
 		case RECHERCHER:
-			if (this.vue.getTextRecherche()!="") {
+			if (!this.vue.getTextRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 			} else {
 				this.vue.setDefaultListModel();
@@ -225,11 +225,16 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 
 		                   try { //Enregistrer l'image
 		                	   Files.copy(file.toPath(), targetFile.toPath());
-		                	   JOptionPane.showMessageDialog(null, "Le fichier a �t� enregistr�.", "Succ�s", JOptionPane.INFORMATION_MESSAGE);
+		                	   JOptionPane.showMessageDialog(null, "Le fichier a été enregistré.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 						   } 
 		                   catch (Exception ex) { // Si l'image existe deja, la supprime pour ajouter la nouvelle
 			                   File targetExisteFile = new File(targetDirectory, newFileName);
-			                   targetExisteFile.delete(); //Suppression
+			                   
+			                   // Suppression
+			                   if (!targetExisteFile.delete()) {
+			                	   JOptionPane.showMessageDialog(null, "L'image n'a pas pu être supprimée.", "Erreur", JOptionPane.ERROR_MESSAGE);
+			                	   
+			                   }
 			    			try {
 								Files.copy(file.toPath(), targetFile.toPath());	//Ajout
 							} catch (IOException e1) {
@@ -262,8 +267,9 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 				this.vue.supprimerJoueur();
 			}
 			this.vue.creerJoueur();
+			break;
 		default:
-			
+			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
 		this.vue.desactiverBouton(this.vue.getBtnSupprimer());

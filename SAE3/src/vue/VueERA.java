@@ -526,22 +526,6 @@ public class VueERA implements Vue{
 	public static void fermerFenetre(JFrame f) {f.setVisible(false);}
 	
 	// AJOUTER UNE ENTITE //
-	public void ajouterEntite(String e) {
-		switch (ControleurERA.entite) {
-		case ECURIE:
-			ajouterEcurie(e);
-			break;
-		case RESPONSABLE:
-			ajouterResponsable(e);
-			break;
-		case ARBITRE:
-			ajouterArbitre(e);
-			break;
-		default:
-		}
-		// Recharge la liste en cas de liste en état de recherche
-		this.filtrerRecherche();
-	}
 	public void ajouterEcurie(String e) {
 		modeleEcuries.addElement(e);
 	}
@@ -556,46 +540,21 @@ public class VueERA implements Vue{
 	public void supprimerEntite() {
 		switch (ControleurERA.entite) {
 		case ECURIE:
-			supprimerEcurie();
+			modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
 			break;
 		case RESPONSABLE:
-			supprimerResponsable();
+			modeleResponsables.removeElement(this.listeResponsables.getSelectedValue());
 			break;
 		case ARBITRE:
-			supprimerArbitre();
+			modeleArbitres.removeElement(this.listeArbitres.getSelectedValue());
 			break;
 		default:
 		}
 		// Recharge la liste en cas de liste en état de recherche
 		this.filtrerRecherche();
-	}
-	public void supprimerEcurie() {
-		modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
-	}
-	public void supprimerResponsable() {
-		modeleResponsables.removeElement(this.listeResponsables.getSelectedValue());
-	}
-	public void supprimerArbitre() {
-		modeleArbitres.removeElement(this.listeArbitres.getSelectedValue());
 	}
 	
 	// MODIFIER UNE ENTITE //
-	public void modifierEntite() {
-		switch (ControleurERA.entite) {
-		case ECURIE:
-			modifierEcurie();
-			break;
-		case RESPONSABLE:
-			modifierResponsable();
-			break;
-		case ARBITRE:
-			modifierArbitre();
-			break;
-		default:
-		}
-		// Recharge la liste en cas de liste en état de recherche
-		this.filtrerRecherche();
-	}
 	public void modifierEcurie() {
 		modeleEcuries.set(this.listeEcuries.getSelectedIndex(),this.getNomEcurie());
 		this.listeEcuries.clearSelection();
@@ -789,25 +748,25 @@ public class VueERA implements Vue{
 			return Etat.CREER;
 		} else if (b.getText().contains("Supprimer")) {
 			return Etat.SUPPRIMER;
-		} else if (b.getText() == "Se déconnecter") {
+		} else if (b.getText().equals("Se déconnecter")) {
 			return Etat.DECONNECTER;
-		} else if (b.getText() == "Calendrier") {
+		} else if (b.getText().equals("Calendrier")) {
 			Vue.desactiverBouton(btnCalendrier);
 			return Etat.CALENDRIER;
-		} else if (b.getText() == "Joueurs") {
+		} else if (b.getText().equals("Joueurs")) {
 			Vue.desactiverBouton(btnJoueurs);
 			return Etat.JOUEURS;
-		} else if (b.getText() == "Equipes") {
+		} else if (b.getText().equals("Equipes")) {
 			Vue.desactiverBouton(btnEquipes);
 			return Etat.EQUIPES ;
-		} else if (b.getText() == "Classement") {
+		} else if (b.getText().equals("Classement")) {
 		 	Vue.desactiverBouton(btnClassement);
 			return Etat.CLASSEMENT;
-		} else if (b.getText() == "Rechercher") {
+		} else if (b.getText().equals("Rechercher")) {
 			return Etat.RECHERCHER;
-		} else if (b.getText() == "Valider") {
+		} else if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;
-		} else if (b.getText() == "Annuler") {
+		} else if (b.getText().equals("Annuler")) {
 			this.deselectionner();
 			return Etat.ANNULER;
 		} 
@@ -815,11 +774,11 @@ public class VueERA implements Vue{
 	}
 
 	private void setEntite(JButton b) {
-		if (b.getName() == "Ecurie") {
+		if (b.getName().equals("Ecurie")) {
 			ControleurERA.entite = Entite.ECURIE;
-		} else if (b.getName() == "Responsable") {
+		} else if (b.getName().equals("Responsable")) {
 			ControleurERA.entite = Entite.RESPONSABLE;
-		} else if (b.getName() == "Arbitre") {
+		} else if (b.getName().equals("Arbitre")) {
 			ControleurERA.entite = Entite.ARBITRE;
 		}
 	}

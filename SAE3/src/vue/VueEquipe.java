@@ -73,7 +73,7 @@ public class VueEquipe implements Vue{
 		fenetreEquipe = new JFrame();
 		fenetreEquipe.getContentPane().setBackground(Couleur.BLEU1);
 		fenetreEquipe.setResizable(false);
-		fenetreEquipe.setBounds(100, 100, 1400, 900);
+		fenetreEquipe.setBounds(100, 100, 1500, 880);
 		fenetreEquipe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// CONTROLEUR

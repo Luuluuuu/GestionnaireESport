@@ -3,6 +3,7 @@ package controleur;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -180,12 +181,14 @@ public class ControleurRentrerPoints implements ActionListener, ListSelectionLis
 					int estGenere = cst.getInt(1);
 					
 					if (estGenere == 1) {
-						
 						ResultSet rs = Connexion.getInstance().retournerRequete("SELECT IDPOULE FROM SAE_POULE WHERE IDPOULE = SEQ_POULEID.CURRVAL");
 						Poule pouleFinale = new Poule(rs.getInt(1));
 						
-						Statement st = Connexion.getInstance().getStatement();
-						ResultSet rs2 = st.executeQuery("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE = "+pouleFinale.getID());
+						// Récupère les équipes de la poule finale
+						PreparedStatement st = Connexion.getInstance().getPreparedStatement("SELECT IDEQUIPE FROM SAE_COMPOSER WHERE IDPOULE =  ?");
+						st.setInt(1, pouleFinale.getID());
+						ResultSet rs2 = st.executeQuery();
+						
 						while (rs2.next()) {
 							pouleFinale.ajouterEquipe(ControleurConnexion.listeEquipesID.get(rs2.getInt(1)));
 						}
