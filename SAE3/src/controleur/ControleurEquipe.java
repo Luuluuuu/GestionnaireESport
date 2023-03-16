@@ -92,31 +92,31 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 		
 		case ECURIE :
 			VueERA fenERA = new VueERA();
 			fenERA.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 		
 		case JOUEURS :
 			VueJoueur fenJoueur = new VueJoueur();
 			fenJoueur.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 		
 		case TOURNOIS:
 			VueInscriptionTournoi fenTournoi = new VueInscriptionTournoi();
 			fenTournoi.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);			
+			VueEquipe.fermerFenetre(this.vue.getFrame());			
 			break;
 			
 		case CLASSEMENT :
 			VueClassement fenClassement = new VueClassement();
 			fenClassement.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 			
 		case RECHERCHER:
@@ -143,7 +143,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 							ControleurConnexion.listeJeux.get(this.vue.getJeu()),
 							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
 					//Vérifie si c'est une création ou une modification
-					if (this.vue.titreModif.getText().equals("Créer une équipe")) {
+					if (this.vue.getTitreModification().getText().equals("Créer une équipe")) {
 						// SI CREATION
 						this.creerEquipe(equipe);
 					} else {
@@ -158,7 +158,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();
 			fen.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 		
 		case CREER:
@@ -213,7 +213,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			switch(list.getName()) {
 			case "Equipe":
 				if (!(list.isSelectionEmpty())) {
-					VueEquipe.afficherTexte(this.vue.titreModif, "Modifier une équipe");
+					VueEquipe.afficherTexte(this.vue.getTitreModification(), "Modifier une équipe");
 					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
 					this.vue.setNomEquipe(equipe.getNom());
 					this.vue.setJeu(equipe.getNomJeu());
@@ -238,7 +238,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 					fenJoueur.setPseudoJoueur(joueur.getPseudo());
 					fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
 					fenJoueur.setNationaliteJoueur(joueur.getNationalite());
-					VueEquipe.fermerFenetre(this.vue.fenetreEquipe);
+					VueEquipe.fermerFenetre(this.vue.getFrame());
 			    }
 			}
 		}
