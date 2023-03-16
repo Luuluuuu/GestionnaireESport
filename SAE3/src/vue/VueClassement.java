@@ -80,6 +80,8 @@ public class VueClassement implements Vue{
 			header.getBtnEquipes().addActionListener(controleur);
 			header.getBtnJoueurs().addActionListener(controleur);
 			header.getBtnTournois().addActionListener(controleur);
+			Vue.desactiverBouton(header.getBtnClassement());
+
 		}
 
 		

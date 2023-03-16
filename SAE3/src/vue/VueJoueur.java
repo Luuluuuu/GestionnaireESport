@@ -60,14 +60,10 @@ public class VueJoueur implements Vue{
 	private DefaultComboBoxModel<String> modeleEquipes = new DefaultComboBoxModel<String>();;
 	private JComboBox<String> entreeEquipe;
 
-	private JButton btnCalendrier;
-	private JButton btnERA;
-	private JButton btnEquipes;
-	private JButton btnTournois;
-	private JButton btnClassement;
 	private JButton btnSupprimer;
 	private JButton btnRechercher;
-	
+	private HeaderAdmin headerA;
+	private HeaderEcurie header;
 	public JFrame getFrame() {
 		return this.fenetreJoueur;
 	}
@@ -86,39 +82,26 @@ public class VueJoueur implements Vue{
 		Image img = new ImageIcon(this.getClass().getResource("photo.jpg")).getImage();
 		
 		// HEADER //
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(Couleur.BLEU1);
-		fenetreJoueur.getContentPane().add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
-		
-		JPanel panelMenu = creerJPanel(panelHeader, Color.WHITE);
-		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
 		// Boutons du Header
 		if (ControleurJoueur.estProfil("Gestionnaire")) {
-			btnCalendrier = creerBouton(panelMenu, "Calendrier", Couleur.BLEU2, 15);
-			btnCalendrier.addActionListener(controleur);
-			
-			btnERA = creerBouton(panelMenu, "Ecuries / Responsables / Arbitres", Couleur.BLEU2, 15);
-			btnERA.addActionListener(controleur);
+			headerA = new HeaderAdmin(this.getFrame());
+			headerA.getBtnDeconnexion().addActionListener(controleur);
+			headerA.getBtnEquipes().addActionListener(controleur);
+			headerA.getBtnCalendrier().addActionListener(controleur);
+			headerA.getBtnEcuries().addActionListener(controleur);
+			headerA.getBtnClassement().addActionListener(controleur);
+			Vue.desactiverBouton(headerA.getBtnJoueurs());
 		}
-		
-		btnEquipes = creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		JButton btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		Vue.desactiverBouton(btnJoueurs); // Désactivé car amène à la page courante
 		
 		if (ControleurJoueur.estProfil("Ecurie")) {
-			btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
-			btnTournois.addActionListener(controleur);
+			header = new HeaderEcurie(this.getFrame());
+			header.getBtnDeconnexion().addActionListener(controleur);
+			header.getBtnEquipes().addActionListener(controleur);
+			header.getBtnTournois().addActionListener(controleur);
+			header.getBtnClassement().addActionListener(controleur);
+			Vue.desactiverBouton(header.getBtnJoueurs());
 		}
 		
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		
-		JPanel panelDeconnexion = creerJPanel(panelHeader, Color.WHITE);
-		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
-		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
-		
-		JButton btnDeconnexion = creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -396,10 +379,7 @@ public class VueJoueur implements Vue{
 		btnValider.addActionListener(controleur);
 		btnCreer.addActionListener(controleur);
 		btnRechercher.addActionListener(controleur);
-		btnEquipes.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
 		// DECONNEXION
-		btnDeconnexion.addActionListener(controleur);
 		// GESTION DES JOUEURS
 		this.listeJoueurs.addListSelectionListener((ListSelectionListener) controleur);
 		btnSupprimer.addActionListener(controleur);
@@ -578,25 +558,33 @@ public class VueJoueur implements Vue{
 		} else if (b.getText().equals("Supprimer le joueur sélectionné")) {
 			return Etat.SUPPRIMER;
 		} else if (b.getText().equals("Ecuries / Responsables / Arbitres")) {
-			Vue.desactiverBouton(btnERA);
+			Vue.desactiverBouton(headerA.getBtnEcuries());
 			return Etat.ECURIE; 
 		} else if (b.getText().equals("Valider")) {
 			return Etat.VALIDER;
 		} else if (b.getText().equals("Calendrier")) {
-			Vue.desactiverBouton(btnCalendrier);
+			Vue.desactiverBouton(headerA.getBtnCalendrier());
 			return Etat.CALENDRIER;
 		} else if (b.getText().equals("Tournois")) {
-			Vue.desactiverBouton(btnTournois);
+			Vue.desactiverBouton(header.getBtnTournois());
 			return Etat.TOURNOIS;
 		}else if (b.getText().equals("Rechercher")) {
 			return Etat.RECHERCHER;
 		}else if (b.getText().equals("Equipes")) {
-			Vue.desactiverBouton(btnEquipes);
+			if (ControleurJoueur.estProfil("Gestionnaire")) {
+				Vue.desactiverBouton(headerA.getBtnEquipes());
+				}else {
+				Vue.desactiverBouton(header.getBtnEquipes());
+				}
 		 	return Etat.EQUIPES;
 		}else if (b.getText().equals("Choisir une photo")) {
 			return Etat.PHOTO;
 		} else if (b.getText().equals("Classement")) {
-			Vue.desactiverBouton(btnClassement);
+			if (ControleurJoueur.estProfil("Gestionnaire")) {
+				Vue.desactiverBouton(headerA.getBtnClassement());
+				}else {
+				Vue.desactiverBouton(header.getBtnClassement());
+				}
 			return Etat.CLASSEMENT;
 		}
 		

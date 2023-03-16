@@ -38,10 +38,6 @@ public class VueInscriptionTournoi implements Vue{
 	private JList<String> listeEquipes;
 	private JComboBox<String> selectionJeu;
 	
-	private JButton btnClassement;
-	private JButton btnEquipes;
-	private JButton btnJoueurs;
-	
 	public JFrame getFrame() {
 		return this.fenetreInscriptionTournoi;
 	}
@@ -57,30 +53,12 @@ public class VueInscriptionTournoi implements Vue{
 		ControleurInscriptionTournoi controleur = new ControleurInscriptionTournoi(this);
 		
 		// HEADER //
-		JPanel panelHeader = new JPanel();
-		panelHeader.setBackground(Couleur.BLEU1);
-		fenetreInscriptionTournoi.getContentPane().add(panelHeader, BorderLayout.NORTH);
-		panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.X_AXIS));
-		
-		JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(Color.WHITE);
-		panelHeader.add(panelMenu);
-		panelMenu.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		
-		// Boutons de navigation
-		btnEquipes =  creerBouton(panelMenu, "Equipes", Couleur.BLEU2, 15);
-		btnJoueurs = creerBouton(panelMenu, "Joueurs", Couleur.BLEU2, 15);
-		JButton btnTournois = creerBouton(panelMenu, "Tournois", Couleur.BLEU2, 15);
-		Vue.desactiverBouton(btnTournois);
-		btnClassement = creerBouton(panelMenu, "Classement", Couleur.BLEU2, 15);
-		
-		JPanel panelDeconnexion = new JPanel();
-		panelDeconnexion.setBackground(Color.WHITE);
-		FlowLayout fl_panelDeconnexion = (FlowLayout) panelDeconnexion.getLayout();
-		fl_panelDeconnexion.setAlignment(FlowLayout.RIGHT);
-		panelHeader.add(panelDeconnexion);
-		
-		JButton btnDeconnexion =  creerBouton(panelDeconnexion, "Se déconnecter", Couleur.ROUGE, 13);
+		HeaderEcurie header = new HeaderEcurie(this.getFrame());
+		header.getBtnDeconnexion().addActionListener(controleur);
+		header.getBtnEquipes().addActionListener(controleur);
+		header.getBtnJoueurs().addActionListener(controleur);
+		header.getBtnClassement().addActionListener(controleur);
+		Vue.desactiverBouton(header.getBtnTournois());
 		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
@@ -223,11 +201,6 @@ public class VueInscriptionTournoi implements Vue{
 		this.selectionJeu.addActionListener(controleur);
 		
 		// BOUTONS //
-		btnEquipes.addActionListener(controleur);
-		btnJoueurs.addActionListener(controleur);
-		btnTournois.addActionListener(controleur);
-		btnClassement.addActionListener(controleur);
-		btnDeconnexion.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 	}
 	
