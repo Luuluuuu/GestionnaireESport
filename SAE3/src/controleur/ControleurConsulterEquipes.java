@@ -97,10 +97,12 @@ public class ControleurConsulterEquipes implements ActionListener, ListSelection
 		if (!l.isSelectionEmpty()) {
 			this.vue.viderJeux();
 			this.vue.ajouterJeu("- Sélectionnez un jeu -");
+			
 			// On récupère le tournoi sélectionné
 			Tournoi t = ControleurConnexion.listeTournois.get(this.vue.getTournoiSelectionne());
 			// On récupère les jeux du tournoi
 			List<Jeu> j = t.getJeux();
+			
 			for (Jeu jeu : j) {
 				this.vue.ajouterJeu(jeu.getNom());
 			}

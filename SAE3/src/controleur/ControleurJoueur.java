@@ -25,6 +25,7 @@ import modele.Connexion;
 import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueConnexion;
 import vue.VueERA;
@@ -124,7 +125,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			VueJoueur.fermerFenetre(this.vue.fenetreJoueur);
 		break;
 		case CREER:
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 		break;
 		case RECHERCHER:
 			if (!this.vue.getTextRecherche().equals("")) {
@@ -132,7 +133,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			} else {
 				this.vue.setDefaultListModel();
 			}
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 			break;
 		case VALIDER:
 			Calendar dateAjd = Calendar.getInstance();
@@ -145,7 +146,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			}
 			//Vérifie que tous les champs sont remplis
 			if(this.vue.getNom().equals("") 
-					|| this.vue.getNomEquipe().equals("- Sélectionnez une équipe -")
+					|| this.vue.getNomEquipe().equals("- S�lectionnez une �quipe -")
 					|| this.vue.getPrenom().equals("") 
 					|| this.vue.getPseudo().equals("")
 					|| this.vue.getDateNaissance() == null 
@@ -160,7 +161,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 						this.vue.getPseudo(), this.vue.getDateNaissance(),this.vue.getNationalite(),
 						ControleurConnexion.listeEquipes.get(this.vue.getNomEquipe()),null);
 				//Vérifie si c'est une creation ou une modification
-				if (this.vue.titreModif.getText().equals("Créer un joueur")) {
+				if (this.vue.titreModif.getText().equals("Cr�er un joueur")) {
 					// SI CREATION
 					if (!(ControleurConnexion.listeEquipes.containsKey(joueur.getPrenomPseudoNom()))) {
 						// En cas de creation, on recupere la prochaine valeur de la sequence, pour l'attribuer au joueur
@@ -209,7 +210,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 					ControleurConnexion.listeJoueurs.put(joueur.getPrenomPseudoNom(), joueur);
 					this.vue.modifierJoueur();
 				}
-					this.vue.creerJoueur();
+					this.vue.afficherCreationJoueur();
 					this.vue.viderMotDePasse();
 					b.setForeground(Color.WHITE);
 			}
@@ -278,13 +279,13 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 							ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne()).getID());
 				this.vue.supprimerJoueur();
 			}
-			this.vue.creerJoueur();
+			this.vue.afficherCreationJoueur();
 			break;
 		default:
 			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
-		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
+		Vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 	
 	@Override
@@ -321,7 +322,7 @@ public class ControleurJoueur implements ActionListener, ListSelectionListener {
 			}
 		}
 		if (!e.getValueIsAdjusting()) {
-			this.vue.activerBouton(this.vue.getBtnSupprimer());
+			Vue.activerBouton(this.vue.getBtnSupprimer());
         } 
 	}
 
