@@ -556,11 +556,13 @@ public class VueERA implements Vue{
 		this.listeEcuries.clearSelection();
 	}
 	public void modifierResponsable() {
-		modeleResponsables.set(this.listeResponsables.getSelectedIndex(), this.getPrenomResponsable() + " " + this.getNomResponsable());
+		modeleResponsables.set(this.listeResponsables.getSelectedIndex(),
+				this.getPrenomResponsable() + " " + this.getNomResponsable());
 		this.listeResponsables.clearSelection();
 	}
 	public void modifierArbitre() {
-		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),this.getPrenomArbitre() + " " + this.getNomArbitre());
+		modeleArbitres.set(this.listeArbitres.getSelectedIndex(),
+				this.getPrenomArbitre() + " " + this.getNomArbitre());
 		this.listeArbitres.clearSelection();
 	}
 	
