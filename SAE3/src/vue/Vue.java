@@ -7,7 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -106,5 +108,25 @@ public interface Vue {
 	// Désactive un bouton donné
 	public static void desactiverBouton(JButton btn) {
 		btn.setEnabled(false);
+	}
+	
+	// MESSAGE //
+	public static void estVide() {		
+        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
+    }
+	
+	/* Vérifie si un champs a été rempli */
+	public static boolean estSaisiRempli(String compare, String comparaison, JLabel nom, JComponent entree) {
+		if (compare.equals(comparaison)) {
+			nom.setForeground(Color.RED);
+			entree.setForeground(Color.RED);
+			return false;
+			
+		} else {
+			nom.setForeground(Color.WHITE);
+			entree.setForeground(Color.BLACK);
+			return true;
+			
+		}
 	}
 }

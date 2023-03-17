@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.Arrays;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -36,14 +37,19 @@ public class VueEquipe{
 	private static final String GESTIONNAIRE = "Gestionnaire";
 	private static final String POLICE = "Roboto";
 	private static final String CREER_UNE_EQUIPE = "Créer une équipe";
+	private static final String SELECTIONNER_UN_JEU = "- Sélectionnez un jeu -";
 	
 	private JFrame fenetreEquipe;
 
 	private JLabel titreModif;
+	private JLabel nomEcurie;
+	private JLabel nomEquipe;
+	private JLabel jeuS;
+	private JLabel libelleNationalite;
 	
 	private JPanel panelModif;
 
-	private JTextField entreeNom;
+	private JTextField entreeNomEquipe;
 	private JTextField recherche;
 	private JTextField entreeNationalite;
 	
@@ -101,8 +107,6 @@ public class VueEquipe{
 			header.getBtnTournois().addActionListener(controleur);
 		}
 		
-		
-
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreEquipe.getContentPane().add(panelContenu, BorderLayout.CENTER);
@@ -129,19 +133,17 @@ public class VueEquipe{
 		flowLayoutTitre.setHgap(50);
 		flowLayoutTitre.setAlignment(FlowLayout.LEFT);
 		
-		// LISTE DES TOURNOIS //
+		// LISTE DES EQUIPES //
 		new JLabelBuilder(panelTitre).setCustomLabel("Equipes", new Font(POLICE, Font.BOLD, 36), Color.WHITE).build();
 		
 		JPanel panelRecherche = new JPanelBuilder(panelTitreT).setCustomPanel(Couleur.BLEU1).build();
-		
 		recherche = new JTextFieldBuilder(panelRecherche).setCustomTextField(new Font(POLICE,Font.PLAIN, 13), 15).build();
-		
 		btnRechercher = new JButtonBuilder(panelRecherche).setCustomButton(
 				"Rechercher", 
 				Color.WHITE, 
 				new Font(POLICE, Font.BOLD, 13), 
 				Couleur.BLEU2).build();
-		desactiverBouton(btnRechercher);
+		Vue.desactiverBouton(btnRechercher);
 		rechercheEquipe(recherche);
 
 		JPanel panelListe = new JPanelBuilder(panelEquipe).setCustomPanel(Couleur.BLEU1).build();
@@ -181,9 +183,9 @@ public class VueEquipe{
 				Color.WHITE, 
 				new Font(POLICE, Font.BOLD, 13), 
 				Couleur.GRIS).build();
-		this.desactiverBouton(btnSupprimer);
+		Vue.desactiverBouton(btnSupprimer);
 		
-		// CREER OU MODIFIER UN TOURNOI
+		// CREER OU MODIFIER UNE EQUIPE
 		panelModif = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
 		
 		GridBagLayout gblPanelModif = new GridBagLayoutBuilder().setCustomGridBagLayout(
@@ -231,8 +233,8 @@ public class VueEquipe{
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 
 		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
-			JLabel nomEcurie = new JLabelBuilder(panel).setCustomLabel(
-					"Sélectionner l'écurie", 
+			nomEcurie = new JLabelBuilder(panel).setCustomLabel(
+					"Nom de l'écurie", 
 					new Font(POLICE, Font.BOLD, 14), 
 					Color.WHITE).build();
 			nomEcurie.setHorizontalAlignment(SwingConstants.CENTER);
@@ -250,6 +252,7 @@ public class VueEquipe{
 			entreeEcurie.setFont(new Font(POLICE, Font.PLAIN, 11));
 			entreeEcurie.setPreferredSize(new Dimension(205, 20));
 			panelEcurie.add(entreeEcurie);
+			
 		}
 		
 		JPanel panelNom = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
@@ -275,8 +278,8 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelNom.add(panel4, gbcPanel4);
 		
-		JLabel nom = new JLabelBuilder(panel4).setCustomLabel("Nom de l'équipe", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
-		nom.setHorizontalAlignment(SwingConstants.CENTER);
+		nomEquipe = new JLabelBuilder(panel4).setCustomLabel("Nom de l'équipe", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		nomEquipe.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel5 = new JPanelBuilder(panelNom).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayout6 = (FlowLayout) panel5.getLayout();
@@ -287,7 +290,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 0), 1, 0).build();
 		panelNom.add(panel5, gbcPanel5);
 		
-		entreeNom = new JTextFieldBuilder(panel5).setCustomTextField(new Font(POLICE,Font.PLAIN, 11), 20).build();
+		entreeNomEquipe = new JTextFieldBuilder(panel5).setCustomTextField(new Font(POLICE,Font.PLAIN, 11), 20).build();
 		
 		JPanel panelJeu = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelJeu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -311,7 +314,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelJeu.add(paneLabelJeu, gbcPanel6);
 		
-		JLabel jeuS = new JLabelBuilder(paneLabelJeu).setCustomLabel("Jeu spécialisé", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		jeuS = new JLabelBuilder(paneLabelJeu).setCustomLabel("Jeu spécialisé", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
 		jeuS.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panelEntreeJeu = new JPanelBuilder(panelJeu).setCustomPanel(Couleur.BLEU1).build();
@@ -326,7 +329,7 @@ public class VueEquipe{
 		entreeJeu.setFont(new Font("Dialog", Font.PLAIN, 11));
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panelEntreeJeu.add(entreeJeu);
-		this.entreeJeu.addItem("- Sélectionnez un jeu -");
+		this.entreeJeu.addItem(SELECTIONNER_UN_JEU);
 		
 		JPanel panelNationalite = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelNationalite = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -351,7 +354,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelNationalite.add(panelLabelNationalite, gbcPanelLabelNationalite);
 		
-		new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		libelleNationalite = new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
 		
 		JPanel panelEntreeNationalite = new JPanelBuilder(panelNationalite).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayoutEntreeNationalite = (FlowLayout) panelEntreeNationalite.getLayout();
@@ -418,15 +421,14 @@ public class VueEquipe{
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 		
-		// DECONNEXION
-		
 		// LISTE
+		btnRechercher.addActionListener(controleur);
 		this.listeEquipes.addListSelectionListener(controleur);
 		listeJoueurs.addListSelectionListener(controleur);
 		
-		
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
+		btnSupprimer.addActionListener(controleur);
 	}
 	
 	public boolean listeVide(JList<String> list) {
@@ -448,11 +450,11 @@ public class VueEquipe{
 	}
 	
 	public void modifierEquipe() {
-		this.modeleEquipes.set(this.listeEquipes.getSelectedIndex(),this.getNom());		
+		this.modeleEquipes.set(this.listeEquipes.getSelectedIndex(),this.getNomEquipe());		
 	}
 	
 	public void supprimerEquipe() {
-		this.modeleEquipes.removeElement(this.entreeNom.getText());
+		this.modeleEquipes.removeElement(this.getNomEquipe());
 		this.deselectionner();
     }
 	
@@ -484,8 +486,8 @@ public class VueEquipe{
 		return (String) this.entreeEcurie.getSelectedItem();
 	}
 
-	public String getNom() {
-		return this.entreeNom.getText();
+	public String getNomEquipe() {
+		return this.entreeNomEquipe.getText();
 	}
 	
 	public String getJeu() {
@@ -502,7 +504,7 @@ public class VueEquipe{
 	
 	// SETTER //
 	public void setNomEquipe(String e) {
-		this.entreeNom.setText(e);
+		this.entreeNomEquipe.setText(e);
 	}
 	
 	public void setEcurie(String e) {
@@ -573,7 +575,7 @@ public class VueEquipe{
         this.deselectionner();
         VueEquipe.afficherPanel(panelModif);
         VueEquipe.afficherTexte(this.titreModif, CREER_UNE_EQUIPE);
-        VueEquipe.supprimerTexte(this.entreeNom);
+        VueEquipe.supprimerTexte(this.entreeNomEquipe);
         VueEquipe.supprimerTexte(this.entreeNationalite);
         this.premierIndexJeu();
         entreeJeu.setForeground(new Color(0,0,0));
@@ -588,48 +590,50 @@ public class VueEquipe{
             }
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 if (recherche.getText().isEmpty()) {
-                    desactiverBouton(btnRechercher);
+                	Vue.desactiverBouton(btnRechercher);
                 }
             }
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 if (!recherche.getText().isEmpty()) {
-                	activerBouton(btnRechercher);
+                	Vue.activerBouton(btnRechercher);
                 }
             }
         });
 	}
 	
-	public void activerBouton(JButton j) {
-        j.setEnabled(true);
-    }
-	
-	public void desactiverBouton(JButton j) {
-        j.setEnabled(false);
-    }
-	
 	public Etat getEtat(JButton b) {
 		return EtatFactory.creerEtat(b.getText());
 	}
 	
-	public void creerEquipe() {
+	public void afficherCreationEquipe() {
 		this.deselectionner();
 		VueEquipe.afficherPanel(panelModif);
 		VueEquipe.afficherTexte(this.titreModif, CREER_UNE_EQUIPE);
-		VueEquipe.supprimerTexte(this.entreeNom);
+		VueEquipe.supprimerTexte(this.entreeNomEquipe);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
 		
 		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
 			this.setEcurie("- Sélectionnez une écurie -");
 		}
 		entreeEcurie.setForeground(new Color(0,0,0));
-		this.setJeu("- Sélectionnez un jeu -");
+		this.setJeu(SELECTIONNER_UN_JEU);
 		entreeJeu.setForeground(new Color(0,0,0));
 		this.viderModeleJoueurs();
 	}
 	
-	// MESSAGE //
-	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
+	/* Vérifie si tous les champs ont été saisis*/
+	public boolean estFormulaireRempli() {
+		Boolean[] resultat = new Boolean[4];
+		resultat[0] = Vue.estSaisiRempli(this.getEcurie(), "- Sélectionnez une écurie -", this.nomEcurie, this.entreeEcurie);
+		resultat[1] = Vue.estSaisiRempli(this.getNomEquipe(), "", this.nomEquipe, this.entreeNomEquipe);
+		resultat[2] = Vue.estSaisiRempli(this.getJeu(), SELECTIONNER_UN_JEU, this.jeuS, this.entreeJeu);
+		resultat[3] = Vue.estSaisiRempli(this.getNationalite(), "", this.libelleNationalite, this.entreeNationalite);
+		
+		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {
+			Vue.estVide();
+			return false;
+		}
+		return true;
+	}
 
 }

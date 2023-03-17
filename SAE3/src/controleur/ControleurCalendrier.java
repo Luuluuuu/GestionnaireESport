@@ -1,4 +1,5 @@
 package controleur;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -200,7 +201,7 @@ public class ControleurCalendrier implements ActionListener, ListSelectionListen
 		default:
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
-		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
+		Vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 
 	@Override

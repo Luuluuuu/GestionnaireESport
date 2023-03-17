@@ -19,6 +19,7 @@ import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
 import modele.Utilisateur;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -125,7 +126,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			} else {
 				this.vue.setDefaultListModel();
 			}
-			this.vue.creerEquipe();
+			this.vue.afficherCreationEquipe();
 			break;
 			
 		case ANNULER :
@@ -133,24 +134,24 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
             break;
             
 		case VALIDER:
-			if ((this.vue.getNom().equals("") || this.vue.getJeu().equals("- Sélectionnez un jeu -"))
-					|| (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE
-						&& this.vue.getEcurie().equals("- Sélectionnez une écurie -"))) {
-				this.vue.estVide();
-			} else {
-					// Instancie l'équipe créée
-					Equipe equipe = new Equipe(0, this.vue.getNom(), 0, this.vue.getNationalite(), 
-							ControleurConnexion.listeJeux.get(this.vue.getJeu()),
-							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
-					//Vérifie si c'est une création ou une modification
-					if (this.vue.getTitreModification().getText().equals("Créer une équipe")) {
-						// SI CREATION
-						this.creerEquipe(equipe);
-					} else {
-						// SINON MODIFICATION
-						this.modifierEquipe(equipe);
-					}
-					this.vue.creerEquipe();
+			if (this.vue.estFormulaireRempli()) {
+				// Instancie l'équipe créée
+				Equipe equipe = new Equipe(0, this.vue.getNomEquipe(), 0, this.vue.getNationalite(), 
+						ControleurConnexion.listeJeux.get(this.vue.getJeu()),
+						ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
+				
+				//Vérifie si c'est une création ou une modification
+				if (this.vue.getTitreModification().getText().equals("Créer une équipe")) {
+					// SI CREATION
+					this.creerEquipe(equipe);
+					
+				} else {
+					// SINON MODIFICATION
+					this.modifierEquipe(equipe);
+					
+				}
+				this.vue.afficherCreationEquipe();
+				
 			}
 			break;
 			
@@ -162,89 +163,59 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			break;
 		
 		case CREER:
-			this.vue.creerEquipe();
+			this.vue.afficherCreationEquipe();
 			break;
 			
 		case SUPPRIMER:
 			// Vérifie si l'équipe est bien sélectionnée
-			if (this.vue.getEquipeSelectionne() != null) {
-				// Récupération de l'équipe sélectionnée
-				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-				// Récupération de la connexion
-				Connexion c = Connexion.getInstance();
-				try {
-					ResultSet rs = c.retournerRequete("SELECT * FROM SAE_INSCRIRE " + 
-							"WHERE IDEQUIPE =" + equipe.getID());
-					// Si l'équipe est déjà inscrite, la suppression est impossible
-					if (rs.next()) {
-						JOptionPane.showMessageDialog(null, "L'équipe sélectionnée ne peut pas être supprimée !",
-							      "Erreur à la suppression", JOptionPane.ERROR_MESSAGE);
-					// Demande la confirmation de l'utilisateur
-					} else if (this.vue.confirmerSuppression() == 0) { 
-						// Suppression de l'équipe dans la vue et les hashmap
-						this.vue.supprimerEquipe();
-						ControleurConnexion.listeEquipes.remove(equipe.getNom());
-						// Suppression des joueurs appartenant à l'équipe
-						c.executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE =" + equipe.getID());	
-						// Suppression de l'équipe
-						c.executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = " + equipe.getID());	
-						this.vue.creerEquipe();
-					}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
+			this.supprimerEquipe();
 			break;
 			
 		default:
 			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
-		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
+		Vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 
 	@Override
-	public void valueChanged(ListSelectionEvent e){
-		switch(this.etat) {
-		case SUPPRIMER:
-		default:
-			@SuppressWarnings("unchecked")
-			JList<String> list = (JList<String>) e.getSource();
-			switch(list.getName()) {
-			case "Equipe":
-				if (!(list.isSelectionEmpty())) {
-					VueEquipe.afficherTexte(this.vue.getTitreModification(), "Modifier une équipe");
-					Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
-					this.vue.setNomEquipe(equipe.getNom());
-					this.vue.setJeu(equipe.getNomJeu());
-					// Récupère l'écurie lorsque le profil est Gestionnaire
-					if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
-						this.vue.setEcurie(equipe.getEcurie().getNom());
-					}
-					this.vue.setNationalite(equipe.getNationalite());
-					this.initialiserListeJoueurs(equipe);
+	public void valueChanged(ListSelectionEvent e){	
+		@SuppressWarnings("unchecked")
+		JList<String> list = (JList<String>) e.getSource();
+		if (list.getName().equals("Equipe")) {
+			if (!(list.isSelectionEmpty())) {
+				VueEquipe.afficherTexte(this.vue.getTitreModification(), "Modifier une équipe");
+				Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+				this.vue.setNomEquipe(equipe.getNom());
+				this.vue.setJeu(equipe.getNomJeu());
+				// Récupère l'écurie lorsque le profil est Gestionnaire
+				if (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE) {
+					this.vue.setEcurie(equipe.getEcurie().getNom());
+					
 				}
-				break;
-				
-			case "Joueurs":
-			    if (!e.getValueIsAdjusting()) {	// gere les doubles clics
-					VueJoueur fenJoueur = new VueJoueur();
-					fenJoueur.getFrame().setVisible(true);
-					VueJoueur.afficherTexte(fenJoueur.titreModif, "Modifier un joueur");
-					Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
-					fenJoueur.setEquipe(joueur.getEquipe().getNom());
-					fenJoueur.setNomJoueur(joueur.getNom());
-					fenJoueur.setPrenomJoueur(joueur.getPrenom());
-					fenJoueur.setPseudoJoueur(joueur.getPseudo());
-					fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
-					fenJoueur.setNationaliteJoueur(joueur.getNationalite());
-					VueEquipe.fermerFenetre(this.vue.getFrame());
-			    }
+				this.vue.setNationalite(equipe.getNationalite());
+				this.initialiserListeJoueurs(equipe);
 			}
+			
 		}
+		else if (list.getName().equals("Joueurs") && !e.getValueIsAdjusting()) {	// gere les doubles clics
+				VueJoueur fenJoueur = new VueJoueur();
+				fenJoueur.getFrame().setVisible(true);
+				VueJoueur.afficherTexte(fenJoueur.titreModif, "Modifier un joueur");
+				Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
+				fenJoueur.setEquipe(joueur.getEquipe().getNom());
+				fenJoueur.setNomJoueur(joueur.getNom());
+				fenJoueur.setPrenomJoueur(joueur.getPrenom());
+				fenJoueur.setPseudoJoueur(joueur.getPseudo());
+				fenJoueur.setDateNaissanceJoueur(joueur.getDateNaissance());
+				fenJoueur.setNationaliteJoueur(joueur.getNationalite());
+				VueEquipe.fermerFenetre(this.vue.getFrame());
+				
+		}
+		
 		//réactive le bouton lorsque un élément de la liste est cliqué
 		if (!e.getValueIsAdjusting()) {
-			this.vue.activerBouton(this.vue.getBtnSupprimer());
+			Vue.activerBouton(this.vue.getBtnSupprimer());
         } 
 	}
 	
@@ -313,6 +284,39 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		ControleurConnexion.listeEquipesID.put(equipe.getID(), equipe);
 		this.vue.modifierEquipe();
 		
-		
+	}
+	
+	private void supprimerEquipe() {
+		// Récupération de l'équipe sélectionnée
+		Equipe equipe = ControleurConnexion.listeEquipes.get(this.vue.getEquipeSelectionne());
+		// Récupération de la connexion
+		Connexion c = Connexion.getInstance();
+		try {
+			ResultSet rs = c.retournerRequete("SELECT * FROM SAE_INSCRIRE " + 
+					"WHERE IDEQUIPE =" + equipe.getID());
+			// Si l'équipe est déjà inscrite, la suppression est impossible
+			if (rs.next()) {
+				JOptionPane.showMessageDialog(null, "L'équipe sélectionnée ne peut pas être supprimée !",
+					      "Erreur à la suppression", JOptionPane.ERROR_MESSAGE);
+				
+			// Demande la confirmation de l'utilisateur
+			} else if (this.vue.confirmerSuppression() == 0) { 
+				// Suppression de l'équipe dans la vue et les hashmap
+				this.vue.supprimerEquipe();
+				ControleurConnexion.listeEquipes.remove(equipe.getNom());
+				
+				// Suppression des joueurs appartenant à l'équipe
+				c.executerRequete("DELETE SAE_JOUEUR WHERE IDEQUIPE =" + equipe.getID());	
+				// Suppression de l'équipe
+				c.executerRequete("DELETE SAE_EQUIPE WHERE IDEQUIPE = " + equipe.getID());	
+				
+				// Affichage de la création d'une équipe
+				this.vue.afficherCreationEquipe();
+				
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			
+		}
 	}
 }
