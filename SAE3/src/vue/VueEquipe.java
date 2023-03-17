@@ -421,15 +421,14 @@ public class VueEquipe{
 		btnAnnuler.addActionListener(controleur);
 		btnValider.addActionListener(controleur);
 		
-		// DECONNEXION
-		
 		// LISTE
+		btnRechercher.addActionListener(controleur);
 		this.listeEquipes.addListSelectionListener(controleur);
 		listeJoueurs.addListSelectionListener(controleur);
 		
-		
 		// GESTION DES EQUIPES
 		btnCreer.addActionListener(controleur);
+		btnSupprimer.addActionListener(controleur);
 	}
 	
 	public boolean listeVide(JList<String> list) {
@@ -455,7 +454,7 @@ public class VueEquipe{
 	}
 	
 	public void supprimerEquipe() {
-		this.modeleEquipes.removeElement(this.entreeNomEquipe.getText());
+		this.modeleEquipes.removeElement(this.getNomEquipe());
 		this.deselectionner();
     }
 	
@@ -606,7 +605,7 @@ public class VueEquipe{
 		return EtatFactory.creerEtat(b.getText());
 	}
 	
-	public void creerEquipe() {
+	public void afficherCreationEquipe() {
 		this.deselectionner();
 		VueEquipe.afficherPanel(panelModif);
 		VueEquipe.afficherTexte(this.titreModif, CREER_UNE_EQUIPE);
