@@ -134,9 +134,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
             break;
             
 		case VALIDER:
-			if (!this.vue.estFormulaireRempli()) {
-				Vue.estVide();
-			} else {
+			if (this.vue.estFormulaireRempli()) {
 					// Instancie l'équipe créée
 					Equipe equipe = new Equipe(0, this.vue.getNomEquipe(), 0, this.vue.getNationalite(), 
 							ControleurConnexion.listeJeux.get(this.vue.getJeu()),

@@ -37,6 +37,7 @@ public class VueEquipe{
 	private static final String GESTIONNAIRE = "Gestionnaire";
 	private static final String POLICE = "Roboto";
 	private static final String CREER_UNE_EQUIPE = "Créer une équipe";
+	private static final String SELECTIONNER_UN_JEU = "- Sélectionnez un jeu -";
 	
 	private JFrame fenetreEquipe;
 
@@ -328,7 +329,7 @@ public class VueEquipe{
 		entreeJeu.setFont(new Font("Dialog", Font.PLAIN, 11));
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panelEntreeJeu.add(entreeJeu);
-		this.entreeJeu.addItem("- Sélectionnez un jeu -");
+		this.entreeJeu.addItem(SELECTIONNER_UN_JEU);
 		
 		JPanel panelNationalite = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelNationalite = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -616,7 +617,7 @@ public class VueEquipe{
 			this.setEcurie("- Sélectionnez une écurie -");
 		}
 		entreeEcurie.setForeground(new Color(0,0,0));
-		this.setJeu("- Sélectionnez un jeu -");
+		this.setJeu(SELECTIONNER_UN_JEU);
 		entreeJeu.setForeground(new Color(0,0,0));
 		this.viderModeleJoueurs();
 	}
@@ -626,10 +627,14 @@ public class VueEquipe{
 		Boolean[] resultat = new Boolean[4];
 		resultat[0] = Vue.estSaisiRempli(this.getEcurie(), "- Sélectionnez une écurie -", this.nomEcurie, this.entreeEcurie);
 		resultat[1] = Vue.estSaisiRempli(this.getNomEquipe(), "", this.nomEquipe, this.entreeNomEquipe);
-		resultat[2] = Vue.estSaisiRempli(this.getJeu(), "- Sélectionnez un jeu -", this.jeuS, this.entreeJeu);
+		resultat[2] = Vue.estSaisiRempli(this.getJeu(), SELECTIONNER_UN_JEU, this.jeuS, this.entreeJeu);
 		resultat[3] = Vue.estSaisiRempli(this.getNationalite(), "", this.libelleNationalite, this.entreeNationalite);
 		
-		return Arrays.stream(resultat).allMatch(Boolean::valueOf);
+		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {
+			Vue.estVide();
+			return false;
+		}
+		return true;
 	}
 
 }
