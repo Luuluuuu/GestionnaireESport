@@ -19,6 +19,7 @@ import modele.Etat;
 import modele.Joueur;
 import modele.Profil;
 import modele.Utilisateur;
+import vue.Vue;
 import vue.VueCalendrier;
 import vue.VueClassement;
 import vue.VueConnexion;
@@ -133,13 +134,11 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
             break;
             
 		case VALIDER:
-			if ((this.vue.getNom().equals("") || this.vue.getJeu().equals("- Sélectionnez un jeu -"))
-					|| (ControleurConnexion.profilUtilisateur == Profil.GESTIONNAIRE
-						&& this.vue.getEcurie().equals("- Sélectionnez une écurie -"))) {
-				this.vue.estVide();
+			if (!this.vue.estFormulaireRempli()) {
+				Vue.estVide();
 			} else {
 					// Instancie l'équipe créée
-					Equipe equipe = new Equipe(0, this.vue.getNom(), 0, this.vue.getNationalite(), 
+					Equipe equipe = new Equipe(0, this.vue.getNomEquipe(), 0, this.vue.getNationalite(), 
 							ControleurConnexion.listeJeux.get(this.vue.getJeu()),
 							ControleurConnexion.listeEcuries.get(this.vue.getEcurie()));
 					//Vérifie si c'est une création ou une modification
@@ -200,7 +199,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			break;
 		}
 		//désactive le bouton lorsque aucun élément n'est séléctionné
-		this.vue.desactiverBouton(this.vue.getBtnSupprimer());
+		Vue.desactiverBouton(this.vue.getBtnSupprimer());
 	}
 
 	@Override
@@ -244,7 +243,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		}
 		//réactive le bouton lorsque un élément de la liste est cliqué
 		if (!e.getValueIsAdjusting()) {
-			this.vue.activerBouton(this.vue.getBtnSupprimer());
+			Vue.activerBouton(this.vue.getBtnSupprimer());
         } 
 	}
 	
