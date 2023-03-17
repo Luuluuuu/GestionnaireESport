@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.Arrays;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -36,33 +37,56 @@ import javax.swing.border.LineBorder;
 
 public class VueERA implements Vue{
 	private JFrame fenetreERA;
-	private JTextField rechercheEcurie;
-	private JTextField rechercheResponsable;
-	private JTextField rechercheArbitre;
+	private HeaderAdmin header;
 
+	// LISTE
 	private DefaultListModel<String> modeleEcuries;
 	private JList<String> listeEcuries;
+	
 	private DefaultListModel<String> modeleResponsables;
 	private JList<String> listeResponsables;
+	
 	private DefaultListModel<String> modeleArbitres;
 	private JList<String> listeArbitres;
 	
+	// LABEL
+	private JLabel lblNomEcurie;
+	private JLabel lblMdpEcurie;
+	
+	private JLabel lblNomResponsable;
+	private JLabel lblPrenomResponsable;
+	private JLabel lblMdpResponsable;
+	
+	private JLabel lblNomArbitre;
+	private JLabel lblPrenomArbitre;
+	private JLabel lblMdpArbitre;
+	
+	// CHAMPS DE SAISIE
+	private JTextField rechercheEcurie;
 	private JTextField nomEcurie;
 	private JPasswordField mdpEcurie;
+	
+	private JTextField rechercheResponsable;
 	private JTextField nomResponsable;
 	private JTextField prenomResponsable;
 	private JPasswordField mdpResponsable;
+	
+	private JTextField rechercheArbitre;
 	private JTextField nomArbitre;
 	private JTextField prenomArbitre;
 	private JPasswordField mdpArbitre;
 	
-	private JButton btnSupprimerEcurie;
-	private JButton btnSupprimerResponsable;
-	private JButton btnSupprimerArbitre;
+	// BOUTONS
 	private JButton btnRechercheEcurie;
-	private JButton btnRechercheArbitre;
+	private JButton btnSupprimerEcurie;
+	
 	private JButton btnRechercheResponsable;
-	private HeaderAdmin header;
+	private JButton btnSupprimerResponsable;
+	
+	private JButton btnRechercheArbitre;
+	private JButton btnSupprimerArbitre;
+	
+	private ControleurERA controleur;
 	
 	public JFrame getFrame() {
 		return this.fenetreERA;
@@ -146,7 +170,7 @@ public class VueERA implements Vue{
 		JPanel panelEntreeEcurie = new JPanelBuilder(panelModificationEcurie).setCustomPanel(Couleur.BLEU1).build();
 		panelEntreeEcurie.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JLabel lblNomEcurie = new JLabelBuilder(panelEntreeEcurie).setCustomLabel(
+		lblNomEcurie = new JLabelBuilder(panelEntreeEcurie).setCustomLabel(
 				"Nom écurie", 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -154,7 +178,7 @@ public class VueERA implements Vue{
 		
 		nomEcurie = new JTextFieldBuilder(panelEntreeEcurie).setCustomTextField(new Font(Vue.POLICE, Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpEcurie = new JLabelBuilder(panelEntreeEcurie).setCustomLabel(
+		lblMdpEcurie = new JLabelBuilder(panelEntreeEcurie).setCustomLabel(
 				Vue.MOT_DE_PASSE, 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -262,7 +286,7 @@ public class VueERA implements Vue{
 		JPanel panelEntreeResponsable = new JPanelBuilder(panelModificationResponsable).setCustomPanel(Couleur.BLEU1).build();
 		panelEntreeResponsable.setLayout(new GridLayout(0, 2, 10, 5));
 		
-		JLabel lblNomResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
+		lblNomResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
 				"Nom responsable", 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -270,7 +294,7 @@ public class VueERA implements Vue{
 		
 		nomResponsable = new JTextFieldBuilder(panelEntreeResponsable).setCustomTextField(new Font(Vue.POLICE, Font.PLAIN, 13), 10).build();
 		
-		JLabel lblPrenomResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
+		lblPrenomResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
 				"Prénom responsable", 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -278,7 +302,7 @@ public class VueERA implements Vue{
 		
 		prenomResponsable = new JTextFieldBuilder(panelEntreeResponsable).setCustomTextField(new Font(Vue.POLICE, Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
+		lblMdpResponsable = new JLabelBuilder(panelEntreeResponsable).setCustomLabel(
 				Vue.MOT_DE_PASSE, 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -386,7 +410,7 @@ public class VueERA implements Vue{
 		JPanel panelEntreeArbitre = new JPanelBuilder(panelModificationArbitre).setCustomPanel(Couleur.BLEU1).build();
 		panelEntreeArbitre.setLayout(new GridLayout(0, 2, 10, 5));
 		
-		JLabel lblNomArbitre = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
+		lblNomArbitre = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
 				"Nom arbitre", 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -394,15 +418,15 @@ public class VueERA implements Vue{
 		
 		nomArbitre = new JTextFieldBuilder(panelEntreeArbitre).setCustomTextField(new Font(Vue.POLICE, Font.PLAIN, 13), 10).build();
 		
-		JLabel lblNewLabel = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
+		lblPrenomArbitre = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
 				"Prénom arbitre", 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPrenomArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		prenomArbitre = new JTextFieldBuilder(panelEntreeArbitre).setCustomTextField(new Font(Vue.POLICE, Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpArbitre = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
+		lblMdpArbitre = new JLabelBuilder(panelEntreeArbitre).setCustomLabel(
 				Vue.MOT_DE_PASSE, 
 				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Color.WHITE).build();
@@ -444,7 +468,7 @@ public class VueERA implements Vue{
 				Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimerArbitre);
 		
-		ControleurERA controleur = new ControleurERA(this);
+		this.controleur = new ControleurERA(this);
 		header.getBtnDeconnexion().addActionListener(controleur);
 		header.getBtnEquipes().addActionListener(controleur);
 		header.getBtnJoueurs().addActionListener(controleur);
@@ -516,7 +540,7 @@ public class VueERA implements Vue{
 	
 	// SUPPRIMER UNE ENTITE //
 	public void supprimerEntite() {
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			modeleEcuries.removeElement(this.listeEcuries.getSelectedValue());
 			break;
@@ -560,18 +584,16 @@ public class VueERA implements Vue{
 	public JButton getBtnSupprimerEcurie() {
 		return btnSupprimerEcurie;
 	}
-	
 	public JButton getbtnSupprimerResponsable() {
 		return btnSupprimerResponsable;
 	}
-	
 	public JButton getBtnSupprimerArbitre() {
 		return btnSupprimerArbitre;
 	}
 	
 	public String getNom() {
 		String nom;
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			nom = getNomEcurie();
 			break;
@@ -595,7 +617,7 @@ public class VueERA implements Vue{
 	
 	public String getRecherche() {
 		String recherche;
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			recherche = getRechercheEcurie();
 			break;
@@ -616,7 +638,7 @@ public class VueERA implements Vue{
 	
 	public String getNomSelectionne() {
 		String nomSelectionne;
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			nomSelectionne = getNomSelectionneEcurie();
 			break;
@@ -637,7 +659,7 @@ public class VueERA implements Vue{
 	
 	public String getMotDePasse() {
 		String mdp;
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			mdp = getMotDePasseEcurie();
 			break;
@@ -670,7 +692,7 @@ public class VueERA implements Vue{
 	public void setNomSelectionneArbitre() {this.nomArbitre.setText(this.listeArbitres.getSelectedValue());}
 	
 	public void setNom(String nom,String prenom) {
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			setNomEcurie(nom);
 			break;
@@ -700,7 +722,7 @@ public class VueERA implements Vue{
 	}
 	
 	public void deselectionner() {
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			this.listeEcuries.clearSelection();
 			break;
@@ -714,6 +736,31 @@ public class VueERA implements Vue{
 		}
 	}
 	
+	public void setCouleurSaisiesEcurieANoir() {
+		this.lblNomEcurie.setForeground(Color.WHITE);
+		this.nomEcurie.setForeground(Color.BLACK);
+		this.lblMdpEcurie.setForeground(Color.WHITE);
+		this.mdpEcurie.setForeground(Color.BLACK);
+	}
+	
+	public void setCouleurSaisiesResponsableANoir() {
+		this.lblNomResponsable.setForeground(Color.WHITE);
+		this.nomResponsable.setForeground(Color.BLACK);
+		this.lblPrenomResponsable.setForeground(Color.WHITE);
+		this.prenomResponsable.setForeground(Color.BLACK);
+		this.lblMdpResponsable.setForeground(Color.WHITE);
+		this.mdpResponsable.setForeground(Color.BLACK);
+	}
+	
+	public void setCouleurSaisiesArbitreANoir() {
+		this.lblNomArbitre.setForeground(Color.WHITE);
+		this.nomArbitre.setForeground(Color.BLACK);
+		this.lblPrenomArbitre.setForeground(Color.WHITE);
+		this.prenomArbitre.setForeground(Color.BLACK);
+		this.lblMdpArbitre.setForeground(Color.WHITE);
+		this.mdpArbitre.setForeground(Color.BLACK);
+	}
+	
 	// LISTE //
 	public boolean estSelectionneEcurie() {return !(this.listeEcuries.isSelectionEmpty());}
 	public boolean estSelectionneResponsable() {return !(this.listeResponsables.isSelectionEmpty());}
@@ -723,7 +770,7 @@ public class VueERA implements Vue{
 	// ETATS //
 	public Etat getEtat(JButton b) {
 		if (b.getText().contains("Créer")) {
-			VueERA.setEntite(b);
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.CREER;
 			
@@ -750,15 +797,15 @@ public class VueERA implements Vue{
 			return Etat.CLASSEMENT;
 			
 		} else if (b.getText().equals(Vue.RECHERCHER)) {
-			VueERA.setEntite(b);
+			this.setEntite(b);
 			return Etat.RECHERCHER;
 			
 		} else if (b.getText().equals(Vue.VALIDER)) {
-			VueERA.setEntite(b);
+			this.setEntite(b);
 			return Etat.VALIDER;
 			
 		} else if (b.getText().equals(Vue.ANNULER)) {
-			VueERA.setEntite(b);
+			this.setEntite(b);
 			this.deselectionner();
 			return Etat.ANNULER;
 			
@@ -766,13 +813,29 @@ public class VueERA implements Vue{
 		return null;
 	}
 
-	private static void setEntite(JButton b) {
+	// SET L'ENTITE COURANTE 
+	private void setEntite(JButton b) {
 		if (b.getName().equals("Ecurie")) {
-			ControleurERA.entite = Entite.ECURIE;
+			this.controleur.setEntite(Entite.ECURIE);
 		} else if (b.getName().equals("Responsable")) {
-			ControleurERA.entite = Entite.RESPONSABLE;
+			this.controleur.setEntite(Entite.RESPONSABLE);
 		} else if (b.getName().equals("Arbitre")) {
-			ControleurERA.entite = Entite.ARBITRE;
+			this.controleur.setEntite(Entite.ARBITRE);
+		}
+	}
+	
+	public void setEntite(JList<String> l) {
+		switch (l.getName()) {
+		case "Ecurie":
+			this.controleur.setEntite(Entite.ECURIE);
+			break;
+		case "Responsable":
+			this.controleur.setEntite(Entite.RESPONSABLE);
+			break;
+		case "Arbitre":
+			this.controleur.setEntite(Entite.ARBITRE);
+			break;
+		default:
 		}
 	}
 	
@@ -830,25 +893,9 @@ public class VueERA implements Vue{
         });
 	}
 	
-	
-	public static void setEntite(JList<String> l) {
-		switch (l.getName()) {
-		case "Ecurie":
-			ControleurERA.entite = Entite.ECURIE;
-			break;
-		case "Responsable":
-			ControleurERA.entite = Entite.RESPONSABLE;
-			break;
-		case "Arbitre":
-			ControleurERA.entite = Entite.ARBITRE;
-			break;
-		default:
-		}
-	}
-	
 	// FILTRES
 	public void filtrerRecherche() {
-		switch (ControleurERA.entite) {
+		switch (this.controleur.getEntite()) {
 		case ECURIE:
 			filtrerRechercheEcurie();
 			break;
@@ -904,12 +951,61 @@ public class VueERA implements Vue{
 		    this.listeArbitres.setModel(modeleFiltre);
 		}
 	}
+	
+	// VERIFIE SI LES CHAMPS ONT ETE SAISIS
+	public boolean estFormulaireRempliEcurie() {
+		Boolean[] resultat = new Boolean[2];
+		resultat[0] = Vue.estSaisiRempli(this.getNomEcurie(), "", this.lblNomEcurie, this.nomEcurie);
+		if (this.listeResponsables.isSelectionEmpty()) {
+			resultat[1] = Vue.estSaisiRempli(this.getPrenomResponsable(), "", this.lblMdpEcurie, this.mdpEcurie);
+			
+		}
+		
+		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {
+			Vue.estVide();
+			return false;
+			
+		}
+		return true;
+	}
+	
+	public boolean estFormulaireRempliResponsable() {
+		Boolean[] resultat = new Boolean[3];
+		resultat[0] = Vue.estSaisiRempli(this.getNomResponsable(), "", this.lblNomResponsable, this.nomResponsable);
+		resultat[1] = Vue.estSaisiRempli(this.getPrenomResponsable(), "", this.lblPrenomResponsable, this.prenomResponsable);
+		
+		if (this.listeResponsables.isSelectionEmpty()) {
+			resultat[2] = Vue.estSaisiRempli(this.getPrenomResponsable(), "", this.lblMdpResponsable, this.mdpResponsable);
+			
+		}
+		
+		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {
+			Vue.estVide();
+			return false;
+			
+		}
+		return true;
+	}
+	
+	public boolean estFormulaireRempliArbitre() {
+		Boolean[] resultat = new Boolean[3];
+		resultat[0] = Vue.estSaisiRempli(this.getNomArbitre(), "", this.lblNomArbitre, this.nomArbitre);
+		resultat[1] = Vue.estSaisiRempli(this.getPrenomArbitre(), "", this.lblPrenomArbitre, this.prenomArbitre);
+		
+		if (this.listeResponsables.isSelectionEmpty()) {
+			resultat[2] = Vue.estSaisiRempli(this.getPrenomResponsable(), "", this.lblMdpArbitre, this.mdpArbitre);
+			
+		}
+		
+		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {
+			Vue.estVide();
+			return false;
+			
+		}
+		return true;
+	}
 
 	// MESSAGES
-	public void estVide() {
-        JOptionPane.showMessageDialog(null, "Veuillez compléter tous les champs !", "Erreur", JOptionPane.ERROR_MESSAGE);
-    }
-	
 	public int confirmer(String operation) {
 		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la "+operation+" ?","Confirmation",JOptionPane.YES_NO_OPTION);
 	}
