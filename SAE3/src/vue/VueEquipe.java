@@ -349,7 +349,8 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelNationalite.add(panelLabelNationalite, gbcPanelLabelNationalite);
 		
-		libelleNationalite = new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font(Vue.POLICE, Font.BOLD, 14), Color.WHITE).build();
+		libelleNationalite = new JLabelBuilder(panelLabelNationalite)
+				.setCustomLabel("Nationalité", new Font(Vue.POLICE, Font.BOLD, 14), Color.WHITE).build();
 		
 		JPanel panelEntreeNationalite = new JPanelBuilder(panelNationalite).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayoutEntreeNationalite = (FlowLayout) panelEntreeNationalite.getLayout();
@@ -557,26 +558,38 @@ public class VueEquipe{
 	public int confirmerSuppression() {
 		return JOptionPane.showConfirmDialog(null, "Confirmez-vous la suppression ?","Confirmation",JOptionPane.YES_NO_OPTION);
 	}
+
+	public void afficherCreationEquipe() {
+		this.deselectionner();
+		VueEquipe.afficherPanel(panelModif);
+		VueEquipe.afficherTexte(this.titreModif, Vue.CREER_UNE_EQUIPE);
+		
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
+			this.entreeEcurie.setSelectedIndex(0);
+			
+		}
+		VueEquipe.supprimerTexte(this.entreeNomEquipe);
+		this.entreeJeu.setSelectedIndex(0);
+		VueEquipe.supprimerTexte(this.entreeNationalite);
+		
+		this.viderModeleJoueurs(); // Vide la liste des joueurs associés à l'équipe
+		
+		this.setCouleurSaisiesANoir();
+	}
 	
-	public void premierIndexJeu() {
-        this.entreeJeu.setSelectedIndex(0);
-    }
-	
-	public void premierIndexEcurie() {
-        this.entreeEcurie.setSelectedIndex(0);
-    }
-	
-	public void annulerEntreeEquipe() {
-        this.deselectionner();
-        VueEquipe.afficherPanel(panelModif);
-        VueEquipe.afficherTexte(this.titreModif, Vue.CREER_UNE_EQUIPE);
-        VueEquipe.supprimerTexte(this.entreeNomEquipe);
-        VueEquipe.supprimerTexte(this.entreeNationalite);
-        this.premierIndexJeu();
-        entreeJeu.setForeground(new Color(0,0,0));
-        this.premierIndexEcurie();
-        entreeEcurie.setForeground(new Color(0,0,0));
-    }
+	public void setCouleurSaisiesANoir() {
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
+			this.nomEcurie.setForeground(Color.WHITE);
+			entreeEcurie.setForeground(Color.BLACK);
+			
+		}
+		this.nomEquipe.setForeground(Color.WHITE);
+		this.entreeNomEquipe.setForeground(Color.BLACK);
+		this.jeuS.setForeground(Color.WHITE);
+		this.entreeJeu.setForeground(Color.BLACK);
+		this.libelleNationalite.setForeground(Color.WHITE);
+		this.entreeNationalite.setForeground(Color.BLACK);
+	}
 	
 	public void rechercheEquipe(JTextField recherche) {
 		recherche.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -598,22 +611,6 @@ public class VueEquipe{
 	
 	public Etat getEtat(JButton b) {
 		return EtatFactory.creerEtat(b.getText());
-	}
-	
-	public void afficherCreationEquipe() {
-		this.deselectionner();
-		VueEquipe.afficherPanel(panelModif);
-		VueEquipe.afficherTexte(this.titreModif, Vue.CREER_UNE_EQUIPE);
-		VueEquipe.supprimerTexte(this.entreeNomEquipe);
-		VueEquipe.supprimerTexte(this.entreeNationalite);
-		
-		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
-			this.setEcurie("- Sélectionnez une écurie -");
-		}
-		entreeEcurie.setForeground(new Color(0,0,0));
-		this.setJeu(Vue.SELECTIONNER_UN_JEU);
-		entreeJeu.setForeground(new Color(0,0,0));
-		this.viderModeleJoueurs();
 	}
 	
 	/* Vérifie si tous les champs ont été saisis*/

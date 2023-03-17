@@ -120,19 +120,25 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			VueEquipe.fermerFenetre(this.vue.getFrame());
 			break;
 			
+		case DECONNECTER :
+			Connexion.fermerConnexion();
+			VueConnexion fen = new VueConnexion();
+			fen.getFrame().setVisible(true);
+			VueEquipe.fermerFenetre(this.vue.getFrame());
+			break;
+			
 		case RECHERCHER:
 			if (!this.vue.getRecherche().equals("")) {
 				this.vue.filtrerRecherche();
 			} else {
 				this.vue.setDefaultListModel();
 			}
+			
+		case ANNULER :
+		case CREER:
 			this.vue.afficherCreationEquipe();
 			break;
 			
-		case ANNULER :
-            this.vue.annulerEntreeEquipe();
-            break;
-            
 		case VALIDER:
 			if (this.vue.estFormulaireRempli()) {
 				// Instancie l'équipe créée
@@ -153,17 +159,6 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				this.vue.afficherCreationEquipe();
 				
 			}
-			break;
-			
-		case DECONNECTER :
-			Connexion.fermerConnexion();
-			VueConnexion fen = new VueConnexion();
-			fen.getFrame().setVisible(true);
-			VueEquipe.fermerFenetre(this.vue.getFrame());
-			break;
-		
-		case CREER:
-			this.vue.afficherCreationEquipe();
 			break;
 			
 		case SUPPRIMER:
@@ -195,8 +190,8 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 				}
 				this.vue.setNationalite(equipe.getNationalite());
 				this.initialiserListeJoueurs(equipe);
+				this.vue.setCouleurSaisiesANoir(); // Remets les saisies en noir en cas d'erreur
 			}
-			
 		}
 		else if (list.getName().equals("Joueurs") && !e.getValueIsAdjusting()) {	// gere les doubles clics
 				VueJoueur fenJoueur = new VueJoueur();
