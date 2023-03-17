@@ -33,12 +33,7 @@ import modele.JPanelBuilder;
 import modele.JTextFieldBuilder;
 import controleur.ControleurEquipe;
 
-public class VueEquipe{
-	private static final String GESTIONNAIRE = "Gestionnaire";
-	private static final String POLICE = "Roboto";
-	private static final String CREER_UNE_EQUIPE = "Créer une équipe";
-	private static final String SELECTIONNER_UN_JEU = "- Sélectionnez un jeu -";
-	
+public class VueEquipe{	
 	private JFrame fenetreEquipe;
 
 	private JLabel titreModif;
@@ -85,7 +80,7 @@ public class VueEquipe{
 		
 		// HEADER //
 		// Boutons du menu
-		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
 			HeaderAdmin header = new HeaderAdmin(this.getFrame());
 			header.getBtnDeconnexion().addActionListener(controleur);
 			header.getBtnEquipes().addActionListener(controleur);
@@ -134,14 +129,14 @@ public class VueEquipe{
 		flowLayoutTitre.setAlignment(FlowLayout.LEFT);
 		
 		// LISTE DES EQUIPES //
-		new JLabelBuilder(panelTitre).setCustomLabel("Equipes", new Font(POLICE, Font.BOLD, 36), Color.WHITE).build();
+		new JLabelBuilder(panelTitre).setCustomLabel("Equipes", new Font(Vue.POLICE, Font.BOLD, 36), Color.WHITE).build();
 		
 		JPanel panelRecherche = new JPanelBuilder(panelTitreT).setCustomPanel(Couleur.BLEU1).build();
-		recherche = new JTextFieldBuilder(panelRecherche).setCustomTextField(new Font(POLICE,Font.PLAIN, 13), 15).build();
+		recherche = new JTextFieldBuilder(panelRecherche).setCustomTextField(new Font(Vue.POLICE,Font.PLAIN, 13), 15).build();
 		btnRechercher = new JButtonBuilder(panelRecherche).setCustomButton(
 				"Rechercher", 
 				Color.WHITE, 
-				new Font(POLICE, Font.BOLD, 13), 
+				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Couleur.BLEU2).build();
 		Vue.desactiverBouton(btnRechercher);
 		rechercheEquipe(recherche);
@@ -157,7 +152,7 @@ public class VueEquipe{
 		panelEquipe.add(panelListe, gbcPanelListe);
 		
 		listeEquipes.setVisibleRowCount(12);
-		listeEquipes.setFont(new Font(POLICE, Font.PLAIN, 15));
+		listeEquipes.setFont(new Font(Vue.POLICE, Font.PLAIN, 15));
 		listeEquipes.setFixedCellHeight(50);
 		listeEquipes.setFixedCellWidth(600);
 		listeEquipes.setName("Equipe");
@@ -176,12 +171,12 @@ public class VueEquipe{
 		JButton btnCreer = new JButtonBuilder(panelBoutons).setCustomButton(
 				"Créer une nouvelle équipe", 
 				Color.WHITE, 
-				new Font(POLICE, Font.BOLD, 13), 
+				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Couleur.BLEU2).build();
 		btnSupprimer = new JButtonBuilder(panelBoutons).setCustomButton(
 				"Supprimer l'équipe sélectionnée", 
 				Color.WHITE, 
-				new Font(POLICE, Font.BOLD, 13), 
+				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimer);
 		
@@ -207,8 +202,8 @@ public class VueEquipe{
 		panelModif.add(panelTitreM, gbcPanelTitreM);
 		
 		titreModif = new JLabelBuilder(panelTitreM).setCustomLabel(
-				CREER_UNE_EQUIPE, 
-				new Font(POLICE, Font.BOLD, 30), 
+				Vue.CREER_UNE_EQUIPE, 
+				new Font(Vue.POLICE, Font.BOLD, 30), 
 				Color.WHITE).build();
 		
 		JPanel panelNomEcurie = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
@@ -232,10 +227,10 @@ public class VueEquipe{
 		panelNomEcurie.add(panel, gbcPanel);
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 
-		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
 			nomEcurie = new JLabelBuilder(panel).setCustomLabel(
 					"Nom de l'écurie", 
-					new Font(POLICE, Font.BOLD, 14), 
+					new Font(Vue.POLICE, Font.BOLD, 14), 
 					Color.WHITE).build();
 			nomEcurie.setHorizontalAlignment(SwingConstants.CENTER);
 	
@@ -249,7 +244,7 @@ public class VueEquipe{
 			panelNomEcurie.add(panelEcurie, gbcPanelEcurie);
 			
 			entreeEcurie.setToolTipText("");
-			entreeEcurie.setFont(new Font(POLICE, Font.PLAIN, 11));
+			entreeEcurie.setFont(new Font(Vue.POLICE, Font.PLAIN, 11));
 			entreeEcurie.setPreferredSize(new Dimension(205, 20));
 			panelEcurie.add(entreeEcurie);
 			
@@ -278,7 +273,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelNom.add(panel4, gbcPanel4);
 		
-		nomEquipe = new JLabelBuilder(panel4).setCustomLabel("Nom de l'équipe", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		nomEquipe = new JLabelBuilder(panel4).setCustomLabel("Nom de l'équipe", new Font(Vue.POLICE, Font.BOLD, 14), Color.WHITE).build();
 		nomEquipe.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panel5 = new JPanelBuilder(panelNom).setCustomPanel(Couleur.BLEU1).build();
@@ -290,7 +285,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 0), 1, 0).build();
 		panelNom.add(panel5, gbcPanel5);
 		
-		entreeNomEquipe = new JTextFieldBuilder(panel5).setCustomTextField(new Font(POLICE,Font.PLAIN, 11), 20).build();
+		entreeNomEquipe = new JTextFieldBuilder(panel5).setCustomTextField(new Font(Vue.POLICE,Font.PLAIN, 11), 20).build();
 		
 		JPanel panelJeu = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelJeu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -314,7 +309,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelJeu.add(paneLabelJeu, gbcPanel6);
 		
-		jeuS = new JLabelBuilder(paneLabelJeu).setCustomLabel("Jeu spécialisé", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		jeuS = new JLabelBuilder(paneLabelJeu).setCustomLabel("Jeu spécialisé", new Font(Vue.POLICE, Font.BOLD, 14), Color.WHITE).build();
 		jeuS.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JPanel panelEntreeJeu = new JPanelBuilder(panelJeu).setCustomPanel(Couleur.BLEU1).build();
@@ -329,7 +324,7 @@ public class VueEquipe{
 		entreeJeu.setFont(new Font("Dialog", Font.PLAIN, 11));
 		entreeJeu.setPreferredSize(new Dimension(205, 20));
 		panelEntreeJeu.add(entreeJeu);
-		this.entreeJeu.addItem(SELECTIONNER_UN_JEU);
+		this.entreeJeu.addItem(Vue.SELECTIONNER_UN_JEU);
 		
 		JPanel panelNationalite = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelNationalite = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -354,7 +349,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 5), 0, 0).build();
 		panelNationalite.add(panelLabelNationalite, gbcPanelLabelNationalite);
 		
-		libelleNationalite = new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font(POLICE, Font.BOLD, 14), Color.WHITE).build();
+		libelleNationalite = new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font(Vue.POLICE, Font.BOLD, 14), Color.WHITE).build();
 		
 		JPanel panelEntreeNationalite = new JPanelBuilder(panelNationalite).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayoutEntreeNationalite = (FlowLayout) panelEntreeNationalite.getLayout();
@@ -365,7 +360,7 @@ public class VueEquipe{
 				new Insets(0, 0, 0, 0), 1, 0).build();
 		panelNationalite.add(panelEntreeNationalite, gbcPanelEntreeNationalite);
 		
-		entreeNationalite = new JTextFieldBuilder(panelEntreeNationalite).setCustomTextField(new Font(POLICE,Font.PLAIN, 11), 20).build();
+		entreeNationalite = new JTextFieldBuilder(panelEntreeNationalite).setCustomTextField(new Font(Vue.POLICE,Font.PLAIN, 11), 20).build();
 		
 		JPanel panelJoueurs = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
 		GridBagConstraints gbcPanelJoueurs = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
@@ -408,13 +403,13 @@ public class VueEquipe{
 		JButton btnValider = new JButtonBuilder(panelValider).setCustomButton(
 				"Valider", 
 				Color.WHITE, 
-				new Font(POLICE, Font.BOLD, 13), 
+				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Couleur.VERT).build();
 		btnValider.setName("btnValider");
 		JButton btnAnnuler = new JButtonBuilder(panelValider).setCustomButton(
 				"Annuler", 
 				Color.WHITE, 
-				new Font(POLICE, Font.BOLD, 13), 
+				new Font(Vue.POLICE, Font.BOLD, 13), 
 				Couleur.GRIS).build();
 
 		// VALIDER OU ANNULER INFORMATIONS SUR L'EQUIPE
@@ -508,7 +503,7 @@ public class VueEquipe{
 	}
 	
 	public void setEcurie(String e) {
-		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
 			this.entreeEcurie.setSelectedItem(e);
 		}	
 	}
@@ -574,7 +569,7 @@ public class VueEquipe{
 	public void annulerEntreeEquipe() {
         this.deselectionner();
         VueEquipe.afficherPanel(panelModif);
-        VueEquipe.afficherTexte(this.titreModif, CREER_UNE_EQUIPE);
+        VueEquipe.afficherTexte(this.titreModif, Vue.CREER_UNE_EQUIPE);
         VueEquipe.supprimerTexte(this.entreeNomEquipe);
         VueEquipe.supprimerTexte(this.entreeNationalite);
         this.premierIndexJeu();
@@ -608,15 +603,15 @@ public class VueEquipe{
 	public void afficherCreationEquipe() {
 		this.deselectionner();
 		VueEquipe.afficherPanel(panelModif);
-		VueEquipe.afficherTexte(this.titreModif, CREER_UNE_EQUIPE);
+		VueEquipe.afficherTexte(this.titreModif, Vue.CREER_UNE_EQUIPE);
 		VueEquipe.supprimerTexte(this.entreeNomEquipe);
 		VueEquipe.supprimerTexte(this.entreeNationalite);
 		
-		if (ControleurEquipe.estProfil(GESTIONNAIRE)) {
+		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
 			this.setEcurie("- Sélectionnez une écurie -");
 		}
 		entreeEcurie.setForeground(new Color(0,0,0));
-		this.setJeu(SELECTIONNER_UN_JEU);
+		this.setJeu(Vue.SELECTIONNER_UN_JEU);
 		entreeJeu.setForeground(new Color(0,0,0));
 		this.viderModeleJoueurs();
 	}
@@ -626,7 +621,7 @@ public class VueEquipe{
 		Boolean[] resultat = new Boolean[4];
 		resultat[0] = Vue.estSaisiRempli(this.getEcurie(), "- Sélectionnez une écurie -", this.nomEcurie, this.entreeEcurie);
 		resultat[1] = Vue.estSaisiRempli(this.getNomEquipe(), "", this.nomEquipe, this.entreeNomEquipe);
-		resultat[2] = Vue.estSaisiRempli(this.getJeu(), SELECTIONNER_UN_JEU, this.jeuS, this.entreeJeu);
+		resultat[2] = Vue.estSaisiRempli(this.getJeu(), Vue.SELECTIONNER_UN_JEU, this.jeuS, this.entreeJeu);
 		resultat[3] = Vue.estSaisiRempli(this.getNationalite(), "", this.libelleNationalite, this.entreeNationalite);
 		
 		if (!Arrays.stream(resultat).allMatch(Boolean::valueOf)) {

@@ -76,17 +76,17 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 		case EQUIPES :
 			VueEquipe fenEQUIPE = new VueEquipe();
 			fenEQUIPE.getFrame().setVisible(true);
-			VueERA.fermerFenetre(this.vue.fenetreERA);
+			VueERA.fermerFenetre(this.vue.getFrame());
 		break;
 		case JOUEURS :
 			VueJoueur fenJOUEUR = new VueJoueur();
 			fenJOUEUR.getFrame().setVisible(true);
-			VueERA.fermerFenetre(this.vue.fenetreERA);
+			VueERA.fermerFenetre(this.vue.getFrame());
 		break;
 		case CLASSEMENT :
 			VueClassement fenClassement = new VueClassement();
 			fenClassement.getFrame().setVisible(true);
-			VueERA.fermerFenetre(this.vue.fenetreERA);
+			VueERA.fermerFenetre(this.vue.getFrame());
 		break;
 		case ANNULER:
 		case CREER :
@@ -144,12 +144,12 @@ public class ControleurERA implements ActionListener, ListSelectionListener, Vue
 			Connexion.fermerConnexion();
 			VueConnexion fen = new VueConnexion();
 			fen.getFrame().setVisible(true);
-			VueERA.fermerFenetre(this.vue.fenetreERA);
+			VueERA.fermerFenetre(this.vue.getFrame());
 		break;
 		case CALENDRIER :
 			VueCalendrier fenCalendrier = new VueCalendrier();
 			fenCalendrier.getFrame().setVisible(true);
-			VueERA.fermerFenetre(this.vue.fenetreERA);
+			VueERA.fermerFenetre(this.vue.getFrame());
 		break;
 		case RECHERCHER:
 			if (!this.vue.getRecherche().equals("")) {
