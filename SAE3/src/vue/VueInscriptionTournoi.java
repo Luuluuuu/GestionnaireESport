@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -202,6 +201,7 @@ public class VueInscriptionTournoi implements Vue{
 		
 		// BOUTONS //
 		btnValider.addActionListener(controleur);
+		btnAnnuler.addActionListener(controleur);
 	}
 	
 	public void activerBouton(JButton j) {
