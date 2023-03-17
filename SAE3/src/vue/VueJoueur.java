@@ -32,12 +32,18 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import modele.EtatFactory;
+import modele.GridBagConstraintsBuilder;
+import modele.GridBagLayoutBuilder;
+import modele.JButtonBuilder;
+import modele.JLabelBuilder;
+import modele.JPanelBuilder;
+import modele.JTextFieldBuilder;
 import modele.Etat;
 import controleur.ControleurJoueur;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
 
-public class VueJoueur implements Vue{
+public class VueJoueur {
 	
 	public JFrame fenetreJoueur;
 	public JPanel panelModif;
@@ -108,39 +114,39 @@ public class VueJoueur implements Vue{
 		fenetreJoueur.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panelJoueur = creerJPanel(panelContenu, Couleur.BLEU1);
-		GridBagLayout gbl_panelJoueur = creerGridBagLayout(new int[]{692, 0}, new int[] {100, 622, 100, 0},
-										new double[]{1.0, Double.MIN_VALUE},new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE});
-		panelJoueur.setLayout(gbl_panelJoueur);
+		JPanel panelJoueur = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
+		GridBagLayout gblPanelJoueur = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{692, 0}, new int[] {100, 622, 100, 0},
+										new double[]{1.0, Double.MIN_VALUE},new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE}).build();
+		panelJoueur.setLayout(gblPanelJoueur);
 		
-		JPanel panelTitreT = creerJPanel(panelJoueur, Couleur.BLEU1);
-		GridBagConstraints gbc_panelTitreT = creerGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-		panelJoueur.add(panelTitreT, gbc_panelTitreT);
+		JPanel panelTitreT = new JPanelBuilder(panelJoueur).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelTitreT = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelJoueur.add(panelTitreT, gbcPanelTitreT);
 		panelTitreT.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panelTitre = creerJPanel(panelTitreT, Couleur.BLEU1);
-		FlowLayout flowLayout_3 = (FlowLayout) panelTitre.getLayout();
-		flowLayout_3.setHgap(50);
-		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		JPanel panelTitre = new JPanelBuilder(panelTitreT).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout3 = (FlowLayout) panelTitre.getLayout();
+		flowLayout3.setHgap(50);
+		flowLayout3.setAlignment(FlowLayout.LEFT);
 		
 		// LISTE DES TOURNOIS //
-		JLabel Joueurs = creerJLabel(panelTitre, "Joueurs", 36);
+		JLabel Joueurs = new JLabelBuilder(panelTitre).setCustomLabel("Joueurs", new Font("Roboto", Font.BOLD, 36), Color.WHITE).build();
 		Joueurs.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		JPanel panelRecherche = creerJPanel(panelTitreT, Couleur.BLEU1);
+		JPanel panelRecherche = new JPanelBuilder(panelTitreT).setCustomPanel(Couleur.BLEU1).build();
 		
-		recherche = creerJTextField(panelRecherche, 13, 15);
+		recherche = new JTextFieldBuilder(panelRecherche).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 15).build();
 		
-		btnRechercher = creerBouton(panelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		btnRechercher = new JButtonBuilder(panelRecherche).setCustomButton("Rechercher", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		Vue.desactiverBouton(btnRechercher);
 		rechercheEquipe(recherche);
 		
-		JPanel panelListe = creerJPanel(panelJoueur, Couleur.BLEU1);
-		FlowLayout fl_panelListe = (FlowLayout) panelListe.getLayout();
-		fl_panelListe.setHgap(50);
-		fl_panelListe.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelListe = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1);
-		panelJoueur.add(panelListe, gbc_panelListe);
+		JPanel panelListe = new JPanelBuilder(panelJoueur).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flPanelListe = (FlowLayout) panelListe.getLayout();
+		flPanelListe.setHgap(50);
+		flPanelListe.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanelListe = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelJoueur.add(panelListe, gbcPanelListe);
 		
 		listeJoueurs = new JList<String>(modeleJoueurs);
 		listeJoueurs.setVisibleRowCount(12);
@@ -150,160 +156,160 @@ public class VueJoueur implements Vue{
 		JScrollPane scrollPane = new JScrollPane(this.listeJoueurs);
 		panelListe.add(scrollPane);
 		
-		JPanel panelBoutons = creerJPanel(panelJoueur, Couleur.BLEU1);
-		GridBagConstraints gbc_panelBoutons = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 2);
-		panelJoueur.add(panelBoutons, gbc_panelBoutons);
+		JPanel panelBoutons = new JPanelBuilder(panelJoueur).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 2).build();
+		panelJoueur.add(panelBoutons, gbcPanelBoutons);
 		panelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		
-		JButton btnCreer = creerBouton(panelBoutons, "Créer un nouveau joueur", Couleur.BLEU2, 13);
+		JButton btnCreer = new JButtonBuilder(panelBoutons).setCustomButton("Créer un nouveau joueur", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		
-		btnSupprimer = creerBouton(panelBoutons, "Supprimer le joueur sélectionné", Couleur.GRIS, 13);
+		btnSupprimer = new JButtonBuilder(panelBoutons).setCustomButton("Supprimer le joueur sélectionné", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimer);
 		
 		// CREER OU MODIFIER UN TOURNOI
 		panelModif = new JPanel();
 		panelModif.setBackground(Couleur.BLEU1);
 		panelContenu.add(panelModif);
-		GridBagLayout gbl_panelModif = creerGridBagLayout(new int[]{692, 0}, new int[] {234, 70, 70, 70, 70, 70, 70, 70, 100, 0},
-										new double[]{0.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE});
-		panelModif.setLayout(gbl_panelModif);
+		GridBagLayout gblPanelModif = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{692, 0}, new int[] {234, 70, 70, 70, 70, 70, 70, 70, 100, 0},
+										new double[]{0.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE}).build();
+		panelModif.setLayout(gblPanelModif);
 		
-		JPanel panelTitreM = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelTitreM = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-		panelModif.add(panelTitreM, gbc_panelTitreM);
+		JPanel panelTitreM = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelTitreM = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelModif.add(panelTitreM, gbcPanelTitreM);
 		panelTitreM.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panelT = creerJPanel(panelTitreM, Couleur.BLEU1);
-		FlowLayout flowLayout_1 = (FlowLayout) panelT.getLayout();
-		flowLayout_1.setVgap(80);
-		flowLayout_1.setHgap(40);
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		JPanel panelT = new JPanelBuilder(panelTitreM).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout1 = (FlowLayout) panelT.getLayout();
+		flowLayout1.setVgap(80);
+		flowLayout1.setHgap(40);
+		flowLayout1.setAlignment(FlowLayout.LEFT);
 		
-		titreModif = creerJLabel(panelT, "Créer un joueur", 30);
+		titreModif = new JLabelBuilder(panelT).setCustomLabel("Créer un joueur", new Font("Roboto", Font.BOLD, 30), Color.WHITE).build();
 		
-		JPanel panelPhoto = creerJPanel(panelTitreM, Couleur.BLEU1);
+		JPanel panelPhoto = new JPanelBuilder(panelTitreM).setCustomPanel(Couleur.BLEU1).build();
 		panelPhoto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnPhoto = creerBouton(panelPhoto, "Choisir une photo", Couleur.BLEU2, 13);
+		JButton btnPhoto = new JButtonBuilder(panelPhoto).setCustomButton("Choisir une photo", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		btnPhoto.addActionListener(controleur);
 		
-		photo = creerJLabel(panelPhoto, "", 11);
+		photo = new JLabelBuilder(panelPhoto).setCustomLabel( "", new Font("Roboto", Font.BOLD, 11), Color.WHITE).build();
 		photo.setIcon(new ImageIcon(img)); //Image affichée a cotée
 		
-		JPanel panelEquipe = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelEquipe = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 1);
-		panelModif.add(panelEquipe, gbc_panelEquipe);
-		GridBagLayout gbl_panelEquipe = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelEquipe.setLayout(gbl_panelEquipe);
+		JPanel panelEquipe = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelEquipe = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelModif.add(panelEquipe, gbcPanelEquipe);
+		GridBagLayout gblPanelEquipe = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelEquipe.setLayout(gblPanelEquipe);
 		
-		JPanel panelLabelEquipe = creerJPanel(panelEquipe, Couleur.BLEU1);
-		FlowLayout flowLayout_11 = (FlowLayout) panelLabelEquipe.getLayout();
-		flowLayout_11.setHgap(55);
-		flowLayout_11.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_8 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelEquipe.add(panelLabelEquipe, gbc_panel_8);
+		JPanel panelLabelEquipe = new JPanelBuilder(panelEquipe).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout11 = (FlowLayout) panelLabelEquipe.getLayout();
+		flowLayout11.setHgap(55);
+		flowLayout11.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel8 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelEquipe.add(panelLabelEquipe, gbcPanel8);
 		
 		// EQUIPE
-		creerJLabel(panelLabelEquipe, "Equipe", 14);
+		new JLabelBuilder(panelLabelEquipe).setCustomLabel("Equipe", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTexteEquipe = creerJPanel(panelEquipe, Couleur.BLEU1);
-		FlowLayout flowLayout_12 = (FlowLayout) panelTexteEquipe.getLayout();
-		flowLayout_12.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_11 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelEquipe.add(panelTexteEquipe, gbc_panel_11);
+		JPanel panelTexteEquipe = new JPanelBuilder(panelEquipe).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout12 = (FlowLayout) panelTexteEquipe.getLayout();
+		flowLayout12.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel11 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelEquipe.add(panelTexteEquipe, gbcPanel11);
 		
 		entreeEquipe = new JComboBox<String>(modeleEquipes);
 		entreeEquipe.setPreferredSize(new Dimension(205, 20));
 		entreeEquipe.setFont(new Font("Roboto", Font.PLAIN, 11));
 		panelTexteEquipe.add(entreeEquipe);
 		
-		JPanel panelNom = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelNom = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 2);
-		panelModif.add(panelNom, gbc_panelNom);
-		GridBagLayout gbl_panelNom = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelNom.setLayout(gbl_panelNom);
+		JPanel panelNom = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelNom = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 2).build();
+		panelModif.add(panelNom, gbcPanelNom);
+		GridBagLayout gblPanelNom = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelNom.setLayout(gblPanelNom);
 		
-		JPanel panelLabelNom = creerJPanel(panelNom, Couleur.BLEU1);
-		GridBagConstraints gbc_panel = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelNom.add(panelLabelNom, gbc_panel);
+		JPanel panelLabelNom = new JPanelBuilder(panelNom).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanel = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelNom.add(panelLabelNom, gbcPanel);
 		panelLabelNom.setLayout(new FlowLayout(FlowLayout.LEFT, 55, 5));
 		
-		creerJLabel(panelLabelNom, "Nom", 14);
+		new JLabelBuilder(panelLabelNom).setCustomLabel("Nom", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTexteNom = creerJPanel(panelNom, Couleur.BLEU1);
+		JPanel panelTexteNom = new JPanelBuilder(panelNom).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayout = (FlowLayout) panelTexteNom.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_1 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelNom.add(panelTexteNom, gbc_panel_1);
+		GridBagConstraints gbcPanel1 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelNom.add(panelTexteNom, gbcPanel1);
 		
-		entreeNom = creerJTextField(panelTexteNom, 11, 20);
+		entreeNom = new JTextFieldBuilder(panelTexteNom).setCustomTextField(new Font("Roboto", Font.PLAIN, 11), 20).build();
 		
-		JPanel panelPrenom = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelPrenom = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 3);
-		panelModif.add(panelPrenom, gbc_panelPrenom);
-		GridBagLayout gbl_panelPrenom = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelPrenom.setLayout(gbl_panelPrenom);
+		JPanel panelPrenom = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelPrenom = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 3).build();
+		panelModif.add(panelPrenom, gbcPanelPrenom);
+		GridBagLayout gblPanelPrenom = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelPrenom.setLayout(gblPanelPrenom);
 		
-		JPanel panelLabelPrenom = creerJPanel(panelPrenom, Couleur.BLEU1);
-		FlowLayout flowLayout_5 = (FlowLayout) panelLabelPrenom.getLayout();
-		flowLayout_5.setHgap(55);
-		flowLayout_5.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_4 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelPrenom.add(panelLabelPrenom, gbc_panel_4);
+		JPanel panelLabelPrenom = new JPanelBuilder(panelPrenom).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout5 = (FlowLayout) panelLabelPrenom.getLayout();
+		flowLayout5.setHgap(55);
+		flowLayout5.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel4 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelPrenom.add(panelLabelPrenom, gbcPanel4);
 		
-		creerJLabel(panelLabelPrenom, "Prénom", 14);
+		new JLabelBuilder(panelLabelPrenom).setCustomLabel("Prénom", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTextePrenom = creerJPanel(panelPrenom, Couleur.BLEU1);
-		FlowLayout flowLayout_6 = (FlowLayout) panelTextePrenom.getLayout();
-		flowLayout_6.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_5 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelPrenom.add(panelTextePrenom, gbc_panel_5);
+		JPanel panelTextePrenom = new JPanelBuilder(panelPrenom).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout6 = (FlowLayout) panelTextePrenom.getLayout();
+		flowLayout6.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel5 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelPrenom.add(panelTextePrenom, gbcPanel5);
 		
-		entreePrenom = creerJTextField(panelTextePrenom, 11, 20);
+		entreePrenom = new JTextFieldBuilder(panelTextePrenom).setCustomTextField(new Font("Roboto", Font.PLAIN, 11), 20).build();
 		
-		JPanel panelPseudo = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelPseudo = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 4);
-		panelModif.add(panelPseudo, gbc_panelPseudo);
-		GridBagLayout gbl_panelPseudo = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelPseudo.setLayout(gbl_panelPseudo);
+		JPanel panelPseudo = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelPseudo = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 4).build();
+		panelModif.add(panelPseudo, gbcPanelPseudo);
+		GridBagLayout gblPanelPseudo = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelPseudo.setLayout(gblPanelPseudo);
 		
-		JPanel panelLabelPseudo = creerJPanel(panelPseudo, Couleur.BLEU1);
-		FlowLayout flowLayout_7 = (FlowLayout) panelLabelPseudo.getLayout();
-		flowLayout_7.setHgap(55);
-		flowLayout_7.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_6 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelPseudo.add(panelLabelPseudo, gbc_panel_6);
+		JPanel panelLabelPseudo = new JPanelBuilder(panelPseudo).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout7 = (FlowLayout) panelLabelPseudo.getLayout();
+		flowLayout7.setHgap(55);
+		flowLayout7.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel6 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelPseudo.add(panelLabelPseudo, gbcPanel6);
 		
-		creerJLabel(panelLabelPseudo, "Pseudo", 14);
+		new JLabelBuilder(panelLabelPseudo).setCustomLabel("Pseudo", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTextePseudo = creerJPanel(panelPseudo, Couleur.BLEU1);
-		FlowLayout flowLayout_8 = (FlowLayout) panelTextePseudo.getLayout();
-		flowLayout_8.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_7 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelPseudo.add(panelTextePseudo, gbc_panel_7);
+		JPanel panelTextePseudo = new JPanelBuilder(panelPseudo).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout8 = (FlowLayout) panelTextePseudo.getLayout();
+		flowLayout8.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel7 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelPseudo.add(panelTextePseudo, gbcPanel7);
 		
-		entreePseudo = creerJTextField(panelTextePseudo, 11, 20);
+		entreePseudo = new JTextFieldBuilder(panelTextePseudo).setCustomTextField(new Font("Roboto", Font.PLAIN, 11), 20).build();
 		
-		JPanel panelDateN = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelDateN = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 5);
-		panelModif.add(panelDateN, gbc_panelDateN);
-		GridBagLayout gbl_panelDateN = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelDateN.setLayout(gbl_panelDateN);
+		JPanel panelDateN = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelDateN = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 5).build();
+		panelModif.add(panelDateN, gbcPanelDateN);
+		GridBagLayout gblPanelDateN = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelDateN.setLayout(gblPanelDateN);
 		
-		JPanel panelLabelDateN = creerJPanel(panelDateN, Couleur.BLEU1);
-		FlowLayout flowLayout_4 = (FlowLayout) panelLabelDateN.getLayout();
-		flowLayout_4.setHgap(55);
-		flowLayout_4.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_2 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelDateN.add(panelLabelDateN, gbc_panel_2);
+		JPanel panelLabelDateN = new JPanelBuilder(panelDateN).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout4 = (FlowLayout) panelLabelDateN.getLayout();
+		flowLayout4.setHgap(55);
+		flowLayout4.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel2 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelDateN.add(panelLabelDateN, gbcPanel2);
 		
-		creerJLabel(panelLabelDateN, "Date de naissance", 14);
+		new JLabelBuilder(panelLabelDateN).setCustomLabel("Date de naissance", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelEntreeDateN = creerJPanel(panelDateN, Couleur.BLEU1);
-		FlowLayout flowLayout_9 = (FlowLayout) panelEntreeDateN.getLayout();
-		flowLayout_9.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_3 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelDateN.add(panelEntreeDateN, gbc_panel_3);
+		JPanel panelEntreeDateN = new JPanelBuilder(panelDateN).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout9 = (FlowLayout) panelEntreeDateN.getLayout();
+		flowLayout9.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel3 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelDateN.add(panelEntreeDateN, gbcPanel3);
 		
 		entreeDateNaissance.getComponentDateTextField().setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeDateNaissance.getComponentToggleCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
@@ -313,66 +319,66 @@ public class VueJoueur implements Vue{
 		paramDate.setAllowEmptyDates(false);
 		paramDate.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
-		JPanel panelNationalite = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelNationalite = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 6);
-		panelModif.add(panelNationalite, gbc_panelNationalite);
-		GridBagLayout gbl_panelNationalite = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelNationalite.setLayout(gbl_panelNationalite);
+		JPanel panelNationalite = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelNationalite = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 6).build();
+		panelModif.add(panelNationalite, gbcPanelNationalite);
+		GridBagLayout gblPanelNationalite = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelNationalite.setLayout(gblPanelNationalite);
 		
-		JPanel panelLabelNationalite = creerJPanel(panelNationalite, Couleur.BLEU1);
-		FlowLayout flowLayout_2 = (FlowLayout) panelLabelNationalite.getLayout();
-		flowLayout_2.setHgap(55);
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_9 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelNationalite.add(panelLabelNationalite, gbc_panel_9);
+		JPanel panelLabelNationalite = new JPanelBuilder(panelNationalite).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout2 = (FlowLayout) panelLabelNationalite.getLayout();
+		flowLayout2.setHgap(55);
+		flowLayout2.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel9 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelNationalite.add(panelLabelNationalite, gbcPanel9);
 		
-		creerJLabel(panelLabelNationalite, "Nationalité", 14);
+		new JLabelBuilder(panelLabelNationalite).setCustomLabel("Nationalité", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTexteNationalite = creerJPanel(panelNationalite, Couleur.BLEU1);
-		FlowLayout flowLayout_10 = (FlowLayout) panelTexteNationalite.getLayout();
-		flowLayout_10.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_10 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelNationalite.add(panelTexteNationalite, gbc_panel_10);
+		JPanel panelTexteNationalite = new JPanelBuilder(panelNationalite).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout10 = (FlowLayout) panelTexteNationalite.getLayout();
+		flowLayout10.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel10 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelNationalite.add(panelTexteNationalite, gbcPanel10);
 		
-		entreeNationalite = creerJTextField(panelTexteNationalite, 11, 20);
+		entreeNationalite = new JTextFieldBuilder(panelTexteNationalite).setCustomTextField(new Font("Roboto", Font.PLAIN, 11), 20).build();
 		
-		JPanel panelMdp = creerJPanel(panelModif, Couleur.BLEU1);
-		GridBagConstraints gbc_panelMdp = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 7);
-		panelModif.add(panelMdp, gbc_panelMdp);
-		GridBagLayout gbl_panelMdp = creerGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE});
-		panelMdp.setLayout(gbl_panelMdp);
+		JPanel panelMdp = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcPanelMdp = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 7).build();
+		panelModif.add(panelMdp, gbcPanelMdp);
+		GridBagLayout gblPanelMdp = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[] {250, 442, 0}, new int[] {30, 0}, new double[]{0.0, 0.0, Double.MIN_VALUE}, new double[]{0.0, Double.MIN_VALUE}).build();
+		panelMdp.setLayout(gblPanelMdp);
 		
-		JPanel panelLabelMdp = creerJPanel(panelMdp, Couleur.BLEU1);
-		FlowLayout fl_panel_12 = (FlowLayout) panelLabelMdp.getLayout();
-		fl_panel_12.setHgap(55);
-		fl_panel_12.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_12 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0);
-		panelMdp.add(panelLabelMdp, gbc_panel_12);
+		JPanel panelLabelMdp = new JPanelBuilder(panelMdp).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flPanel12 = (FlowLayout) panelLabelMdp.getLayout();
+		flPanel12.setHgap(55);
+		flPanel12.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel12 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 5), 0, 0).build();
+		panelMdp.add(panelLabelMdp, gbcPanel12);
 		
-		creerJLabel(panelLabelMdp, "Mot de passe", 14);
+		new JLabelBuilder(panelLabelMdp).setCustomLabel("Mot de passe", new Font("Roboto", Font.BOLD, 14), Color.WHITE).build();
 		
-		JPanel panelTexteMdp = creerJPanel(panelMdp, Couleur.BLEU1);
-		FlowLayout flowLayout_13 = (FlowLayout) panelTexteMdp.getLayout();
-		flowLayout_13.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panel_13 = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0);
-		panelMdp.add(panelTexteMdp, gbc_panel_13);
+		JPanel panelTexteMdp = new JPanelBuilder(panelMdp).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flowLayout13 = (FlowLayout) panelTexteMdp.getLayout();
+		flowLayout13.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcPanel13 = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 1, 0).build();
+		panelMdp.add(panelTexteMdp, gbcPanel13);
 		
 		entreeMdp = new JPasswordField();
 		entreeMdp.setFont(new Font("Roboto", Font.PLAIN, 11));
 		entreeMdp.setColumns(20);
 		panelTexteMdp.add(entreeMdp);
 		
-		JPanel panelValider = creerJPanel(panelModif, Couleur.BLEU1);
-		FlowLayout fl_panelValider = (FlowLayout) panelValider.getLayout();
-		fl_panelValider.setVgap(0);
-		fl_panelValider.setHgap(150);
-		GridBagConstraints gbc_panelValider = creerGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 8);
-		panelModif.add(panelValider, gbc_panelValider);
+		JPanel panelValider = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flPanelValider = (FlowLayout) panelValider.getLayout();
+		flPanelValider.setVgap(0);
+		flPanelValider.setHgap(150);
+		GridBagConstraints gbcPanelValider = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 8).build();
+		panelModif.add(panelValider, gbcPanelValider);
 		
-		JButton btnValider = creerBouton(panelValider, "Valider", Couleur.VERT, 13);
+		JButton btnValider = new JButtonBuilder(panelValider).setCustomButton("Valider", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.VERT).build();
 		btnValider.setName("btnValider");
 		
-		JButton btnAnnuler = creerBouton(panelValider, "Annuler", Couleur.GRIS, 13);
+		JButton btnAnnuler = new JButtonBuilder(panelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
 		// VALIDER OU ANNULER INFORMATIONS SUR LE JOUEUR
 		btnAnnuler.addActionListener(controleur);

@@ -261,8 +261,8 @@ public class VueERA implements Vue{
 		rechercheArbitre(rechercheArbitre);
 		
 		JPanel panelListeArbitres = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
-		FlowLayout fl_panelListeArbitres = (FlowLayout) panelListeArbitres.getLayout();
-		fl_panelListeArbitres.setVgap(10);
+		FlowLayout flPanelListeArbitres = (FlowLayout) panelListeArbitres.getLayout();
+		flPanelListeArbitres.setVgap(10);
 		GridBagConstraints gbcPanelListeArbitres = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
 		panelArbitres.add(panelListeArbitres, gbcPanelListeArbitres);
 		
@@ -306,8 +306,8 @@ public class VueERA implements Vue{
 		JButton ABtnAnnuler = new JButtonBuilder(APanelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
 		JPanel APanelBoutons = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
-		GridBagConstraints gbc_APanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 3).build();
-		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
+		GridBagConstraints gbcAPanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 3).build();
+		panelArbitres.add(APanelBoutons, gbcAPanelBoutons);
 		
 		JButton btnCreerArbitre = new JButtonBuilder(APanelBoutons).setCustomButton("Créer un nouvel arbitre", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.BLEU2).build();
 		btnSupprimerArbitre = new JButtonBuilder(APanelBoutons).setCustomButton("Supprimer l'arbitre sélectionné", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.GRIS).build();
