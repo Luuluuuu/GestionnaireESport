@@ -24,6 +24,12 @@ import javax.swing.SwingConstants;
 import controleur.ControleurERA;
 import controleur.ControleurERA.Entite;
 import controleur.ControleurERA.Etat;
+import modele.GridBagConstraintsBuilder;
+import modele.GridBagLayoutBuilder;
+import modele.JButtonBuilder;
+import modele.JLabelBuilder;
+import modele.JPanelBuilder;
+import modele.JTextFieldBuilder;
 
 import java.awt.Color;
 import javax.swing.border.LineBorder;
@@ -57,6 +63,7 @@ public class VueERA implements Vue{
 	private JButton ABtnRecherche;
 	private JButton btnRechercheResponsable;
 	private HeaderAdmin header;
+	
 	public JFrame getFrame() {
 		return this.fenetreERA;
 	}
@@ -76,63 +83,35 @@ public class VueERA implements Vue{
 		panelContenu.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		// ----------------------------- ECURIE ----------------------------- //
-		JPanel panelEcuries = new JPanel();
+		JPanel panelEcuries = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
 		panelEcuries.setBorder(new LineBorder(Color.WHITE));
-		panelEcuries.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelEcuries);
-		GridBagLayout gbl_panelEcuries = new GridBagLayout();
-		gbl_panelEcuries.columnWidths = new int[]{461, 0};
-		gbl_panelEcuries.rowHeights = new int[] {100, 549, 100, 100, 0};
-		gbl_panelEcuries.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelEcuries.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		panelEcuries.setLayout(gbl_panelEcuries);
+		GridBagLayout gblPanelEcuries = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{461, 0}, new int[] {100, 549, 100, 100, 0}, new double[]{1.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE}).build();
+		panelEcuries.setLayout(gblPanelEcuries);
 		
-		JPanel EPanelHeaderContenu = new JPanel();
-		EPanelHeaderContenu.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_EPanelHeaderContenu = new GridBagConstraints();
-		gbc_EPanelHeaderContenu.anchor = GridBagConstraints.SOUTH;
-		gbc_EPanelHeaderContenu.fill = GridBagConstraints.HORIZONTAL;
-		gbc_EPanelHeaderContenu.insets = new Insets(0, 0, 5, 0);
-		gbc_EPanelHeaderContenu.gridx = 0;
-		gbc_EPanelHeaderContenu.gridy = 0;
-		panelEcuries.add(EPanelHeaderContenu, gbc_EPanelHeaderContenu);
+		JPanel EPanelHeaderContenu = new JPanelBuilder(panelEcuries).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcEPanelHeaderContenu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelEcuries.add(EPanelHeaderContenu, gbcEPanelHeaderContenu);
 		EPanelHeaderContenu.setLayout(new BoxLayout(EPanelHeaderContenu, BoxLayout.X_AXIS));
 		
-		JPanel EPanelTitre = new JPanel();
-		EPanelTitre.setBackground(Couleur.BLEU1);
-		EPanelHeaderContenu.add(EPanelTitre);
+		JPanel EPanelTitre = new JPanelBuilder(EPanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
 		
-		JLabel ETitre = new JLabel("Ecuries");
-		ETitre.setForeground(Color.WHITE);
-		ETitre.setFont(new Font("Roboto", Font.BOLD, 30));
-		EPanelTitre.add(ETitre);
+		new JLabelBuilder(EPanelTitre).setCustomLabel("Ecuries", new Font("Roboto", Font.BOLD, 30), Color.WHITE).build();
 		
-		JPanel EPanelRecherche = new JPanel();
-		EPanelRecherche.setBackground(Couleur.BLEU1);
-		FlowLayout fl_EPanelRecherche = (FlowLayout) EPanelRecherche.getLayout();
-		fl_EPanelRecherche.setAlignment(FlowLayout.RIGHT);
-		EPanelHeaderContenu.add(EPanelRecherche);
+		JPanel EPanelRecherche = new JPanelBuilder(EPanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flEPanelRecherche = (FlowLayout) EPanelRecherche.getLayout();
+		flEPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		
-		rechercheEcurie = new JTextField();
-		rechercheEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
-		EPanelRecherche.add(rechercheEcurie);
-		rechercheEcurie.setColumns(10);
-		
+		rechercheEcurie = new JTextFieldBuilder(EPanelRecherche).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 
-		btnRechercheEcurie = creerBouton(EPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		btnRechercheEcurie = new JButtonBuilder(EPanelRecherche).setCustomButton("Rechercher", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		Vue.desactiverBouton(btnRechercheEcurie);
 		rechercheEcurie(rechercheEcurie);
 		
-		JPanel panelListeEcuries = new JPanel();
-		panelListeEcuries.setBackground(Couleur.BLEU1);
-		FlowLayout fl_panelListeEcuries = (FlowLayout) panelListeEcuries.getLayout();
-		fl_panelListeEcuries.setVgap(10);
-		GridBagConstraints gbc_panelListeEcuries = new GridBagConstraints();
-		gbc_panelListeEcuries.fill = GridBagConstraints.BOTH;
-		gbc_panelListeEcuries.insets = new Insets(0, 0, 5, 0);
-		gbc_panelListeEcuries.gridx = 0;
-		gbc_panelListeEcuries.gridy = 1;
-		panelEcuries.add(panelListeEcuries, gbc_panelListeEcuries);
+		JPanel panelListeEcuries = new JPanelBuilder(panelEcuries).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flPanelListeEcuries = (FlowLayout) panelListeEcuries.getLayout();
+		flPanelListeEcuries.setVgap(10);
+		GridBagConstraints gbcPanelListeEcuries = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelEcuries.add(panelListeEcuries, gbcPanelListeEcuries);
 		
 		this.modeleEcuries = new DefaultListModel<String>();
 		listeEcuries = new JList<String>(modeleEcuries);
@@ -143,118 +122,70 @@ public class VueERA implements Vue{
 		JScrollPane scrollPane = new JScrollPane(listeEcuries);
 		panelListeEcuries.add(scrollPane);
 		
-		JPanel EPanelModification = new JPanel();
-		EPanelModification.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_EPanelModification = new GridBagConstraints();
-		gbc_EPanelModification.fill = GridBagConstraints.HORIZONTAL;
-		gbc_EPanelModification.insets = new Insets(0, 0, 5, 0);
-		gbc_EPanelModification.gridx = 0;
-		gbc_EPanelModification.gridy = 2;
-		panelEcuries.add(EPanelModification, gbc_EPanelModification);
+		JPanel EPanelModification = new JPanelBuilder(panelEcuries).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcEPanelModification = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 2).build();
+		panelEcuries.add(EPanelModification, gbcEPanelModification);
 		
-		JPanel EPanelEntree = new JPanel();
-		EPanelEntree.setBackground(Couleur.BLEU1);
-		EPanelModification.add(EPanelEntree);
+		JPanel EPanelEntree = new JPanelBuilder(EPanelModification).setCustomPanel(Couleur.BLEU1).build();
 		EPanelEntree.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JLabel lblNomEcurie = new JLabel("Nom écurie");
+		JLabel lblNomEcurie = new JLabelBuilder(EPanelEntree).setCustomLabel("Nom écurie", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblNomEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
-		EPanelEntree.add(lblNomEcurie);
 		
-		nomEcurie = new JTextField();
-		nomEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
-		EPanelEntree.add(nomEcurie);
-		nomEcurie.setColumns(10);
+		nomEcurie = new JTextFieldBuilder(EPanelEntree).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpEcurie = new JLabel("Mot de passe");
+		JLabel lblMdpEcurie = new JLabelBuilder(EPanelEntree).setCustomLabel("Mot de passe", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblMdpEcurie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpEcurie.setFont(new Font("Roboto", Font.BOLD, 13));
-		EPanelEntree.add(lblMdpEcurie);
 		
 		mdpEcurie = new JPasswordField();
 		mdpEcurie.setFont(new Font("Roboto", Font.PLAIN, 13));
 		EPanelEntree.add(mdpEcurie);
 		
-		JPanel EPanelValider = new JPanel();
-		EPanelModification.add(EPanelValider);
+		JPanel EPanelValider = new JPanelBuilder(EPanelModification).setCustomPanel(Couleur.BLEU1).build();
 		EPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton EBtnValider = creerBouton(EPanelValider, "Valider", Couleur.VERT, 13);
-		JButton btnAnnulerEcurie = creerBouton(EPanelValider, "Annuler", Couleur.GRIS, 13);
+		JButton EBtnValider = new JButtonBuilder(EPanelValider).setCustomButton("Valider", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.VERT).build();
+		JButton btnAnnulerEcurie = new JButtonBuilder(EPanelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
-		JPanel EPanelBoutons = new JPanel();
-		EPanelBoutons.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_EPanelBoutons = new GridBagConstraints();
-		gbc_EPanelBoutons.fill = GridBagConstraints.HORIZONTAL;
-		gbc_EPanelBoutons.gridx = 0;
-		gbc_EPanelBoutons.gridy = 3;
-		panelEcuries.add(EPanelBoutons, gbc_EPanelBoutons);
+		JPanel EPanelBoutons = new JPanelBuilder(panelEcuries).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcEPanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 3).build();
+		panelEcuries.add(EPanelBoutons, gbcEPanelBoutons);
 		EPanelBoutons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnCreerEcurie = creerBouton(EPanelBoutons, "Créer une nouvelle écurie", Couleur.BLEU2, 12);
-		btnSupprimerEcurie = creerBouton(EPanelBoutons, "Supprimer l'écurie sélectionnée", Couleur.GRIS, 12);
+		JButton btnCreerEcurie = new JButtonBuilder(EPanelBoutons).setCustomButton("Créer une nouvelle écurie", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.BLEU2).build();
+		btnSupprimerEcurie = new JButtonBuilder(EPanelBoutons).setCustomButton("Supprimer l'écurie sélectionnée", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimerEcurie);
 
 		// ----------------------------- RESPONSABLE ----------------------------- //
-		JPanel panelResponsables = new JPanel();
+		JPanel panelResponsables = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
 		panelResponsables.setBorder(new LineBorder(Color.WHITE));
-		panelResponsables.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelResponsables);
-		GridBagLayout gbl_panelResponsables = new GridBagLayout();
-		gbl_panelResponsables.columnWidths = new int[]{461, 0};
-		gbl_panelResponsables.rowHeights = new int[] {100, 549, 100, 100, 0};
-		gbl_panelResponsables.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelResponsables.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0};
-		panelResponsables.setLayout(gbl_panelResponsables);
+		GridBagLayout gblPanelResponsables = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{461, 0}, new int[] {100, 549, 100, 100, 0}, new double[]{1.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, 1.0}).build();
+		panelResponsables.setLayout(gblPanelResponsables);
 		
-		JPanel RPanelHeaderContenu = new JPanel();
-		RPanelHeaderContenu.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_RPanelHeaderContenu = new GridBagConstraints();
-		gbc_RPanelHeaderContenu.anchor = GridBagConstraints.SOUTH;
-		gbc_RPanelHeaderContenu.fill = GridBagConstraints.HORIZONTAL;
-		gbc_RPanelHeaderContenu.insets = new Insets(0, 0, 5, 0);
-		gbc_RPanelHeaderContenu.gridx = 0;
-		gbc_RPanelHeaderContenu.gridy = 0;
-		panelResponsables.add(RPanelHeaderContenu, gbc_RPanelHeaderContenu);
+		JPanel RPanelHeaderContenu = new JPanelBuilder(panelResponsables).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcRPanelHeaderContenu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelResponsables.add(RPanelHeaderContenu, gbcRPanelHeaderContenu);
 		RPanelHeaderContenu.setLayout(new BoxLayout(RPanelHeaderContenu, BoxLayout.X_AXIS));
 		
-		JPanel RPanelTitre = new JPanel();
-		RPanelTitre.setBackground(Couleur.BLEU1);
-		@SuppressWarnings("unused")
-		FlowLayout flowLayout_1 = (FlowLayout) RPanelTitre.getLayout();
-		RPanelHeaderContenu.add(RPanelTitre);
+		JPanel RPanelTitre = new JPanelBuilder(RPanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
 		
-		JLabel RTitre = new JLabel("Responsables");
-		RTitre.setForeground(Color.WHITE);
-		RTitre.setFont(new Font("Roboto", Font.BOLD, 30));
-		RPanelTitre.add(RTitre);
+		new JLabelBuilder(RPanelTitre).setCustomLabel("Responsables", new Font("Roboto", Font.BOLD, 30), Color.WHITE).build();
 		
-		JPanel RPanelRecherche = new JPanel();
-		RPanelRecherche.setBackground(Couleur.BLEU1);
-		FlowLayout fl_RPanelRecherche = (FlowLayout) RPanelRecherche.getLayout();
-		fl_RPanelRecherche.setAlignment(FlowLayout.RIGHT);
-		RPanelHeaderContenu.add(RPanelRecherche);
+		JPanel RPanelRecherche = new JPanelBuilder(RPanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flRPanelRecherche = (FlowLayout) RPanelRecherche.getLayout();
+		flRPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		
-		rechercheResponsable = new JTextField();
-		rechercheResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelRecherche.add(rechercheResponsable);
-		rechercheResponsable.setColumns(10);
+		rechercheResponsable = new JTextFieldBuilder(RPanelRecherche).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 
-		btnRechercheResponsable = creerBouton(RPanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		btnRechercheResponsable = new JButtonBuilder(RPanelRecherche).setCustomButton("Rechercher", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		Vue.desactiverBouton(btnRechercheResponsable);
 		rechercheResponsable(rechercheResponsable);
 		
-		JPanel panelListeResponsables = new JPanel();
-		panelListeResponsables.setBackground(Couleur.BLEU1);
-		FlowLayout fl_panelListeResponsables = (FlowLayout) panelListeResponsables.getLayout();
-		fl_panelListeResponsables.setVgap(10);
-		GridBagConstraints gbc_panelListeResponsables = new GridBagConstraints();
-		gbc_panelListeResponsables.fill = GridBagConstraints.BOTH;
-		gbc_panelListeResponsables.insets = new Insets(0, 0, 5, 0);
-		gbc_panelListeResponsables.gridx = 0;
-		gbc_panelListeResponsables.gridy = 1;
-		panelResponsables.add(panelListeResponsables, gbc_panelListeResponsables);
+		JPanel panelListeResponsables = new JPanelBuilder(panelResponsables).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flPanelListeResponsables = (FlowLayout) panelListeResponsables.getLayout();
+		flPanelListeResponsables.setVgap(10);
+		GridBagConstraints gbcPanelListeResponsables = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelResponsables.add(panelListeResponsables, gbcPanelListeResponsables);
 		
 		this.modeleResponsables = new DefaultListModel<String>();
 		listeResponsables = new JList<String>(modeleResponsables);
@@ -265,129 +196,75 @@ public class VueERA implements Vue{
 		JScrollPane scrollPane2 = new JScrollPane(listeResponsables);
 		panelListeResponsables.add(scrollPane2);
 		
-		JPanel RPanelModification = new JPanel();
-		RPanelModification.setBackground(Couleur.BLEU1);
-		@SuppressWarnings("unused")
-		FlowLayout flowLayout = (FlowLayout) RPanelModification.getLayout();
-		GridBagConstraints gbc_RPanelModification = new GridBagConstraints();
-		gbc_RPanelModification.fill = GridBagConstraints.HORIZONTAL;
-		gbc_RPanelModification.insets = new Insets(0, 0, 5, 0);
-		gbc_RPanelModification.gridx = 0;
-		gbc_RPanelModification.gridy = 2;
-		panelResponsables.add(RPanelModification, gbc_RPanelModification);
+		JPanel RPanelModification = new JPanelBuilder(panelResponsables).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcRPanelModification = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 2).build();
+		panelResponsables.add(RPanelModification, gbcRPanelModification);
 		
-		JPanel RPanelEntree = new JPanel();
-		RPanelEntree.setBackground(Couleur.BLEU1);
-		RPanelModification.add(RPanelEntree);
+		JPanel RPanelEntree = new JPanelBuilder(RPanelModification).setCustomPanel(Couleur.BLEU1).build();
 		RPanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
-		JLabel lblNomResponsable = new JLabel("Nom responsable");
+		JLabel lblNomResponsable = new JLabelBuilder(RPanelEntree).setCustomLabel("Nom responsable", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblNomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
-		RPanelEntree.add(lblNomResponsable);
 		
-		nomResponsable = new JTextField();
-		nomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelEntree.add(nomResponsable);
-		nomResponsable.setColumns(10);
+		nomResponsable = new JTextFieldBuilder(RPanelEntree).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		JLabel lblPrenomResponsable = new JLabel("Prénom responsable");
+		JLabel lblPrenomResponsable = new JLabelBuilder(RPanelEntree).setCustomLabel("Prénom responsable", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblPrenomResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPrenomResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
-		RPanelEntree.add(lblPrenomResponsable);
 		
-		prenomResponsable = new JTextField();
-		prenomResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
-		RPanelEntree.add(prenomResponsable);
-		prenomResponsable.setColumns(10);
+		prenomResponsable = new JTextFieldBuilder(RPanelEntree).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpResponsable = new JLabel("Mot de passe");
+		JLabel lblMdpResponsable = new JLabelBuilder(RPanelEntree).setCustomLabel("Mot de passe", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblMdpResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpResponsable.setFont(new Font("Roboto", Font.BOLD, 13));
-		RPanelEntree.add(lblMdpResponsable);
 		
 		mdpResponsable = new JPasswordField();
 		mdpResponsable.setFont(new Font("Roboto", Font.PLAIN, 13));
 		RPanelEntree.add(mdpResponsable);
 		
-		JPanel RPanelValider = new JPanel();
-		RPanelModification.add(RPanelValider);
+		JPanel RPanelValider = new JPanelBuilder(RPanelModification).setCustomPanel(Couleur.BLEU1).build();
 		RPanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton RBtnValider = creerBouton(RPanelValider, "Valider", Couleur.VERT, 13);
-		JButton RBtnAnnuler = creerBouton(RPanelValider, "Annuler", Couleur.GRIS, 13);
+		JButton RBtnValider = new JButtonBuilder(RPanelValider).setCustomButton("Valider", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.VERT).build();
+		JButton RBtnAnnuler = new JButtonBuilder(RPanelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
-		JPanel RPanelBoutons = new JPanel();
-		@SuppressWarnings("unused")
-		FlowLayout flowLayout_2 = (FlowLayout) RPanelBoutons.getLayout();
-		RPanelBoutons.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_RPanelBoutons = new GridBagConstraints();
-		gbc_RPanelBoutons.fill = GridBagConstraints.HORIZONTAL;
-		gbc_RPanelBoutons.gridx = 0;
-		gbc_RPanelBoutons.gridy = 3;
-		panelResponsables.add(RPanelBoutons, gbc_RPanelBoutons);
+		JPanel RPanelBoutons = new JPanelBuilder(panelResponsables).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcRPanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 3).build();
+		panelResponsables.add(RPanelBoutons, gbcRPanelBoutons);
 		
-		JButton btnCreerResponsable = creerBouton(RPanelBoutons, "Créer un nouveau responsable", Couleur.BLEU2, 12);
+		JButton btnCreerResponsable = new JButtonBuilder(RPanelBoutons).setCustomButton("Créer un nouveau responsable", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.BLEU2).build();
 		
-		btnSupprimerResponsable = creerBouton(RPanelBoutons, "Supprimer le responsable sélectionné", Couleur.GRIS, 12);
+		btnSupprimerResponsable = new JButtonBuilder(RPanelBoutons).setCustomButton("Supprimer le responsable sélectionné", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimerResponsable);
 
 		// ----------------------------- ARBITRE ----------------------------- //
-		JPanel panelArbitres = new JPanel();
+		JPanel panelArbitres = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
 		panelArbitres.setBorder(new LineBorder(Color.WHITE));
-		panelArbitres.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelArbitres);
-		GridBagLayout gbl_panelArbitres = new GridBagLayout();
-		gbl_panelArbitres.columnWidths = new int[]{461, 0};
-		gbl_panelArbitres.rowHeights = new int[] {100, 549, 100, 100, 0};
-		gbl_panelArbitres.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelArbitres.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		panelArbitres.setLayout(gbl_panelArbitres);
+		GridBagLayout gblPanelArbitres = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{461, 0}, new int[] {100, 549, 100, 100, 0}, new double[]{1.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE}).build();
+		panelArbitres.setLayout(gblPanelArbitres);
 		
-		JPanel APanelHeaderContenu = new JPanel();
-		GridBagConstraints gbc_APanelHeaderContenu = new GridBagConstraints();
-		gbc_APanelHeaderContenu.anchor = GridBagConstraints.SOUTH;
-		gbc_APanelHeaderContenu.fill = GridBagConstraints.HORIZONTAL;
-		gbc_APanelHeaderContenu.insets = new Insets(0, 0, 5, 0);
-		gbc_APanelHeaderContenu.gridx = 0;
-		gbc_APanelHeaderContenu.gridy = 0;
-		panelArbitres.add(APanelHeaderContenu, gbc_APanelHeaderContenu);
+		JPanel APanelHeaderContenu = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcAPanelHeaderContenu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelArbitres.add(APanelHeaderContenu, gbcAPanelHeaderContenu);
 		APanelHeaderContenu.setLayout(new BoxLayout(APanelHeaderContenu, BoxLayout.X_AXIS));
 		
-		JPanel APanelTitre = new JPanel();
-		APanelTitre.setBackground(Couleur.BLEU1);
-		APanelHeaderContenu.add(APanelTitre);
+		JPanel APanelTitre = new JPanelBuilder(APanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
 		
-		JLabel ATitre = new JLabel("Arbitres");
-		ATitre.setForeground(Color.WHITE);
-		ATitre.setFont(new Font("Roboto", Font.BOLD, 30));
-		APanelTitre.add(ATitre);
+		new JLabelBuilder(APanelTitre).setCustomLabel("Arbitres", new Font("Roboto", Font.BOLD, 30), Color.WHITE).build();
 		
-		JPanel APanelRecherche = new JPanel();
-		APanelRecherche.setBackground(Couleur.BLEU1);
-		FlowLayout fl_APanelRecherche = (FlowLayout) APanelRecherche.getLayout();
-		fl_APanelRecherche.setAlignment(FlowLayout.RIGHT);
-		APanelHeaderContenu.add(APanelRecherche);
+		JPanel APanelRecherche = new JPanelBuilder(APanelHeaderContenu).setCustomPanel(Couleur.BLEU1).build();
+		FlowLayout flAPanelRecherche = (FlowLayout) APanelRecherche.getLayout();
+		flAPanelRecherche.setAlignment(FlowLayout.RIGHT);
 		
-		rechercheArbitre = new JTextField();
-		rechercheArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
-		APanelRecherche.add(rechercheArbitre);
-		rechercheArbitre.setColumns(10);
+		rechercheArbitre = new JTextFieldBuilder(APanelRecherche).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		ABtnRecherche = creerBouton(APanelRecherche, "Rechercher", Couleur.BLEU2, 13);
+		ABtnRecherche = new JButtonBuilder(APanelRecherche).setCustomButton("Rechercher", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.BLEU2).build();
 		Vue.desactiverBouton(ABtnRecherche);
 		rechercheArbitre(rechercheArbitre);
 		
-		JPanel panelListeArbitres = new JPanel();
-		panelListeArbitres.setBackground(Couleur.BLEU1);
+		JPanel panelListeArbitres = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout fl_panelListeArbitres = (FlowLayout) panelListeArbitres.getLayout();
 		fl_panelListeArbitres.setVgap(10);
-		GridBagConstraints gbc_panelListeArbitres = new GridBagConstraints();
-		gbc_panelListeArbitres.fill = GridBagConstraints.BOTH;
-		gbc_panelListeArbitres.insets = new Insets(0, 0, 5, 0);
-		gbc_panelListeArbitres.gridx = 0;
-		gbc_panelListeArbitres.gridy = 1;
-		panelArbitres.add(panelListeArbitres, gbc_panelListeArbitres);
+		GridBagConstraints gbcPanelListeArbitres = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelArbitres.add(panelListeArbitres, gbcPanelListeArbitres);
 		
 		this.modeleArbitres = new DefaultListModel<String>();
 		listeArbitres = new JList<String>(modeleArbitres);
@@ -398,66 +275,42 @@ public class VueERA implements Vue{
 		JScrollPane scrollPane3 = new JScrollPane(listeArbitres);
 		panelListeArbitres.add(scrollPane3);
 		
-		JPanel APanelModification = new JPanel();
-		APanelModification.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_APanelModification = new GridBagConstraints();
-		gbc_APanelModification.fill = GridBagConstraints.HORIZONTAL;
-		gbc_APanelModification.insets = new Insets(0, 0, 5, 0);
-		gbc_APanelModification.gridx = 0;
-		gbc_APanelModification.gridy = 2;
-		panelArbitres.add(APanelModification, gbc_APanelModification);
+		JPanel APanelModification = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbcAPanelModification = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 2).build();
+		panelArbitres.add(APanelModification, gbcAPanelModification);
 		
-		JPanel APanelEntree = new JPanel();
-		APanelEntree.setBackground(Couleur.BLEU1);
-		APanelModification.add(APanelEntree);
+		JPanel APanelEntree = new JPanelBuilder(APanelModification).setCustomPanel(Couleur.BLEU1).build();
 		APanelEntree.setLayout(new GridLayout(0, 2, 10, 5));
 		
-		JLabel lblNomArbitre = new JLabel("Nom arbitre");
+		JLabel lblNomArbitre = new JLabelBuilder(APanelEntree).setCustomLabel("Nom arbitre", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblNomArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomArbitre.setFont(new Font("Roboto", Font.BOLD, 13));
-		APanelEntree.add(lblNomArbitre);
 		
-		nomArbitre = new JTextField();
-		nomArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
-		APanelEntree.add(nomArbitre);
-		nomArbitre.setColumns(10);
+		nomArbitre = new JTextFieldBuilder(APanelEntree).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		JLabel lblNewLabel = new JLabel("Prénom arbitre");
+		JLabel lblNewLabel = new JLabelBuilder(APanelEntree).setCustomLabel("Prénom arbitre", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 13));
-		APanelEntree.add(lblNewLabel);
 
-		prenomArbitre = new JTextField();
-		prenomArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
-		APanelEntree.add(prenomArbitre);
-		prenomArbitre.setColumns(10);
+		prenomArbitre = new JTextFieldBuilder(APanelEntree).setCustomTextField(new Font("Roboto", Font.PLAIN, 13), 10).build();
 		
-		JLabel lblMdpArbitre = new JLabel("Mot de passe");
+		JLabel lblMdpArbitre = new JLabelBuilder(APanelEntree).setCustomLabel("Mot de passe", new Font("Roboto", Font.BOLD, 13), Color.WHITE).build();
 		lblMdpArbitre.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblMdpArbitre.setFont(new Font("Roboto", Font.BOLD, 13));
-		APanelEntree.add(lblMdpArbitre);
 		
 		mdpArbitre = new JPasswordField();
 		mdpArbitre.setFont(new Font("Roboto", Font.PLAIN, 13));
 		APanelEntree.add(mdpArbitre);
 		
-		JPanel APanelValider = new JPanel();
-		APanelModification.add(APanelValider);
+		JPanel APanelValider = new JPanelBuilder(APanelModification).setCustomPanel(Couleur.BLEU1).build();
 		APanelValider.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JButton ABtnValider = creerBouton(APanelValider, "Valider", Couleur.VERT, 13);
-		JButton ABtnAnnuler = creerBouton(APanelValider, "Annuler", Couleur.GRIS, 13);
+		JButton ABtnValider = new JButtonBuilder(APanelValider).setCustomButton("Valider", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.VERT).build();
+		JButton ABtnAnnuler = new JButtonBuilder(APanelValider).setCustomButton("Annuler", Color.WHITE, new Font("Roboto", Font.BOLD, 13), Couleur.GRIS).build();
 		
-		JPanel APanelBoutons = new JPanel();
-		APanelBoutons.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_APanelBoutons = new GridBagConstraints();
-		gbc_APanelBoutons.fill = GridBagConstraints.HORIZONTAL;
-		gbc_APanelBoutons.gridx = 0;
-		gbc_APanelBoutons.gridy = 3;
+		JPanel APanelBoutons = new JPanelBuilder(panelArbitres).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbc_APanelBoutons = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 3).build();
 		panelArbitres.add(APanelBoutons, gbc_APanelBoutons);
 		
-		JButton btnCreerArbitre = creerBouton(APanelBoutons, "Créer un nouvel arbitre", Couleur.BLEU2, 12);
-		btnSupprimerArbitre = creerBouton(APanelBoutons, "Supprimer l'arbitre sélectionné", Couleur.GRIS, 12);
+		JButton btnCreerArbitre = new JButtonBuilder(APanelBoutons).setCustomButton("Créer un nouvel arbitre", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.BLEU2).build();
+		btnSupprimerArbitre = new JButtonBuilder(APanelBoutons).setCustomButton("Supprimer l'arbitre sélectionné", Color.WHITE, new Font("Roboto", Font.BOLD, 12), Couleur.GRIS).build();
 		Vue.desactiverBouton(btnSupprimerArbitre);
 		
 		ControleurERA controleur = new ControleurERA(this);
