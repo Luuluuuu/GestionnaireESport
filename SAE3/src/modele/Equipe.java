@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Equipe implements Comparable<Equipe>, Cloneable {
 	//Declaration d'attributs
-	private int ID;
+	private int id;
     private String nom;
     private int pointsChampionnat;
-    private List<Joueur> joueurs = new ArrayList<Joueur> ();
+    private List<Joueur> joueurs = new ArrayList<> ();
     private Jeu jeu;
     private Ecurie ecurie;
-    private List<Poule> poules = new ArrayList<Poule> ();
+    private List<Poule> poules = new ArrayList<> ();
     private String nationalite;
 
     /*Constructeur d'Equipe
@@ -19,8 +19,8 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
      * 		les points de championnat de type int
      * 		un jeu de type Jeu
      * 		une liste de Joueurs de type List<Joueur>*/
-    public Equipe(int ID, String nom, int pointsChampionnat,String nationalite, Jeu jeu, Ecurie ecurie) {
-    	this.ID = ID;
+    public Equipe(int id, String nom, int pointsChampionnat, String nationalite, Jeu jeu, Ecurie ecurie) {
+    	this.id = id;
     	this.nom = nom;
     	this.pointsChampionnat = pointsChampionnat;
     	this.nationalite = nationalite;
@@ -31,11 +31,6 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
     /*Retourne le nom de l'equipe de type String*/
     public String getNom() {
         return this.nom;
-    }
-
-    /*Modifie le nom de l'equipe*/
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
     /*Retourne la liste des joueurs de l'equipe*/
@@ -73,7 +68,7 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
 	}
  
 	public int getID() {
-		return this.ID;
+		return this.id;
 	}
     
 	 //Retourne les points de l'equipe au championnat
@@ -91,9 +86,14 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
     	this.jeu = jeu;
     }
 
-	public void setID(int ID) {
-		this.ID = ID;
+	public void setID(int id) {
+		this.id = id;
 	}
+
+    /*Modifie le nom de l'equipe*/
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
     
 	// Modifie l'écurie
 	private void setEcurie(Ecurie ecurie) {
@@ -129,7 +129,13 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
 		return this.getNom().equals(e.getNom()) &&	this.getJeu().equals(e.getJeu()) && 
 				this.getJoueurs().equals(e.getJoueurs()) && this.getPointsChampionnat()==e.getPointsChampionnat();
 	}
-
+	
+	/* Renvoie un entier de notre objet haché (nécessaire pour SonarQube)*/
+	@Override
+	public int hashCode() {
+		return this.id * this.nom.hashCode();
+	}
+	
 	@Override
 	public int compareTo(Equipe e) {
 		if (this.pointsChampionnat==e.getPointsChampionnat()) {
@@ -147,12 +153,12 @@ public class Equipe implements Comparable<Equipe>, Cloneable {
 		
 		cloned.setEcurie(this.ecurie.clone());
 		
-		cloned.joueurs = new ArrayList<Joueur>();
+		cloned.joueurs = new ArrayList<>();
 		for (Joueur j : this.joueurs) {
 			cloned.ajouterJoueur(j);
 		}
 		
-		cloned.poules = new ArrayList<Poule>();
+		cloned.poules = new ArrayList<>();
 		for (Poule p : this.poules) {
 			cloned.ajouterPoule(p);
 		}
