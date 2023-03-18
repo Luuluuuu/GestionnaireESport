@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +22,10 @@ import javax.swing.SwingConstants;
 
 import controleur.ControleurInscriptionTournoi;
 import modele.EtatFactory;
+import modele.GridBagConstraintsBuilder;
+import modele.GridBagLayoutBuilder;
+import modele.JLabelBuilder;
+import modele.JPanelBuilder;
 import modele.Etat;
 
 import javax.swing.JComboBox;
@@ -30,7 +35,11 @@ public class VueInscriptionTournoi implements Vue{
 	public JFrame fenetreInscriptionTournoi;
 	public JPanel panelModif;
 	public JLabel titreModif;
-	
+	private static final String SELECTIONNER_UN_TOURNOIS = "Sélectionnez le tournoi";
+	private static final String EQUIPE_A_INSCRIRE = "Equipe à inscrire";
+
+	private static final String POLICE = "Roboto";
+
 	private DefaultListModel<String> modeleTournois = new DefaultListModel<String>();
 	private JList<String> listeTournois;
 	private DefaultListModel<String> modeleEquipes = new DefaultListModel<String>();
@@ -59,51 +68,45 @@ public class VueInscriptionTournoi implements Vue{
 		header.getBtnClassement().addActionListener(controleur);
 		Vue.desactiverBouton(header.getBtnTournois());
 		
+		
+		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreInscriptionTournoi.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panelTournoi = new JPanel();
-		panelTournoi.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelTournoi);
-		GridBagLayout gbl_panelTournoi = new GridBagLayout();
-		gbl_panelTournoi.columnWidths = new int[]{692, 0};
-		gbl_panelTournoi.rowHeights = new int[] {100, 724, 0};
-		gbl_panelTournoi.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelTournoi.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		JPanel panelTournoi = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
+		
+		GridBagLayout gbl_panelTournoi = new GridBagLayoutBuilder().setCustomGridBagLayout(
+				new int[]{692, 0}, 
+				new int[] {100, 724, 0}, 
+				new double[]{1.0, Double.MIN_VALUE}, 
+				new double[]{0.0, 0.0, Double.MIN_VALUE}).build();
 		panelTournoi.setLayout(gbl_panelTournoi);
 		
-		JPanel panelTitreT = new JPanel();
-		panelTitreT.setBackground(Couleur.BLEU1);
+		JPanel panelTitreT = new JPanelBuilder(panelTournoi).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout fl_panelTitreT = (FlowLayout) panelTitreT.getLayout();
 		fl_panelTitreT.setVgap(0);
 		fl_panelTitreT.setHgap(50);
 		fl_panelTitreT.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelTitreT = new GridBagConstraints();
-		gbc_panelTitreT.anchor = GridBagConstraints.SOUTH;
-		gbc_panelTitreT.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelTitreT.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTitreT.gridx = 0;
-		gbc_panelTitreT.gridy = 0;
+		GridBagConstraints gbc_panelTitreT = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
+				GridBagConstraints.SOUTH, 
+				GridBagConstraints.HORIZONTAL, 
+				new Insets(0, 0, 5, 0), 0, 0).build();
 		panelTournoi.add(panelTitreT, gbc_panelTitreT);
 		
 		// LISTE DES TOURNOIS //
-		JLabel Tournois = new JLabel("Sélectionnez le tournoi");
-		Tournois.setForeground(Color.WHITE);
-		Tournois.setFont(new Font("Roboto", Font.BOLD, 36));
-		Tournois.setHorizontalAlignment(SwingConstants.LEFT);
-		panelTitreT.add(Tournois);
+		new JLabelBuilder(panelTitreT).setCustomLabel(SELECTIONNER_UN_TOURNOIS, new Font(POLICE, Font.BOLD, 30),Color.WHITE).build();
 		
-		JPanel panelListe = new JPanel();
-		panelListe.setBackground(Couleur.BLEU1);
+		JPanel panelListe = new JPanelBuilder(panelTournoi).setCustomPanel(Couleur.BLEU1).build();
+
 		FlowLayout fl_panelListe = (FlowLayout) panelListe.getLayout();
 		fl_panelListe.setHgap(50);
 		fl_panelListe.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelListe = new GridBagConstraints();
-		gbc_panelListe.fill = GridBagConstraints.BOTH;
-		gbc_panelListe.gridx = 0;
-		gbc_panelListe.gridy = 1;
+		GridBagConstraints gbc_panelListe = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
+				GridBagConstraints.CENTER, 
+				GridBagConstraints.BOTH, 
+				new Insets(0, 0, 0, 0), 0, 1).build();
 		panelTournoi.add(panelListe, gbc_panelListe);
 		
 		listeTournois = new JList<String>(modeleTournois);
@@ -115,59 +118,45 @@ public class VueInscriptionTournoi implements Vue{
 		JScrollPane scrollPane = new JScrollPane(listeTournois);
 		panelListe.add(scrollPane);
 		
-		panelModif = new JPanel();
-		panelModif.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelModif);
-		GridBagLayout gbl_panelModif = new GridBagLayout();
-		gbl_panelModif.columnWidths = new int[]{692, 0};
-		gbl_panelModif.rowHeights = new int[] {100, 622, 100, 0};
-		gbl_panelModif.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_panelModif.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		JPanel panelModif = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
+		GridBagLayout gbl_panelModif = new GridBagLayoutBuilder().setCustomGridBagLayout(
+				new int[] {692, 0}, 
+				new int[]{100, 622, 100, 0}, 
+				new double[]{1.0, Double.MIN_VALUE}, 
+				new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE}).build();
 		panelModif.setLayout(gbl_panelModif);
 		
-		JPanel panelTitreM = new JPanel();
-		panelTitreM.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_panelTitreM = new GridBagConstraints();
-		gbc_panelTitreM.anchor = GridBagConstraints.SOUTH;
-		gbc_panelTitreM.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelTitreM.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTitreM.gridx = 0;
-		gbc_panelTitreM.gridy = 0;
+		JPanel panelTitreM = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbc_panelTitreM = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
+				GridBagConstraints.SOUTH, 
+				GridBagConstraints.HORIZONTAL, 
+				new Insets(0, 0, 5, 0), 0, 0).build();
 		panelModif.add(panelTitreM, gbc_panelTitreM);
 		panelTitreM.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Couleur.BLEU1);
-		panelTitreM.add(panel_1);
+		JPanel panel_1 = new JPanelBuilder(panelTitreM).setCustomPanel(Couleur.BLEU1).build();
+
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel titrePoule = new JLabel("Equipe à inscrire");
-		titrePoule.setForeground(Color.WHITE);
-		titrePoule.setFont(new Font("Roboto", Font.BOLD, 30));
-		panel_1.add(titrePoule);
+		new JLabelBuilder(panel_1).setCustomLabel(EQUIPE_A_INSCRIRE, new Font(POLICE, Font.BOLD, 30),Color.WHITE).build();
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Couleur.BLEU1);
+		JPanel panel_2 = new JPanelBuilder(panelTitreM).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout fl_panel_2 = (FlowLayout) panel_2.getLayout();
 		fl_panel_2.setHgap(50);
 		fl_panel_2.setAlignment(FlowLayout.RIGHT);
 		fl_panel_2.setVgap(0);
-		panelTitreM.add(panel_2);
 		
 		selectionJeu = new JComboBox<String>();
 		selectionJeu.setFont(new Font("Roboto", Font.PLAIN, 11));
 		selectionJeu.setPreferredSize(new Dimension(205, 20));
 		selectionJeu.addItem("- Sélectionnez un jeu -");
 		panel_2.add(selectionJeu);
-		
-		JPanel panelEquipe = new JPanel();
-		panelEquipe.setBackground(Couleur.BLEU1);
-		GridBagConstraints gbc_panelEquipe = new GridBagConstraints();
-		gbc_panelEquipe.fill = GridBagConstraints.BOTH;
-		gbc_panelEquipe.insets = new Insets(0, 0, 5, 0);
-		gbc_panelEquipe.gridx = 0;
-		gbc_panelEquipe.gridy = 1;
-		panelModif.add(panelEquipe, gbc_panelEquipe);
+		JPanel panelEquipe = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+		GridBagConstraints gbc_panelEquipe = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
+				GridBagConstraints.CENTER, 
+				GridBagConstraints.BOTH,
+				new Insets(0, 0, 5, 0), 0, 1).build();
+		panelModif.add(panelEquipe, gbc_panelEquipe);	
 		panelEquipe.setLayout(new FlowLayout(FlowLayout.LEFT, 50, 5));
 		
 		listeEquipes = new JList<String>(this.modeleEquipes);
@@ -178,16 +167,15 @@ public class VueInscriptionTournoi implements Vue{
 		listeEquipes.setFixedCellWidth(600);
 		JScrollPane scrollPane2 = new JScrollPane(listeEquipes);
 		panelEquipe.add(scrollPane2);
-		
-		JPanel panelValider = new JPanel();
-		panelValider.setBackground(Couleur.BLEU1);
+		JPanel panelValider = new JPanelBuilder(panelModif).setCustomPanel(Couleur.BLEU1).build();
+
 		FlowLayout fl_panelValider = (FlowLayout) panelValider.getLayout();
 		fl_panelValider.setVgap(0);
 		fl_panelValider.setHgap(150);
-		GridBagConstraints gbc_panelValider = new GridBagConstraints();
-		gbc_panelValider.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelValider.gridx = 0;
-		gbc_panelValider.gridy = 2;
+		GridBagConstraints gbc_panelValider = new GridBagConstraintsBuilder().setCustomGridBagConstraints(
+				GridBagConstraints.CENTER, 
+				GridBagConstraints.HORIZONTAL,
+				new Insets(0, 0, 0, 0), 0, 2).build();
 		panelModif.add(panelValider, gbc_panelValider);
 
 		// Bouton de validation/annulation
