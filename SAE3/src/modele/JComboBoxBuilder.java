@@ -10,7 +10,7 @@ public class JComboBoxBuilder<T> {
     private final JComboBox<T> comboBox;
 
     public JComboBoxBuilder(JPanel panel) {
-        comboBox = new JComboBox<T>();
+        comboBox = new JComboBox<>();
         panel.add(comboBox);
     }
     

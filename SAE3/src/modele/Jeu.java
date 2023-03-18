@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jeu implements Cloneable{
-	private int ID;
+	private int id;
     private String nom;
     private int nbJoueurs;
     private List<Equipe> equipes;
     private Poule[] poules;
     private int indiceCourant;
-    private final int TAILLEMAXPOULE = 5;
+    private static final int TAILLE_MAX_POULE = 5;
     
 	/* Constructeur de Jeu
 	 * Entrees :
 	 * 	nom			String	nom du jeu
 	 * 	nbJoueurs	int		nombre de joueurs pour jouer au jeu
 	 */
-    public Jeu(int ID, String nom, int nbJoueurs) {
-    	this.ID = ID;
+    public Jeu(int id, String nom, int nbJoueurs) {
+    	this.id = id;
     	this.nom = nom;
     	this.nbJoueurs = nbJoueurs;
-    	this.equipes = new ArrayList<Equipe>();
-    	this.poules = new Poule[TAILLEMAXPOULE];
+    	this.equipes = new ArrayList<>();
+    	this.poules = new Poule[TAILLE_MAX_POULE];
     	this.indiceCourant = 0;
     }
     
     //Getters
     //Retourne l'ID du jeu
     public int getID() {
-        return this.ID;
+        return this.id;
     }
     
     //Retourne le nom du jeu
@@ -73,6 +73,11 @@ public class Jeu implements Cloneable{
 		Jeu j = (Jeu) obj;
 		return this.getNbJoueurs()==j.getNbJoueurs() && this.getNom().equals(j.getNom());
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.id * this.nom.hashCode();
+	}
 
 	/* Inscrit une équipe au jeu
 	 * Entree :
@@ -99,8 +104,8 @@ public class Jeu implements Cloneable{
 			for (Equipe equipe : this.equipes) {
 				cloned.inscrire(equipe.clone());
 			}
-			cloned.poules = new Poule[TAILLEMAXPOULE];
-			for (int i = 0; i < TAILLEMAXPOULE; i++) {
+			cloned.poules = new Poule[TAILLE_MAX_POULE];
+			for (int i = 0; i < TAILLE_MAX_POULE; i++) {
 				cloned.ajouterPoule(new Poule(0));
 			}
 			indiceCourant = 0;

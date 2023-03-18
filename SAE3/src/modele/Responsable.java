@@ -1,24 +1,24 @@
 package modele;
 
 public class Responsable {
-	private int ID;
+	private int id;
     private String nom;
     private String prenom;
     private int anneesExperience;
 
-    public Responsable(int ID, String nom, String prenom) {
-    	this.ID = ID;
+    public Responsable(int id, String nom, String prenom) {
+    	this.id = id;
     	this.nom = nom;
     	this.prenom = prenom;
     }
 
     public void creerLogin(String mdp) {
-    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.ECURIE, this.ID);
+    	Utilisateur.ajouterUtilisateur(nom+"."+prenom, mdp, Profil.ECURIE, this.id);
     }
     
     // GETTERS //
     public int getID() {
-        return this.ID;
+        return this.id;
     }
     
     public String getNom() {

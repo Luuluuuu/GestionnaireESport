@@ -15,7 +15,7 @@ import oracle.jdbc.driver.*;
 @SuppressWarnings("unused")
 public class Connexion {
 	private static Connection connx;
-	public static Connexion instance;
+	private static Connexion instance;
 	private static Statement st;
 	
 	private Connexion() {
@@ -37,7 +37,6 @@ public class Connexion {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Connexion OK");		
 	}
 	
 	public static synchronized Connexion getInstance() {
@@ -78,7 +77,6 @@ public class Connexion {
 		try {
 			return Connexion.connx.createStatement();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -88,7 +86,6 @@ public class Connexion {
 		try {
 			return Connexion.connx.prepareCall(str);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -98,7 +95,6 @@ public class Connexion {
 		try {
 			return Connexion.connx.prepareStatement(req);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

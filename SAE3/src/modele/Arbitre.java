@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Arbitre {
 	//Declaration des variables
-	private int ID;
+	private int id;
     private String nom;
     private String prenom;
     private String pseudo;
     private int anneesExperience;
-    private List<Tournoi> tournois = new ArrayList<Tournoi> ();
+    private List<Tournoi> tournois = new ArrayList<> ();
     
     /*Constructeur d'un Arbitre
      * Entrées : 
@@ -19,15 +19,15 @@ public class Arbitre {
      * 		ses anneeExp de type int
      * 		un mdp de type String (généré par le gestionnaire d'E-Sporter)
     */
-    public Arbitre(int ID, String nom, String prenom) {
-    	this.ID = ID;
+    public Arbitre(int id, String nom, String prenom) {
+    	this.id = id;
     	this.nom = nom;
     	this.prenom = prenom;
     }
 
 	//compose un login sous forme nom.prenom_compose et l'enregistre dans le tableau des Utilisateurs
     public void creerLogin(String mdp) {
-    	Utilisateur.ajouterUtilisateur((nom+"."+prenom), mdp, Profil.ARBITRE, this.ID);
+    	Utilisateur.ajouterUtilisateur((nom+"."+prenom), mdp, Profil.ARBITRE, this.id);
     }
     
     /*Retourne la liste des Tournois assignees à l'arbitre*/
@@ -60,7 +60,7 @@ public class Arbitre {
     //GETTERS
     /*Retourne le nom l'arbitre*/
     public int getID() {
-        return this.ID;
+        return this.id;
     }
     
     /*Retourne le nom l'arbitre*/

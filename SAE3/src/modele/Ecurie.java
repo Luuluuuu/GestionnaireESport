@@ -6,27 +6,27 @@ public class Ecurie implements Cloneable {
 	//Declaration de variables
     private String nom;
     private int anneeDeCreation;
-    private List<Equipe> equipes = new ArrayList<Equipe> ();
-	private int ID;
+    private List<Equipe> equipes = new ArrayList<> ();
+	private int id;
     
     /*Constructeur d'une Ecurie
      * Entrées : 
      * 		un nom de type String
      * 		une anneeDeCreation de type Date
     */
-    public Ecurie(int ID, String nom) {
-    	this.ID = ID;
+    public Ecurie(int id, String nom) {
+    	this.id = id;
     	this.nom = nom;
     }
     
     public void creerLogin(String mdp) {
-    	Utilisateur.ajouterUtilisateur(nom, mdp, Profil.ECURIE, this.ID);
+    	Utilisateur.ajouterUtilisateur(nom, mdp, Profil.ECURIE, this.id);
     }
     
     // GETTERS //
 
 	public int getID() {
-		return this.ID;
+		return this.id;
 	}
 	
     //retourne le nom de l'écurie
@@ -93,7 +93,6 @@ public class Ecurie implements Cloneable {
     	try {
 			cloned = (Ecurie) super.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return cloned;

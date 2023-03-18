@@ -28,7 +28,7 @@ public class ControleurClassementJoueur implements ActionListener {
 		
 		// INITIALISE LE JOUEUR CONNECTE
 		for (Joueur j : ControleurConnexion.listeJoueurs.values()) {
-			if (j.getID() == Utilisateur.IDCourant) {
+			if (j.getID() == Utilisateur.idCourant) {
 				this.joueur = j;
 			}
 		}

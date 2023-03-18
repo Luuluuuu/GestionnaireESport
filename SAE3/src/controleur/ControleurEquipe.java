@@ -230,7 +230,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 			// On récupère l'ID de l'écurie courante ou sélectionnée
 			int idEcurie;
 			if (ControleurConnexion.profilUtilisateur == Profil.ECURIE) {
-				idEcurie = Utilisateur.IDCourant;
+				idEcurie = Utilisateur.idCourant;
 			} else {
 				idEcurie = ControleurConnexion.listeEcuries.get(this.vue.getEcurie()).getID();
 			}

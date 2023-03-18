@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import modele.Connexion;
@@ -14,23 +12,6 @@ import modele.Utilisateur;
 import modele.Profil;
 
 public class TestUtilisateur {
-	private Utilisateur utilisateur ;
-	
-	@Before
-	public void setUp() {
-		this.utilisateur = new Utilisateur();
-	}
-	
-	@After
-	public void tearDown() {
-		this.utilisateur = null;
-	}
-	
-	@Test
-	public void testConstructeur() {
-		assertTrue(this.utilisateur instanceof Utilisateur);
-	}
-
 	@Test
 	public void testAjouterUtilisateur() {
 		Utilisateur.ajouterUtilisateur(("vidal"+"."+"jean"), "$iutinfo", Profil.ARBITRE, 1);

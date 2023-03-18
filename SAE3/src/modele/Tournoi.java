@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Tournoi {
 	//Attributs
-	private int ID;
+	private int id;
     private String nom;
     private String date;
     private String heureDebut;
@@ -23,17 +23,17 @@ public class Tournoi {
      * 	format 	Format 		si le tournoi est en distanciel, présentiel ou hybride
     */
     public Tournoi(int ID, String nom, String date, String heure, String echelle){
-    	this.ID = ID;
+    	this.id = ID;
     	this.nom = nom;
     	this.date = date;
     	this.heureDebut = heure;
     	this.echelle = echelle;
-    	this.jeux = new ArrayList<Jeu>();
+    	this.jeux = new ArrayList<>();
     }
 
     /*Retourne l'ID du tournoi*/
     public int getID() {
-    	return this.ID;
+    	return this.id;
     }
     
     public String getNom() {
@@ -64,7 +64,7 @@ public class Tournoi {
     }
     
     public List<String> getNomJeux(){
-    	List <String> nomJeux = new ArrayList<String>();
+    	List <String> nomJeux = new ArrayList<>();
     	for (Jeu j : this.jeux) {
     		nomJeux.add(j.getNom());
     	}
@@ -85,8 +85,8 @@ public class Tournoi {
     }
     
     // SETTERS //
-    public void setID(int ID) {
-    	this.ID=ID;
+    public void setID(int id) {
+    	this.id=id;
     }
     
     /*Modifie le nom du tournoi

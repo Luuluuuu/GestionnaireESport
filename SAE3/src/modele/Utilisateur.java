@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Utilisateur {
-    public static int IDCourant;
+    public static int idCourant;
 
-    public Utilisateur() {
+    private Utilisateur() {
+	    throw new IllegalStateException("Classe sans construction");
     }
     
     public static void ajouterUtilisateur(String nom, String mdp,Profil profil, int ID) {
@@ -44,22 +45,22 @@ public class Utilisateur {
 	    			return Profil.GESTIONNAIRE;
 	    		}
 	    		if (rs.getInt("IDRESPONSABLE") != 0) {
-	    			IDCourant = rs.getInt("IDRESPONSABLE");
+	    			idCourant = rs.getInt("IDRESPONSABLE");
 	    	    	rs.close();
 	    			return Profil.RESPONSABLE;
 	    		}
 	    		if (rs.getInt("IDARBITRE") != 0) {
-	    			IDCourant = rs.getInt("IDARBITRE");
+	    			idCourant = rs.getInt("IDARBITRE");
 	    	    	rs.close();
 	    			return Profil.ARBITRE;
 	    		}
 	    		if (rs.getInt("IDECURIE") != 0) {
-	    			IDCourant = rs.getInt("IDECURIE");
+	    			idCourant = rs.getInt("IDECURIE");
 	    	    	rs.close();
 	    			return Profil.ECURIE;
 	    		}
 	    		if (rs.getInt("IDJOUEUR") != 0) {
-	    			IDCourant = rs.getInt("IDJOUEUR");
+	    			idCourant = rs.getInt("IDJOUEUR");
 	    	    	rs.close();
 	    			return Profil.JOUEUR;
 	    		}

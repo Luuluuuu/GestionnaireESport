@@ -76,7 +76,7 @@ public class ControleurInscriptionTournoi implements ActionListener, ListSelecti
 			Jeu j2 = t.getJeu(j);
 			
 			for (Equipe equipe : ControleurConnexion.listeEquipes.values()) {
-				if (equipe.getEcurie().getID() == Utilisateur.IDCourant && 
+				if (equipe.getEcurie().getID() == Utilisateur.idCourant && 
 						equipe.getJeu().getNom().equals(this.vue.getJeuSelectionne()) &&
 						(!j2.contient(equipe))) {
 					

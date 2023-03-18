@@ -1,11 +1,11 @@
 package modele;
 
-import modele.Etat;
-import vue.HeaderAdmin;
-import vue.VueCalendrier;
-
 public class EtatFactory {
 	
+	 private EtatFactory() {
+	    throw new IllegalStateException("Classe sans construction");
+	 }
+	 
     public static Etat creerEtat(String texteBouton) {
         switch (texteBouton) {
             case "Créer un nouveau tournoi":
@@ -29,8 +29,6 @@ public class EtatFactory {
             case "Valider":
                 return Etat.VALIDER;
             case "Classement":
-            	//désactivation puis réactivation du bouton classement après que la page soit ouverte lié au problème d'ouverture de fenêtre multiple
-            	//VueCalendrier.desactiverBouton(VueCalendrier.getBtnClassement());
                 return Etat.CLASSEMENT;
             case "Equipes":
                 return Etat.EQUIPES;
