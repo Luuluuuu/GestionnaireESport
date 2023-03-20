@@ -20,6 +20,7 @@ public interface Vue {
 	public static final String MOT_DE_PASSE = "Mot de passe";
 	public static final String CREER_UNE_EQUIPE = "Créer une équipe";
 	public static final String SELECTIONNER_UN_JEU = "- Sélectionnez un jeu -";
+	public static final String SELECTIONNER_UNE_EQUIPE = "- Sélectionnez une équipe -";
 	public static final String VALIDER = "Valider";
 	public static final String ANNULER = "Annuler";
 	

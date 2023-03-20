@@ -145,7 +145,11 @@ public class Joueur {
 		return this.equipe;
 	}
 
+	/* Crée les identifiants d'un joueur
+	 * Entrées :
+	 * 	mdp String mot de passe de l'utilisateur */
 	public void creerLogin(String mdp) {
+		Utilisateur.ajouterUtilisateur(this.getPseudo().toLowerCase(), mdp, Profil.JOUEUR, this.getID());
 	}
 
 	public String getPhoto() {
