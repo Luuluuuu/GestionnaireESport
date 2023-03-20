@@ -19,7 +19,7 @@ public class JLabelBuilder {
 	        label.setForeground(foreground);
 	        label.setFont(font);
 	        return this;
-}
+	   }
 
 	public JLabel build() {
 		return label;

@@ -83,10 +83,8 @@ public class VueEquipe{
 		if (ControleurEquipe.estProfil(Vue.GESTIONNAIRE)) {
 			HeaderAdmin header = new HeaderAdmin(this.getFrame());
 			header.getBtnDeconnexion().addActionListener(controleur);
-			header.getBtnEquipes().addActionListener(controleur);
 			header.getBtnJoueurs().addActionListener(controleur);
 			header.getBtnClassement().addActionListener(controleur);
-
 			header.getBtnCalendrier().addActionListener(controleur);
 			header.getBtnEcuries().addActionListener(controleur);
 			Vue.desactiverBouton(header.getBtnEquipes());
@@ -95,11 +93,10 @@ public class VueEquipe{
 		if (ControleurEquipe.estProfil("Ecurie")) {
 			HeaderEcurie header = new HeaderEcurie(this.getFrame());
 			header.getBtnDeconnexion().addActionListener(controleur);
-			header.getBtnEquipes().addActionListener(controleur);
 			header.getBtnJoueurs().addActionListener(controleur);
 			header.getBtnClassement().addActionListener(controleur);
-			
 			header.getBtnTournois().addActionListener(controleur);
+			Vue.desactiverBouton(header.getBtnEquipes());
 		}
 		
 		JPanel panelContenu = new JPanel();

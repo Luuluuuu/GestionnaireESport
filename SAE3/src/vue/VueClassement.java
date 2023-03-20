@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import modele.EtatFactory;
+import modele.GridBagConstraintsBuilder;
+import modele.GridBagLayoutBuilder;
+import modele.JLabelBuilder;
+import modele.JPanelBuilder;
 import modele.Etat;
 import controleur.ControleurClassement;
 
@@ -56,8 +60,6 @@ public class VueClassement implements Vue{
 		ControleurClassement controleur = new ControleurClassement(this);
 		
 		// HEADER //
-		
-
 		if (controleur.estProfil("Gestionnaire")) {
 			HeaderAdmin header = new HeaderAdmin(this.getFrame());
 			header.getBtnDeconnexion().addActionListener(controleur);
@@ -78,54 +80,32 @@ public class VueClassement implements Vue{
 
 		}
 
-		
 		JPanel panelContenu = new JPanel();
 		panelContenu.setBackground(Couleur.BLEU1);
 		fenetreClassement.getContentPane().add(panelContenu, BorderLayout.CENTER);
 		panelContenu.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel panelPodium = new JPanel();
-		panelPodium.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelPodium);
-		GridBagLayout gbl_panelPodium = new GridBagLayout();
-		gbl_panelPodium.columnWidths = new int[]{692, 0};
-		gbl_panelPodium.rowHeights = new int[] {100, 724, 0, 0};
-		gbl_panelPodium.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panelPodium.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panelPodium.setLayout(gbl_panelPodium);
+		JPanel panelPodium = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
+		GridBagLayout gblPanelPodium = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{692, 0}, new int[] {100, 724, 0, 0}, new double[]{0.0, Double.MIN_VALUE}, new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE}).build();
+		panelPodium.setLayout(gblPanelPodium);
 		
-		JPanel panelTitrePodium = new JPanel();
-		panelTitrePodium.setBackground(Couleur.BLEU1);
+		JPanel panelTitrePodium = new JPanelBuilder(panelPodium).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayout = (FlowLayout) panelTitrePodium.getLayout();
 		flowLayout.setVgap(0);
-		GridBagConstraints gbc_panelTitrePodium = new GridBagConstraints();
-		gbc_panelTitrePodium.anchor = GridBagConstraints.SOUTH;
-		gbc_panelTitrePodium.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelTitrePodium.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTitrePodium.gridx = 0;
-		gbc_panelTitrePodium.gridy = 0;
-		panelPodium.add(panelTitrePodium, gbc_panelTitrePodium);
+		GridBagConstraints gbcPanelTitrePodium = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelPodium.add(panelTitrePodium, gbcPanelTitrePodium);
 		
-		JLabel titrePodium = new JLabel("PODIUM");
-		titrePodium.setForeground(Color.WHITE);
-		titrePodium.setFont(new Font("Roboto", Font.BOLD, 20));
-		panelTitrePodium.add(titrePodium);
+		new JLabelBuilder(panelTitrePodium).setCustomLabel("PODIUM", new Font("Roboto", Font.BOLD, 20), Color.WHITE).build();
 		
-		JPanel panelImgPodium = new JPanel();
-		panelImgPodium.setBackground(Couleur.BLEU1);
+		JPanel panelImgPodium = new JPanelBuilder(panelPodium).setCustomPanel(Couleur.BLEU1).build();
 		panelImgPodium.setLayout(null);
-		GridBagConstraints gbc_panelImgPodium = new GridBagConstraints();
-		gbc_panelImgPodium.insets = new Insets(0, 0, 5, 0);
-		gbc_panelImgPodium.fill = GridBagConstraints.BOTH;
-		gbc_panelImgPodium.gridx = 0;
-		gbc_panelImgPodium.gridy = 1;
-		panelPodium.add(panelImgPodium, gbc_panelImgPodium);
+		GridBagConstraints gbcPanelImgPodium = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 5, 0), 0, 1).build();
+		panelPodium.add(panelImgPodium, gbcPanelImgPodium);
 		
-		JLabel imgPodium = new JLabel("");
+		JLabel imgPodium = new JLabelBuilder(panelImgPodium).setCustomLabel("", new Font("Roboto", Font.BOLD, 11), Color.WHITE).build();
 		Image img = new ImageIcon(this.getClass().getResource("podium.png")).getImage();
 		imgPodium.setBounds(80, 96, 535, 521);
 		imgPodium.setIcon(new ImageIcon(img));
-		panelImgPodium.add(imgPodium);
 		
 		nomPremier.setForeground(Color.WHITE);
 		nomPremier.setHorizontalAlignment(SwingConstants.CENTER);
@@ -145,44 +125,28 @@ public class VueClassement implements Vue{
 		nomTroisieme.setBounds(451, 447, 164, 24);
 		panelImgPodium.add(nomTroisieme);
 		
-		JPanel panelFinPodium = new JPanel();
-		panelFinPodium.setBackground(Couleur.BLEU1);
-		panelContenu.add(panelFinPodium);
-		GridBagLayout gbl_panelFinPodium = new GridBagLayout();
-		gbl_panelFinPodium.columnWidths = new int[]{692, 0};
-		gbl_panelFinPodium.rowHeights = new int[] {100, 724, 0};
-		gbl_panelFinPodium.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panelFinPodium.rowWeights = new double[]{0.0, 0.0};
-		panelFinPodium.setLayout(gbl_panelFinPodium);
+		JPanel panelFinPodium = new JPanelBuilder(panelContenu).setCustomPanel(Couleur.BLEU1).build();
+		GridBagLayout gblPanelFinPodium = new GridBagLayoutBuilder().setCustomGridBagLayout(new int[]{692, 0}, new int[] {100, 724, 0}, new double[]{0.0, Double.MIN_VALUE}, new double[]{0.0, 0.0}).build();
+		panelFinPodium.setLayout(gblPanelFinPodium);
 		
-		JPanel panelTriJeu = new JPanel();
-		panelTriJeu.setBackground(Couleur.BLEU1);
+		JPanel panelTriJeu = new JPanelBuilder(panelFinPodium).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayout_1 = (FlowLayout) panelTriJeu.getLayout();
 		flowLayout_1.setHgap(10);
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		flowLayout_1.setVgap(0);
-		GridBagConstraints gbc_panelTriJeu = new GridBagConstraints();
-		gbc_panelTriJeu.anchor = GridBagConstraints.SOUTH;
-		gbc_panelTriJeu.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panelTriJeu.insets = new Insets(0, 0, 5, 0);
-		gbc_panelTriJeu.gridx = 0;
-		gbc_panelTriJeu.gridy = 0;
-		panelFinPodium.add(panelTriJeu, gbc_panelTriJeu);
+		GridBagConstraints gbcPanelTriJeu = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0).build();
+		panelFinPodium.add(panelTriJeu, gbcPanelTriJeu);
 		
 		triJeux.setPreferredSize(new Dimension(205, 20));
 		panelTriJeu.add(triJeux);
 		
-		JPanel panelListe = new JPanel();
-		panelListe.setBackground(Couleur.BLEU1);
+		JPanel panelListe = new JPanelBuilder(panelFinPodium).setCustomPanel(Couleur.BLEU1).build();
 		FlowLayout flowLayout_2 = (FlowLayout) panelListe.getLayout();
 		flowLayout_2.setVgap(50);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		flowLayout_2.setHgap(50);
-		GridBagConstraints gbc_panelListe = new GridBagConstraints();
-		gbc_panelListe.fill = GridBagConstraints.BOTH;
-		gbc_panelListe.gridx = 0;
-		gbc_panelListe.gridy = 1;
-		panelFinPodium.add(panelListe, gbc_panelListe);
+		GridBagConstraints gbcPanelListe = new GridBagConstraintsBuilder().setCustomGridBagConstraints(GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 1).build();
+		panelFinPodium.add(panelListe, gbcPanelListe);
 		
 		listePodium = new JList<String>(this.modelePodium);
 		listePodium.setVisibleRowCount(14);
@@ -192,12 +156,6 @@ public class VueClassement implements Vue{
 		listePodium.setForeground(Color.red);
 		JScrollPane scrollPane = new JScrollPane(listePodium);
 		panelListe.add(scrollPane);
-		
-		// DECONNEXION
-		
-		// BOUTONS MENU
-//		btnEquipes.addActionListener(controleur);
-//		btnJoueurs.addActionListener(controleur);
 
 		// COMBOBOX DE JEUX
 		this.triJeux.addActionListener(controleur);
