@@ -196,7 +196,7 @@ public class ControleurEquipe implements ActionListener, ListSelectionListener {
 		else if (list.getName().equals("Joueurs") && !e.getValueIsAdjusting()) {	// gere les doubles clics
 				VueJoueur fenJoueur = new VueJoueur();
 				fenJoueur.getFrame().setVisible(true);
-				VueJoueur.afficherTexte(fenJoueur.titreModif, "Modifier un joueur");
+				VueJoueur.afficherTexte(fenJoueur.getTitreModif(), "Modifier un joueur");
 				Joueur joueur = ControleurConnexion.listeJoueurs.get(this.vue.getJoueurSelectionne());
 				fenJoueur.setEquipe(joueur.getEquipe().getNom());
 				fenJoueur.setNomJoueur(joueur.getNom());
